@@ -202,6 +202,23 @@ public class XmiManager : IXmiManager
         }
     }
 
+    
+    // 泛型查询
+
+    public List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
+    {
+        if (IsValidModelIndex(modelIndex))
+        {
+            return Models[modelIndex].Entities
+                .OfType<T>()
+                .ToList();
+        }
+        else
+        {
+            throw new IndexOutOfRangeException("模型索引无效");
+        }
+    }
+
     // 私有辅助方法：验证索引是否在范围内
     private bool IsValidModelIndex(int index)
     {

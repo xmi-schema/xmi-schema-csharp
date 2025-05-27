@@ -24,6 +24,8 @@ namespace XmiSchema.Core.Manager
         void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection xmiHasStructuralCrossSection);
         void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey xmiHasStructuralStorey);
 
+        List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity;
+
         string BuildJson(int modelIndex);
         void Save(string path);
     }
