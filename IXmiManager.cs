@@ -1,7 +1,7 @@
 using XmiSchema.Core.Entities;
+using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Models;
-using XmiSchema.Core.Geometries;
 
 namespace XmiSchema.Core.Manager
 {
@@ -9,23 +9,28 @@ namespace XmiSchema.Core.Manager
     {
         List<XmiModel> Models { get; set; }
 
+        // 添加实体方法
+        void AddXmiStructuralMaterialToModel(int modelIndex, XmiStructuralMaterial material);
+        void AddXmiStructuralCrossSectionToModel(int modelIndex, XmiStructuralCrossSection crossSection);
+        void AddXmiStructuralCurveMemberToModel(int modelIndex, XmiStructuralCurveMember member);
+        void AddXmiStructuralSurfaceMemberToModel(int modelIndex, XmiStructuralSurfaceMember member);
+        void AddXmiStructuralPointConnectionToModel(int modelIndex, XmiStructuralPointConnection connection);
+        void AddXmiStructuralStoreyToModel(int modelIndex, XmiStructuralStorey storey);
+        void AddXmiPoint3DToModel(int modelIndex, XmiPoint3D point);
         void AddEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities);
-        void AddXmiPoint3DToModel(int modelIndex, XmiPoint3D xmiPoint3D);
-        void AddXmiStructuralMaterialToModel(int modelIndex, XmiStructuralMaterial xmiStructuralMaterial);
-        void AddXmiStructuralCrossSectionToModel(int modelIndex, XmiStructuralCrossSection xmiStructuralCrossSection);
-        void AddXmiStructuralCurveMemberToModel(int modelIndex, XmiStructuralCurveMember xmiStructuralCurveMember);
-        void AddXmiStructuralPointConnectionToModel(int modelIndex, XmiStructuralPointConnection xmiStructuralPointConnection);
-        void AddXmiStructuralStoreyToModel(int modelIndex, XmiStructuralStorey xmiStructuralStorey);
-        void AddXmiStructuralSurfaceMemberToModel(int modelIndex, XmiStructuralSurfaceMember xmiStructuralSurfaceMember);
 
-        void AddXmiHasPoint3DToModel(int modelIndex, XmiHasPoint3D xmiHasPoint3D);
-        void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasStructuralMaterial xmiHasStructuralMaterial);
-        void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode xmiHasStructuralNode);
-        void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection xmiHasStructuralCrossSection);
-        void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey xmiHasStructuralStorey);
+        // 添加关系方法
+        void AddXmiHasPoint3DToModel(int modelIndex, XmiHasPoint3D relation);
+        void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasStructuralMaterial relation);
+        void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode relation);
+        void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection relation);
+        void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey relation);
 
+        // 查询
+        string GetMatchingPoint3DId(int modelIndex, XmiPoint3D importedPoint);
         List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity;
 
+        // 构建 JSON 图和保存
         string BuildJson(int modelIndex);
         void Save(string path);
     }
