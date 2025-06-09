@@ -111,6 +111,12 @@ namespace XmiSchema.Core.Manager
             return Models[modelIndex].GetEntitiesOfType<T>();
         }
 
+        public T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.ID == id);
+        }
+
         public string? FindMatchingPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();

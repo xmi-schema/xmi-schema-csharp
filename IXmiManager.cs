@@ -29,6 +29,7 @@ namespace XmiSchema.Core.Manager
         // 查询
         string GetMatchingPoint3DId(int modelIndex, XmiPoint3D importedPoint);
         List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity;
+        T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity;
         string? FindMatchingPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection);
        
         // 构建 JSON 图和保存
