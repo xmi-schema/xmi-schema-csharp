@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
-    <Version>0.2.5</Version>
+    <Version>0.2.6</Version>
 
 
     <PackageId>XmiSchema.Core</PackageId>
