@@ -111,6 +111,39 @@ namespace XmiSchema.Core.Manager
             return Models[modelIndex].GetEntitiesOfType<T>();
         }
 
+        public string? FindMatchingPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+
+            var model = Models[modelIndex];
+
+            // Step 1: 从模型中查找 inputConnection 关联的 Point3D（通过关系）
+            var inputPoint = model.Relationships
+                .OfType<XmiHasPoint3D>()
+                .FirstOrDefault(rel => rel.Source?.ID == inputConnection.ID)
+                ?.Target as XmiPoint3D;
+
+            if (inputPoint == null) return null;
+
+            // Step 2: 在所有其他的 PointConnection 中查找是否有相同坐标的 Point3D（也通过关系查）
+            var match = model.Relationships
+                .OfType<XmiHasPoint3D>()
+                .Where(rel => rel.Source is XmiStructuralPointConnection && rel.Source.ID != inputConnection.ID)
+                .FirstOrDefault(rel => ArePointsEqual(rel.Target as XmiPoint3D, inputPoint));
+
+            return match?.Source?.ID;
+        }
+
+        private bool ArePointsEqual(XmiPoint3D? p1, XmiPoint3D? p2, double tolerance = 1e-10)
+        {
+            if (p1 == null || p2 == null) return false;
+            return Math.Abs(p1.X - p2.X) < tolerance &&
+                   Math.Abs(p1.Y - p2.Y) < tolerance &&
+                   Math.Abs(p1.Z - p2.Z) < tolerance;
+        }
+
+
+
         // ========== 构建与保存 ==========
         public string BuildJson(int modelIndex)
         {
