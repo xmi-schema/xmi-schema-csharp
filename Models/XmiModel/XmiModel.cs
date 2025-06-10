@@ -113,7 +113,7 @@ namespace XmiSchema.Core.Models
             // 验证参数
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
+            // if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
             // if (point == null) throw new ArgumentNullException(nameof(point), "Point cannot be null");
 
             // 创建临时点连接对象用于检查

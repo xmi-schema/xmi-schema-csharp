@@ -40,10 +40,6 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         double torsionalConstant
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCrossSection))
     {
-        if (material == null)
-            throw new ArgumentNullException(nameof(material), "Material cannot be null");
-        if (area <= 0)
-            throw new ArgumentException("Area must be greater than 0", nameof(area));
 
         Material = material;
         Shape = shape;
