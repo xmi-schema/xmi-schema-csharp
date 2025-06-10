@@ -114,7 +114,7 @@ namespace XmiSchema.Core.Models
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
             if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
-            if (point == null) throw new ArgumentNullException(nameof(point), "Point cannot be null");
+            // if (point == null) throw new ArgumentNullException(nameof(point), "Point cannot be null");
 
             // 创建临时点连接对象用于检查
             var tempConnection = new XmiStructuralPointConnection(
@@ -261,13 +261,13 @@ namespace XmiSchema.Core.Models
             // 验证参数
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            if (crossSection == null) throw new ArgumentNullException(nameof(crossSection), "CrossSection cannot be null");
-            if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
-            if (nodes == null || !nodes.Any()) throw new ArgumentException("Nodes cannot be null or empty", nameof(nodes));
-            if (segments == null || !segments.Any()) throw new ArgumentException("Segments cannot be null or empty", nameof(segments));
-            if (beginNode == null) throw new ArgumentNullException(nameof(beginNode), "BeginNode cannot be null");
-            if (endNode == null) throw new ArgumentNullException(nameof(endNode), "EndNode cannot be null");
-            if (length <= 0) throw new ArgumentException("Length must be greater than 0", nameof(length));
+            // if (crossSection == null) throw new ArgumentNullException(nameof(crossSection), "CrossSection cannot be null");
+            // if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
+            // if (nodes == null || !nodes.Any()) throw new ArgumentException("Nodes cannot be null or empty", nameof(nodes));
+            // if (segments == null || !segments.Any()) throw new ArgumentException("Segments cannot be null or empty", nameof(segments));
+            // if (beginNode == null) throw new ArgumentNullException(nameof(beginNode), "BeginNode cannot be null");
+            // if (endNode == null) throw new ArgumentNullException(nameof(endNode), "EndNode cannot be null");
+            // if (length <= 0) throw new ArgumentException("Length must be greater than 0", nameof(length));
 
             // 检查是否存在具有相同nativeId的截面
             var existingCrossSection = GetEntitiesOfType<XmiStructuralCrossSection>()
@@ -365,8 +365,8 @@ namespace XmiSchema.Core.Models
             // 验证参数
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            if (material == null) throw new ArgumentNullException(nameof(material), "Material cannot be null");
-            if (area <= 0) throw new ArgumentException("Area must be greater than 0", nameof(area));
+            // if (material == null) throw new ArgumentNullException(nameof(material), "Material cannot be null");
+            // if (area <= 0) throw new ArgumentException("Area must be greater than 0", nameof(area));
 
             // 检查是否存在具有相同nativeId的材料
             var existingMaterial = GetEntitiesOfType<XmiStructuralMaterial>()
@@ -531,13 +531,13 @@ namespace XmiSchema.Core.Models
         )
         {
             // 验证参数
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            if (crossSection == null) throw new ArgumentNullException(nameof(crossSection), "CrossSection cannot be null");
-            if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
-            if (nodes == null || !nodes.Any()) throw new ArgumentException("Nodes cannot be null or empty", nameof(nodes));
-            if (segments == null || !segments.Any()) throw new ArgumentException("Segments cannot be null or empty", nameof(segments));
-            if (thickness <= 0) throw new ArgumentException("Thickness must be greater than 0", nameof(thickness));
+            // if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            // if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            // if (crossSection == null) throw new ArgumentNullException(nameof(crossSection), "CrossSection cannot be null");
+            // // if (storey == null) throw new ArgumentNullException(nameof(storey), "Storey cannot be null");
+            // if (nodes == null || !nodes.Any()) throw new ArgumentException("Nodes cannot be null or empty", nameof(nodes));
+            // if (segments == null || !segments.Any()) throw new ArgumentException("Segments cannot be null or empty", nameof(segments));
+            // if (thickness <= 0) throw new ArgumentException("Thickness must be greater than 0", nameof(thickness));
 
             // 检查是否存在具有相同nativeId的截面
             var existingCrossSection = GetEntitiesOfType<XmiStructuralCrossSection>()
