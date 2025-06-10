@@ -149,7 +149,7 @@ namespace XmiSchema.Core.Manager
             double height
         );
 
-        XmiStructuralPointConnection CreateStructurePointConnection(
+        XmiStructuralPointConnection CreateStructuralPointConnection(
             int modelIndex,
             string id,
             string name,

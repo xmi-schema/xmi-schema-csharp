@@ -149,7 +149,7 @@ namespace XmiSchema.Core.Manager
         }
 
         // ========== 创建实体 ==========
-        public XmiStructuralPointConnection CreateStructurePointConnection(
+        public XmiStructuralPointConnection CreateStructuralPointConnection(
             int modelIndex,
             string id,
             string name,
