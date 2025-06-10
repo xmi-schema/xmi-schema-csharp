@@ -1,5 +1,8 @@
+using System;
+
 namespace XmiSchema.Core.Entities;
-public class XmiStructuralStorey : XmiBaseEntity
+
+public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey>
 {
     public double StoreyElevation { get; set; }
     public double StoreyMass { get; set; }
@@ -25,5 +28,18 @@ public class XmiStructuralStorey : XmiBaseEntity
         StoreyHorizontalReactionX = storeyHorizontalReactionX;
         StoreyHorizontalReactionY = storeyHorizontalReactionY;
         StoreyVerticalReaction = storeyVerticalReaction;
+    }
+
+    public bool Equals(XmiStructuralStorey other)
+    {
+        if (other == null) return false;
+        return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public override bool Equals(object obj) => Equals(obj as XmiStructuralStorey);
+
+    public override int GetHashCode()
+    {
+        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
     }
 }

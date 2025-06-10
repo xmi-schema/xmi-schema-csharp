@@ -99,11 +99,11 @@ namespace XmiSchema.Core.Manager
         }
 
         // ========== 查询 ==========
-        public string GetMatchingPoint3DId(int modelIndex, XmiPoint3D importedPoint)
-        {
-            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].GetMatchingPoint3DId(importedPoint);
-        }
+        // public string GetMatchingPoint3DId(int modelIndex, XmiPoint3D importedPoint)
+        // {
+        //     if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+        //     return Models[modelIndex].GetMatchingPoint3DId(importedPoint);
+        // }
 
         public List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
         {
@@ -148,7 +148,196 @@ namespace XmiSchema.Core.Manager
                    Math.Abs(p1.Z - p2.Z) < tolerance;
         }
 
+        // ========== 创建实体 ==========
+        public XmiStructuralPointConnection CreateStructurePointConnection(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiStructuralStorey storey,
+            XmiPoint3D point
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructurePointConnection(
+                id, name, ifcGuid, nativeId, description,
+                storey, point
+            );
+        }
 
+        public XmiPoint3D CreatePoint3D(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            double x,
+            double y,
+            double z
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreatePoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
+        }
+
+        public XmiStructuralMaterial CreateStructuralMaterial(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiStructuralMaterialTypeEnum materialType,
+            double grade,
+            double unitWeight,
+            string eModulus,
+            string gModulus,
+            string poissonRatio,
+            double thermalCoefficient
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructuralMaterial(
+                id, name, ifcGuid, nativeId, description,
+                materialType, grade, unitWeight,
+                eModulus, gModulus, poissonRatio, thermalCoefficient
+            );
+        }
+
+        public XmiStructuralCrossSection CreateStructuralCrossSection(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiStructuralMaterial material,
+            XmiShapeEnum shape,
+            string[] parameters,
+            double area,
+            double secondMomentOfAreaXAxis,
+            double secondMomentOfAreaYAxis,
+            double radiusOfGyrationXAxis,
+            double radiusOfGyrationYAxis,
+            double elasticModulusXAxis,
+            double elasticModulusYAxis,
+            double plasticModulusXAxis,
+            double plasticModulusYAxis,
+            double torsionalConstant
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructuralCrossSection(
+                id, name, ifcGuid, nativeId, description,
+                material, shape, parameters,
+                area, secondMomentOfAreaXAxis, secondMomentOfAreaYAxis,
+                radiusOfGyrationXAxis, radiusOfGyrationYAxis,
+                elasticModulusXAxis, elasticModulusYAxis,
+                plasticModulusXAxis, plasticModulusYAxis,
+                torsionalConstant
+            );
+        }
+
+        public XmiStructuralStorey CreateStructuralStorey(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            double storeyElevation,
+            double storeyMass,
+            string storeyHorizontalReactionX,
+            string storeyHorizontalReactionY,
+            string storeyVerticalReaction
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructuralStorey(
+                id, name, ifcGuid, nativeId, description,
+                storeyElevation, storeyMass,
+                storeyHorizontalReactionX, storeyHorizontalReactionY, storeyVerticalReaction
+            );
+        }
+
+        public XmiStructuralCurveMember CreateStructuralCurveMember(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiStructuralCrossSection crossSection,
+            XmiStructuralStorey storey,
+            XmiStructuralCurveMemberTypeEnum curvememberType,
+            List<XmiStructuralPointConnection> nodes,
+            List<XmiSegment> segments,
+            XmiStructuralCurveMemberSystemLineEnum systemLine,
+            XmiStructuralPointConnection beginNode,
+            XmiStructuralPointConnection endNode,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset,
+            string endFixityStart,
+            string endFixityEnd
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructuralCurveMember(
+                id, name, ifcGuid, nativeId, description,
+                crossSection, storey, curvememberType,
+                nodes, segments, systemLine,
+                beginNode, endNode, length,
+                localAxisX, localAxisY, localAxisZ,
+                beginNodeXOffset, endNodeXOffset,
+                beginNodeYOffset, endNodeYOffset,
+                beginNodeZOffset, endNodeZOffset,
+                endFixityStart, endFixityEnd
+            );
+        }
+
+        public XmiStructuralSurfaceMember CreateStructuralSurfaceMember(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiStructuralCrossSection crossSection,
+            XmiStructuralStorey storey,
+            XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
+            List<XmiStructuralPointConnection> nodes,
+            List<XmiSegment> segments,
+            XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
+            double area,
+            double zOffset,
+            double thickness,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double height
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateStructuralSurfaceMember(
+                id, name, ifcGuid, nativeId, description,
+                crossSection, storey, surfaceMemberType,
+                nodes, segments, systemPlane,
+                area, zOffset, thickness,
+                localAxisX, localAxisY, localAxisZ,
+                height
+            );
+        }
 
         // ========== 构建与保存 ==========
         public string BuildJson(int modelIndex)
@@ -216,3 +405,4 @@ namespace XmiSchema.Core.Manager
         }
     }
 }
+

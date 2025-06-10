@@ -4,14 +4,14 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
-public class XmiStructuralCurveMember : XmiBaseEntity
+public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralCurveMember>
 {
     public XmiStructuralCrossSection CrossSection { get; set; }
     public XmiStructuralStorey Storey { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberTypeEnum CurvememberType { get; set; }
     public List<XmiStructuralPointConnection> Nodes { get; set; }
-    public List<XmiBaseEntity> Segments { get; set; }
+    public List<XmiSegment> Segments { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberSystemLineEnum SystemLine { get; set; }
@@ -48,7 +48,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity
         XmiStructuralStorey storey,
         XmiStructuralCurveMemberTypeEnum curvememberType,
         List<XmiStructuralPointConnection> nodes,
-        List<XmiBaseEntity> segments,
+        List<XmiSegment> segments,
         XmiStructuralCurveMemberSystemLineEnum systemLine,
         XmiStructuralPointConnection beginNode,
         XmiStructuralPointConnection endNode,
@@ -92,4 +92,19 @@ public class XmiStructuralCurveMember : XmiBaseEntity
         EndFixityEnd = endFixityEnd;
 
     }
+
+    public bool Equals(XmiStructuralCurveMember other)
+    {
+        if (other == null) return false;
+        return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public override bool Equals(object obj) => Equals(obj as XmiStructuralCurveMember);
+
+    public override int GetHashCode()
+    {
+        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
+    }
 }
+
+
