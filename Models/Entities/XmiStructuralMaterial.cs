@@ -2,15 +2,15 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
-public class XmiStructuralMaterial : XmiBaseEntity
+public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMaterial>
 {
-    public XmiStructuralMaterialTypeEnum MaterialType { get; set; }                  // Type of material (Enum)
-    public double Grade { get; set; }                  // Material grade (fck, fy, yield strength, etc.)
-    public double UnitWeight { get; set; }             // Unit weight of the material
-    public string EModulus { get; set; }               // Young's modulus
-    public string GModulus { get; set; }               // Shear modulus
-    public string PoissonRatio { get; set; }           // Poisson ratio
-    public double ThermalCoefficient { get; set; }     // Thermal expansion coefficient
+    public XmiStructuralMaterialTypeEnum MaterialType { get; set; }
+    public double Grade { get; set; }
+    public double UnitWeight { get; set; }
+    public string EModulus { get; set; }
+    public string GModulus { get; set; }
+    public string PoissonRatio { get; set; }
+    public double ThermalCoefficient { get; set; }
 
     public XmiStructuralMaterial(
         string id,
@@ -34,5 +34,18 @@ public class XmiStructuralMaterial : XmiBaseEntity
         GModulus = gModulus;
         PoissonRatio = poissonRatio;
         ThermalCoefficient = thermalCoefficient;
+    }
+
+    public bool Equals(XmiStructuralMaterial other)
+    {
+        if (other == null) return false;
+        return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public override bool Equals(object obj) => Equals(obj as XmiStructuralMaterial);
+
+    public override int GetHashCode()
+    {
+        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
     }
 }

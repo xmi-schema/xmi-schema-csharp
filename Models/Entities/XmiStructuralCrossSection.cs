@@ -3,21 +3,21 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
-public class XmiStructuralCrossSection : XmiBaseEntity
+public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructuralCrossSection>
 {
-    public XmiStructuralMaterial Material { get; set; }     // Name of the material for element
-    public XmiShapeEnum Shape { get; set; }                    // Shape of the cross section (Enum)
-    public string[] Parameters { get; set; }               // Refer to "CrossSectionParameter temp ref" TAB
-    public double Area { get; set; }                      // Cross-sectional area
-    public double SecondMomentOfAreaXAxis { get; set; }                        // Second moment of area about x axis
-    public double SecondMomentOfAreaYAxis { get; set; }                        // Second moment of area about y axis
-    public double RadiusOfGyrationXAxis { get; set; }                        // Radius of gyration about x axis
-    public double RadiusOfGyrationYAxis { get; set; }                        // Radius of gyration about y axis
-    public double ElasticModulusXAxis { get; set; }                        // Elastic modulus about x axis
-    public double ElasticModulusYAxis { get; set; }                        // Elastic modulus about y axis
-    public double PlasticModulusXAxis { get; set; }                        // Plastic modulus about x axis
-    public double PlasticModulusYAxis { get; set; }                        // Plastic modulus about y axis
-    public double TorsionalConstant { get; set; }                         // Torsional constant
+    public required XmiStructuralMaterial Material { get; set; }
+    public XmiShapeEnum Shape { get; set; }
+    public string[] Parameters { get; set; }
+    public required double Area { get; set; }
+    public double SecondMomentOfAreaXAxis { get; set; }
+    public double SecondMomentOfAreaYAxis { get; set; }
+    public double RadiusOfGyrationXAxis { get; set; }
+    public double RadiusOfGyrationYAxis { get; set; }
+    public double ElasticModulusXAxis { get; set; }
+    public double ElasticModulusYAxis { get; set; }
+    public double PlasticModulusXAxis { get; set; }
+    public double PlasticModulusYAxis { get; set; }
+    public double TorsionalConstant { get; set; }
 
     public XmiStructuralCrossSection(
         string id,
@@ -40,6 +40,11 @@ public class XmiStructuralCrossSection : XmiBaseEntity
         double torsionalConstant
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCrossSection))
     {
+        if (material == null)
+            throw new ArgumentNullException(nameof(material), "Material cannot be null");
+        if (area <= 0)
+            throw new ArgumentException("Area must be greater than 0", nameof(area));
+
         Material = material;
         Shape = shape;
         Parameters = parameters;
@@ -53,5 +58,18 @@ public class XmiStructuralCrossSection : XmiBaseEntity
         PlasticModulusXAxis = plasticModulusXAxis;
         PlasticModulusYAxis = plasticModulusYAxis;
         TorsionalConstant = torsionalConstant;
+    }
+
+    public bool Equals(XmiStructuralCrossSection other)
+    {
+        if (other == null) return false;
+        return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    public override bool Equals(object obj) => Equals(obj as XmiStructuralCrossSection);
+
+    public override int GetHashCode()
+    {
+        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
     }
 }
