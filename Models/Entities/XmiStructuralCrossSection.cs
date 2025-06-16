@@ -5,10 +5,10 @@ namespace XmiSchema.Core.Entities;
 
 public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructuralCrossSection>
 {
-    public required XmiStructuralMaterial Material { get; set; }
+    // public required XmiStructuralMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }
     public string[] Parameters { get; set; }
-    public required double Area { get; set; }
+    public double Area { get; set; }
     public double SecondMomentOfAreaXAxis { get; set; }
     public double SecondMomentOfAreaYAxis { get; set; }
     public double RadiusOfGyrationXAxis { get; set; }
@@ -25,7 +25,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         string ifcguid,
         string nativeId,
         string description,
-        XmiStructuralMaterial material,
+        // XmiStructuralMaterial material,
         XmiShapeEnum shape,
         string[] parameters,
         double area,
@@ -41,7 +41,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCrossSection))
     {
 
-        Material = material;
+        // Material = material;
         Shape = shape;
         Parameters = parameters;
         Area = area;

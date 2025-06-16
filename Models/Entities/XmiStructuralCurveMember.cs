@@ -44,14 +44,14 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
         string ifcguid,
         string nativeId,
         string description,
-        XmiStructuralCrossSection crossSection,
-        XmiStructuralStorey storey,
+        // XmiStructuralCrossSection crossSection,
+        // XmiStructuralStorey storey,
         XmiStructuralCurveMemberTypeEnum curvememberType,
-        List<XmiStructuralPointConnection> nodes,
-        List<XmiSegment> segments,
+        // List<XmiStructuralPointConnection> nodes,
+        // List<XmiSegment> segments,
         XmiStructuralCurveMemberSystemLineEnum systemLine,
-        XmiStructuralPointConnection beginNode,
-        XmiStructuralPointConnection endNode,
+        // XmiStructuralPointConnection beginNode,
+        // XmiStructuralPointConnection endNode,
         double length,
 
         string localAxisX,
@@ -70,14 +70,14 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
 
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCurveMember))
     {
-        CrossSection = crossSection;
-        Storey = storey;
+        // CrossSection = crossSection;
+        // Storey = storey;
         CurvememberType = curvememberType;
-        Nodes = nodes;
-        Segments = segments;
+        // Nodes = nodes;
+        // Segments = segments;
         SystemLine = systemLine;
-        BeginNode = beginNode;
-        EndNode = endNode;
+        // BeginNode = beginNode;
+        // EndNode = endNode;
         Length = length;
         LocalAxisX = localAxisX;
         LocalAxisY = localAxisY;

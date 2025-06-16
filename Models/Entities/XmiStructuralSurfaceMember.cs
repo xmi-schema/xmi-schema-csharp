@@ -26,13 +26,13 @@ public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructura
         string ifcguid,
         string nativeId,
         string description,
-        XmiStructuralMaterial material,
+        // XmiStructuralMaterial material,
         XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
         double thickness,
         XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
-        List<XmiStructuralPointConnection> nodes,
-        XmiStructuralStorey storey,
-        List<XmiSegment> segments,
+        // List<XmiStructuralPointConnection> nodes,
+        // XmiStructuralStorey storey,
+        // List<XmiSegment> segments,
         double area,
         double zOffset,
         string localAxisX,
@@ -41,13 +41,13 @@ public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructura
         double height
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralSurfaceMember))
     {
-        Material = material;
+        // Material = material;
         SurfaceMemberType = surfaceMemberType;
         Thickness = thickness;
         SystemPlane = systemPlane;
-        Nodes = nodes;
-        Storey = storey;
-        Segments = segments;
+        // Nodes = nodes;
+        // Storey = storey;
+        // Segments = segments;
         Area = area;
         ZOffset = zOffset;
         LocalAxisX = localAxisX;

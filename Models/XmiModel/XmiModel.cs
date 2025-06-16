@@ -122,9 +122,9 @@ namespace XmiSchema.Core.Models
                 name,
                 ifcGuid,
                 nativeId,
-                description,
-                storey,
-                point
+                description
+                // storey,
+                // point
             );
 
             // 检查是否存在具有相同点的连接
@@ -156,9 +156,9 @@ namespace XmiSchema.Core.Models
                 name,
                 ifcGuid,
                 nativeId,
-                description,
-                existingStorey,
-                existingPoint
+                description//,
+                // existingStorey,
+                // existingPoint
             );
 
             // 添加到模型
@@ -302,14 +302,14 @@ namespace XmiSchema.Core.Models
                 ifcGuid,
                 nativeId,
                 description,
-                existingCrossSection,
-                existingStorey,
+                // existingCrossSection,
+                // existingStorey,
                 curvememberType,
-                nodes,
-                segments,
+                // nodes,
+                // segments,
                 systemLine,
-                existingBeginNode,
-                existingEndNode,
+                // existingBeginNode,
+                // existingEndNode,
                 length,
                 localAxisX,
                 localAxisY,
@@ -382,7 +382,7 @@ namespace XmiSchema.Core.Models
                 ifcGuid,
                 nativeId,
                 description,
-                existingMaterial,
+                // existingMaterial,
                 shape,
                 parameters,
                 area,
@@ -395,11 +395,8 @@ namespace XmiSchema.Core.Models
                 plasticModulusXAxis,
                 plasticModulusYAxis,
                 torsionalConstant
-            )
-            {
-                Material = existingMaterial,
-                Area = area
-            };
+            );
+
 
             // 添加到模型
             AddXmiStructuralCrossSection(crossSection);
@@ -569,13 +566,13 @@ namespace XmiSchema.Core.Models
                 ifcGuid,
                 nativeId,
                 description,
-                existingCrossSection.Material,
+                // existingCrossSection.Material,
                 surfaceMemberType,
                 thickness,
                 systemPlane,
-                existingNodes,
-                existingStorey,
-                segments,
+                // existingNodes,
+                // existingStorey,
+                // segments,
                 area,
                 zOffset,
                 localAxisX,
