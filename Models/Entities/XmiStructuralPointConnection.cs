@@ -14,13 +14,13 @@ namespace XmiSchema.Core.Entities
             string name,
             string ifcGuid,
             string nativeId,
-            string description,
-            XmiStructuralStorey storey,
-            XmiPoint3D point
+            string description //,
+            // XmiStructuralStorey storey,
+            // XmiPoint3D point
         ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralPointConnection))
         {
-            Storey = storey;
-            Point = point;
+            // Storey = storey;
+            // Point = point;
         }
 
         public bool Equals(XmiStructuralPointConnection other)

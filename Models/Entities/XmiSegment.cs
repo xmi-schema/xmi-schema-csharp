@@ -21,18 +21,18 @@ public class XmiSegment : XmiBaseEntity
         string ifcguid,
         string nativeId,
         string description,
-        XmiBaseGeometry geometry,
+        // XmiBaseGeometry geometry,
         float position,
-        XmiStructuralPointConnection beginNode,
-        XmiStructuralPointConnection endNode,
+        // XmiStructuralPointConnection beginNode,
+        // XmiStructuralPointConnection endNode,
         XmiSegmentTypeEnum segmentType
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiSegment))
     {
-        Geometry = geometry;
+        // Geometry = geometry;
         Position = position;
-        BeginNode = beginNode;
-        BeginNode = beginNode;
-        EndNode = endNode;
+        // BeginNode = beginNode;
+
+        // EndNode = endNode;
         SegmentType = segmentType;
     }
 }
