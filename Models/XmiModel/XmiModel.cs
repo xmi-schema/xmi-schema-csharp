@@ -123,8 +123,8 @@ namespace XmiSchema.Core.Models
                 ifcGuid,
                 nativeId,
                 description
-                // storey,
-                // point
+            // storey,
+            // point
             );
 
             // 检查是否存在具有相同点的连接
@@ -157,8 +157,8 @@ namespace XmiSchema.Core.Models
                 ifcGuid,
                 nativeId,
                 description//,
-                // existingStorey,
-                // existingPoint
+                           // existingStorey,
+                           // existingPoint
             );
 
             // 添加到模型
@@ -368,12 +368,15 @@ namespace XmiSchema.Core.Models
             // if (material == null) throw new ArgumentNullException(nameof(material), "Material cannot be null");
             // if (area <= 0) throw new ArgumentException("Area must be greater than 0", nameof(area));
 
-            // 检查是否存在具有相同nativeId的材料
-            var existingMaterial = GetEntitiesOfType<XmiStructuralMaterial>()
-                .FirstOrDefault(m => m.NativeId == material.NativeId);
+            XmiStructuralMaterial? existingMaterial = null;
 
-            // 如果找不到相同nativeId的材料，使用传入的材料
-            existingMaterial ??= material;
+            if (material != null)
+            {
+                existingMaterial = GetEntitiesOfType<XmiStructuralMaterial>()
+                    .FirstOrDefault(m => m.NativeId == material.NativeId)
+                    ?? material;
+            }
+
 
             // 创建截面对象
             var crossSection = new XmiStructuralCrossSection(
