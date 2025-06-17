@@ -405,8 +405,11 @@ namespace XmiSchema.Core.Models
             AddXmiStructuralCrossSection(crossSection);
 
             // 创建并添加关系
-            var materialRelation = new XmiHasStructuralMaterial(crossSection, existingMaterial);
-            AddXmiHasStructuralMaterial(materialRelation);
+            if (existingMaterial != null)
+            {
+                var materialRelation = new XmiHasStructuralMaterial(crossSection, existingMaterial);
+                AddXmiHasStructuralMaterial(materialRelation);
+            }
 
             return crossSection;
         }
