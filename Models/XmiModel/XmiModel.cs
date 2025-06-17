@@ -370,7 +370,7 @@ namespace XmiSchema.Core.Models
 
             XmiStructuralMaterial? existingMaterial = null;
 
-            if (material != null && !string.IsNullOrEmpty(material.NativeId))
+            if (material != null )
             {
                 var materials = GetEntitiesOfType<XmiStructuralMaterial>() ?? Enumerable.Empty<XmiStructuralMaterial>();
 
