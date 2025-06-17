@@ -362,30 +362,29 @@ namespace XmiSchema.Core.Models
             double torsionalConstant
         )
         {
-            // 验证参数
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            // if (material == null) throw new ArgumentNullException(nameof(material), "Material cannot be null");
-            // if (area <= 0) throw new ArgumentException("Area must be greater than 0", nameof(area));
+            if (string.IsNullOrEmpty(id))
+                throw new ArgumentException("ID cannot be null or empty", nameof(id));
+
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
             XmiStructuralMaterial? existingMaterial = null;
 
-            if (material != null)
+            if (material != null && !string.IsNullOrEmpty(material.NativeId))
             {
-                existingMaterial = GetEntitiesOfType<XmiStructuralMaterial>()
-                    .FirstOrDefault(m => m.NativeId == material.NativeId)
+                var materials = GetEntitiesOfType<XmiStructuralMaterial>() ?? Enumerable.Empty<XmiStructuralMaterial>();
+
+                existingMaterial = materials
+                    .FirstOrDefault(m => m != null && m.NativeId == material.NativeId)
                     ?? material;
             }
 
-
-            // 创建截面对象
             var crossSection = new XmiStructuralCrossSection(
                 id,
                 name,
                 ifcGuid,
                 nativeId,
                 description,
-                // existingMaterial,
                 shape,
                 parameters,
                 area,
@@ -400,11 +399,8 @@ namespace XmiSchema.Core.Models
                 torsionalConstant
             );
 
-
-            // 添加到模型
             AddXmiStructuralCrossSection(crossSection);
 
-            // 创建并添加关系
             if (existingMaterial != null)
             {
                 var materialRelation = new XmiHasStructuralMaterial(crossSection, existingMaterial);
@@ -413,6 +409,7 @@ namespace XmiSchema.Core.Models
 
             return crossSection;
         }
+
 
         public XmiStructuralStorey CreateStructuralStorey(
             string id,
