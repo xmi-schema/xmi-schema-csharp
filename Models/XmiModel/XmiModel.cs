@@ -370,15 +370,14 @@ namespace XmiSchema.Core.Models
 
             XmiStructuralMaterial? existingMaterial = null;
 
-            if (material != null )
+            // ✅ 安全处理：仅在 NativeId 有效时查找或创建材料引用关系
+            if (material != null && !string.IsNullOrEmpty(material.NativeId))
             {
                 var materials = GetEntitiesOfType<XmiStructuralMaterial>() ?? Enumerable.Empty<XmiStructuralMaterial>();
-
-                existingMaterial = materials
-                    .FirstOrDefault(m => m != null && m.NativeId == material.NativeId)
-                    ?? material;
+                existingMaterial = materials.FirstOrDefault(m => m?.NativeId == material.NativeId) ?? material;
             }
 
+            // ✅ 创建截面
             var crossSection = new XmiStructuralCrossSection(
                 id,
                 name,
@@ -401,6 +400,7 @@ namespace XmiSchema.Core.Models
 
             AddXmiStructuralCrossSection(crossSection);
 
+            // ✅ 创建关系（仅在 existingMaterial 有效时）
             if (existingMaterial != null)
             {
                 var materialRelation = new XmiHasStructuralMaterial(crossSection, existingMaterial);
@@ -409,6 +409,7 @@ namespace XmiSchema.Core.Models
 
             return crossSection;
         }
+
 
 
         public XmiStructuralStorey CreateStructuralStorey(
