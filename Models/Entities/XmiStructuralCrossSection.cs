@@ -56,16 +56,13 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         TorsionalConstant = torsionalConstant;
     }
 
-    public bool Equals(XmiStructuralCrossSection other)
+    public bool Equals(XmiStructuralCrossSection? other)
     {
-        if (other == null) return false;
+        if (other is null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object obj) => Equals(obj as XmiStructuralCrossSection);
+    public override bool Equals(object? obj) => Equals(obj as XmiStructuralCrossSection);
 
-    public override int GetHashCode()
-    {
-        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
-    }
+    public override int GetHashCode() => NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
 }

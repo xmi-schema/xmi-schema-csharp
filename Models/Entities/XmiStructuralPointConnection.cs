@@ -6,8 +6,8 @@ namespace XmiSchema.Core.Entities
 {
     public class XmiStructuralPointConnection : XmiBaseEntity, IEquatable<XmiStructuralPointConnection>
     {
-        public XmiStructuralStorey Storey { get; set; }
-        public XmiPoint3D Point { get; set; }
+        public XmiStructuralStorey? Storey { get; set; }
+        public XmiPoint3D? Point { get; set; }
 
         public XmiStructuralPointConnection(
             string id,
@@ -23,14 +23,14 @@ namespace XmiSchema.Core.Entities
             // Point = point;
         }
 
-        public bool Equals(XmiStructuralPointConnection other)
+        public bool Equals(XmiStructuralPointConnection? other)
         {
             if (other == null) return false;
 
             return Point != null && Point.Equals(other.Point);
         }
 
-        public override bool Equals(object obj) => Equals(obj as XmiStructuralPointConnection);
+        public override bool Equals(object? obj) => Equals(obj as XmiStructuralPointConnection);
 
         public override int GetHashCode()
         {

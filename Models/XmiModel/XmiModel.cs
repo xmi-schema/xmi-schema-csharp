@@ -240,7 +240,7 @@ namespace XmiSchema.Core.Models
             XmiStructuralStorey storey,
             XmiStructuralCurveMemberTypeEnum curvememberType,
             List<XmiStructuralPointConnection> nodes,
-            List<XmiSegment> segments,
+            List<XmiSegment>? segments,
             XmiStructuralCurveMemberSystemLineEnum systemLine,
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
@@ -286,13 +286,13 @@ namespace XmiSchema.Core.Models
             // 检查起始节点是否存在相同点的连接
             var existingBeginNodeId = FindMatchingPointConnectionByPoint3D(beginNode);
             var existingBeginNode = existingBeginNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingBeginNodeId)
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingBeginNodeId)??beginNode
                 : beginNode;
 
             // 检查结束节点是否存在相同点的连接
             var existingEndNodeId = FindMatchingPointConnectionByPoint3D(endNode);
             var existingEndNode = existingEndNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingEndNodeId)
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingEndNodeId)??endNode
                 : endNode;
 
             // 创建构件对象
@@ -347,7 +347,7 @@ namespace XmiSchema.Core.Models
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial material,
+            XmiStructuralMaterial? material,
             XmiShapeEnum shape,
             string[] parameters,
             double area,

@@ -7,10 +7,10 @@ namespace XmiSchema.Core.Entities;
 public class XmiSegment : XmiBaseEntity
 {
 
-    public XmiBaseGeometry Geometry { get; set; }   // Surface member the support is assigned to
+    // public XmiBaseGeometry Geometry { get; set; }   // Surface member the support is assigned to
     public float Position { get; set; }
-    public XmiStructuralPointConnection BeginNode { get; set; }
-    public XmiStructuralPointConnection EndNode { get; set; }
+    // public XmiStructuralPointConnection BeginNode { get; set; }
+    // public XmiStructuralPointConnection EndNode { get; set; }
     public XmiSegmentTypeEnum SegmentType { get; set; }
 
 
