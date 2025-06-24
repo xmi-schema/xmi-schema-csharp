@@ -30,13 +30,13 @@ public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey
         StoreyVerticalReaction = storeyVerticalReaction;
     }
 
-    public bool Equals(XmiStructuralStorey other)
+    public bool Equals(XmiStructuralStorey? other)
     {
         if (other == null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object obj) => Equals(obj as XmiStructuralStorey);
+    public override bool Equals(object? obj) => Equals(obj as XmiStructuralStorey);
 
     public override int GetHashCode()
     {

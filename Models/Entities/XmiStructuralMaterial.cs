@@ -36,16 +36,14 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
         ThermalCoefficient = thermalCoefficient;
     }
 
-    public bool Equals(XmiStructuralMaterial other)
+    public bool Equals(XmiStructuralMaterial? other)
     {
-        if (other == null) return false;
+        if (other is null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object obj) => Equals(obj as XmiStructuralMaterial);
+    public override bool Equals(object? obj) => Equals(obj as XmiStructuralMaterial);
 
-    public override int GetHashCode()
-    {
-        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
-    }
+    public override int GetHashCode() =>
+        NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
 }

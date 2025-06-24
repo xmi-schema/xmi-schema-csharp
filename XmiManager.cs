@@ -214,7 +214,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial material,
+            XmiStructuralMaterial? material,
             XmiShapeEnum shape,
             string[] parameters,
             double area,
@@ -274,7 +274,7 @@ namespace XmiSchema.Core.Manager
             XmiStructuralStorey storey,
             XmiStructuralCurveMemberTypeEnum curvememberType,
             List<XmiStructuralPointConnection> nodes,
-            List<XmiSegment> segments,
+            List<XmiSegment>? segments,
             XmiStructuralCurveMemberSystemLineEnum systemLine,
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
@@ -365,14 +365,16 @@ namespace XmiSchema.Core.Manager
                 if (value == null) continue;
 
                 var type = prop.PropertyType;
-                object finalValue = null;
-
+                object? finalValue = null;
                 if (type.IsEnum)
                 {
-                    var enumName = value.ToString();
-                    var field = type.GetField(enumName);
-                    var enumValueAttr = field?.GetCustomAttribute<EnumValueAttribute>();
-                    finalValue = enumValueAttr?.Value ?? enumName;
+                    var enumName = value?.ToString();
+                    if (!string.IsNullOrEmpty(enumName))
+                    {
+                        var field = type.GetField(enumName);
+                        var enumValueAttr = field?.GetCustomAttribute<EnumValueAttribute>();
+                        finalValue = enumValueAttr?.Value ?? enumName;
+                    }
                 }
                 else if (type.IsPrimitive || type == typeof(string) ||
                          type == typeof(decimal) || type == typeof(DateTime) ||

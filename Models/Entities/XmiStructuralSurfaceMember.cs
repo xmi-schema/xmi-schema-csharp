@@ -5,14 +5,14 @@ namespace XmiSchema.Core.Entities;
 
 public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructuralSurfaceMember>
 {
-    public XmiStructuralMaterial Material { get; set; }
+    // public XmiStructuralMaterial Material { get; set; }
     public XmiStructuralSurfaceMemberTypeEnum SurfaceMemberType { get; set; }
     public double Thickness { get; set; }
     public XmiStructuralSurfaceMemberSystemPlaneEnum SystemPlane { get; set; }
-    public List<XmiStructuralPointConnection> Nodes { get; set; }
-    public XmiStructuralStorey Storey { get; set; }
+    // public List<XmiStructuralPointConnection> Nodes { get; set; }
+    // public XmiStructuralStorey Storey { get; set; }
 
-    public List<XmiSegment> Segments { get; set; }
+    // public List<XmiSegment> Segments { get; set; }
     public double Area { get; set; }
     public double ZOffset { get; set; }
     public string LocalAxisX { get; set; }
@@ -56,13 +56,13 @@ public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructura
         Height = height;
     }
 
-    public bool Equals(XmiStructuralSurfaceMember other)
+    public bool Equals(XmiStructuralSurfaceMember? other)
     {
         if (other == null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object obj) => Equals(obj as XmiStructuralSurfaceMember);
+    public override bool Equals(object? obj) => Equals(obj as XmiStructuralSurfaceMember);
 
     public override int GetHashCode()
     {
