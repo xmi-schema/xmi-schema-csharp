@@ -516,15 +516,15 @@ namespace XmiSchema.Core.Models
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralCrossSection crossSection,
-            XmiStructuralStorey storey,
+            XmiStructuralMaterial material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
-            List<XmiStructuralPointConnection> nodes,
-            List<XmiSegment> segments,
+            double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
+            List<XmiStructuralPointConnection> nodes,
+            XmiStructuralStorey storey,
+            List<XmiSegment> segments,
             double area,
             double zOffset,
-            double thickness,
             string localAxisX,
             string localAxisY,
             string localAxisZ,
@@ -540,19 +540,21 @@ namespace XmiSchema.Core.Models
             // if (segments == null || !segments.Any()) throw new ArgumentException("Segments cannot be null or empty", nameof(segments));
             // if (thickness <= 0) throw new ArgumentException("Thickness must be greater than 0", nameof(thickness));
 
-            // 检查是否存在具有相同nativeId的截面
-            var existingCrossSection = GetEntitiesOfType<XmiStructuralCrossSection>()
-                .FirstOrDefault(c => c.NativeId == crossSection.NativeId);
-
-            // 如果找不到相同nativeId的截面，使用传入的截面
-            existingCrossSection ??= crossSection;
-
             // 检查是否存在具有相同nativeId的楼层
             var existingStorey = GetEntitiesOfType<XmiStructuralStorey>()
                 .FirstOrDefault(s => s.NativeId == storey.NativeId);
 
             // 如果找不到相同nativeId的楼层，使用传入的楼层
             existingStorey ??= storey;
+
+            XmiStructuralMaterial? existingMaterial = null;
+
+            // ✅ 安全处理：仅在 NativeId 有效时查找或创建材料引用关系
+            if (material != null && !string.IsNullOrEmpty(material.NativeId))
+            {
+                var materials = GetEntitiesOfType<XmiStructuralMaterial>() ?? Enumerable.Empty<XmiStructuralMaterial>();
+                existingMaterial = materials.FirstOrDefault(m => m?.NativeId == material.NativeId) ?? material;
+            }
 
             // 检查所有节点是否存在相同点的连接
             var existingNodes = nodes.Select(node =>
@@ -589,10 +591,16 @@ namespace XmiSchema.Core.Models
             AddXmiStructuralSurfaceMember(surfaceMember);
 
             // 创建并添加关系
-            var crossSectionRelation = new XmiHasStructuralCrossSection(surfaceMember, existingCrossSection);
+
+                        // ✅ 创建关系（仅在 existingMaterial 有效时）
+            if (existingMaterial != null)
+            {
+                var materialRelation = new XmiHasStructuralMaterial(surfaceMember, existingMaterial);
+                AddXmiHasStructuralMaterial(materialRelation);
+            }
+
             var storeyRelation = new XmiHasStructuralStorey(surfaceMember, existingStorey);
 
-            AddXmiHasStructuralCrossSection(crossSectionRelation);
             AddXmiHasStorey(storeyRelation);
 
             return surfaceMember;

@@ -313,15 +313,15 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralCrossSection crossSection,
-            XmiStructuralStorey storey,
+            XmiStructuralMaterial material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
-            List<XmiStructuralPointConnection> nodes,
-            List<XmiSegment> segments,
+            double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
+            List<XmiStructuralPointConnection> nodes,
+            XmiStructuralStorey storey,
+            List<XmiSegment> segments,
             double area,
             double zOffset,
-            double thickness,
             string localAxisX,
             string localAxisY,
             string localAxisZ,
@@ -331,9 +331,9 @@ namespace XmiSchema.Core.Manager
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateStructuralSurfaceMember(
                 id, name, ifcGuid, nativeId, description,
-                crossSection, storey, surfaceMemberType,
-                nodes, segments, systemPlane,
-                area, zOffset, thickness,
+                material, surfaceMemberType,thickness,systemPlane,
+                nodes, storey, segments, 
+                area, zOffset, 
                 localAxisX, localAxisY, localAxisZ,
                 height
             );
