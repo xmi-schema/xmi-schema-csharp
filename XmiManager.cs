@@ -13,47 +13,60 @@ namespace XmiSchema.Core.Manager
     /// </summary>
     public class XmiManager : IXmiManager
     {
+        /// <inheritdoc />
         public List<XmiModel> Models { get; set; } = new();
 
+        /// <summary>
+        /// Checks whether the provided index can safely access the <see cref="Models"/> list.
+        /// </summary>
+        /// <param name="index">Index to validate.</param>
+        /// <returns><c>true</c> when the index is within range; otherwise <c>false</c>.</returns>
         private bool IsValidModelIndex(int index) => index >= 0 && index < Models.Count;
 
         // ========== 添加实体 ==========
+        /// <inheritdoc />
         public void AddXmiStructuralMaterialToModel(int modelIndex, XmiStructuralMaterial material)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralMaterial(material);
         }
 
+        /// <inheritdoc />
         public void AddXmiStructuralCrossSectionToModel(int modelIndex, XmiStructuralCrossSection crossSection)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralCrossSection(crossSection);
         }
 
+        /// <inheritdoc />
         public void AddXmiStructuralCurveMemberToModel(int modelIndex, XmiStructuralCurveMember member)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralCurveMember(member);
         }
 
+        /// <inheritdoc />
         public void AddXmiStructuralSurfaceMemberToModel(int modelIndex, XmiStructuralSurfaceMember member)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralSurfaceMember(member);
         }
 
+        /// <inheritdoc />
         public void AddXmiStructuralPointConnectionToModel(int modelIndex, XmiStructuralPointConnection connection)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralPointConnection(connection);
         }
 
+        /// <inheritdoc />
         public void AddXmiStructuralStoreyToModel(int modelIndex, XmiStructuralStorey storey)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralStorey(storey);
         }
 
+        /// <inheritdoc />
         public void AddXmiPoint3DToModel(int modelIndex, XmiPoint3D point)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
@@ -61,6 +74,7 @@ namespace XmiSchema.Core.Manager
         }
 
         // 批量添加
+        /// <inheritdoc />
         public void AddEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
@@ -71,30 +85,35 @@ namespace XmiSchema.Core.Manager
         }
 
         // ========== 添加关系 ==========
+        /// <inheritdoc />
         public void AddXmiHasPoint3DToModel(int modelIndex, XmiHasPoint3D relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasPoint3D(relation);
         }
 
+        /// <inheritdoc />
         public void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasStructuralMaterial relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasStructuralMaterial(relation);
         }
 
+        /// <inheritdoc />
         public void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasStructuralNode(relation);
         }
 
+        /// <inheritdoc />
         public void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasStructuralCrossSection(relation);
         }
 
+        /// <inheritdoc />
         public void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
@@ -108,18 +127,26 @@ namespace XmiSchema.Core.Manager
         //     return Models[modelIndex].GetMatchingPoint3DId(importedPoint);
         // }
 
+        /// <inheritdoc />
         public List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].GetEntitiesOfType<T>();
         }
 
+        /// <inheritdoc />
         public T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.ID == id);
         }
 
+        /// <summary>
+        /// Attempts to locate a different point connection that references an identical <see cref="XmiPoint3D"/>.
+        /// </summary>
+        /// <param name="modelIndex">Model index enclosing both the input and potential matches.</param>
+        /// <param name="inputConnection">Point connection whose coordinates are used as the search key.</param>
+        /// <returns>The identifier of the first matching connection or <c>null</c>.</returns>
         public string? FindMatchingPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
@@ -143,6 +170,13 @@ namespace XmiSchema.Core.Manager
             return match?.Source?.ID;
         }
 
+        /// <summary>
+        /// Compares two point instances using the provided tolerance.
+        /// </summary>
+        /// <param name="p1">First point to compare.</param>
+        /// <param name="p2">Second point to compare.</param>
+        /// <param name="tolerance">Allowed delta between coordinates.</param>
+        /// <returns><c>true</c> when both points are present and within tolerance.</returns>
         private bool ArePointsEqual(XmiPoint3D? p1, XmiPoint3D? p2, double tolerance = 1e-10)
         {
             if (p1 == null || p2 == null) return false;
@@ -152,6 +186,7 @@ namespace XmiSchema.Core.Manager
         }
 
         // ========== 创建实体 ==========
+        /// <inheritdoc />
         public XmiStructuralPointConnection CreateStructuralPointConnection(
             int modelIndex,
             string id,
@@ -170,6 +205,7 @@ namespace XmiSchema.Core.Manager
             );
         }
 
+        /// <inheritdoc />
         public XmiPoint3D CreatePoint3D(
             int modelIndex,
             string id,
@@ -186,6 +222,7 @@ namespace XmiSchema.Core.Manager
             return Models[modelIndex].CreatePoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
         }
 
+        /// <inheritdoc />
         public XmiStructuralMaterial CreateStructuralMaterial(
             int modelIndex,
             string id,
@@ -210,6 +247,7 @@ namespace XmiSchema.Core.Manager
             );
         }
 
+        /// <inheritdoc />
         public XmiStructuralCrossSection CreateStructuralCrossSection(
             int modelIndex,
             string id,
@@ -244,6 +282,7 @@ namespace XmiSchema.Core.Manager
             );
         }
 
+        /// <inheritdoc />
         public XmiStructuralStorey CreateStructuralStorey(
             int modelIndex,
             string id,
@@ -266,6 +305,7 @@ namespace XmiSchema.Core.Manager
             );
         }
 
+        /// <inheritdoc />
         public XmiStructuralCurveMember CreateStructuralCurveMember(
             int modelIndex,
             string id,
@@ -309,6 +349,7 @@ namespace XmiSchema.Core.Manager
             );
         }
 
+        /// <inheritdoc />
         public XmiStructuralSurfaceMember CreateStructuralSurfaceMember(
             int modelIndex,
             string id,
@@ -343,6 +384,7 @@ namespace XmiSchema.Core.Manager
         }
 
         // ========== 构建与保存 ==========
+        /// <inheritdoc />
         public string BuildJson(int modelIndex)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
@@ -356,6 +398,11 @@ namespace XmiSchema.Core.Manager
             return JsonConvert.SerializeObject(graphJson, Formatting.Indented);
         }
 
+        /// <summary>
+        /// Projects the public properties of the provided object into a JSON-friendly dictionary.
+        /// </summary>
+        /// <param name="obj">Entity or relationship to inspect.</param>
+        /// <returns>Dictionary keyed by property names with primitive or ID values.</returns>
         private Dictionary<string, object> GetAttributes(object obj)
         {
             var dict = new Dictionary<string, object>();
@@ -403,6 +450,7 @@ namespace XmiSchema.Core.Manager
             return dict;
         }
 
+        /// <inheritdoc />
         public void Save(string path)
         {
             File.WriteAllText(path, BuildJson(0));
