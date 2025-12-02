@@ -28,9 +28,9 @@ jobs:
           default_bump: patch
           tag_prefix: "v"
           release_branches: main,dev
-          major_pattern: "(BREAKING CHANGE|major)"
-          minor_pattern: "feat:"
-          patch_pattern: "(fix|docs|style|refactor|perf|test|ci|build|chore):"
+          # major_pattern: "(BREAKING CHANGE|major)"
+          # minor_pattern: "feat:"
+          # patch_pattern: "(fix|docs|style|refactor|perf|test|ci|build|chore):"
 
       - name: Format version number
         id: format_version
