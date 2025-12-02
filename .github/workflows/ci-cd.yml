@@ -85,9 +85,28 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - run: dotnet restore -p:RestoreFallbackFolders=""
-      - run: dotnet build --configuration Release --no-restore -p:RestoreFallbackFolders=""
-      - run: dotnet test --configuration Release --no-build --logger trx -p:RestoreFallbackFolders=""
+      - name: 恢复依赖
+        run: dotnet restore XmiSchema.sln -p:RestoreFallbackFolders=""
+
+      - name: 构建解决方案
+        run: dotnet build XmiSchema.sln --configuration Release --no-restore -p:RestoreFallbackFolders=""
+
+      - name: 运行测试并收集代码覆盖率
+        run: dotnet test XmiSchema.sln --configuration Release --no-build --logger trx --collect:"XPlat Code Coverage" -p:RestoreFallbackFolders=""
+
+      - name: 上传测试结果
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: '**/TestResults/**/*.trx'
+
+      - name: 上传代码覆盖率报告
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: '**/TestResults/**/coverage.cobertura.xml'
 
   publish-nuget:
     name: 发布到 NuGet
@@ -103,10 +122,16 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: 恢复依赖
+        run: dotnet restore XmiSchema.sln -p:RestoreFallbackFolders=""
+
+      - name: 构建解决方案
+        run: dotnet build XmiSchema.sln --configuration Release --no-restore -p:RestoreFallbackFolders=""
+
       - name: 打包 NuGet（显式版本）
         run: |
           VERSION="${{ needs.versioning.outputs.new_version }}"
-          dotnet pack --configuration Release --output ./packages --no-build /p:PackageVersion=$VERSION -p:RestoreFallbackFolders=""
+          dotnet pack xmi-schema-Csharp.Core.csproj --configuration Release --output ./packages /p:PackageVersion=$VERSION -p:RestoreFallbackFolders=""
 
       - name: 显示 NuGet 包
         run: ls -R ./packages

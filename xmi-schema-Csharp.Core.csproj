@@ -5,16 +5,52 @@
     <RootNamespace>XmiSchema.Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
 
-    <Version>0.0.27</Version>
-
-
+    <!-- Package Metadata -->
     <PackageId>XmiSchema.Core</PackageId>
+    <Version>0.0.27</Version>
+    <Authors>XmiSchema Contributors</Authors>
+    <Company>XmiSchema</Company>
+    <Product>XmiSchema.Core</Product>
+    <Description>A C# library for building and managing structural engineering data models with automatic relationship inference. Exports models to JSON format representing graph structures (nodes and edges) for built environment data.</Description>
+    <PackageTags>xmi;schema;graph;structural;engineering;built-environment;data-model;bim;aec</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/xmi-schema/xmi-schema-csharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xmi-schema/xmi-schema-csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReleaseNotes>See https://github.com/xmi-schema/xmi-schema-csharp/releases</PackageReleaseNotes>
 
+    <!-- Build Configuration -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 
+    <!-- SourceLink Support -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" Condition="Exists('README.md')" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Exclude test files from main project compilation -->
+    <Compile Remove="tests/**" />
+    <EmbeddedResource Remove="tests/**" />
+    <None Remove="tests/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="QuikGraph" Version="2.5.0" />
   </ItemGroup>
