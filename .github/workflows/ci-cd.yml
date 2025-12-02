@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-      - dev
-      - dev-0.2.0
-  pull_request:
-    branches:
-      - main
 
 jobs:
   versioning:
@@ -87,7 +82,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: 创建 NuGet 配置（包含 nuget.org 官方源）
         run: |
@@ -135,7 +130,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: 创建 NuGet 配置（包含 nuget.org 官方源）
         run: |
