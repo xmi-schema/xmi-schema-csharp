@@ -108,3 +108,4 @@ _ReSharper*/
 .Trashes
 ehthumbs.db
 Thumbs.db
+.dotnet/
