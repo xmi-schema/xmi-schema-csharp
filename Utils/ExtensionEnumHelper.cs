@@ -2,8 +2,17 @@ using System.Reflection;
 using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Utils;
+
+/// <summary>
+/// Provides utilities for converting serialized string values back into XMI enums.
+/// </summary>
 public static class ExtensionEnumHelper
 {
+    /// <summary>
+    /// Returns the enum value annotated with <see cref="EnumValueAttribute"/> that matches the provided string.
+    /// </summary>
+    /// <typeparam name="TEnum">Enumeration type declared in <c>XmiSchema.Core.Enums</c>.</typeparam>
+    /// <param name="value">Serialized value to match.</param>
     public static TEnum? FromEnumValue<TEnum>(string value) where TEnum : struct, Enum
     {
         foreach (var field in typeof(TEnum).GetFields(BindingFlags.Public | BindingFlags.Static))

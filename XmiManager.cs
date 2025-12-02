@@ -8,6 +8,9 @@ using System.Reflection;
 
 namespace XmiSchema.Core.Manager
 {
+    /// <summary>
+    /// Provides high-level helpers for constructing and querying <see cref="XmiModel"/> instances.
+    /// </summary>
     public class XmiManager : IXmiManager
     {
         public List<XmiModel> Models { get; set; } = new();

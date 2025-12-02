@@ -1,8 +1,22 @@
 using XmiSchema.Core.Entities;
 
 namespace XmiSchema.Core.Relationships;
+
+/// <summary>
+/// Binds curve members to segment definitions so consumers can rebuild detailed analytical definitions.
+/// </summary>
 public class XmiHasSegment : XmiBaseRelationship
 {
+    /// <summary>
+    /// Creates a segment relationship with explicit identifiers.
+    /// </summary>
+    /// <param name="id">Unique identifier.</param>
+    /// <param name="source">Owning entity (usually a curve member).</param>
+    /// <param name="target">Segment entity.</param>
+    /// <param name="name">Relationship label.</param>
+    /// <param name="description">Additional notes.</param>
+    /// <param name="entityName">Serialized entity name.</param>
+    /// <param name="umlType">UML stereotype.</param>
     public XmiHasSegment(
         string id,
         XmiBaseEntity source,
@@ -15,6 +29,11 @@ public class XmiHasSegment : XmiBaseRelationship
     {
     }
 
+    /// <summary>
+    /// Auto-generates an identifier for a simple segment relationship.
+    /// </summary>
+    /// <param name="source">Owning entity.</param>
+    /// <param name="target">Segment entity.</param>
     public XmiHasSegment(
         XmiBaseEntity source,
         XmiBaseEntity target

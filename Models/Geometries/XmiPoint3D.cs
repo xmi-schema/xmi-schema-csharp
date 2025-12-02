@@ -2,8 +2,9 @@ using Newtonsoft.Json;
 
 namespace XmiSchema.Core.Geometries;
 
-
-
+/// <summary>
+/// Represents a spatial point in the Cross Model Information schema with tolerance aware comparisons.
+/// </summary>
 public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
 {
     private const double Tolerance = 1e-10;
@@ -17,6 +18,17 @@ public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
     [JsonProperty(Order = 8)]
     public double Z { get; set; }
 
+    /// <summary>
+    /// Initializes a new <see cref="XmiPoint3D"/> with project coordinates.
+    /// </summary>
+    /// <param name="id">Unique identifier.</param>
+    /// <param name="name">Display name.</param>
+    /// <param name="ifcGuid">Optional IFC GUID reference.</param>
+    /// <param name="nativeId">Native identifier from the source model.</param>
+    /// <param name="description">Describes the point usage.</param>
+    /// <param name="x">X coordinate.</param>
+    /// <param name="y">Y coordinate.</param>
+    /// <param name="z">Z coordinate.</param>
     public XmiPoint3D(
         string id,
         string name,

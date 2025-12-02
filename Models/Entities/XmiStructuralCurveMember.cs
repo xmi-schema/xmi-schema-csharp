@@ -4,6 +4,9 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
+/// <summary>
+/// Represents a linear structural element (beam, column, brace) in the XMI graph, storing alignment data and offsets.
+/// </summary>
 public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralCurveMember>
 {
     // public XmiStructuralCrossSection CrossSection { get; set; }
@@ -38,6 +41,28 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
 
 
 
+    /// <summary>
+    /// Configures a new <see cref="XmiStructuralCurveMember"/> with system line metadata and local axis offsets.
+    /// </summary>
+    /// <param name="id">Unique identifier for the member entity.</param>
+    /// <param name="name">Friendly name exposed to client applications.</param>
+    /// <param name="ifcguid">IFC GUID reference for traceability.</param>
+    /// <param name="nativeId">Identifier from the authoring tool.</param>
+    /// <param name="description">Optional descriptive text.</param>
+    /// <param name="curvememberType">Member type classification (beam, column, etc.).</param>
+    /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
+    /// <param name="length">Analytical length of the element.</param>
+    /// <param name="localAxisX">Serialized orientation of local X.</param>
+    /// <param name="localAxisY">Serialized orientation of local Y.</param>
+    /// <param name="localAxisZ">Serialized orientation of local Z.</param>
+    /// <param name="beginNodeXOffset">X offset applied to the start node.</param>
+    /// <param name="endNodeXOffset">X offset applied to the end node.</param>
+    /// <param name="beginNodeYOffset">Y offset applied to the start node.</param>
+    /// <param name="endNodeYOffset">Y offset applied to the end node.</param>
+    /// <param name="beginNodeZOffset">Z offset applied to the start node.</param>
+    /// <param name="endNodeZOffset">Z offset applied to the end node.</param>
+    /// <param name="endFixityStart">Boundary condition definition at the start.</param>
+    /// <param name="endFixityEnd">Boundary condition definition at the end.</param>
     public XmiStructuralCurveMember(
         string id,
         string name,

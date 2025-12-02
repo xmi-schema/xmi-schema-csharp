@@ -4,6 +4,9 @@ using XmiSchema.Core.Geometries;
 
 namespace XmiSchema.Core.Entities;
 
+/// <summary>
+/// Represents a logical segment within a structural curve member, including its position and shape classification.
+/// </summary>
 public class XmiSegment : XmiBaseEntity
 {
 
@@ -15,6 +18,16 @@ public class XmiSegment : XmiBaseEntity
 
 
     // 带参数构造函数（包含父类属性 + 子类属性）
+    /// <summary>
+    /// Creates a new <see cref="XmiSegment"/> tied to a specific parent curve member.
+    /// </summary>
+    /// <param name="id">Unique identifier inside the Cross Model Information graph.</param>
+    /// <param name="name">Readable label; uses <paramref name="id"/> when omitted.</param>
+    /// <param name="ifcguid">IFC GUID that links to the originating BIM element.</param>
+    /// <param name="nativeId">Source identifier from the authoring system.</param>
+    /// <param name="description">Free-form notes about the segment.</param>
+    /// <param name="position">Normalized position value along the parent member (0-1).</param>
+    /// <param name="segmentType">Geometric definition for downstream consumers.</param>
     public XmiSegment(
         string id,
         string name,

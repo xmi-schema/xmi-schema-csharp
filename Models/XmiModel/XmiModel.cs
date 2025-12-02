@@ -5,74 +5,130 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Models
 {
+    /// <summary>
+    /// Represents an in-memory Cross Model Information graph including all entities and relationships.
+    /// </summary>
     public class XmiModel
     {
         public List<XmiBaseEntity> Entities { get; set; } = new();
         public List<XmiBaseRelationship> Relationships { get; set; } = new();
 
         // 添加不同类型的实体
+        /// <summary>
+        /// Adds a structural material entity to the model.
+        /// </summary>
+        /// <param name="material">Material to insert.</param>
         public void AddXmiStructuralMaterial(XmiStructuralMaterial material)
         {
             Entities.Add(material);
         }
 
+        /// <summary>
+        /// Adds a structural cross-section entity to the model.
+        /// </summary>
+        /// <param name="crossSection">Cross-section instance.</param>
         public void AddXmiStructuralCrossSection(XmiStructuralCrossSection crossSection)
         {
             Entities.Add(crossSection);
         }
 
+        /// <summary>
+        /// Adds a curve member entity to the model.
+        /// </summary>
+        /// <param name="member">Curve member.</param>
         public void AddXmiStructuralCurveMember(XmiStructuralCurveMember member)
         {
             Entities.Add(member);
         }
 
+        /// <summary>
+        /// Adds a surface member entity to the model.
+        /// </summary>
+        /// <param name="member">Surface member.</param>
         public void AddXmiStructuralSurfaceMember(XmiStructuralSurfaceMember member)
         {
             Entities.Add(member);
         }
 
+        /// <summary>
+        /// Adds a point connection entity to the model.
+        /// </summary>
+        /// <param name="connection">Point connection.</param>
         public void AddXmiStructuralPointConnection(XmiStructuralPointConnection connection)
         {
             Entities.Add(connection);
         }
 
+        /// <summary>
+        /// Adds a storey entity to the model.
+        /// </summary>
+        /// <param name="storey">Storey entity.</param>
         public void AddXmiStructuralStorey(XmiStructuralStorey storey)
         {
             Entities.Add(storey);
         }
 
+        /// <summary>
+        /// Adds a 3D point entity to the model.
+        /// </summary>
+        /// <param name="point">Point entity.</param>
         public void AddXmiPoint3D(XmiPoint3D point)
         {
             Entities.Add(point);
         }
 
         // 添加不同类型的关系
+        /// <summary>
+        /// Adds a point relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
         public void AddXmiHasPoint3D(XmiHasPoint3D relation)
         {
             Relationships.Add(relation);
         }
 
+        /// <summary>
+        /// Adds a material relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
         public void AddXmiHasStructuralMaterial(XmiHasStructuralMaterial relation)
         {
             Relationships.Add(relation);
         }
 
+        /// <summary>
+        /// Adds a structural node relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
         public void AddXmiHasStructuralNode(XmiHasStructuralNode relation)
         {
             Relationships.Add(relation);
         }
 
+        /// <summary>
+        /// Adds a cross-section relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
         public void AddXmiHasStructuralCrossSection(XmiHasStructuralCrossSection relation)
         {
             Relationships.Add(relation);
         }
 
+        /// <summary>
+        /// Adds a storey relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
         public void AddXmiHasStorey(XmiHasStructuralStorey relation)
         {
             Relationships.Add(relation);
         }
 
         // 查询
+        /// <summary>
+        /// Finds a structural point connection that references the same physical point as the provided connection.
+        /// </summary>
+        /// <param name="inputConnection">Connection to match.</param>
+        /// <returns>The ID for the matching connection if found; otherwise null.</returns>
         public string? FindMatchingPointConnectionByPoint3D(XmiStructuralPointConnection inputConnection)
         {
             // Step 1: 从模型中查找 inputConnection 关联的 Point3D（通过关系）
@@ -100,6 +156,17 @@ namespace XmiSchema.Core.Models
                    Math.Abs(p1.Z - p2.Z) < tolerance;
         }
 
+        /// <summary>
+        /// Creates or reuses a structural point connection for the provided storey and coordinate.
+        /// </summary>
+        /// <param name="id">Unique identifier for the new connection.</param>
+        /// <param name="name">Display name.</param>
+        /// <param name="ifcGuid">IFC GUID reference.</param>
+        /// <param name="nativeId">Native identifier.</param>
+        /// <param name="description">Description for the connection.</param>
+        /// <param name="storey">Storey containing the connection.</param>
+        /// <param name="point">Point geometry representing the node.</param>
+        /// <returns>An existing or newly created connection.</returns>
         public XmiStructuralPointConnection CreateStructurePointConnection(
             string id,
             string name,
@@ -178,12 +245,28 @@ namespace XmiSchema.Core.Models
             return connection;
         }
 
+        /// <summary>
+        /// Returns all entities of the requested type.
+        /// </summary>
+        /// <typeparam name="T">Subtype of <see cref="XmiBaseEntity"/> to retrieve.</typeparam>
         public List<T> GetEntitiesOfType<T>() where T : XmiBaseEntity
         {
             return Entities.OfType<T>().ToList();
         }
 
         // 创建点的方法
+        /// <summary>
+        /// Creates a new <see cref="XmiPoint3D"/> entity, adding it to the model.
+        /// </summary>
+        /// <param name="id">Unique identifier.</param>
+        /// <param name="name">Display name.</param>
+        /// <param name="ifcGuid">IFC GUID reference.</param>
+        /// <param name="nativeId">Native identifier.</param>
+        /// <param name="description">Point description.</param>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="z">Z coordinate.</param>
+        /// <returns>The newly created point.</returns>
         public XmiPoint3D CreatePoint3D(
             string id,
             string name,

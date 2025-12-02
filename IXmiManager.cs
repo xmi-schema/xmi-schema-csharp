@@ -6,6 +6,9 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Manager
 {
+    /// <summary>
+    /// Contract for components that manage Cross Model Information graphs and helper creation routines.
+    /// </summary>
     public interface IXmiManager
     {
         List<XmiModel> Models { get; set; }

@@ -1,5 +1,8 @@
 namespace XmiSchema.Core.Geometries;
 
+/// <summary>
+/// Represents a three-dimensional circular arc defined by start, end, and center points.
+/// </summary>
 public class XmiArc3D : XmiBaseGeometry
 {
     public XmiPoint3D StartPoint { get; set; }
@@ -7,6 +10,18 @@ public class XmiArc3D : XmiBaseGeometry
     public XmiPoint3D CentrePoint { get; set; }
     public float Radius { get; set; }
 
+    /// <summary>
+    /// Initializes a new <see cref="XmiArc3D"/> entity.
+    /// </summary>
+    /// <param name="id">Unique identifier for the geometry node.</param>
+    /// <param name="name">Readable label.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
+    /// <param name="nativeId">Identifier from the authoring system.</param>
+    /// <param name="description">Optional text describing the curve.</param>
+    /// <param name="startPoint">Start coordinate.</param>
+    /// <param name="endPoint">End coordinate.</param>
+    /// <param name="centrePoint">Arc center coordinate.</param>
+    /// <param name="radius">Arc radius.</param>
     public XmiArc3D(
         string id,
         string name,

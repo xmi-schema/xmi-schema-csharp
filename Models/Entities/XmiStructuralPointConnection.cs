@@ -4,11 +4,22 @@ using XmiSchema.Core.Geometries;
 
 namespace XmiSchema.Core.Entities
 {
+    /// <summary>
+    /// Represents a discrete analytical point that can connect members, nodes, or storey definitions.
+    /// </summary>
     public class XmiStructuralPointConnection : XmiBaseEntity, IEquatable<XmiStructuralPointConnection>
     {
         public XmiStructuralStorey? Storey { get; set; }
         public XmiPoint3D? Point { get; set; }
 
+        /// <summary>
+        /// Initializes a new <see cref="XmiStructuralPointConnection"/> that can be linked to storeys and geometry.
+        /// </summary>
+        /// <param name="id">Unique Cross Model identifier.</param>
+        /// <param name="name">Descriptive name for UI clients.</param>
+        /// <param name="ifcGuid">IFC GUID reference.</param>
+        /// <param name="nativeId">Source-system identifier.</param>
+        /// <param name="description">Optional notes on the connection.</param>
         public XmiStructuralPointConnection(
             string id,
             string name,

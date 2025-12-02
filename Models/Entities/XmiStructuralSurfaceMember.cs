@@ -3,6 +3,9 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
+/// <summary>
+/// Models plates, slabs, and other surface members in the XMI graph with system plane and local axes metadata.
+/// </summary>
 public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructuralSurfaceMember>
 {
     // public XmiStructuralMaterial Material { get; set; }
@@ -20,6 +23,23 @@ public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructura
     public string LocalAxisZ { get; set; }
     public double Height { get; set; }
 
+    /// <summary>
+    /// Initializes a new <see cref="XmiStructuralSurfaceMember"/> including analytical orientation.
+    /// </summary>
+    /// <param name="id">Unique XMI identifier.</param>
+    /// <param name="name">Human readable title.</param>
+    /// <param name="ifcguid">Optional IFC GUID.</param>
+    /// <param name="nativeId">Native authoring-system identifier.</param>
+    /// <param name="description">Description of the surface.</param>
+    /// <param name="surfaceMemberType">Surface type classification.</param>
+    /// <param name="thickness">Member thickness.</param>
+    /// <param name="systemPlane">Plane orientation relative to the model.</param>
+    /// <param name="area">Planar area.</param>
+    /// <param name="zOffset">Offset along the Z axis.</param>
+    /// <param name="localAxisX">Serialized local X axis orientation.</param>
+    /// <param name="localAxisY">Serialized local Y axis orientation.</param>
+    /// <param name="localAxisZ">Serialized local Z axis orientation.</param>
+    /// <param name="height">Total extrusion height.</param>
     public XmiStructuralSurfaceMember(
         string id,
         string name,

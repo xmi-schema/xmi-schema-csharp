@@ -2,6 +2,9 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
+/// <summary>
+/// Describes a structural material that can be referenced by other XMI entities, including the mechanical constants used during analysis.
+/// </summary>
 public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMaterial>
 {
     public XmiStructuralMaterialTypeEnum MaterialType { get; set; }
@@ -12,6 +15,21 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
     public string PoissonRatio { get; set; }
     public double ThermalCoefficient { get; set; }
 
+    /// <summary>
+    /// Initializes a new <see cref="XmiStructuralMaterial"/> with the physical properties required for Cross Model Information analysis.
+    /// </summary>
+    /// <param name="id">Unique identifier inside the XMI document.</param>
+    /// <param name="name">Human readable label for the material; falls back to <paramref name="id"/>.</param>
+    /// <param name="ifcguid">Optional IFC GUID that links the material back to its native BIM object.</param>
+    /// <param name="nativeId">Identifier coming from the source authoring tool.</param>
+    /// <param name="description">Free-form description explaining when the material is used.</param>
+    /// <param name="materialType">Generalized material category (concrete, steel, etc.).</param>
+    /// <param name="grade">Producer grade/strength number.</param>
+    /// <param name="unitWeight">Mass density expressed in the preferred unit system.</param>
+    /// <param name="eModulus">Elastic modulus (E) captured as a string to preserve precision and units.</param>
+    /// <param name="gModulus">Shear modulus (G) string representation.</param>
+    /// <param name="poissonRatio">Poisson ratio value.</param>
+    /// <param name="thermalCoefficient">Thermal expansion coefficient.</param>
     public XmiStructuralMaterial(
         string id,
         string name,

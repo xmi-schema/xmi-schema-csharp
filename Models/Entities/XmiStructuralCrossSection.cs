@@ -3,6 +3,9 @@ using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
+/// <summary>
+/// Captures geometric and analytical properties of a structural cross-section shared by curve or surface members.
+/// </summary>
 public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructuralCrossSection>
 {
     // public required XmiStructuralMaterial Material { get; set; }
@@ -19,6 +22,26 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     public double PlasticModulusYAxis { get; set; }
     public double TorsionalConstant { get; set; }
 
+    /// <summary>
+    /// Initializes a new <see cref="XmiStructuralCrossSection"/> with the inputs consumed by the XMI graph.
+    /// </summary>
+    /// <param name="id">Unique local identifier.</param>
+    /// <param name="name">Human readable name for reports.</param>
+    /// <param name="ifcguid">Optional IFC GUID reference.</param>
+    /// <param name="nativeId">Source-system identifier.</param>
+    /// <param name="description">Explanation of origin or use.</param>
+    /// <param name="shape">Generic shape classification (I, T, L, etc.).</param>
+    /// <param name="parameters">Shape-specific parameters such as flange widths.</param>
+    /// <param name="area">Cross-sectional area.</param>
+    /// <param name="secondMomentOfAreaXAxis">Second moment of area about the local X axis.</param>
+    /// <param name="secondMomentOfAreaYAxis">Second moment of area about the local Y axis.</param>
+    /// <param name="radiusOfGyrationXAxis">Radius of gyration about X.</param>
+    /// <param name="radiusOfGyrationYAxis">Radius of gyration about Y.</param>
+    /// <param name="elasticModulusXAxis">Elastic section modulus about X.</param>
+    /// <param name="elasticModulusYAxis">Elastic section modulus about Y.</param>
+    /// <param name="plasticModulusXAxis">Plastic section modulus about X.</param>
+    /// <param name="plasticModulusYAxis">Plastic section modulus about Y.</param>
+    /// <param name="torsionalConstant">Torsional constant (J).</param>
     public XmiStructuralCrossSection(
         string id,
         string name,
