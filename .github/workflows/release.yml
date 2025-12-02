@@ -16,7 +16,7 @@ jobs:
       new_version: ${{ steps.format_version.outputs.version }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -26,11 +26,11 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: patch
-          tag_prefix: 'v'
+          tag_prefix: "v"
           release_branches: main,dev
-          major_pattern: '(BREAKING CHANGE|major)'
-          minor_pattern: 'feat:'
-          patch_pattern: '(fix|docs|style|refactor|perf|test|ci|build|chore):'
+          major_pattern: "(BREAKING CHANGE|major)"
+          minor_pattern: "feat:"
+          patch_pattern: "(fix|docs|style|refactor|perf|test|ci|build|chore):"
 
       - name: Format version number
         id: format_version
@@ -47,7 +47,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Apply new version to csproj files
         run: |
@@ -68,7 +68,7 @@ jobs:
     needs: [versioning, update-csproj]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
 
@@ -78,7 +78,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore solution
         run: dotnet restore xmi-schema-Csharp.Core.sln
@@ -94,7 +94,7 @@ jobs:
     needs: [versioning, update-csproj, build-and-test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
 
@@ -102,9 +102,9 @@ jobs:
         run: git pull origin ${{ github.ref_name }}
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: "8.0.x"
 
       - name: Restore solution
         run: dotnet restore xmi-schema-Csharp.Core.sln

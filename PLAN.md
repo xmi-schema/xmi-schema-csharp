@@ -3,29 +3,24 @@
 ## Goal
 Create a reusable .NET 8 XmiSchema library package (Cross Model Information) with full documentation, per-class READMEs, standardized XML doc comments, unit tests, usage samples, and updated main README/testing guidance for CI pipelines.
 
-## Work Breakdown
+## Status Overview
 
-1. **Inventory & Preparation**
-   - Enumerate every class within `Models`, `Utils`, managers, etc., and note missing XML documentation.
-   - Confirm current solution structure; add a `tests/` directory scaffold if absent.
-   - Define documentation style guide (XML comments + markdown conventions).
+1. **Inventory & Preparation — Completed**
+   - Cataloged every class across `Models`, `Utils`, managers, etc., and standardized the XML documentation template.
+   - Confirmed the solution layout and added the `tests/Unit` and `tests/Examples` scaffolding where needed.
 
-2. **Per-Class Documentation**
-   - For each folder (e.g., `Models/Entities`, `Models/Geometries`, `Utils`), create a `README.md` summarizing folder purpose, listing classes, and linking to relevant usage examples.
-   - Inside each class file, add XML doc comments (`/// <summary>`, `<param>`, `<returns>`) and include parameter descriptions and behavior notes referencing Cross Model Information semantics.
-   - For complex flows (e.g., `XmiManager`), add code snippets showing expected usage.
+2. **Per-Class Documentation — Completed**
+   - Every class file now carries XML doc comments with `<summary>`, `<param>`, and `<returns>` descriptions tied to XMI semantics.
+   - Folder-level READMEs exist for the root, `Models/*`, `Utils`, and test/example directories to keep contributors oriented.
 
-3. **Testing & Examples Structure**
-   - Create `tests/XmiSchema.Core.Tests` (xUnit or NUnit) with one test class per production class (`ClassNameTests.cs`), using Arrange/Act/Assert and XML docs on test methods.
-   - Add `examples/` (or `tests/Examples`) to host runnable sample projects demonstrating typical consumer scenarios; each sample gets a README with run instructions.
-   - Ensure test folder organization distinguishes pure unit tests from usage samples, highlighting entry points for future contributors.
+3. **Testing & Examples Structure — Completed**
+   - `tests/Unit/XmiSchema.Core.Tests` (xUnit) includes a fixture per production class plus shared builders, and `tests/Examples/StructuralGraphSample` demonstrates library usage.
+   - READMEs inside `tests/Unit` and `tests/Examples` explain how to execute each suite locally.
 
-4. **README & Pipeline Updates**
-   - Update root `README.md` with sections covering: project overview, how to run unit tests (`dotnet restore && dotnet test`), how to execute examples, and CI expectations (e.g., GitHub Actions pipeline running tests).
-   - Document how to include tests in the pipeline, including command snippets or workflow YAML references.
-   - Optionally mention coverage thresholds or quality gates once defined.
+4. **README & Pipeline Updates — Completed**
+   - The root README documents local restore/test commands, example execution, and references the `Pull Request Tests` and `Release Build & Publish` workflows.
+   - GitHub Actions now splits PR validation from release publishing, and the NuGet package ships the README via `<PackageReadmeFile>`.
 
-5. **Validation & Finalization**
-   - Run `dotnet format`, `dotnet build`, `dotnet test` to ensure the library and tests pass.
-   - Verify all new README files render correctly and reference valid paths.
-   - Commit in logical chunks (e.g., documentation, tests, README updates) if version control is used.
+5. **Validation & Finalization — In Progress**
+   - Need a final `dotnet restore && dotnet test` run before tagging releases and a spot-check that the packaged README renders correctly on nuget.org.
+   - Remaining enhancements: optional coverage tooling and any future architecture diagrams once functionality expands.

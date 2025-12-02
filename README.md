@@ -56,18 +56,17 @@ xmi-schema-csharp/
 Each subdirectory within `Models/` includes its own README that documents constructor expectations and naming conventions.
 
 ## Testing & CI
-- **Unit tests:**
+- **Local workflow:**
   ```bash
-  dotnet test xmi-schema-Csharp.Core.sln
+  dotnet restore xmi-schema-Csharp.Core.sln
+  dotnet test xmi-schema-Csharp.Core.sln --configuration Release
   ```
-  The xUnit suite mirrors the production namespace layout so every class is covered. Builders under `tests/Unit/XmiSchema.Core.Tests/Support` keep fixtures concise while still honoring XML documentation requirements.
-- **Examples:** run `dotnet run --project tests/Examples/StructuralGraphSample/StructuralGraphSample.csproj` to see how `XmiManager` composes a graph.
-- **Pipeline guidance:** add the following step (or similar) to your CI workflow so pull requests execute the unit tests:
-  ```yaml
-  - name: Run unit tests
-    run: dotnet test xmi-schema-Csharp.Core.sln --configuration Release --nologo
-  ```
-  The existing GitHub Actions workflow can consume this command directly, and local contributors should execute it before opening a PR.
+  Run these commands before every commit or pull request so the xUnit suite (one fixture per production class) stays green. Builders under `tests/Unit/XmiSchema.Core.Tests/Support` provide deterministic sample models for the tests.
+- **Examples:** run `dotnet run --project tests/Examples/StructuralGraphSample/StructuralGraphSample.csproj` to see how `XmiManager` composes a graph; treat it as an integration sanity check when touching graph construction logic.
+- **GitHub Actions:**
+  - `Pull Request Tests` restores, builds, and tests the solution on every pull request targeting any branch.
+  - `Release Build & Publish` runs after pushes to `main`, repeats restore/build/test, and then packs/pushes the NuGet package (using the README captured in the `.csproj`).
+  Both workflows rely on the same commands shown above, so matching them locally avoids surprises in CI.
 
 ## Contributing
 1. `dotnet restore`
