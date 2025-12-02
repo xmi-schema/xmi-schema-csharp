@@ -19,7 +19,7 @@ public class XmiHasSegmentTests
             nameof(XmiHasSegment),
             "Association");
 
-        Assert.Equal("rel-seg", relation.ID);
+        Assert.Equal("rel-seg", relation.Id);
         Assert.Equal("Contains", relation.Name);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasSegmentTests
     {
         var relation = new XmiHasSegment(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateSegment());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

@@ -16,6 +16,6 @@ public class XmiArc3DTests
         var arc = TestModelFactory.CreateArc();
 
         Assert.Equal(2.5f, arc.Radius);
-        Assert.Equal("arc-start", arc.StartPoint.ID);
+        Assert.Equal("arc-start", arc.StartPoint.Id);
     }
 }

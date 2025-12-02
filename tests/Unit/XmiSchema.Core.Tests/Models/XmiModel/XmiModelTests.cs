@@ -57,7 +57,7 @@ public class XmiModelTests
 
         var connection = model.CreateStructurePointConnection("pc-1", "Node", "ifc", "native", "desc", storey, point);
 
-        Assert.Contains(model.Entities.OfType<XmiStructuralPointConnection>(), e => e.ID == connection.ID);
+        Assert.Contains(model.Entities.OfType<XmiStructuralPointConnection>(), e => e.Id == connection.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == connection && r.Target == storey);
         Assert.Contains(model.Relationships.OfType<XmiHasPoint3D>(), r => r.Source == connection && r.Target == point);
     }
@@ -92,7 +92,7 @@ public class XmiModelTests
             0.0008,
             0.0009);
 
-        Assert.Contains(model.Entities.OfType<XmiStructuralCrossSection>(), e => e.ID == section.ID);
+        Assert.Contains(model.Entities.OfType<XmiStructuralCrossSection>(), e => e.Id == section.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralMaterial>(), r => r.Source == section && r.Target.NativeId == material.NativeId);
     }
 
@@ -139,7 +139,7 @@ public class XmiModelTests
             "Fixed",
             "Pinned");
 
-        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.ID == member.ID);
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralCrossSection>(), r => r.Source == member && r.Target == crossSection);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == member && r.Target == storey);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralNode>().Count());
@@ -177,7 +177,7 @@ public class XmiModelTests
             "0,0,1",
             0.3);
 
-        Assert.Contains(model.Entities.OfType<XmiStructuralSurfaceMember>(), e => e.ID == member.ID);
+        Assert.Contains(model.Entities.OfType<XmiStructuralSurfaceMember>(), e => e.Id == member.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == member && r.Target.NativeId == storey.NativeId);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralMaterial>(), r => r.Source == member && r.Target.NativeId == material.NativeId);
     }

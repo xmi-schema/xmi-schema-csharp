@@ -138,7 +138,7 @@ namespace XmiSchema.Core.Manager
         public T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.ID == id);
+            return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.Id == id);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace XmiSchema.Core.Manager
             // Step 1: 从模型中查找 inputConnection 关联的 Point3D（通过关系）
             var inputPoint = model.Relationships
                 .OfType<XmiHasPoint3D>()
-                .FirstOrDefault(rel => rel.Source?.ID == inputConnection.ID)
+                .FirstOrDefault(rel => rel.Source?.Id == inputConnection.Id)
                 ?.Target as XmiPoint3D;
 
             if (inputPoint == null) return null;
@@ -164,10 +164,10 @@ namespace XmiSchema.Core.Manager
             // Step 2: 在所有其他的 PointConnection 中查找是否有相同坐标的 Point3D（也通过关系查）
             var match = model.Relationships
                 .OfType<XmiHasPoint3D>()
-                .Where(rel => rel.Source is XmiStructuralPointConnection && rel.Source.ID != inputConnection.ID)
+                .Where(rel => rel.Source is XmiStructuralPointConnection && rel.Source.Id != inputConnection.Id)
                 .FirstOrDefault(rel => ArePointsEqual(rel.Target as XmiPoint3D, inputPoint));
 
-            return match?.Source?.ID;
+            return match?.Source?.Id;
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace XmiSchema.Core.Manager
             string description,
             XmiStructuralCrossSection crossSection,
             XmiStructuralStorey storey,
-            XmiStructuralCurveMemberTypeEnum curvememberType,
+            XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
             XmiStructuralCurveMemberSystemLineEnum systemLine,
@@ -338,7 +338,7 @@ namespace XmiSchema.Core.Manager
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateStructuralCurveMember(
                 id, name, ifcGuid, nativeId, description,
-                crossSection, storey, curvememberType,
+                crossSection, storey, curveMemberType,
                 nodes, segments, systemLine,
                 beginNode, endNode, length,
                 localAxisX, localAxisY, localAxisZ,
@@ -434,11 +434,11 @@ namespace XmiSchema.Core.Manager
                 }
                 else if (value is XmiBaseEntity entityRef)
                 {
-                    finalValue = entityRef.ID;
+                    finalValue = entityRef.Id;
                 }
                 else if (value is IEnumerable<XmiBaseEntity> entityList)
                 {
-                    finalValue = entityList.Select(e => e.ID).ToList();
+                    finalValue = entityList.Select(e => e.Id).ToList();
                 }
 
                 if (finalValue != null)
@@ -458,4 +458,3 @@ namespace XmiSchema.Core.Manager
         }
     }
 }
-

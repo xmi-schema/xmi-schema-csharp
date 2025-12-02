@@ -19,7 +19,7 @@ public class XmiHasGeometryTests
             nameof(XmiHasGeometry),
             "Association");
 
-        Assert.Equal("rel-geom", relation.ID);
+        Assert.Equal("rel-geom", relation.Id);
         Assert.Equal(nameof(XmiHasGeometry), relation.EntityType);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasGeometryTests
     {
         var relation = new XmiHasGeometry(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateLine());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

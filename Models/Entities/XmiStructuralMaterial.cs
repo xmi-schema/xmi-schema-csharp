@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
@@ -10,8 +11,12 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
     public XmiStructuralMaterialTypeEnum MaterialType { get; set; }
     public double Grade { get; set; }
     public double UnitWeight { get; set; }
-    public string EModulus { get; set; }
-    public string GModulus { get; set; }
+
+    [JsonProperty(PropertyName = "EModulus")]
+    public string ElasticModulus { get; set; }
+
+    [JsonProperty(PropertyName = "GModulus")]
+    public string ShearModulus { get; set; }
     public string PoissonRatio { get; set; }
     public double ThermalCoefficient { get; set; }
 
@@ -20,36 +25,36 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
     /// </summary>
     /// <param name="id">Unique identifier inside the XMI document.</param>
     /// <param name="name">Human readable label for the material; falls back to <paramref name="id"/>.</param>
-    /// <param name="ifcguid">Optional IFC GUID that links the material back to its native BIM object.</param>
+        /// <param name="ifcGuid">Optional IFC GUID that links the material back to its native BIM object.</param>
     /// <param name="nativeId">Identifier coming from the source authoring tool.</param>
     /// <param name="description">Free-form description explaining when the material is used.</param>
     /// <param name="materialType">Generalized material category (concrete, steel, etc.).</param>
     /// <param name="grade">Producer grade/strength number.</param>
     /// <param name="unitWeight">Mass density expressed in the preferred unit system.</param>
-    /// <param name="eModulus">Elastic modulus (E) captured as a string to preserve precision and units.</param>
-    /// <param name="gModulus">Shear modulus (G) string representation.</param>
+        /// <param name="elasticModulus">Elastic modulus (E) captured as a string to preserve precision and units.</param>
+        /// <param name="shearModulus">Shear modulus (G) string representation.</param>
     /// <param name="poissonRatio">Poisson ratio value.</param>
     /// <param name="thermalCoefficient">Thermal expansion coefficient.</param>
     public XmiStructuralMaterial(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         XmiStructuralMaterialTypeEnum materialType,
         double grade,
         double unitWeight,
-        string eModulus,
-        string gModulus,
+        string elasticModulus,
+        string shearModulus,
         string poissonRatio,
         double thermalCoefficient
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralMaterial))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralMaterial))
     {
         MaterialType = materialType;
         Grade = grade;
         UnitWeight = unitWeight;
-        EModulus = eModulus;
-        GModulus = gModulus;
+        ElasticModulus = elasticModulus;
+        ShearModulus = shearModulus;
         PoissonRatio = poissonRatio;
         ThermalCoefficient = thermalCoefficient;
     }

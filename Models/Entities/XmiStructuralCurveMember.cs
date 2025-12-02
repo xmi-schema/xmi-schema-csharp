@@ -12,7 +12,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
     // public XmiStructuralCrossSection CrossSection { get; set; }
     // public XmiStructuralStorey Storey { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
-    public XmiStructuralCurveMemberTypeEnum CurvememberType { get; set; }
+    public XmiStructuralCurveMemberTypeEnum CurveMemberType { get; set; }
     // public List<XmiStructuralPointConnection> Nodes { get; set; }
     // public List<XmiSegment> Segments { get; set; }
 
@@ -49,7 +49,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
     /// <param name="ifcguid">IFC GUID reference for traceability.</param>
     /// <param name="nativeId">Identifier from the authoring tool.</param>
     /// <param name="description">Optional descriptive text.</param>
-    /// <param name="curvememberType">Member type classification (beam, column, etc.).</param>
+    /// <param name="curveMemberType">Member type classification (beam, column, etc.).</param>
     /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
     /// <param name="length">Analytical length of the element.</param>
     /// <param name="localAxisX">Serialized orientation of local X.</param>
@@ -71,7 +71,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
         string description,
         // XmiStructuralCrossSection crossSection,
         // XmiStructuralStorey storey,
-        XmiStructuralCurveMemberTypeEnum curvememberType,
+        XmiStructuralCurveMemberTypeEnum curveMemberType,
         // List<XmiStructuralPointConnection> nodes,
         // List<XmiSegment> segments,
         XmiStructuralCurveMemberSystemLineEnum systemLine,
@@ -97,7 +97,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
     {
         // CrossSection = crossSection;
         // Storey = storey;
-        CurvememberType = curvememberType;
+        CurveMemberType = curveMemberType;
         // Nodes = nodes;
         // Segments = segments;
         SystemLine = systemLine;

@@ -19,7 +19,7 @@ public class XmiHasStructuralCrossSectionTests
             nameof(XmiHasStructuralCrossSection),
             "Association");
 
-        Assert.Equal("rel-sec", relation.ID);
+        Assert.Equal("rel-sec", relation.Id);
         Assert.Equal(nameof(XmiHasStructuralCrossSection), relation.EntityType);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasStructuralCrossSectionTests
     {
         var relation = new XmiHasStructuralCrossSection(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCrossSection());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

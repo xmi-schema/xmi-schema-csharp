@@ -19,7 +19,7 @@ public class XmiHasStructuralStoreyTests
             nameof(XmiHasStructuralStorey),
             "Association");
 
-        Assert.Equal("rel-storey", relation.ID);
+        Assert.Equal("rel-storey", relation.Id);
         Assert.Equal("ContainedIn", relation.Name);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasStructuralStoreyTests
     {
         var relation = new XmiHasStructuralStorey(TestModelFactory.CreatePointConnection(), TestModelFactory.CreateStorey());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

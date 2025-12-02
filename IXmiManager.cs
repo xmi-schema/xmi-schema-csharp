@@ -267,7 +267,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="description">Optional description for the member.</param>
         /// <param name="crossSection">Cross-section applied to the member.</param>
         /// <param name="storey">Storey containing the member.</param>
-        /// <param name="curvememberType">Curve member classification.</param>
+        /// <param name="curveMemberType">Curve member classification.</param>
         /// <param name="nodes">Nodes participating in the member.</param>
         /// <param name="segments">Optional explicit segments describing geometry.</param>
         /// <param name="systemLine">System line type.</param>
@@ -295,7 +295,7 @@ namespace XmiSchema.Core.Manager
             string description,
             XmiStructuralCrossSection crossSection,
             XmiStructuralStorey storey,
-            XmiStructuralCurveMemberTypeEnum curvememberType,
+            XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
             XmiStructuralCurveMemberSystemLineEnum systemLine,
