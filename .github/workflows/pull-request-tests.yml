@@ -1,0 +1,28 @@
+name: Pull Request Tests
+
+on:
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build-and-test:
+    name: Restore, Build, and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore xmi-schema-Csharp.Core.sln
+
+      - name: Build library
+        run: dotnet build xmi-schema-Csharp.Core.csproj --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test xmi-schema-Csharp.Core.sln --configuration Release --no-build --logger trx
