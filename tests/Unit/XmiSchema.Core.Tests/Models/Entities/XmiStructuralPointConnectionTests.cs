@@ -1,0 +1,27 @@
+using XmiSchema.Core.Entities;
+using XmiSchema.Core.Geometries;
+
+namespace XmiSchema.Core.Tests.Models.Entities;
+
+/// <summary>
+/// Tests the behavior of <see cref="XmiStructuralPointConnection"/> instances.
+/// </summary>
+public class XmiStructuralPointConnectionTests
+{
+    /// <summary>
+    /// Connections compare equality based on the referenced <see cref="XmiPoint3D"/>.
+    /// </summary>
+    [Fact]
+    public void Equals_UsesPointCoordinate()
+    {
+        var a = TestModelFactory.CreatePointConnection("pc-a");
+        var b = TestModelFactory.CreatePointConnection("pc-b");
+        var point = TestModelFactory.CreatePoint("pt-shared");
+
+        a.Point = point;
+        b.Point = new XmiPoint3D(point.ID, point.Name, point.IFCGUID, point.NativeId, point.Description, point.X, point.Y, point.Z);
+
+        Assert.True(a.Equals(b));
+        Assert.Equal(a.GetHashCode(), b.GetHashCode());
+    }
+}

@@ -1,10 +1,19 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xmi-schema-Csharp.Core", "xmi-schema-Csharp.Core.csproj", "{F828A0EA-36B2-EAA1-FC4A-6E971EA1C94E}"
 EndProject
-
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7A006963-4414-440E-A214-F90A78677140}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{80079B04-AC56-40D1-9099-3E202A4F21B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema.Core.Tests", "tests\Unit\XmiSchema.Core.Tests\XmiSchema.Core.Tests.csproj", "{AE3DD6AF-725A-4C68-B006-6D085C118C4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{168E890E-1645-40CA-B704-3E1EAEC0F7B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructuralGraphSample", "tests\Examples\StructuralGraphSample\StructuralGraphSample.csproj", "{722F4EF0-EC99-4B14-BA07-193E10A4C003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,12 +24,25 @@ Global
 		{F828A0EA-36B2-EAA1-FC4A-6E971EA1C94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F828A0EA-36B2-EAA1-FC4A-6E971EA1C94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F828A0EA-36B2-EAA1-FC4A-6E971EA1C94E}.Release|Any CPU.Build.0 = Release|Any CPU
-		
+		{AE3DD6AF-725A-4C68-B006-6D085C118C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE3DD6AF-725A-4C68-B006-6D085C118C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE3DD6AF-725A-4C68-B006-6D085C118C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE3DD6AF-725A-4C68-B006-6D085C118C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{722F4EF0-EC99-4B14-BA07-193E10A4C003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{722F4EF0-EC99-4B14-BA07-193E10A4C003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{722F4EF0-EC99-4B14-BA07-193E10A4C003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{722F4EF0-EC99-4B14-BA07-193E10A4C003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19CA04E6-905C-47D1-9A1A-CE273297D933}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{80079B04-AC56-40D1-9099-3E202A4F21B3} = {7A006963-4414-440E-A214-F90A78677140}
+		{AE3DD6AF-725A-4C68-B006-6D085C118C4A} = {80079B04-AC56-40D1-9099-3E202A4F21B3}
+		{168E890E-1645-40CA-B704-3E1EAEC0F7B2} = {7A006963-4414-440E-A214-F90A78677140}
+		{722F4EF0-EC99-4B14-BA07-193E10A4C003} = {168E890E-1645-40CA-B704-3E1EAEC0F7B2}
 	EndGlobalSection
 EndGlobal

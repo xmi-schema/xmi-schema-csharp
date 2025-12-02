@@ -3,6 +3,12 @@
 /obj/
 /Debug/
 /Release/
+bin/
+obj/
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
 
 # Visual Studio
 *.user
@@ -20,7 +26,13 @@ packages/
 # 本地设置
 *.vs/
 .vscode/
+*.csproj.user
 
 
 # 个人开发日志
 /_private/
+
+# Tests (unit + examples)
+tests/**/bin/
+tests/**/obj/
+tests/**/TestResults/

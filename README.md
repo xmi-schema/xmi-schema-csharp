@@ -5,118 +5,76 @@
 [![License](https://img.shields.io/github/license/ximlib-foundation/XmiSchema.Core.svg)](LICENSE)
 [![Downloads](https://img.shields.io/nuget/dt/XmiSchema.Core.svg)](https://www.nuget.org/packages/XmiSchema.Core/)
 
+## Overview
+XmiSchema.Core is a .NET 8 class library that models Cross Model Information (XMI) graphs for built-environment data. The package exposes strongly-typed entities (materials, storeys, geometries, relationships) plus the `XmiManager` helper so downstream projects or NuGet consumers can build, query, and export graph payloads consistently.
 
-
-## 📖 Description
-
-**ximSchema Lib** is a utility library that provides a standardized set of classes and properties for structuring data across various workflows. It enables consistent data modeling and facilitates seamless conversion between different data formats or working contexts. The library is designed to promote interoperability, reduce redundancy, and support clean, maintainable data operations in diverse scenarios.
-
----
-
-## 🔧 Installation
-
-### 📦 Option 1: Install via NuGet (Recommended for Developers)
-
-You can add **ximlib** to your project using the .NET CLI or the NuGet Package Manager:
-
+## Installation
 ```bash
-# Using .NET CLI
-dotnet add package ximlib
-
-# Or via Package Manager Console
-Install-Package ximlib
+dotnet add package XmiSchema.Core
 ```
+The package targets .NET 8.0 and ships as a reusable dependency for desktop, web, or service workloads.
 
-> Requires [.NET 8.0 ](https://dotnet.microsoft.com/) or later.
+## Quick Start
+```csharp
+using System.Collections.Generic;
+using XmiSchema.Core.Enums;
+using XmiSchema.Core.Entities;
+using XmiSchema.Core.Manager;
+using XmiSchema.Core.Models;
 
+var manager = new XmiManager();
+manager.Models.Add(new XmiModel());
 
+var storey = manager.CreateStructuralStorey(0, "Storey-1", "Level 1", "ifc-guid", "LEVEL_1", "Ground floor", 0, 900, "Fx", "Fy", "Fz");
+var point = manager.CreatePoint3D(0, "pt-1", "Grid A/1", "pt-guid", "PT_A1", "Column base", 0, 0, 0);
+var connection = manager.CreateStructuralPointConnection(0, "pc-1", "Node", "pc-guid", "PC_A1", "Column node", storey, point);
 
-### 💻 Option 2: Included with Revit Plugin Installer
+var material = manager.CreateStructuralMaterial(0, "mat-1", "Steel", "mat-guid", "MAT_S355", "Sample material", XmiStructuralMaterialTypeEnum.Steel, 50, 78.5, "210000", "81000", "0.3", 1.2);
+var section = manager.CreateStructuralCrossSection(0, "sec-1", "IPE300", "sec-guid", "SEC_IPE300", "Beam section", material, XmiShapeEnum.IShape, new[] { "0.15", "0.3" }, 0.0009, 0.00012, 0.00035, 0.045, 0.09, 0.0003, 0.0004, 0.0005, 0.0006, 0.00007);
 
-If you're using the official Revit plugin that depends on `ximlib`, the library will be **automatically installed** as part of the plugin's EXE installer.
+var curveMember = manager.CreateStructuralCurveMember(0, "cur-1", "Beam A", "cur-guid", "BEAM_A", "Sample beam", section, storey, XmiStructuralCurveMemberTypeEnum.Beam,
+    new List<XmiStructuralPointConnection> { connection, connection }, new List<XmiSegment> { new("seg-1", "Segment", "seg-guid", "SEG_1", "Segment", 0f, XmiSegmentTypeEnum.Line) },
+    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, connection, connection, 5, "1,0,0", "0,1,0", "0,0,1", 0, 0, 0, 0, 0, 0, "Fixed", "Pinned");
 
-* Simply download and run the installer:
-  👉 [Download Installer (Coming Soon)](https://your-download-link.com)
-
-No manual setup is needed.
-
----
-
-
-## 🚀 Quick Start / Usage
-
-A basic code example showing how to use the library.
-
-```bash
-from your_library import feature
-
-result = feature.do_something("input")
-print(result)
+var json = manager.BuildJson(0);
+Console.WriteLine(json);
 ```
+For a full runnable sample see `tests/Examples/StructuralGraphSample`.
 
-## 📘 Documentation
-
-Link to full documentation or explain the key modules/functions/classes.
-
-* [Entities and Full API Reference](https://our-library-docs.com)
-* [Examples](https://github.com/xmiSchema-org/our-library/tree/main/examples)
-
-## ✅ Features
-
-* ✅ Easy-to-use API
-* 🔄 Integrates with XYZ
-* ⚙️ Highly customizable
-* 🧪 Well-tested with CI/CD
-
-## 📁 Project Structure
-
-*(Optional)* A brief overview of the directory layout.
-
-```bash
+## Folder Layout
+```
 xmi-schema-csharp/
-├── .github/workflows/           
-├── Interfaces/
-│   ├── IManagers/            # Interfaces that expose management behavior of XmiModel, Entities, Relationships
-│   └── IModules/             # Interfaces that expose management behavior of different modules
-├── Managers/                 # Implementations of manager interfaces; manages XmiModel, entities, and relationships
-├── Models/                   # Data model classes representing application data structures
-├── Modules/                  # Independent modular components implementing specific features
-├── Services/                 # Services that integrate modules into a complete plug-and-play workflow
-├── Utils/                    # Utility classes for tasks like Enum handling and computation
-├── .gitignore                
-└── xmi-schema-Csharp.Core.csproj  # C# project file with dependencies and build configuration
+├── IXmiManager.cs / XmiManager.cs      # Public orchestration API
+├── Models/                             # Bases, entities, geometries, relationships, and XmiModel helpers
+├── Utils/                              # Shared utilities (enum converters, extensions)
+├── tests/
+│   ├── Unit/XmiSchema.Core.Tests       # xUnit project with one fixture per production class
+│   └── Examples/StructuralGraphSample  # Console sample showing library usage
+├── AGENTS.md / PLAN.md / README.md     # Contributor docs
+└── xmi-schema-Csharp.Core.csproj       # Library project file
 ```
+Each subdirectory within `Models/` includes its own README that documents constructor expectations and naming conventions.
 
-## 🛠 Contributing
+## Testing & CI
+- **Local workflow:**
+  ```bash
+  dotnet restore xmi-schema-Csharp.Core.sln
+  dotnet test xmi-schema-Csharp.Core.sln --configuration Release
+  ```
+  Run these commands before every commit or pull request so the xUnit suite (one fixture per production class) stays green. Builders under `tests/Unit/XmiSchema.Core.Tests/Support` provide deterministic sample models for the tests.
+- **Examples:** run `dotnet run --project tests/Examples/StructuralGraphSample/StructuralGraphSample.csproj` to see how `XmiManager` composes a graph; treat it as an integration sanity check when touching graph construction logic.
+- **GitHub Actions:**
+  - `Pull Request Tests` restores, builds, and tests the solution on every pull request targeting any branch.
+  - `Release Build & Publish` runs after pushes to `main`, repeats restore/build/test, and then packs/pushes the NuGet package (using the README captured in the `.csproj`).
+  Both workflows rely on the same commands shown above, so matching them locally avoids surprises in CI.
 
-Instructions for setting up the development environment and contributing to the project.
+## Contributing
+1. `dotnet restore`
+2. Update or add XML documentation whenever a public API changes.
+3. Add or update tests in `tests/Unit/XmiSchema.Core.Tests` and ensure `dotnet test` passes.
+4. Document new behavior in the relevant README (folder-level or root).
 
-```bash
-# Clone the repository
-git clone https://github.com/your-org/your-library.git
+See `AGENTS.md` for detailed contributor guidelines and the long-term plan in `PLAN.md`.
 
-# Install dependencies
-dotnet restore
-```
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
-
-## 🧪 Running Tests
-
-```bash
-dotnet test
-```
-
-## 📄 License
-
-This project is licensed under ...... - see the [LICENSE](LICENSE) file for details.
-
-## ❓ FAQ
-
-*(Optional)* Common questions and answers.
-
-## 🙏 Acknowledgements
-
-*(Optional)* Credit to other libraries, tools, or contributors.
-
-
+## License
+Distributed under the terms of the project [LICENSE](LICENSE).

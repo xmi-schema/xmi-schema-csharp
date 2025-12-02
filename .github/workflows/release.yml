@@ -1,0 +1,130 @@
+name: Release Build & Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  versioning:
+    name: Generate Tag and Version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      new_tag: ${{ steps.tag_version.outputs.new_tag }}
+      new_version: ${{ steps.format_version.outputs.version }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Create semantic version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: patch
+          tag_prefix: "v"
+          release_branches: main,dev
+          # major_pattern: "(BREAKING CHANGE|major)"
+          # minor_pattern: "feat:"
+          # patch_pattern: "(fix|docs|style|refactor|perf|test|ci|build|chore):"
+
+      - name: Format version number
+        id: format_version
+        run: |
+          TAG="${{ steps.tag_version.outputs.new_tag }}"
+          VERSION=${TAG#v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Calculated semantic version: $VERSION"
+
+  update-csproj:
+    name: Update project metadata
+    needs: versioning
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Apply new version to csproj files
+        run: |
+          VERSION="${{ needs.versioning.outputs.new_version }}"
+          find . -name "*.csproj" -type f -exec sed -i "s/<Version>[^<]*<\/Version>/<Version>$VERSION<\/Version>/g" {} \;
+
+      - name: Commit version bump
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update package version to ${{ needs.versioning.outputs.new_version }} [skip ci]"
+          file_pattern: "*.csproj"
+          branch: ${{ github.ref_name }}
+          commit_user_name: GitHub Actions Bot
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+
+  build-and-test:
+    name: Build and Test
+    needs: [versioning, update-csproj]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Pull latest commits
+        run: git pull origin ${{ github.ref_name }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore solution
+        run: dotnet restore xmi-schema-Csharp.Core.sln
+
+      - name: Build solution
+        run: dotnet build xmi-schema-Csharp.Core.sln --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test xmi-schema-Csharp.Core.sln --configuration Release --no-build --logger trx
+
+  publish-nuget:
+    name: Publish to NuGet
+    needs: [versioning, update-csproj, build-and-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Pull latest commits
+        run: git pull origin ${{ github.ref_name }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore solution
+        run: dotnet restore xmi-schema-Csharp.Core.sln
+
+      - name: Pack NuGet artifact
+        run: |
+          VERSION="${{ needs.versioning.outputs.new_version }}"
+          dotnet pack ./xmi-schema-Csharp.Core.csproj \
+            --configuration Release \
+            --output ./packages \
+            /p:PackageVersion=$VERSION
+
+      - name: List produced packages
+        run: ls -R ./packages
+
+      - name: Publish package to nuget.org
+        run: |
+          PACKAGE=$(find packages -name "*.nupkg" | head -n 1)
+          if [ -z "$PACKAGE" ]; then
+            echo "No NuGet package found"
+            exit 1
+          fi
+          dotnet nuget push "$PACKAGE" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
