@@ -14,6 +14,7 @@ jobs:
     outputs:
       new_tag: ${{ steps.tag_version.outputs.new_tag }}
       new_version: ${{ steps.format_version.outputs.version }}
+      changelog: ${{ steps.tag_version.outputs.changelog }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -128,3 +129,17 @@ jobs:
             exit 1
           fi
           dotnet nuget push "$PACKAGE" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
+  create-github-release:
+    name: Create GitHub Release
+    needs: [versioning, publish-nuget]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create release with changelog
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.versioning.outputs.new_tag }}
+          name: Release ${{ needs.versioning.outputs.new_tag }}
+          body: ${{ needs.versioning.outputs.changelog }}
