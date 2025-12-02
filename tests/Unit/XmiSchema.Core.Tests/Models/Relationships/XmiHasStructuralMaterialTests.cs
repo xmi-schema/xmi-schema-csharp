@@ -19,7 +19,7 @@ public class XmiHasStructuralMaterialTests
             nameof(XmiHasStructuralMaterial),
             "Association");
 
-        Assert.Equal("rel-mat", relation.ID);
+        Assert.Equal("rel-mat", relation.Id);
         Assert.Equal("Uses", relation.Name);
         Assert.Equal(nameof(XmiHasStructuralMaterial), relation.EntityType);
     }
@@ -29,7 +29,7 @@ public class XmiHasStructuralMaterialTests
     {
         var relation = new XmiHasStructuralMaterial(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateMaterial());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
         Assert.Equal(nameof(XmiHasStructuralMaterial), relation.Name);
     }
 }

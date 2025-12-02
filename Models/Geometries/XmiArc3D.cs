@@ -7,7 +7,7 @@ public class XmiArc3D : XmiBaseGeometry
 {
     public XmiPoint3D StartPoint { get; set; }
     public XmiPoint3D EndPoint { get; set; }
-    public XmiPoint3D CentrePoint { get; set; }
+    public XmiPoint3D CenterPoint { get; set; }
     public float Radius { get; set; }
 
     /// <summary>
@@ -20,7 +20,7 @@ public class XmiArc3D : XmiBaseGeometry
     /// <param name="description">Optional text describing the curve.</param>
     /// <param name="startPoint">Start coordinate.</param>
     /// <param name="endPoint">End coordinate.</param>
-    /// <param name="centrePoint">Arc center coordinate.</param>
+    /// <param name="centerPoint">Arc center coordinate.</param>
     /// <param name="radius">Arc radius.</param>
     public XmiArc3D(
         string id,
@@ -30,13 +30,13 @@ public class XmiArc3D : XmiBaseGeometry
         string description,
         XmiPoint3D startPoint ,
         XmiPoint3D endPoint ,
-        XmiPoint3D centrePoint ,
+        XmiPoint3D centerPoint ,
         float radius
     ) : base(id, name, ifcGuid, nativeId, description)
     {
         StartPoint  = startPoint ;
         EndPoint  = endPoint ;
-        CentrePoint  = centrePoint ;
+        CenterPoint  = centerPoint ;
         Radius = radius;
         EntityType = nameof(XmiArc3D);
     }

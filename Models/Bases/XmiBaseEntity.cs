@@ -7,14 +7,14 @@ namespace XmiSchema.Core.Entities
     /// </summary>
     public class XmiBaseEntity
     {
-        [JsonProperty(Order = 0)]
-        public string ID { get; set; }
+        [JsonProperty(PropertyName = "ID", Order = 0)]
+        public string Id { get; set; }
 
         [JsonProperty(Order = 1)]
         public string Name { get; set; }
 
-        [JsonProperty(Order = 2)]
-        public string IFCGUID { get; set; }
+        [JsonProperty(PropertyName = "IFCGUID", Order = 2)]
+        public string IfcGuid { get; set; }
 
         [JsonProperty(Order = 3)]
         public string NativeId { get; set; }
@@ -38,15 +38,15 @@ namespace XmiSchema.Core.Entities
         public XmiBaseEntity(
             string id,
             string name,
-            string ifcguid,
+            string ifcGuid,
             string nativeId,
             string description,
             string entityType
         )
         {
-            ID = id;
+            Id = id;
             Name = string.IsNullOrWhiteSpace(name) ? id : name;
-            IFCGUID = ifcguid;
+            IfcGuid = ifcGuid;
             NativeId = nativeId;
             Description = description;
             EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseEntity) : entityType;

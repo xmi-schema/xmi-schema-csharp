@@ -15,8 +15,8 @@ public class XmiLine3DTests
     {
         var line = TestModelFactory.CreateLine();
 
-        Assert.NotNull(line.StartPoint3D);
-        Assert.NotNull(line.EndPoint3D);
-        Assert.Equal("line-start", line.StartPoint3D.ID);
+        Assert.NotNull(line.StartPoint);
+        Assert.NotNull(line.EndPoint);
+        Assert.Equal("line-start", line.StartPoint.Id);
     }
 }

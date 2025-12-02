@@ -35,7 +35,7 @@ public class XmiBaseRelationshipTests
 
         var relationship = new XmiBaseRelationship(source, target, "EdgeType", "Association");
 
-        Assert.False(string.IsNullOrWhiteSpace(relationship.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relationship.Id));
         Assert.Equal("EdgeType", relationship.Name);
         Assert.Equal("Association", relationship.UmlType);
     }

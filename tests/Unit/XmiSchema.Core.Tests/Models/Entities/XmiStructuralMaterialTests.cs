@@ -18,7 +18,7 @@ public class XmiStructuralMaterialTests
 
         Assert.Equal(XmiStructuralMaterialTypeEnum.Steel, material.MaterialType);
         Assert.Equal(78.5, material.UnitWeight);
-        Assert.Equal("200000", material.EModulus);
+        Assert.Equal("200000", material.ElasticModulus);
     }
 
     /// <summary>

@@ -19,7 +19,7 @@ public class XmiHasLine3DTests
             nameof(XmiHasLine3D),
             "Association");
 
-        Assert.Equal("rel-line", relation.ID);
+        Assert.Equal("rel-line", relation.Id);
         Assert.Equal("AlignedWith", relation.Name);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasLine3DTests
     {
         var relation = new XmiHasLine3D(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCurveMember("curve-b"));
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

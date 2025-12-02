@@ -16,7 +16,7 @@ public class XmiStructuralCurveMemberTests
     {
         var member = TestModelFactory.CreateCurveMember();
 
-        Assert.Equal(XmiStructuralCurveMemberTypeEnum.Beam, member.CurvememberType);
+        Assert.Equal(XmiStructuralCurveMemberTypeEnum.Beam, member.CurveMemberType);
         Assert.Equal(XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, member.SystemLine);
         Assert.Equal("Fixed", member.EndFixityStart);
         Assert.Equal(5.0, member.Length);

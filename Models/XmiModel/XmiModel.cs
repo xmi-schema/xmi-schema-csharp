@@ -134,7 +134,7 @@ namespace XmiSchema.Core.Models
             // Step 1: 从模型中查找 inputConnection 关联的 Point3D（通过关系）
             var inputPoint = Relationships
                 .OfType<XmiHasPoint3D>()
-                .FirstOrDefault(rel => rel.Source?.ID == inputConnection.ID)
+                .FirstOrDefault(rel => rel.Source?.Id == inputConnection.Id)
                 ?.Target as XmiPoint3D;
 
             if (inputPoint == null) return null;
@@ -142,10 +142,10 @@ namespace XmiSchema.Core.Models
             // Step 2: 在所有其他的 PointConnection 中查找是否有相同坐标的 Point3D（也通过关系查）
             var match = Relationships
                 .OfType<XmiHasPoint3D>()
-                .Where(rel => rel.Source is XmiStructuralPointConnection && rel.Source.ID != inputConnection.ID)
+                .Where(rel => rel.Source is XmiStructuralPointConnection && rel.Source.Id != inputConnection.Id)
                 .FirstOrDefault(rel => ArePointsEqual(rel.Target as XmiPoint3D, inputPoint));
 
-            return match?.Source?.ID;
+            return match?.Source?.Id;
         }
 
         private bool ArePointsEqual(XmiPoint3D? p1, XmiPoint3D? p2, double tolerance = 1e-10)
@@ -200,7 +200,7 @@ namespace XmiSchema.Core.Models
             {
                 // 如果找到匹配的连接，返回已存在的连接
                 return GetEntitiesOfType<XmiStructuralPointConnection>()
-                    .FirstOrDefault(c => c.ID == existingConnectionId) ?? tempConnection;
+                    .FirstOrDefault(c => c.Id == existingConnectionId) ?? tempConnection;
             }
 
             // 检查是否存在具有相同nativeId的楼层
@@ -321,7 +321,7 @@ namespace XmiSchema.Core.Models
             string description,
             XmiStructuralCrossSection crossSection,
             XmiStructuralStorey storey,
-            XmiStructuralCurveMemberTypeEnum curvememberType,
+            XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
             XmiStructuralCurveMemberSystemLineEnum systemLine,
@@ -369,13 +369,13 @@ namespace XmiSchema.Core.Models
             // 检查起始节点是否存在相同点的连接
             var existingBeginNodeId = FindMatchingPointConnectionByPoint3D(beginNode);
             var existingBeginNode = existingBeginNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingBeginNodeId)??beginNode
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId)??beginNode
                 : beginNode;
 
             // 检查结束节点是否存在相同点的连接
             var existingEndNodeId = FindMatchingPointConnectionByPoint3D(endNode);
             var existingEndNode = existingEndNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingEndNodeId)??endNode
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId)??endNode
                 : endNode;
 
             // 创建构件对象
@@ -387,7 +387,7 @@ namespace XmiSchema.Core.Models
                 description,
                 // existingCrossSection,
                 // existingStorey,
-                curvememberType,
+                curveMemberType,
                 // nodes,
                 // segments,
                 systemLine,
@@ -644,7 +644,7 @@ namespace XmiSchema.Core.Models
             {
                 var existingNodeId = FindMatchingPointConnectionByPoint3D(node);
                 return existingNodeId != null
-                    ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.ID == existingNodeId)
+                    ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingNodeId)
                     : node;
             }).ToList();
 

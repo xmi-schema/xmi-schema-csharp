@@ -5,8 +5,8 @@ namespace XmiSchema.Core.Geometries;
 /// </summary>
 public class XmiLine3D : XmiBaseGeometry
 {
-    public XmiPoint3D StartPoint3D { get; set; }
-    public XmiPoint3D EndPoint3D { get; set; }
+    public XmiPoint3D StartPoint { get; set; }
+    public XmiPoint3D EndPoint { get; set; }
 
     /// <summary>
     /// Creates a new <see cref="XmiLine3D"/> suitable for associating with curve members.
@@ -16,20 +16,20 @@ public class XmiLine3D : XmiBaseGeometry
     /// <param name="ifcGuid">Optional IFC GUID.</param>
     /// <param name="nativeId">Native identifier from the authoring system.</param>
     /// <param name="description">Optional description.</param>
-    /// <param name="startPoint3D">Start coordinate.</param>
-    /// <param name="endPoint3D">End coordinate.</param>
+    /// <param name="startPoint">Start coordinate.</param>
+    /// <param name="endPoint">End coordinate.</param>
     public XmiLine3D(
         string id,
         string name,
         string ifcGuid,
         string nativeId,
         string description,
-        XmiPoint3D startPoint3D,
-        XmiPoint3D endPoint3D
+        XmiPoint3D startPoint,
+        XmiPoint3D endPoint
     ) : base(id, name, ifcGuid, nativeId, description)
     {
-        StartPoint3D = startPoint3D;
-        EndPoint3D = endPoint3D;
+        StartPoint = startPoint;
+        EndPoint = endPoint;
         EntityType = nameof(XmiLine3D);
     }
 }

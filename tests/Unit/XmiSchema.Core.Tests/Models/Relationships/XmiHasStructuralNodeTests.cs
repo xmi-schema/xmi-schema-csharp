@@ -19,7 +19,7 @@ public class XmiHasStructuralNodeTests
             nameof(XmiHasStructuralNode),
             "Association");
 
-        Assert.Equal("rel-node", relation.ID);
+        Assert.Equal("rel-node", relation.Id);
         Assert.Equal("AttachedTo", relation.Name);
     }
 
@@ -28,6 +28,6 @@ public class XmiHasStructuralNodeTests
     {
         var relation = new XmiHasStructuralNode(TestModelFactory.CreateCurveMember(), TestModelFactory.CreatePointConnection());
 
-        Assert.False(string.IsNullOrWhiteSpace(relation.ID));
+        Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }
 }

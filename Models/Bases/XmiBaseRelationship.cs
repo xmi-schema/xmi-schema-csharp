@@ -7,13 +7,13 @@ namespace XmiSchema.Core.Relationships;
 /// </summary>
 public class XmiBaseRelationship
 {
-    public string ID { get; set; }
+    public string Id { get; set; }
     public XmiBaseEntity Source { get; set; }
     public XmiBaseEntity Target { get; set; }
     public string Name { get; set; }
-     public string Description { get; set; }
+    public string Description { get; set; }
     public string EntityType { get; set; }
-    public string UmlType{get; set;}
+    public string UmlType { get; set; }
     /// <summary>
     /// Initializes a fully-described relationship.
     /// </summary>
@@ -23,7 +23,7 @@ public class XmiBaseRelationship
     /// <param name="name">Readable label.</param>
     /// <param name="description">Notes for downstream consumers.</param>
     /// <param name="entityType">Type name recorded in the payload.</param>
-    /// <param name="umlTtype">UML stereotype for the edge.</param>
+    /// <param name="umlType">UML stereotype for the edge.</param>
     public XmiBaseRelationship(
         string id,
         XmiBaseEntity source,
@@ -31,16 +31,16 @@ public class XmiBaseRelationship
         string name,
         string description,
         string entityType,
-        string umlTtype
+        string umlType
     )
     {
-        ID = id;
+        Id = id;
         Source = source;
         Target = target;
         Name = string.IsNullOrEmpty(name) ? "Unnamed"  : name;
         Description = string.IsNullOrEmpty(description) ? "" : description;
         EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseRelationship) : entityType;
-        UmlType = string.IsNullOrEmpty(umlTtype)? "": umlTtype;
+        UmlType = string.IsNullOrEmpty(umlType)? "": umlType;
     }
     /// <summary>
     /// Generates a relationship with a new identifier using the provided endpoints.

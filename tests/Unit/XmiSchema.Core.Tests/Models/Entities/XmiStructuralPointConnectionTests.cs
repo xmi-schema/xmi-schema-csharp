@@ -19,7 +19,7 @@ public class XmiStructuralPointConnectionTests
         var point = TestModelFactory.CreatePoint("pt-shared");
 
         a.Point = point;
-        b.Point = new XmiPoint3D(point.ID, point.Name, point.IFCGUID, point.NativeId, point.Description, point.X, point.Y, point.Z);
+        b.Point = new XmiPoint3D(point.Id, point.Name, point.IfcGuid, point.NativeId, point.Description, point.X, point.Y, point.Z);
 
         Assert.True(a.Equals(b));
         Assert.Equal(a.GetHashCode(), b.GetHashCode());
