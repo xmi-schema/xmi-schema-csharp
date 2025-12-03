@@ -1,15 +1,16 @@
 using System;
+using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 
-namespace XmiSchema.Core.Entities
+namespace XmiSchema.Core.Models.Entities.StructuralAnalytical
 {
     /// <summary>
     /// Represents a discrete analytical point that can connect members, nodes, or storey definitions.
     /// </summary>
-    public class XmiStructuralPointConnection : XmiBaseEntity, IEquatable<XmiStructuralPointConnection>
+    public class XmiStructuralPointConnection : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralPointConnection>
     {
-        public XmiStructuralStorey? Storey { get; set; }
+        public XmiStorey? Storey { get; set; }
         public XmiPoint3D? Point { get; set; }
 
         /// <summary>

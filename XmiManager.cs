@@ -9,6 +9,7 @@ using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
 using Newtonsoft.Json;
 using System.Reflection;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Core.Manager
 {
@@ -29,7 +30,7 @@ namespace XmiSchema.Core.Manager
 
         // ========== 添加实体 ==========
         /// <inheritdoc />
-        public void AddXmiStructuralMaterialToModel(int modelIndex, XmiStructuralMaterial material)
+        public void AddXmiStructuralMaterialToModel(int modelIndex, XmiMaterial material)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralMaterial(material);
@@ -64,7 +65,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiStructuralStoreyToModel(int modelIndex, XmiStructuralStorey storey)
+        public void AddXmiStructuralStoreyToModel(int modelIndex, XmiStorey storey)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiStructuralStorey(storey);
@@ -97,7 +98,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasStructuralMaterial relation)
+        public void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasMaterial relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasStructuralMaterial(relation);
@@ -118,7 +119,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey relation)
+        public void AddXmiHasStoreyToModel(int modelIndex, XmiHasStorey relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiHasStorey(relation);
@@ -198,7 +199,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             XmiPoint3D point
         )
         {
@@ -227,7 +228,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStructuralMaterial CreateStructuralMaterial(
+        public XmiMaterial CreateStructuralMaterial(
             int modelIndex,
             string id,
             string name,
@@ -259,7 +260,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial? material,
+            XmiMaterial? material,
             XmiShapeEnum shape,
             IXmiShapeParameters parameters,
             double area,
@@ -287,7 +288,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStructuralStorey CreateStructuralStorey(
+        public XmiStorey CreateStructuralStorey(
             int modelIndex,
             string id,
             string name,
@@ -318,7 +319,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -361,12 +362,12 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial material,
+            XmiMaterial material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,

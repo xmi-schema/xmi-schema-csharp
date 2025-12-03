@@ -3,20 +3,20 @@ using XmiSchema.Core.Relationships;
 namespace XmiSchema.Core.Tests.Models.Relationships;
 
 /// <summary>
-/// Ensures <see cref="XmiHasStructuralStorey"/> behaves as expected.
+/// Ensures <see cref="XmiHasStorey"/> behaves as expected.
 /// </summary>
 public class XmiHasStructuralStoreyTests
 {
     [Fact]
     public void Constructor_AssignsMetadata()
     {
-        var relation = new XmiHasStructuralStorey(
+        var relation = new XmiHasStorey(
             "rel-storey",
             TestModelFactory.CreatePointConnection(),
             TestModelFactory.CreateStorey(),
             "ContainedIn",
             "desc",
-            nameof(XmiHasStructuralStorey),
+            nameof(XmiHasStorey),
             "Association");
 
         Assert.Equal("rel-storey", relation.Id);
@@ -26,7 +26,7 @@ public class XmiHasStructuralStoreyTests
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var relation = new XmiHasStructuralStorey(TestModelFactory.CreatePointConnection(), TestModelFactory.CreateStorey());
+        var relation = new XmiHasStorey(TestModelFactory.CreatePointConnection(), TestModelFactory.CreateStorey());
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }

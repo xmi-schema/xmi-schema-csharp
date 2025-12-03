@@ -1,12 +1,13 @@
 using System;
+using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Models plates, slabs, and other surface members in the XMI graph with system plane and local axes metadata.
 /// </summary>
-public class XmiStructuralSurfaceMember : XmiBaseEntity, IEquatable<XmiStructuralSurfaceMember>
+public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralSurfaceMember>
 {
     // public XmiStructuralMaterial Material { get; set; }
     public XmiStructuralSurfaceMemberTypeEnum SurfaceMemberType { get; set; }

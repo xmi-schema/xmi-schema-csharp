@@ -5,6 +5,7 @@ using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Core.Tests.Models.GraphModel;
 
@@ -40,7 +41,7 @@ public class XmiModelTests
         var second = model.CreateStructuralMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiStructuralMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
 
         Assert.Same(first, second);
-        Assert.Single(model.Entities.OfType<XmiStructuralMaterial>());
+        Assert.Single(model.Entities.OfType<XmiMaterial>());
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ public class XmiModelTests
         var connection = model.CreateStructurePointConnection("pc-1", "Node", "ifc", "native", "desc", storey, point);
 
         Assert.Contains(model.Entities.OfType<XmiStructuralPointConnection>(), e => e.Id == connection.Id);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == connection && r.Target == storey);
+        Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == connection && r.Target == storey);
         Assert.Contains(model.Relationships.OfType<XmiHasPoint3D>(), r => r.Source == connection && r.Target == point);
     }
 
@@ -93,7 +94,7 @@ public class XmiModelTests
             0.0009);
 
         Assert.Contains(model.Entities.OfType<XmiCrossSection>(), e => e.Id == section.Id);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralMaterial>(), r => r.Source == section && r.Target.NativeId == material.NativeId);
+        Assert.Contains(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == section && r.Target.NativeId == material.NativeId);
     }
 
     /// <summary>
@@ -141,7 +142,7 @@ public class XmiModelTests
 
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member && r.Target == crossSection);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == member && r.Target == storey);
+        Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == member && r.Target == storey);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralNode>().Count());
     }
 
@@ -178,7 +179,7 @@ public class XmiModelTests
             0.3);
 
         Assert.Contains(model.Entities.OfType<XmiStructuralSurfaceMember>(), e => e.Id == member.Id);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == member && r.Target.NativeId == storey.NativeId);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralMaterial>(), r => r.Source == member && r.Target.NativeId == material.NativeId);
+        Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == member && r.Target.NativeId == storey.NativeId);
+        Assert.Contains(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == member && r.Target.NativeId == material.NativeId);
     }
 }

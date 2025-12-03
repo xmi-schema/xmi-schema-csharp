@@ -1,13 +1,14 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using XmiSchema.Core.Enums;
+using XmiSchema.Core.Entities;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Represents a linear structural element (beam, column, brace) in the XMI graph, storing alignment data and offsets.
 /// </summary>
-public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralCurveMember>
+public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralCurveMember>
 {
     // public XmiCrossSection CrossSection { get; set; }
     // public XmiStructuralStorey Storey { get; set; }

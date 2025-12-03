@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Entities;
 /// <summary>
 /// Describes a structural material that can be referenced by other XMI entities, including the mechanical constants used during analysis.
 /// </summary>
-public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMaterial>
+public class XmiMaterial : XmiBaseEntity, IEquatable<XmiMaterial>
 {
     public XmiStructuralMaterialTypeEnum MaterialType { get; set; }
     public double Grade { get; set; }
@@ -21,7 +21,7 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
     public double ThermalCoefficient { get; set; }
 
     /// <summary>
-    /// Initializes a new <see cref="XmiStructuralMaterial"/> with the physical properties required for Cross Model Information analysis.
+    /// Initializes a new <see cref="XmiMaterial"/> with the physical properties required for Cross Model Information analysis.
     /// </summary>
     /// <param name="id">Unique identifier inside the XMI document.</param>
     /// <param name="name">Human readable label for the material; falls back to <paramref name="id"/>.</param>
@@ -35,7 +35,7 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
         /// <param name="shearModulus">Shear modulus (G) string representation.</param>
     /// <param name="poissonRatio">Poisson ratio value.</param>
     /// <param name="thermalCoefficient">Thermal expansion coefficient.</param>
-    public XmiStructuralMaterial(
+    public XmiMaterial(
         string id,
         string name,
         string ifcGuid,
@@ -48,7 +48,7 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
         string shearModulus,
         string poissonRatio,
         double thermalCoefficient
-    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralMaterial))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiMaterial), XmiBaseEntityDomainEnum.Shared)
     {
         MaterialType = materialType;
         Grade = grade;
@@ -59,13 +59,13 @@ public class XmiStructuralMaterial : XmiBaseEntity, IEquatable<XmiStructuralMate
         ThermalCoefficient = thermalCoefficient;
     }
 
-    public bool Equals(XmiStructuralMaterial? other)
+    public bool Equals(XmiMaterial? other)
     {
         if (other is null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object? obj) => Equals(obj as XmiStructuralMaterial);
+    public override bool Equals(object? obj) => Equals(obj as XmiMaterial);
 
     public override int GetHashCode() =>
         NativeId?.ToLowerInvariant().GetHashCode() ?? 0;

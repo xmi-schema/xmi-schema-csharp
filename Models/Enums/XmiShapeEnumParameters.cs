@@ -48,7 +48,7 @@ public static class XmiShapeEnumParameters
 
     public static IReadOnlyDictionary<XmiShapeEnum, XmiShapeParameterDefinition> Definitions => ShapeParameters;
 
-    public static bool TryGetParameters(XmiShapeEnum shape, out XmiShapeParameterDefinition definition) =>
+    public static bool TryGetParameters(XmiShapeEnum shape, out XmiShapeParameterDefinition? definition) =>
         ShapeParameters.TryGetValue(shape, out definition);
 }
 

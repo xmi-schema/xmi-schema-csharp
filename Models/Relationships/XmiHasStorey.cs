@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Relationships;
 /// <summary>
 /// Associates entities, such as point connections, to the storey they belong to.
 /// </summary>
-public class XmiHasStructuralStorey : XmiBaseRelationship
+public class XmiHasStorey : XmiBaseRelationship
 {
     /// <summary>
     /// Creates a storey relationship capturing all serialization metadata.
@@ -17,16 +17,14 @@ public class XmiHasStructuralStorey : XmiBaseRelationship
     /// <param name="name">Label for the relationship.</param>
     /// <param name="description">Notes describing the link.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
-    public XmiHasStructuralStorey(
+    public XmiHasStorey(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasStructuralStorey), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasStorey), "Association")
     {
     }
 
@@ -35,10 +33,10 @@ public class XmiHasStructuralStorey : XmiBaseRelationship
     /// </summary>
     /// <param name="source">Entity positioned on the storey.</param>
     /// <param name="target">Storey entity.</param>
-    public XmiHasStructuralStorey(
+    public XmiHasStorey(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasStructuralStorey), "Association")
+    ) : base(source, target, nameof(XmiHasStorey), "Association")
     {
     }
 }

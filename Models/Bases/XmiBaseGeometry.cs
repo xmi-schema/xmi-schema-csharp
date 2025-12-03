@@ -1,4 +1,5 @@
 using XmiSchema.Core.Entities;
+using XmiSchema.Core.Enums;
 
 
 namespace XmiSchema.Core.Geometries;
@@ -21,11 +22,12 @@ public abstract class XmiBaseGeometry : XmiBaseEntity
         string id,
         string name,
         string ifcGuid,
-        string nativeId, 
+        string nativeId,
         string description,
         string? entityType = null)
         : base(id, name, ifcGuid, nativeId, description,
-               string.IsNullOrEmpty(entityType) ? nameof(XmiBaseGeometry) : entityType)
+               string.IsNullOrEmpty(entityType) ? nameof(XmiBaseGeometry) : entityType,
+               XmiBaseEntityDomainEnum.Geometry)
     {
     }
 }

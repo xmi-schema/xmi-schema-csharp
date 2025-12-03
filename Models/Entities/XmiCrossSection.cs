@@ -1,6 +1,7 @@
 using System;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Parameters;
+using XmiSchema.Core.Geometries;
 
 
 namespace XmiSchema.Core.Entities;
@@ -8,7 +9,7 @@ namespace XmiSchema.Core.Entities;
 /// <summary>
 /// Captures geometric and analytical properties of a structural cross-section shared by curve or surface members.
 /// </summary>
-public class XmiCrossSection : XmiBaseEntity, IEquatable<XmiCrossSection>
+public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
 {
     // public required XmiStructuralMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }

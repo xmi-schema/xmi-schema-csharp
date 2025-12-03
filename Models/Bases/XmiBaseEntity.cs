@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities
 {
@@ -25,6 +27,10 @@ namespace XmiSchema.Core.Entities
         [JsonProperty(Order = 5)]
         public string EntityType { get; set; }
 
+        [JsonProperty(Order = 6)]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public XmiBaseEntityDomainEnum Type { get; set; }
+
         // 带参数构造函数
         /// <summary>
         /// Initializes the entity with the identifiers required for serialization.
@@ -35,13 +41,15 @@ namespace XmiSchema.Core.Entities
         /// <param name="nativeId">Identifier from the native source system.</param>
         /// <param name="description">Describes the entity purpose.</param>
         /// <param name="entityType">Type hint emitted in payloads.</param>
+        /// <param name="type">Domain classification for the entity.</param>
         public XmiBaseEntity(
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            string entityType
+            string entityType,
+            XmiBaseEntityDomainEnum type
         )
         {
             Id = id;
@@ -50,6 +58,7 @@ namespace XmiSchema.Core.Entities
             NativeId = nativeId;
             Description = description;
             EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseEntity) : entityType;
+            Type = type;
         }
     }
 }

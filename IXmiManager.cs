@@ -4,6 +4,7 @@ using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Parameters;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Core.Manager
 {
@@ -22,7 +23,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the <see cref="XmiModel"/> in <see cref="Models"/>.</param>
         /// <param name="material">Material entity that should be appended to the model.</param>
-        void AddXmiStructuralMaterialToModel(int modelIndex, XmiStructuralMaterial material);
+        void AddXmiStructuralMaterialToModel(int modelIndex, XmiMaterial material);
 
         /// <summary>
         /// Adds a structural cross-section to the requested model.
@@ -57,7 +58,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="storey">Storey entity to add.</param>
-        void AddXmiStructuralStoreyToModel(int modelIndex, XmiStructuralStorey storey);
+        void AddXmiStructuralStoreyToModel(int modelIndex, XmiStorey storey);
 
         /// <summary>
         /// Adds a point entity to the requested model.
@@ -85,7 +86,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="relation">Relationship referencing the structural material.</param>
-        void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasStructuralMaterial relation);
+        void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasMaterial relation);
 
         /// <summary>
         /// Adds a relationship that links a structural node (point connection) to other entities.
@@ -106,7 +107,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="relation">Relationship referencing the storey.</param>
-        void AddXmiHasStoreyToModel(int modelIndex, XmiHasStructuralStorey relation);
+        void AddXmiHasStoreyToModel(int modelIndex, XmiHasStorey relation);
 
         /// <summary>
         /// Retrieves entities of a specific type from the target model.
@@ -166,8 +167,8 @@ namespace XmiSchema.Core.Manager
         /// <param name="gModulus">Shear modulus string.</param>
         /// <param name="poissonRatio">Poisson ratio.</param>
         /// <param name="thermalCoefficient">Thermal coefficient.</param>
-        /// <returns>The created <see cref="XmiStructuralMaterial"/> instance.</returns>
-        XmiStructuralMaterial CreateStructuralMaterial(
+        /// <returns>The created <see cref="XmiMaterial"/> instance.</returns>
+        XmiMaterial CreateStructuralMaterial(
             int modelIndex,
             string id,
             string name,
@@ -213,7 +214,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial? material,
+            XmiMaterial? material,
             XmiShapeEnum shape,
             IXmiShapeParameters parameters,
             double area,
@@ -242,8 +243,8 @@ namespace XmiSchema.Core.Manager
         /// <param name="storeyHorizontalReactionX">Horizontal reaction along x-axis.</param>
         /// <param name="storeyHorizontalReactionY">Horizontal reaction along y-axis.</param>
         /// <param name="storeyVerticalReaction">Vertical reaction.</param>
-        /// <returns>The created <see cref="XmiStructuralStorey"/>.</returns>
-        XmiStructuralStorey CreateStructuralStorey(
+        /// <returns>The created <see cref="XmiStorey"/>.</returns>
+        XmiStorey CreateStructuralStorey(
             int modelIndex,
             string id,
             string name,
@@ -295,7 +296,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -346,12 +347,12 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterial material,
+            XmiMaterial material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,
@@ -380,7 +381,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralStorey storey,
+            XmiStorey storey,
             XmiPoint3D point
         );
 

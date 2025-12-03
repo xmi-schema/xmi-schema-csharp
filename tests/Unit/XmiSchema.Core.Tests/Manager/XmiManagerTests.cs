@@ -24,7 +24,7 @@ public class XmiManagerTests
 
         manager.AddXmiStructuralMaterialToModel(0, material);
 
-        Assert.Contains(manager.Models[0].Entities.OfType<XmiStructuralMaterial>(), m => m.Id == "mat-new");
+        Assert.Contains(manager.Models[0].Entities.OfType<XmiMaterial>(), m => m.Id == "mat-new");
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ public class XmiManagerTests
         var storey = TestModelFactory.CreateStorey("storey-lookup");
         manager.AddXmiStructuralStoreyToModel(0, storey);
 
-        var result = manager.GetEntityById<XmiStructuralStorey>(0, storey.Id);
+        var result = manager.GetEntityById<XmiStorey>(0, storey.Id);
 
         Assert.NotNull(result);
         Assert.Equal(storey.Id, result!.Id);
@@ -78,7 +78,7 @@ public class XmiManagerTests
         var connection = TestModelFactory.CreatePointConnection();
         manager.AddXmiStructuralStoreyToModel(0, storey);
         manager.AddXmiStructuralPointConnectionToModel(0, connection);
-        manager.AddXmiHasStoreyToModel(0, new XmiHasStructuralStorey(connection, storey));
+        manager.AddXmiHasStoreyToModel(0, new XmiHasStorey(connection, storey));
 
         var json = manager.BuildJson(0);
 

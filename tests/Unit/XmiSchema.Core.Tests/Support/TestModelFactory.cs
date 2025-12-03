@@ -4,6 +4,7 @@ using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 
 namespace XmiSchema.Core.Tests.Support;
@@ -13,7 +14,7 @@ namespace XmiSchema.Core.Tests.Support;
 /// </summary>
 internal static class TestModelFactory
 {
-    internal static XmiStructuralMaterial CreateMaterial(string id = "mat-1") =>
+    internal static XmiMaterial CreateMaterial(string id = "mat-1") =>
         new(id,
             $"Material {id}",
             "ifc-guid",
@@ -46,7 +47,7 @@ internal static class TestModelFactory
             0.0008,
             0.0009);
 
-    internal static XmiStructuralStorey CreateStorey(string id = "str-1") =>
+    internal static XmiStorey CreateStorey(string id = "str-1") =>
         new(id,
             $"Storey {id}",
             "ifc-guid",
@@ -121,7 +122,7 @@ internal static class TestModelFactory
             "0,0,1",
             0.3);
 
-    internal static XmiStructuralUnit CreateUnit(string id = "unit-1") =>
+    internal static XmiUnit CreateUnit(string id = "unit-1") =>
         new(id,
             $"Unit {id}",
             "ifc-guid",

@@ -1,5 +1,5 @@
-using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Core.Tests.Models.Entities;
 
