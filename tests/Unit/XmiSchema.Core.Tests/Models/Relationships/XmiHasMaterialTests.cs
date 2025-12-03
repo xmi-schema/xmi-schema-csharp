@@ -5,7 +5,7 @@ namespace XmiSchema.Core.Tests.Models.Relationships;
 /// <summary>
 /// Tests <see cref="XmiHasMaterial"/> constructors.
 /// </summary>
-public class XmiHasStructuralMaterialTests
+public class XmiHasMaterialTests
 {
     [Fact]
     public void Constructor_WithExplicitValues_AssignsMetadata()

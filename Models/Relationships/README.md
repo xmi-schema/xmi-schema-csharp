@@ -8,9 +8,9 @@ Relationship entities inherit from `XmiBaseRelationship` and form the edges of t
 | `XmiHasLine3D` | Specialised helper for line references. | `XmiStructuralCurveMember` → `XmiLine3D` |
 | `XmiHasPoint3D` | Connects point connections to coordinates. | `XmiStructuralPointConnection` → `XmiPoint3D` |
 | `XmiHasSegment` | Links curve members to their `XmiSegment` definitions. | `XmiStructuralCurveMember` → `XmiSegment` |
-| `XmiHasStructuralMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiStructuralMaterial` |
+| `XmiHasMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiMaterial` |
 | `XmiHasStructuralNode` | Declares a member’s analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
 | `XmiHasCrossSection` | Specifies which cross-section a member uses. | `XmiStructuralCurveMember` → `XmiCrossSection` |
-| `XmiHasStructuralStorey` | Places an entity on a storey level. | Point connection → `XmiStructuralStorey` |
+| `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStructuralStorey` |
 
 Whenever you add new entity types, introduce matching relationships so consuming systems can navigate the graph. Keep constructors consistent with the `<id, source, target, ...>` signature and cover them with unit tests in `tests/XmiSchema.Core.Tests/Relationships`.*** End Patch

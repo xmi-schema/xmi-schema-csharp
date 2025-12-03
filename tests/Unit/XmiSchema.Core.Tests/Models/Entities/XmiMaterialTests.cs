@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Tests.Models.Entities;
 /// <summary>
 /// Validates the material entity used throughout the schema.
 /// </summary>
-public class XmiStructuralMaterialTests
+public class XmiMaterialTests
 {
     /// <summary>
     /// Ensures constructor parameters are assigned to their respective properties.

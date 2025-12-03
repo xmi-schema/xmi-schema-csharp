@@ -11,7 +11,7 @@ namespace XmiSchema.Core.Entities;
 /// </summary>
 public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
 {
-    // public required XmiStructuralMaterial Material { get; set; }
+    // public required XmiMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }
     public IXmiShapeParameters Parameters { get; set; }
     public double Area { get; set; }
@@ -51,7 +51,7 @@ public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
         string ifcguid,
         string nativeId,
         string description,
-        // XmiStructuralMaterial material,
+        // XmiMaterial material,
         XmiShapeEnum shape,
         IXmiShapeParameters parameters,
         double area,

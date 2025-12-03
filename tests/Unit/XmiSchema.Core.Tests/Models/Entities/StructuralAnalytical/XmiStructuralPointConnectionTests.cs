@@ -1,7 +1,7 @@
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 
-namespace XmiSchema.Core.Tests.Models.Entities;
+namespace XmiSchema.Core.Tests.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Tests the behavior of <see cref="XmiStructuralPointConnection"/> instances.

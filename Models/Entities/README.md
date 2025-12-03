@@ -7,7 +7,7 @@ This folder contains the business objects that describe the built-environment gr
 | `XmiSegment` | Represents a sub-span along a curve member with a positional offset and segment type. | Attach to `XmiStructuralCurveMember` via `XmiHasSegment` when detailed geometry is required. |
 | `XmiCrossSection` | Holds all geometric and analytical properties for a profile (area, torsion, section moduli). | Assign to curve or surface members to standardise their section definition. |
 | `XmiStructuralCurveMember` | Beam/column/bracing equivalent with offsets, system line, and fixities. | Use when modeling linear members extracted from authoring tools. |
-| `XmiStructuralMaterial` | Material definition with grade, density, and stiffness constants. | Shared across sections or members so consumers can look up properties. |
+| `XmiMaterial` | Material definition with grade, density, and stiffness constants. | Shared across sections or members so consumers can look up properties. |
 | `XmiStructuralPointConnection` | Analytical node that ties members and storeys together. | Create through `XmiModel.CreateStructurePointConnection` to automatically reuse identical coordinates. |
 | `XmiStructuralStorey` | Represents a level with elevation, mass, and reaction info. | Link point connections or surfaces to storeys for vertical organization. |
 | `XmiStructuralSurfaceMember` | Plate, slab, or wall element capturing thickness, axes, and plane metadata. | Use to model surface-based analytical elements. |

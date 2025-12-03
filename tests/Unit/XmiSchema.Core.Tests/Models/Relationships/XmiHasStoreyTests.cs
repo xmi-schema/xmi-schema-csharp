@@ -5,7 +5,7 @@ namespace XmiSchema.Core.Tests.Models.Relationships;
 /// <summary>
 /// Ensures <see cref="XmiHasStorey"/> behaves as expected.
 /// </summary>
-public class XmiHasStructuralStoreyTests
+public class XmiHasStoreyTests
 {
     [Fact]
     public void Constructor_AssignsMetadata()
@@ -16,8 +16,7 @@ public class XmiHasStructuralStoreyTests
             TestModelFactory.CreateStorey(),
             "ContainedIn",
             "desc",
-            nameof(XmiHasStorey),
-            "Association");
+            nameof(XmiHasStorey));
 
         Assert.Equal("rel-storey", relation.Id);
         Assert.Equal("ContainedIn", relation.Name);

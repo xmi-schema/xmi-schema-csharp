@@ -9,7 +9,7 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
 /// </summary>
 public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralSurfaceMember>
 {
-    // public XmiStructuralMaterial Material { get; set; }
+    // public XmiMaterial Material { get; set; }
     public XmiStructuralSurfaceMemberTypeEnum SurfaceMemberType { get; set; }
     public double Thickness { get; set; }
     public XmiStructuralSurfaceMemberSystemPlaneEnum SystemPlane { get; set; }
@@ -47,7 +47,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
         string ifcguid,
         string nativeId,
         string description,
-        // XmiStructuralMaterial material,
+        // XmiMaterial material,
         XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
         double thickness,
         XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,

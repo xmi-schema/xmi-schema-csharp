@@ -4,6 +4,7 @@ using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
+using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 
@@ -151,6 +152,34 @@ internal static class TestModelFactory
             CreatePoint("arc-end", 7, 8, 9),
             CreatePoint("arc-center", 3, 3, 3),
             2.5f);
+
+    internal static XmiBeam CreateBeam(string id = "beam-1") =>
+        new(id,
+            $"Beam {id}",
+            "ifc-guid",
+            id.ToUpperInvariant(),
+            "Steel beam");
+
+    internal static XmiColumn CreateColumn(string id = "col-1") =>
+        new(id,
+            $"Column {id}",
+            "ifc-guid",
+            id.ToUpperInvariant(),
+            "Concrete column");
+
+    internal static XmiSlab CreateSlab(string id = "slab-1") =>
+        new(id,
+            $"Slab {id}",
+            "ifc-guid",
+            id.ToUpperInvariant(),
+            "Concrete slab");
+
+    internal static XmiWall CreateWall(string id = "wall-1") =>
+        new(id,
+            $"Wall {id}",
+            "ifc-guid",
+            id.ToUpperInvariant(),
+            "Concrete wall");
 
     internal static XmiModel CreateModelWithBasics()
     {

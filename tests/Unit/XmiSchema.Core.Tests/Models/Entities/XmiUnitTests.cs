@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Tests.Models.Entities;
 /// <summary>
 /// Exercises the lightweight unit mapping entity.
 /// </summary>
-public class XmiStructuralUnitTests
+public class XmiUnitTests
 {
     /// <summary>
     /// Confirms constructor arguments are reflected through the public properties.

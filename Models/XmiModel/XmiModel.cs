@@ -131,7 +131,7 @@ namespace XmiSchema.Core.Models
         /// Adds a material relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStructuralMaterial(XmiHasStructuralMaterial relation)
+        public void AddXmiHasStructuralMaterial(XmiHasMaterial relation)
         {
             Relationships.Add(relation);
         }
@@ -158,7 +158,7 @@ namespace XmiSchema.Core.Models
         /// Adds a storey relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStorey(XmiHasStructuralStorey relation)
+        public void AddXmiHasStorey(XmiHasStorey relation)
         {
             Relationships.Add(relation);
         }
@@ -262,7 +262,7 @@ namespace XmiSchema.Core.Models
 
                 AddXmiStructuralPointConnection(connection);
 
-                var storeyRelation = new XmiHasStructuralStorey(connection, existingStorey);
+                var storeyRelation = new XmiHasStorey(connection, existingStorey);
                 AddXmiHasStorey(storeyRelation);
 
                 if (existingPoint != null)
@@ -423,7 +423,7 @@ namespace XmiSchema.Core.Models
                 AddXmiStructuralCurveMember(curveMember);
 
                 var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
-                var storeyRelation = new XmiHasStructuralStorey(curveMember, existingStorey);
+                var storeyRelation = new XmiHasStorey(curveMember, existingStorey);
                 var beginNodeRelation = new XmiHasStructuralNode(curveMember, existingBeginNode);
                 var endNodeRelation = new XmiHasStructuralNode(curveMember, existingEndNode);
 
@@ -506,7 +506,7 @@ namespace XmiSchema.Core.Models
 
                 if (existingMaterial != null)
                 {
-                    var materialRelation = new XmiHasStructuralMaterial(crossSection, existingMaterial);
+                    var materialRelation = new XmiHasMaterial(crossSection, existingMaterial);
                     AddXmiHasStructuralMaterial(materialRelation);
                 }
 
@@ -689,11 +689,11 @@ namespace XmiSchema.Core.Models
 
                 if (existingMaterial != null)
                 {
-                    var materialRelation = new XmiHasStructuralMaterial(surfaceMember, existingMaterial);
+                    var materialRelation = new XmiHasMaterial(surfaceMember, existingMaterial);
                     AddXmiHasStructuralMaterial(materialRelation);
                 }
 
-                var storeyRelation = new XmiHasStructuralStorey(surfaceMember, existingStorey);
+                var storeyRelation = new XmiHasStorey(surfaceMember, existingStorey);
                 AddXmiHasStorey(storeyRelation);
 
                 return surfaceMember;

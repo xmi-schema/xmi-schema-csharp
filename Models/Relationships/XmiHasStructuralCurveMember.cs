@@ -19,8 +19,8 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     /// <param name="umlType">UML stereotype.</param>
     public XmiHasStructuralCurveMember(
         string id,
-        XmiPhysicalEntity source,
-        XmiStructuralAnalyticalEntity target,
+        XmiBasePhysicalEntity source,
+        XmiBaseStructuralAnalyticalEntity target,
         string name,
         string description,
         string entityName,
@@ -35,8 +35,8 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     /// <param name="source">Physical entity (e.g., XmiBeam, XmiColumn).</param>
     /// <param name="target">Structural analytical curve member entity.</param>
     public XmiHasStructuralCurveMember(
-        XmiPhysicalEntity source,
-        XmiStructuralAnalyticalEntity target
+        XmiBasePhysicalEntity source,
+        XmiBaseStructuralAnalyticalEntity target
     ) : base(source, target, nameof(XmiHasStructuralCurveMember), "Association")
     {
     }
