@@ -1,4 +1,6 @@
+using System;
 using XmiSchema.Core.Enums;
+using XmiSchema.Core.Parameters;
 
 
 namespace XmiSchema.Core.Entities;
@@ -6,11 +8,11 @@ namespace XmiSchema.Core.Entities;
 /// <summary>
 /// Captures geometric and analytical properties of a structural cross-section shared by curve or surface members.
 /// </summary>
-public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructuralCrossSection>
+public class XmiCrossSection : XmiBaseEntity, IEquatable<XmiCrossSection>
 {
     // public required XmiStructuralMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }
-    public string[] Parameters { get; set; }
+    public IXmiShapeParameters Parameters { get; set; }
     public double Area { get; set; }
     public double SecondMomentOfAreaXAxis { get; set; }
     public double SecondMomentOfAreaYAxis { get; set; }
@@ -23,7 +25,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     public double TorsionalConstant { get; set; }
 
     /// <summary>
-    /// Initializes a new <see cref="XmiStructuralCrossSection"/> with the inputs consumed by the XMI graph.
+    /// Initializes a new <see cref="XmiCrossSection"/> with the inputs consumed by the XMI graph.
     /// </summary>
     /// <param name="id">Unique local identifier.</param>
     /// <param name="name">Human readable name for reports.</param>
@@ -31,7 +33,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     /// <param name="nativeId">Source-system identifier.</param>
     /// <param name="description">Explanation of origin or use.</param>
     /// <param name="shape">Generic shape classification (I, T, L, etc.).</param>
-    /// <param name="parameters">Shape-specific parameters such as flange widths.</param>
+    /// <param name="parameters">Shape-specific parameter object.</param>
     /// <param name="area">Cross-sectional area.</param>
     /// <param name="secondMomentOfAreaXAxis">Second moment of area about the local X axis.</param>
     /// <param name="secondMomentOfAreaYAxis">Second moment of area about the local Y axis.</param>
@@ -42,7 +44,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     /// <param name="plasticModulusXAxis">Plastic section modulus about X.</param>
     /// <param name="plasticModulusYAxis">Plastic section modulus about Y.</param>
     /// <param name="torsionalConstant">Torsional constant (J).</param>
-    public XmiStructuralCrossSection(
+    public XmiCrossSection(
         string id,
         string name,
         string ifcguid,
@@ -50,7 +52,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         string description,
         // XmiStructuralMaterial material,
         XmiShapeEnum shape,
-        string[] parameters,
+        IXmiShapeParameters parameters,
         double area,
         double secondMomentOfAreaXAxis,
         double secondMomentOfAreaYAxis,
@@ -61,12 +63,20 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         double plasticModulusXAxis,
         double plasticModulusYAxis,
         double torsionalConstant
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCrossSection))
+    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiCrossSection))
     {
 
         // Material = material;
+        if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+
+        if (parameters.Shape != shape)
+        {
+            throw new ArgumentException($"Parameter set is defined for {parameters.Shape} but {shape} was requested.", nameof(parameters));
+        }
+
         Shape = shape;
         Parameters = parameters;
+        Parameters.Validate();
         Area = area;
         SecondMomentOfAreaXAxis = secondMomentOfAreaXAxis;
         SecondMomentOfAreaYAxis = secondMomentOfAreaYAxis;
@@ -79,13 +89,13 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         TorsionalConstant = torsionalConstant;
     }
 
-    public bool Equals(XmiStructuralCrossSection? other)
+    public bool Equals(XmiCrossSection? other)
     {
         if (other is null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object? obj) => Equals(obj as XmiStructuralCrossSection);
+    public override bool Equals(object? obj) => Equals(obj as XmiCrossSection);
 
     public override int GetHashCode() => NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
 }

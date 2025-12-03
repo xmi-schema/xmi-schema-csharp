@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
+using XmiSchema.Core.Parameters;
 
 namespace XmiSchema.Core.Tests.Models.GraphModel;
 
@@ -80,7 +80,7 @@ public class XmiModelTests
             "desc",
             material,
             XmiShapeEnum.Rectangular,
-            new[] { "0.3", "0.6" },
+            new RectangularShapeParameters(0.3, 0.6),
             0.18,
             0.002,
             0.003,
@@ -92,7 +92,7 @@ public class XmiModelTests
             0.0008,
             0.0009);
 
-        Assert.Contains(model.Entities.OfType<XmiStructuralCrossSection>(), e => e.Id == section.Id);
+        Assert.Contains(model.Entities.OfType<XmiCrossSection>(), e => e.Id == section.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralMaterial>(), r => r.Source == section && r.Target.NativeId == material.NativeId);
     }
 
@@ -107,7 +107,7 @@ public class XmiModelTests
         var storey = TestModelFactory.CreateStorey();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
-        model.AddXmiStructuralCrossSection(crossSection);
+        model.AddXmiCrossSection(crossSection);
         model.AddXmiStructuralStorey(storey);
         model.AddXmiStructuralPointConnection(beginNode);
         model.AddXmiStructuralPointConnection(endNode);
@@ -140,7 +140,7 @@ public class XmiModelTests
             "Pinned");
 
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
-        Assert.Contains(model.Relationships.OfType<XmiHasStructuralCrossSection>(), r => r.Source == member && r.Target == crossSection);
+        Assert.Contains(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member && r.Target == crossSection);
         Assert.Contains(model.Relationships.OfType<XmiHasStructuralStorey>(), r => r.Source == member && r.Target == storey);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralNode>().Count());
     }

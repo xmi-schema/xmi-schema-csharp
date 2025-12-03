@@ -4,6 +4,7 @@ using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
+using XmiSchema.Core.Parameters;
 
 var manager = new XmiManager();
 manager.Models.Add(new XmiModel());
@@ -52,7 +53,7 @@ var crossSection = manager.CreateStructuralCrossSection(
     "Column section",
     material,
     XmiShapeEnum.Rectangular,
-    new[] { "0.4", "0.4" },
+    new RectangularShapeParameters(0.4, 0.4),
     area: 0.16,
     secondMomentOfAreaXAxis: 0.0021,
     secondMomentOfAreaYAxis: 0.0021,
