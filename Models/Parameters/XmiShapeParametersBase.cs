@@ -15,7 +15,7 @@ public abstract class XmiShapeParametersBase : IXmiShapeParameters
     protected XmiShapeParametersBase(XmiShapeEnum shape, IDictionary<string, double> parameters)
     {
         Shape = shape;
-        values = new ReadOnlyDictionary<string, double>(new Dictionary<string, double>(parameters));
+        values = new ReadOnlyDictionary<string, double>(Sanitize(parameters));
     }
 
     public XmiShapeEnum Shape { get; }
@@ -32,7 +32,28 @@ public abstract class XmiShapeParametersBase : IXmiShapeParameters
         var dict = new Dictionary<string, double>(entries.Length, StringComparer.OrdinalIgnoreCase);
         foreach (var (key, value) in entries)
         {
+            if (value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(entries), key, "Shape parameters must be non-negative.");
+            }
+
             dict[key] = value;
+        }
+
+        return dict;
+    }
+
+    private static IDictionary<string, double> Sanitize(IDictionary<string, double> source)
+    {
+        var dict = new Dictionary<string, double>(source.Count, StringComparer.OrdinalIgnoreCase);
+        foreach (var kvp in source)
+        {
+            if (kvp.Value < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(source), kvp.Key, "Shape parameters must be non-negative.");
+            }
+
+            dict[kvp.Key] = kvp.Value;
         }
 
         return dict;
