@@ -3,30 +3,30 @@ using XmiSchema.Core.Relationships;
 namespace XmiSchema.Core.Tests.Models.Relationships;
 
 /// <summary>
-/// Validates <see cref="XmiHasStructuralCrossSection"/>.
+/// Validates <see cref="XmiHasCrossSection"/>.
 /// </summary>
-public class XmiHasStructuralCrossSectionTests
+public class XmiHasCrossSectionTests
 {
     [Fact]
     public void Constructor_AssignsMetadata()
     {
-        var relation = new XmiHasStructuralCrossSection(
+        var relation = new XmiHasCrossSection(
             "rel-sec",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreateCrossSection(),
             "Uses",
             "desc",
-            nameof(XmiHasStructuralCrossSection),
+            nameof(XmiHasCrossSection),
             "Association");
 
         Assert.Equal("rel-sec", relation.Id);
-        Assert.Equal(nameof(XmiHasStructuralCrossSection), relation.EntityType);
+        Assert.Equal(nameof(XmiHasCrossSection), relation.EntityType);
     }
 
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var relation = new XmiHasStructuralCrossSection(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCrossSection());
+        var relation = new XmiHasCrossSection(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCrossSection());
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }

@@ -27,7 +27,7 @@ internal static class TestModelFactory
             "0.3",
             1.2);
 
-    internal static XmiStructuralCrossSection CreateCrossSection(string id = "sec-1") =>
+    internal static XmiCrossSection CreateCrossSection(string id = "sec-1") =>
         new(id,
             $"Section {id}",
             "ifc-guid",

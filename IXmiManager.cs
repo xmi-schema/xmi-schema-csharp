@@ -29,7 +29,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the model receiving the cross-section.</param>
         /// <param name="crossSection">Cross-section entity to add.</param>
-        void AddXmiStructuralCrossSectionToModel(int modelIndex, XmiStructuralCrossSection crossSection);
+        void AddXmiCrossSectionToModel(int modelIndex, XmiCrossSection crossSection);
 
         /// <summary>
         /// Adds a structural curve member to the requested model.
@@ -99,7 +99,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="relation">Relationship referencing the cross-section.</param>
-        void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection relation);
+        void AddXmiHasCrossSectionToModel(int modelIndex, XmiHasCrossSection relation);
 
         /// <summary>
         /// Adds a relationship between storeys and the structural elements they contain.
@@ -205,8 +205,8 @@ namespace XmiSchema.Core.Manager
         /// <param name="plasticModulusXAxis">Plastic modulus about x-axis.</param>
         /// <param name="plasticModulusYAxis">Plastic modulus about y-axis.</param>
         /// <param name="torsionalConstant">Torsional constant.</param>
-        /// <returns>The created <see cref="XmiStructuralCrossSection"/>.</returns>
-        XmiStructuralCrossSection CreateStructuralCrossSection(
+        /// <returns>The created <see cref="XmiCrossSection"/>.</returns>
+        XmiCrossSection CreateStructuralCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -294,7 +294,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralCrossSection crossSection,
+            XmiCrossSection crossSection,
             XmiStructuralStorey storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,

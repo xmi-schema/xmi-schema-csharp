@@ -8,7 +8,7 @@ namespace XmiSchema.Core.Tests.Models.Entities;
 /// <summary>
 /// Tests the cross-section entity covering property assignment and equality.
 /// </summary>
-public class XmiStructuralCrossSectionTests
+public class XmiCrossSectionTests
 {
     /// <summary>
     /// Ensures the constructor records all section properties.
@@ -42,7 +42,7 @@ public class XmiStructuralCrossSectionTests
     public void Constructor_ThrowsWhenShapeMismatch()
     {
         var exception = Assert.Throws<ArgumentException>(() =>
-            new XmiStructuralCrossSection(
+            new XmiCrossSection(
                 "sec-mismatch",
                 "Section mismatch",
                 "ifc",

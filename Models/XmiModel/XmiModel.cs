@@ -29,7 +29,7 @@ namespace XmiSchema.Core.Models
         /// Adds a structural cross-section entity to the model.
         /// </summary>
         /// <param name="crossSection">Cross-section instance.</param>
-        public void AddXmiStructuralCrossSection(XmiStructuralCrossSection crossSection)
+        public void AddXmiCrossSection(XmiCrossSection crossSection)
         {
             Entities.Add(crossSection);
         }
@@ -111,7 +111,7 @@ namespace XmiSchema.Core.Models
         /// Adds a cross-section relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStructuralCrossSection(XmiHasStructuralCrossSection relation)
+        public void AddXmiHasCrossSection(XmiHasCrossSection relation)
         {
             Relationships.Add(relation);
         }
@@ -321,7 +321,7 @@ namespace XmiSchema.Core.Models
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralCrossSection crossSection,
+            XmiCrossSection crossSection,
             XmiStructuralStorey storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
@@ -355,7 +355,7 @@ namespace XmiSchema.Core.Models
             // if (length <= 0) throw new ArgumentException("Length must be greater than 0", nameof(length));
 
             // 检查是否存在具有相同nativeId的截面
-            var existingCrossSection = GetEntitiesOfType<XmiStructuralCrossSection>()
+            var existingCrossSection = GetEntitiesOfType<XmiCrossSection>()
                 .FirstOrDefault(c => c.NativeId == crossSection.NativeId);
 
             // 如果找不到相同nativeId的截面，使用传入的截面
@@ -371,13 +371,13 @@ namespace XmiSchema.Core.Models
             // 检查起始节点是否存在相同点的连接
             var existingBeginNodeId = FindMatchingPointConnectionByPoint3D(beginNode);
             var existingBeginNode = existingBeginNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId)??beginNode
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId) ?? beginNode
                 : beginNode;
 
             // 检查结束节点是否存在相同点的连接
             var existingEndNodeId = FindMatchingPointConnectionByPoint3D(endNode);
             var existingEndNode = existingEndNodeId != null
-                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId)??endNode
+                ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId) ?? endNode
                 : endNode;
 
             // 创建构件对象
@@ -413,12 +413,12 @@ namespace XmiSchema.Core.Models
             AddXmiStructuralCurveMember(curveMember);
 
             // 创建并添加关系
-            var crossSectionRelation = new XmiHasStructuralCrossSection(curveMember, existingCrossSection);
+            var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
             var storeyRelation = new XmiHasStructuralStorey(curveMember, existingStorey);
             var beginNodeRelation = new XmiHasStructuralNode(curveMember, existingBeginNode);
             var endNodeRelation = new XmiHasStructuralNode(curveMember, existingEndNode);
 
-            AddXmiHasStructuralCrossSection(crossSectionRelation);
+            AddXmiHasCrossSection(crossSectionRelation);
             AddXmiHasStorey(storeyRelation);
             AddXmiHasStructuralNode(beginNodeRelation);
             AddXmiHasStructuralNode(endNodeRelation);
@@ -426,7 +426,7 @@ namespace XmiSchema.Core.Models
             return curveMember;
         }
 
-        public XmiStructuralCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateStructuralCrossSection(
             string id,
             string name,
             string ifcGuid,
@@ -463,7 +463,7 @@ namespace XmiSchema.Core.Models
             }
 
             // ✅ 创建截面
-            var crossSection = new XmiStructuralCrossSection(
+            var crossSection = new XmiCrossSection(
                 id,
                 name,
                 ifcGuid,
@@ -483,7 +483,7 @@ namespace XmiSchema.Core.Models
                 torsionalConstant
             );
 
-            AddXmiStructuralCrossSection(crossSection);
+            AddXmiCrossSection(crossSection);
 
             // ✅ 创建关系（仅在 existingMaterial 有效时）
             if (existingMaterial != null)
@@ -677,7 +677,7 @@ namespace XmiSchema.Core.Models
 
             // 创建并添加关系
 
-                        // ✅ 创建关系（仅在 existingMaterial 有效时）
+            // ✅ 创建关系（仅在 existingMaterial 有效时）
             if (existingMaterial != null)
             {
                 var materialRelation = new XmiHasStructuralMaterial(surfaceMember, existingMaterial);

@@ -1,6 +1,6 @@
 # XmiShapeEnum Parameter Reference
 
-`XmiStructuralCrossSection.Parameters` now stores the shape inputs through strongly typed classes (e.g., `RectangularShapeParameters`, `IShapeParameters`). Each class serializes into a dictionary so every symbol (H, B, T, etc.) is explicitly paired with its numeric value. This ensures consumers can reason about the payload without tracking array indexes.
+`XmiCrossSection.Parameters` now stores the shape inputs through strongly typed classes (e.g., `RectangularShapeParameters`, `IShapeParameters`). Each class serializes into a dictionary so every symbol (H, B, T, etc.) is explicitly paired with its numeric value. This ensures consumers can reason about the payload without tracking array indexes.
 
 Example for a rectangular column:
 

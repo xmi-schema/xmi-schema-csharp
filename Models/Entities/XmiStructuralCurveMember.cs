@@ -9,7 +9,7 @@ namespace XmiSchema.Core.Entities;
 /// </summary>
 public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralCurveMember>
 {
-    // public XmiStructuralCrossSection CrossSection { get; set; }
+    // public XmiCrossSection CrossSection { get; set; }
     // public XmiStructuralStorey Storey { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberTypeEnum CurveMemberType { get; set; }
@@ -69,7 +69,7 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
         string ifcguid,
         string nativeId,
         string description,
-        // XmiStructuralCrossSection crossSection,
+        // XmiCrossSection crossSection,
         // XmiStructuralStorey storey,
         XmiStructuralCurveMemberTypeEnum curveMemberType,
         // List<XmiStructuralPointConnection> nodes,

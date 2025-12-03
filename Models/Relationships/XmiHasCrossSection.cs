@@ -5,7 +5,7 @@ namespace XmiSchema.Core.Relationships;
 /// <summary>
 /// Links members to the cross-section definition they reference.
 /// </summary>
-public class XmiHasStructuralCrossSection : XmiBaseRelationship
+public class XmiHasCrossSection : XmiBaseRelationship
 {
     /// <summary>
     /// Creates a cross-section relationship with explicit metadata.
@@ -17,7 +17,7 @@ public class XmiHasStructuralCrossSection : XmiBaseRelationship
     /// <param name="description">Notes describing the assignment.</param>
     /// <param name="entityName">Serialized entity name.</param>
     /// <param name="umlType">UML stereotype.</param>
-    public XmiHasStructuralCrossSection(
+    public XmiHasCrossSection(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
@@ -25,7 +25,7 @@ public class XmiHasStructuralCrossSection : XmiBaseRelationship
         string description,
         string entityName,
         string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasStructuralCrossSection), "Association")
+    ) : base(id, source, target, name, description, nameof(XmiHasCrossSection), "Association")
     {
     }
 
@@ -34,10 +34,10 @@ public class XmiHasStructuralCrossSection : XmiBaseRelationship
     /// </summary>
     /// <param name="source">Entity requiring the cross-section.</param>
     /// <param name="target">Cross-section entity.</param>
-    public XmiHasStructuralCrossSection(
+    public XmiHasCrossSection(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasStructuralCrossSection), "Association")
+    ) : base(source, target, nameof(XmiHasCrossSection), "Association")
     {
     }
 }

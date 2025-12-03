@@ -8,7 +8,7 @@ namespace XmiSchema.Core.Entities;
 /// <summary>
 /// Captures geometric and analytical properties of a structural cross-section shared by curve or surface members.
 /// </summary>
-public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructuralCrossSection>
+public class XmiCrossSection : XmiBaseEntity, IEquatable<XmiCrossSection>
 {
     // public required XmiStructuralMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }
@@ -25,7 +25,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     public double TorsionalConstant { get; set; }
 
     /// <summary>
-    /// Initializes a new <see cref="XmiStructuralCrossSection"/> with the inputs consumed by the XMI graph.
+    /// Initializes a new <see cref="XmiCrossSection"/> with the inputs consumed by the XMI graph.
     /// </summary>
     /// <param name="id">Unique local identifier.</param>
     /// <param name="name">Human readable name for reports.</param>
@@ -44,7 +44,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     /// <param name="plasticModulusXAxis">Plastic section modulus about X.</param>
     /// <param name="plasticModulusYAxis">Plastic section modulus about Y.</param>
     /// <param name="torsionalConstant">Torsional constant (J).</param>
-    public XmiStructuralCrossSection(
+    public XmiCrossSection(
         string id,
         string name,
         string ifcguid,
@@ -63,7 +63,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         double plasticModulusXAxis,
         double plasticModulusYAxis,
         double torsionalConstant
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCrossSection))
+    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiCrossSection))
     {
 
         // Material = material;
@@ -89,13 +89,13 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         TorsionalConstant = torsionalConstant;
     }
 
-    public bool Equals(XmiStructuralCrossSection? other)
+    public bool Equals(XmiCrossSection? other)
     {
         if (other is null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object? obj) => Equals(obj as XmiStructuralCrossSection);
+    public override bool Equals(object? obj) => Equals(obj as XmiCrossSection);
 
     public override int GetHashCode() => NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
 }

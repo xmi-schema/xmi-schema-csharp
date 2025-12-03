@@ -36,10 +36,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiStructuralCrossSectionToModel(int modelIndex, XmiStructuralCrossSection crossSection)
+        public void AddXmiCrossSectionToModel(int modelIndex, XmiCrossSection crossSection)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiStructuralCrossSection(crossSection);
+            Models[modelIndex].AddXmiCrossSection(crossSection);
         }
 
         /// <inheritdoc />
@@ -111,10 +111,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralCrossSectionToModel(int modelIndex, XmiHasStructuralCrossSection relation)
+        public void AddXmiHasCrossSectionToModel(int modelIndex, XmiHasCrossSection relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasStructuralCrossSection(relation);
+            Models[modelIndex].AddXmiHasCrossSection(relation);
         }
 
         /// <inheritdoc />
@@ -252,7 +252,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStructuralCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateStructuralCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -317,7 +317,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralCrossSection crossSection,
+            XmiCrossSection crossSection,
             XmiStructuralStorey storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
@@ -379,9 +379,9 @@ namespace XmiSchema.Core.Manager
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateStructuralSurfaceMember(
                 id, name, ifcGuid, nativeId, description,
-                material, surfaceMemberType,thickness,systemPlane,
-                nodes, storey, segments, 
-                area, zOffset, 
+                material, surfaceMemberType, thickness, systemPlane,
+                nodes, storey, segments,
+                area, zOffset,
                 localAxisX, localAxisY, localAxisZ,
                 height
             );
