@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
+using XmiSchema.Core.Parameters;
 using Newtonsoft.Json;
 using System.Reflection;
 
@@ -257,7 +261,7 @@ namespace XmiSchema.Core.Manager
             string description,
             XmiStructuralMaterial? material,
             XmiShapeEnum shape,
-            string[] parameters,
+            IXmiShapeParameters parameters,
             double area,
             double secondMomentOfAreaXAxis,
             double secondMomentOfAreaYAxis,
@@ -439,6 +443,19 @@ namespace XmiSchema.Core.Manager
                 else if (value is IEnumerable<XmiBaseEntity> entityList)
                 {
                     finalValue = entityList.Select(e => e.Id).ToList();
+                }
+                else if (value is IDictionary dictionary)
+                {
+                    finalValue = dictionary
+                        .Cast<DictionaryEntry>()
+                        .Where(entry => entry.Key is not null)
+                        .ToDictionary(
+                            entry => entry.Key!.ToString()!,
+                            entry => entry.Value ?? string.Empty);
+                }
+                else if (value is IXmiShapeParameters shapeParameters)
+                {
+                    finalValue = shapeParameters.Values.ToDictionary(kvp => kvp.Key, kvp => (object)kvp.Value);
                 }
 
                 if (finalValue != null)

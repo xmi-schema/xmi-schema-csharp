@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
+using XmiSchema.Core.Parameters;
 
 namespace XmiSchema.Core.Tests.Support;
 
@@ -32,7 +34,7 @@ internal static class TestModelFactory
             id.ToUpperInvariant(),
             "Rectangular section",
             XmiShapeEnum.Rectangular,
-            new[] { "0.3", "0.6" },
+            new RectangularShapeParameters(0.3, 0.6),
             0.18,
             0.002,
             0.003,

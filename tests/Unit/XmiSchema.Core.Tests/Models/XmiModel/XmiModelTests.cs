@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
+using XmiSchema.Core.Parameters;
 
 namespace XmiSchema.Core.Tests.Models.GraphModel;
 
@@ -80,7 +80,7 @@ public class XmiModelTests
             "desc",
             material,
             XmiShapeEnum.Rectangular,
-            new[] { "0.3", "0.6" },
+            new RectangularShapeParameters(0.3, 0.6),
             0.18,
             0.002,
             0.003,

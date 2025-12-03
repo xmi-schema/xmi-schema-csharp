@@ -13,4 +13,6 @@ This folder contains the business objects that describe the built-environment gr
 | `XmiStructuralSurfaceMember` | Plate, slab, or wall element capturing thickness, axes, and plane metadata. | Use to model surface-based analytical elements. |
 | `XmiStructuralUnit` | Maps entity attributes to `XmiUnitEnum` units for conversion. | Persist the measurement standard for downstream validation. |
 
-When adding new entities, extend `XmiBaseEntity`, add XML documentation, and keep constructor arguments ordered `[id, name, ifcGuid, nativeId, description, domain-specific args]` for consistency. Provide regression tests under `tests/XmiSchema.Core.Tests/Entities/<ClassName>Tests.cs`.*** End Patch***
+> `XmiStructuralCrossSection.Parameters` wraps an `IXmiShapeParameters` implementation (e.g., `RectangularShapeParameters`). Each class exposes a typed constructor but serializes to the same dictionary shown in `XmiShapeEnumParameters.md`.
+
+When adding new entities, extend `XmiBaseEntity`, add XML documentation, and keep constructor arguments ordered `[id, name, ifcGuid, nativeId, description, domain-specific args]` for consistency. Provide regression tests under `tests/XmiSchema.Core.Tests/Entities/<ClassName>Tests.cs`.

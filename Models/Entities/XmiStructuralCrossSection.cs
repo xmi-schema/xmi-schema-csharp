@@ -1,4 +1,6 @@
+using System;
 using XmiSchema.Core.Enums;
+using XmiSchema.Core.Parameters;
 
 
 namespace XmiSchema.Core.Entities;
@@ -10,7 +12,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
 {
     // public required XmiStructuralMaterial Material { get; set; }
     public XmiShapeEnum Shape { get; set; }
-    public string[] Parameters { get; set; }
+    public IXmiShapeParameters Parameters { get; set; }
     public double Area { get; set; }
     public double SecondMomentOfAreaXAxis { get; set; }
     public double SecondMomentOfAreaYAxis { get; set; }
@@ -31,7 +33,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     /// <param name="nativeId">Source-system identifier.</param>
     /// <param name="description">Explanation of origin or use.</param>
     /// <param name="shape">Generic shape classification (I, T, L, etc.).</param>
-    /// <param name="parameters">Shape-specific parameters such as flange widths.</param>
+    /// <param name="parameters">Shape-specific parameter object.</param>
     /// <param name="area">Cross-sectional area.</param>
     /// <param name="secondMomentOfAreaXAxis">Second moment of area about the local X axis.</param>
     /// <param name="secondMomentOfAreaYAxis">Second moment of area about the local Y axis.</param>
@@ -50,7 +52,7 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
         string description,
         // XmiStructuralMaterial material,
         XmiShapeEnum shape,
-        string[] parameters,
+        IXmiShapeParameters parameters,
         double area,
         double secondMomentOfAreaXAxis,
         double secondMomentOfAreaYAxis,
@@ -65,8 +67,16 @@ public class XmiStructuralCrossSection : XmiBaseEntity, IEquatable<XmiStructural
     {
 
         // Material = material;
+        if (parameters is null) throw new ArgumentNullException(nameof(parameters));
+
+        if (parameters.Shape != shape)
+        {
+            throw new ArgumentException($"Parameter set is defined for {parameters.Shape} but {shape} was requested.", nameof(parameters));
+        }
+
         Shape = shape;
         Parameters = parameters;
+        Parameters.Validate();
         Area = area;
         SecondMomentOfAreaXAxis = secondMomentOfAreaXAxis;
         SecondMomentOfAreaYAxis = secondMomentOfAreaYAxis;

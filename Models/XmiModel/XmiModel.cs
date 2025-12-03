@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Enums;
+using XmiSchema.Core.Parameters;
 
 namespace XmiSchema.Core.Models
 {
@@ -432,7 +434,7 @@ namespace XmiSchema.Core.Models
             string description,
             XmiStructuralMaterial? material,
             XmiShapeEnum shape,
-            string[] parameters,
+            IXmiShapeParameters parameters,
             double area,
             double secondMomentOfAreaXAxis,
             double secondMomentOfAreaYAxis,
