@@ -12,7 +12,7 @@ namespace XmiSchema.Core.Models.Entities.Physical;
 public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public XmiStructuralCurveMemberSystemLineEnum SystemLine { get; set; }
+    public XmiSystemLineEnum SystemLine { get; set; }
 
     public double Length { get; set; }
 
@@ -26,9 +26,6 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
     public double EndNodeYOffset { get; set; }
     public double BeginNodeZOffset { get; set; }
     public double EndNodeZOffset { get; set; }
-
-    public string EndFixityStart { get; set; }
-    public string EndFixityEnd { get; set; }
 
     /// <summary>
     /// Creates a new <see cref="XmiBeam"/> physical element.
@@ -49,15 +46,13 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
     /// <param name="endNodeYOffset">Y offset applied to the end node.</param>
     /// <param name="beginNodeZOffset">Z offset applied to the start node.</param>
     /// <param name="endNodeZOffset">Z offset applied to the end node.</param>
-    /// <param name="endFixityStart">Boundary condition definition at the start.</param>
-    /// <param name="endFixityEnd">Boundary condition definition at the end.</param>
     public XmiBeam(
         string id,
         string name,
         string ifcguid,
         string nativeId,
         string description,
-        XmiStructuralCurveMemberSystemLineEnum systemLine,
+        XmiSystemLineEnum systemLine,
         double length,
         string localAxisX,
         string localAxisY,
@@ -67,9 +62,7 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
         double beginNodeYOffset,
         double endNodeYOffset,
         double beginNodeZOffset,
-        double endNodeZOffset,
-        string endFixityStart,
-        string endFixityEnd
+        double endNodeZOffset
     ) : base(id, name, ifcguid, nativeId, description, nameof(XmiBeam))
     {
         SystemLine = systemLine;
@@ -83,8 +76,6 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
         EndNodeYOffset = endNodeYOffset;
         BeginNodeZOffset = beginNodeZOffset;
         EndNodeZOffset = endNodeZOffset;
-        EndFixityStart = endFixityStart;
-        EndFixityEnd = endFixityEnd;
     }
 
     public bool Equals(XmiBeam? other)

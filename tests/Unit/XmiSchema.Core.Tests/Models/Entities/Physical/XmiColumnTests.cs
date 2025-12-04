@@ -22,10 +22,8 @@ public class XmiColumnTests
         Assert.Equal("Column col-1", column.Name);
         Assert.Equal("COL-1", column.NativeId);
         Assert.Equal(nameof(XmiColumn), column.EntityType);
-        Assert.Equal(XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, column.SystemLine);
+        Assert.Equal(XmiSystemLineEnum.MiddleMiddle, column.SystemLine);
         Assert.Equal(3.5, column.Length);
-        Assert.Equal("Fixed", column.EndFixityStart);
-        Assert.Equal("Fixed", column.EndFixityEnd);
     }
 
     /// <summary>

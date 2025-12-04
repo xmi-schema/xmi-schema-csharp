@@ -18,7 +18,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     // public List<XmiSegment> Segments { get; set; }
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public XmiStructuralCurveMemberSystemLineEnum SystemLine { get; set; }
+    public XmiSystemLineEnum SystemLine { get; set; }
     // public XmiStructuralPointConnection BeginNode { get; set; }
     // public XmiStructuralPointConnection EndNode { get; set; }
     public double Length { get; set; }
@@ -75,7 +75,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
         XmiStructuralCurveMemberTypeEnum curveMemberType,
         // List<XmiStructuralPointConnection> nodes,
         // List<XmiSegment> segments,
-        XmiStructuralCurveMemberSystemLineEnum systemLine,
+        XmiSystemLineEnum systemLine,
         // XmiStructuralPointConnection beginNode,
         // XmiStructuralPointConnection endNode,
         double length,

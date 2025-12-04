@@ -124,7 +124,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             new List<XmiSegment> { TestModelFactory.CreateSegment() },
-            XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+            XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
             5.0,

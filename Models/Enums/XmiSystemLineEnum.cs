@@ -1,5 +1,5 @@
 namespace XmiSchema.Core.Enums;
-public enum XmiStructuralCurveMemberSystemLineEnum
+public enum XmiSystemLineEnum
 {
     [EnumValue("TopMiddle")] TopMiddle,
     [EnumValue("TopLeft")] TopLeft,
@@ -10,5 +10,5 @@ public enum XmiStructuralCurveMemberSystemLineEnum
     [EnumValue("BottomLeft")] BottomLeft,
     [EnumValue("BottomMiddle")] BottomMiddle,
     [EnumValue("BottomRight")] BottomRight,
-        [EnumValue("Unknown")] Unknown
+    [EnumValue("Unknown")] Unknown
 }
