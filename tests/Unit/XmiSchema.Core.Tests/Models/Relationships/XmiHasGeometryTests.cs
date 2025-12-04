@@ -16,8 +16,7 @@ public class XmiHasGeometryTests
             TestModelFactory.CreateLine(),
             "Geometric",
             "desc",
-            nameof(XmiHasGeometry),
-            "Association");
+            nameof(XmiHasGeometry));
 
         Assert.Equal("rel-geom", relation.Id);
         Assert.Equal(nameof(XmiHasGeometry), relation.EntityType);

@@ -62,7 +62,6 @@ Stores the source/target nodes, UML stereotype, and descriptive metadata for gra
 - `Source`: Source entity reference
 - `Target`: Target entity reference
 - `RelationshipType`: Type discriminator
-- `Stereotype`: UML stereotype (e.g., "Association")
 
 ## EnumValueAttribute
 

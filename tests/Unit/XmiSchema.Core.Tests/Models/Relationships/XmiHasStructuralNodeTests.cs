@@ -16,8 +16,7 @@ public class XmiHasStructuralNodeTests
             TestModelFactory.CreatePointConnection(),
             "AttachedTo",
             "desc",
-            nameof(XmiHasStructuralNode),
-            "Association");
+            nameof(XmiHasStructuralNode));
 
         Assert.Equal("rel-node", relation.Id);
         Assert.Equal("AttachedTo", relation.Name);

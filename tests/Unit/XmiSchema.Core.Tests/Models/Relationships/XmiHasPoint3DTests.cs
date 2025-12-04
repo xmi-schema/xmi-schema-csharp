@@ -20,8 +20,7 @@ public class XmiHasPoint3DTests
             TestModelFactory.CreatePointConnection(),
             "Owns",
             "desc",
-            nameof(XmiHasPoint3D),
-            "Association");
+            nameof(XmiHasPoint3D));
 
         Assert.Equal("rel-1", relation.Id);
         Assert.Equal("Owns", relation.Name);

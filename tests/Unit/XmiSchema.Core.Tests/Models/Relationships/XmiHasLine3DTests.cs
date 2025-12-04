@@ -16,8 +16,7 @@ public class XmiHasLine3DTests
             TestModelFactory.CreateCurveMember("curve-b"),
             "AlignedWith",
             "desc",
-            nameof(XmiHasLine3D),
-            "Association");
+            nameof(XmiHasLine3D));
 
         Assert.Equal("rel-line", relation.Id);
         Assert.Equal("AlignedWith", relation.Name);

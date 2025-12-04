@@ -16,16 +16,14 @@ public class XmiHasSegment : XmiBaseRelationship
     /// <param name="name">Relationship label.</param>
     /// <param name="description">Additional notes.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasSegment(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasSegment), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasSegment))
     {
     }
 
@@ -37,7 +35,7 @@ public class XmiHasSegment : XmiBaseRelationship
     public XmiHasSegment(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasSegment), "Association")
+    ) : base(source, target, nameof(XmiHasSegment))
     {
     }
 }

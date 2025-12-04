@@ -18,7 +18,7 @@ public class XmiBaseRelationshipTests
         var source = new XmiBaseEntity("src", string.Empty, "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
         var target = new XmiBaseEntity("tgt", string.Empty, "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
 
-        var relationship = new XmiBaseRelationship("rel-1", source, target, string.Empty, string.Empty, string.Empty, string.Empty);
+        var relationship = new XmiBaseRelationship("rel-1", source, target, string.Empty, string.Empty, string.Empty);
 
         Assert.Equal("Unnamed", relationship.Name);
         Assert.Equal(string.Empty, relationship.Description);
@@ -26,7 +26,7 @@ public class XmiBaseRelationshipTests
     }
 
     /// <summary>
-    /// Confirms that the shorthand constructor generates identifiers but preserves UML types.
+    /// Confirms that the shorthand constructor generates identifiers.
     /// </summary>
     [Fact]
     public void Constructor_GeneratesIdentifier()
@@ -34,10 +34,9 @@ public class XmiBaseRelationshipTests
         var source = new XmiBaseEntity("src", "Source", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
         var target = new XmiBaseEntity("tgt", "Target", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
 
-        var relationship = new XmiBaseRelationship(source, target, "EdgeType", "Association");
+        var relationship = new XmiBaseRelationship(source, target, "EdgeType");
 
         Assert.False(string.IsNullOrWhiteSpace(relationship.Id));
         Assert.Equal("EdgeType", relationship.Name);
-        Assert.Equal("Association", relationship.UmlType);
     }
 }

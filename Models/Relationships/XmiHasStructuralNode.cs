@@ -16,16 +16,14 @@ public class XmiHasStructuralNode : XmiBaseRelationship
     /// <param name="name">Label for the relationship.</param>
     /// <param name="description">Notes describing the link.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasStructuralNode(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasStructuralNode), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasStructuralNode))
     {
     }
 
@@ -37,7 +35,7 @@ public class XmiHasStructuralNode : XmiBaseRelationship
     public XmiHasStructuralNode(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasStructuralNode), "Association")
+    ) : base(source, target, nameof(XmiHasStructuralNode))
     {
     }
 }
