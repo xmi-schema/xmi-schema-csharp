@@ -1,6 +1,7 @@
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Core.Tests.Support;
 
 namespace XmiSchema.Core.Tests.Models.Entities.Physical;
 
@@ -15,14 +16,16 @@ public class XmiColumnTests
     [Fact]
     public void Constructor_AssignsAllProperties()
     {
-        var column = new XmiColumn("col-1", "C1", "ifc-column", "native-col-1", "Concrete column");
+        var column = TestModelFactory.CreateColumn();
 
         Assert.Equal("col-1", column.Id);
-        Assert.Equal("C1", column.Name);
-        Assert.Equal("ifc-column", column.IfcGuid);
-        Assert.Equal("native-col-1", column.NativeId);
-        Assert.Equal("Concrete column", column.Description);
+        Assert.Equal("Column col-1", column.Name);
+        Assert.Equal("COL-1", column.NativeId);
         Assert.Equal(nameof(XmiColumn), column.EntityType);
+        Assert.Equal(XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, column.SystemLine);
+        Assert.Equal(3.5, column.Length);
+        Assert.Equal("Fixed", column.EndFixityStart);
+        Assert.Equal("Fixed", column.EndFixityEnd);
     }
 
     /// <summary>
@@ -31,7 +34,7 @@ public class XmiColumnTests
     [Fact]
     public void Constructor_SetsTypeToPhysical()
     {
-        var column = new XmiColumn("col-2", "C2", "ifc", "native", "desc");
+        var column = TestModelFactory.CreateColumn();
 
         Assert.Equal(XmiBaseEntityDomainEnum.Physical, column.Type);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(column);
@@ -43,8 +46,8 @@ public class XmiColumnTests
     [Fact]
     public void Equals_UsesNativeId()
     {
-        var first = new XmiColumn("col-3", "C3", "ifc", "COLUMN-SHARED", "First column");
-        var second = new XmiColumn("col-4", "C4", "ifc2", "column-shared", "Second column");
+        var first = TestModelFactory.CreateColumn("col-shared");
+        var second = TestModelFactory.CreateColumn("col-shared");
 
         Assert.True(first.Equals(second));
     }
@@ -55,8 +58,8 @@ public class XmiColumnTests
     [Fact]
     public void Equals_ReturnsFalseForDifferentNativeIds()
     {
-        var first = new XmiColumn("col-5", "C5", "ifc", "COLUMN-A", "Column A");
-        var second = new XmiColumn("col-6", "C6", "ifc", "COLUMN-B", "Column B");
+        var first = TestModelFactory.CreateColumn("col-a");
+        var second = TestModelFactory.CreateColumn("col-b");
 
         Assert.False(first.Equals(second));
     }
@@ -67,8 +70,8 @@ public class XmiColumnTests
     [Fact]
     public void GetHashCode_ConsistentWithEquals()
     {
-        var first = new XmiColumn("col-7", "C7", "ifc", "COLUMN-HASH", "Column");
-        var second = new XmiColumn("col-8", "C8", "ifc", "column-hash", "Column");
+        var first = TestModelFactory.CreateColumn("col-hash");
+        var second = TestModelFactory.CreateColumn("col-hash");
 
         Assert.Equal(first.GetHashCode(), second.GetHashCode());
     }

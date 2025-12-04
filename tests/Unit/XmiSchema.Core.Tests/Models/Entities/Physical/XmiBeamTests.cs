@@ -1,6 +1,7 @@
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Core.Tests.Support;
 
 namespace XmiSchema.Core.Tests.Models.Entities.Physical;
 
@@ -15,14 +16,16 @@ public class XmiBeamTests
     [Fact]
     public void Constructor_AssignsAllProperties()
     {
-        var beam = new XmiBeam("beam-1", "B1", "ifc-beam", "native-beam-1", "Steel beam");
+        var beam = TestModelFactory.CreateBeam();
 
         Assert.Equal("beam-1", beam.Id);
-        Assert.Equal("B1", beam.Name);
-        Assert.Equal("ifc-beam", beam.IfcGuid);
-        Assert.Equal("native-beam-1", beam.NativeId);
-        Assert.Equal("Steel beam", beam.Description);
+        Assert.Equal("Beam beam-1", beam.Name);
+        Assert.Equal("BEAM-1", beam.NativeId);
         Assert.Equal(nameof(XmiBeam), beam.EntityType);
+        Assert.Equal(XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, beam.SystemLine);
+        Assert.Equal(5.0, beam.Length);
+        Assert.Equal("Fixed", beam.EndFixityStart);
+        Assert.Equal("Pinned", beam.EndFixityEnd);
     }
 
     /// <summary>
@@ -31,7 +34,7 @@ public class XmiBeamTests
     [Fact]
     public void Constructor_SetsTypeToPhysical()
     {
-        var beam = new XmiBeam("beam-2", "B2", "ifc", "native", "desc");
+        var beam = TestModelFactory.CreateBeam();
 
         Assert.Equal(XmiBaseEntityDomainEnum.Physical, beam.Type);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(beam);
@@ -43,8 +46,8 @@ public class XmiBeamTests
     [Fact]
     public void Equals_UsesNativeId()
     {
-        var first = new XmiBeam("beam-3", "B3", "ifc", "BEAM-SHARED", "First beam");
-        var second = new XmiBeam("beam-4", "B4", "ifc2", "beam-shared", "Second beam");
+        var first = TestModelFactory.CreateBeam("beam-shared");
+        var second = TestModelFactory.CreateBeam("beam-shared");
 
         Assert.True(first.Equals(second));
     }
@@ -55,8 +58,8 @@ public class XmiBeamTests
     [Fact]
     public void Equals_ReturnsFalseForDifferentNativeIds()
     {
-        var first = new XmiBeam("beam-5", "B5", "ifc", "BEAM-A", "Beam A");
-        var second = new XmiBeam("beam-6", "B6", "ifc", "BEAM-B", "Beam B");
+        var first = TestModelFactory.CreateBeam("beam-a");
+        var second = TestModelFactory.CreateBeam("beam-b");
 
         Assert.False(first.Equals(second));
     }
@@ -67,8 +70,8 @@ public class XmiBeamTests
     [Fact]
     public void GetHashCode_ConsistentWithEquals()
     {
-        var first = new XmiBeam("beam-7", "B7", "ifc", "BEAM-HASH", "Beam");
-        var second = new XmiBeam("beam-8", "B8", "ifc", "beam-hash", "Beam");
+        var first = TestModelFactory.CreateBeam("beam-hash");
+        var second = TestModelFactory.CreateBeam("beam-hash");
 
         Assert.Equal(first.GetHashCode(), second.GetHashCode());
     }
