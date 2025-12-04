@@ -1,0 +1,31 @@
+title: XMI Schema C#
+description: .NET library for structural engineering data exchange
+theme: jekyll-theme-cayman
+baseurl: /xmi-schema-csharp
+
+# Markdown settings
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# Collections for organized content
+collections:
+  api:
+    output: true
+    permalink: /api/:name/
+  reference:
+    output: true
+    permalink: /reference/:name/
+  examples:
+    output: true
+    permalink: /examples/:name/
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: API Reference
+    url: /api/
+  - title: Examples
+    url: /examples/
