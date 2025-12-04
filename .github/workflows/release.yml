@@ -200,6 +200,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.versioning.outputs.new_tag }}
-          name: Release ${{ needs.versioning.outputs.new_tag }}
+          name: ${{ needs.versioning.outputs.new_tag }}
           body: ${{ steps.release_notes.outputs.notes }}
           generate_release_notes: false
