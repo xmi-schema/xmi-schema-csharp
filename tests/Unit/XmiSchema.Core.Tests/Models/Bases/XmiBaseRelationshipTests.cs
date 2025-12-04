@@ -1,4 +1,5 @@
 using XmiSchema.Core.Entities;
+using XmiSchema.Core.Enums;
 using XmiSchema.Core.Relationships;
 
 namespace XmiSchema.Core.Tests.Models.Bases;
@@ -14,8 +15,8 @@ public class XmiBaseRelationshipTests
     [Fact]
     public void Constructor_DefaultsUnsetMetadata()
     {
-        var source = new XmiBaseEntity("src", string.Empty, "ifc", "native", string.Empty, string.Empty);
-        var target = new XmiBaseEntity("tgt", string.Empty, "ifc", "native", string.Empty, string.Empty);
+        var source = new XmiBaseEntity("src", string.Empty, "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
+        var target = new XmiBaseEntity("tgt", string.Empty, "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
 
         var relationship = new XmiBaseRelationship("rel-1", source, target, string.Empty, string.Empty, string.Empty, string.Empty);
 
@@ -30,8 +31,8 @@ public class XmiBaseRelationshipTests
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var source = new XmiBaseEntity("src", "Source", "ifc", "native", string.Empty, string.Empty);
-        var target = new XmiBaseEntity("tgt", "Target", "ifc", "native", string.Empty, string.Empty);
+        var source = new XmiBaseEntity("src", "Source", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
+        var target = new XmiBaseEntity("tgt", "Target", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
 
         var relationship = new XmiBaseRelationship(source, target, "EdgeType", "Association");
 

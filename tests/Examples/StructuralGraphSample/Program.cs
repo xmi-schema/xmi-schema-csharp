@@ -4,6 +4,7 @@ using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
+using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 
 var manager = new XmiManager();

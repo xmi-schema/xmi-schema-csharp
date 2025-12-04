@@ -3,33 +3,33 @@ using XmiSchema.Core.Relationships;
 namespace XmiSchema.Core.Tests.Models.Relationships;
 
 /// <summary>
-/// Tests <see cref="XmiHasStructuralMaterial"/> constructors.
+/// Tests <see cref="XmiHasMaterial"/> constructors.
 /// </summary>
-public class XmiHasStructuralMaterialTests
+public class XmiHasMaterialTests
 {
     [Fact]
     public void Constructor_WithExplicitValues_AssignsMetadata()
     {
-        var relation = new XmiHasStructuralMaterial(
+        var relation = new XmiHasMaterial(
             "rel-mat",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreateMaterial(),
             "Uses",
             "desc",
-            nameof(XmiHasStructuralMaterial),
+            nameof(XmiHasMaterial),
             "Association");
 
         Assert.Equal("rel-mat", relation.Id);
         Assert.Equal("Uses", relation.Name);
-        Assert.Equal(nameof(XmiHasStructuralMaterial), relation.EntityType);
+        Assert.Equal(nameof(XmiHasMaterial), relation.EntityType);
     }
 
     [Fact]
     public void Constructor_WithAutoIdentifier_GeneratesId()
     {
-        var relation = new XmiHasStructuralMaterial(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateMaterial());
+        var relation = new XmiHasMaterial(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateMaterial());
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
-        Assert.Equal(nameof(XmiHasStructuralMaterial), relation.Name);
+        Assert.Equal(nameof(XmiHasMaterial), relation.Name);
     }
 }

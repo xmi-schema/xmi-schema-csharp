@@ -136,10 +136,70 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: read
     steps:
-      - name: Create release with changelog
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Generate enhanced release notes
+        id: release_notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get the previous tag
+          PREVIOUS_TAG=$(git tag --sort=-version:refname | grep -v "${{ needs.versioning.outputs.new_tag }}" | head -n 1)
+
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "No previous tag found, using initial commit"
+            PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
+          fi
+
+          echo "Generating release notes from $PREVIOUS_TAG to ${{ needs.versioning.outputs.new_tag }}"
+
+          # Initialize release notes
+          RELEASE_NOTES="## What's Changed"
+          RELEASE_NOTES="${RELEASE_NOTES}\n"
+
+          # Get all merged PRs between tags
+          PRS=$(gh pr list --state merged --base main --json number,title,body,mergedAt --limit 100 | \
+                jq -r --arg since "$(git log -1 --format=%aI $PREVIOUS_TAG 2>/dev/null || echo '1970-01-01')" \
+                '.[] | select(.mergedAt > $since) | "\(.number)|\(.title)|\(.body // "")"')
+
+          if [ -n "$PRS" ]; then
+            RELEASE_NOTES="${RELEASE_NOTES}\n### Pull Requests\n"
+            while IFS='|' read -r pr_number pr_title pr_body; do
+              RELEASE_NOTES="${RELEASE_NOTES}\n#### #${pr_number}: ${pr_title}\n"
+              if [ -n "$pr_body" ] && [ "$pr_body" != "null" ]; then
+                # Truncate PR body if too long and clean it up
+                PR_BODY_CLEAN=$(echo "$pr_body" | head -c 500 | sed 's/\r//g')
+                RELEASE_NOTES="${RELEASE_NOTES}${PR_BODY_CLEAN}\n"
+              fi
+              RELEASE_NOTES="${RELEASE_NOTES}\n"
+            done <<< "$PRS"
+          fi
+
+          # Get all commits between tags with details
+          RELEASE_NOTES="${RELEASE_NOTES}\n### Commits\n"
+          git log ${PREVIOUS_TAG}..${{ github.sha }} --pretty=format:"- **%s** (%h) - %an" --no-merges | while read -r line; do
+            RELEASE_NOTES="${RELEASE_NOTES}\n${line}"
+          done
+
+          # Save to file to handle multiline content properly
+          echo -e "$RELEASE_NOTES" > release_notes.md
+
+          # Set output using the file
+          {
+            echo 'notes<<EOF'
+            cat release_notes.md
+            echo EOF
+          } >> $GITHUB_OUTPUT
+
+      - name: Create release with enhanced changelog
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.versioning.outputs.new_tag }}
-          name: Release ${{ needs.versioning.outputs.new_tag }}
-          body: ${{ needs.versioning.outputs.changelog }}
+          name: ${{ needs.versioning.outputs.new_tag }}
+          body: ${{ steps.release_notes.outputs.notes }}
+          generate_release_notes: false

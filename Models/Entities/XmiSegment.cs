@@ -39,7 +39,7 @@ public class XmiSegment : XmiBaseEntity
         // XmiStructuralPointConnection beginNode,
         // XmiStructuralPointConnection endNode,
         XmiSegmentTypeEnum segmentType
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiSegment))
+    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiSegment), XmiBaseEntityDomainEnum.Shared)
     {
         // Geometry = geometry;
         Position = position;

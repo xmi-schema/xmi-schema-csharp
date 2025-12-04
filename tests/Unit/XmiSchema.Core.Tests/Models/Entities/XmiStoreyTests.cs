@@ -3,9 +3,9 @@ using XmiSchema.Core.Entities;
 namespace XmiSchema.Core.Tests.Models.Entities;
 
 /// <summary>
-/// Covers the metadata handling of <see cref="XmiStructuralStorey"/>.
+/// Covers the metadata handling of <see cref="XmiStorey"/>.
 /// </summary>
-public class XmiStructuralStoreyTests
+public class XmiStoreyTests
 {
     /// <summary>
     /// Ensures all constructor arguments are mapped to properties.

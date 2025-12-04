@@ -1,57 +1,45 @@
-using Newtonsoft.Json.Converters;
+using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Core.Models.Entities.Physical;
 
 /// <summary>
-/// Represents a linear structural element (beam, column, brace) in the XMI graph, storing alignment data and offsets.
+/// Represents a physical column element in the built environment.
 /// </summary>
-public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralCurveMember>
+public class XmiColumn : XmiBasePhysicalEntity, IEquatable<XmiColumn>
 {
-    // public XmiCrossSection CrossSection { get; set; }
-    // public XmiStructuralStorey Storey { get; set; }
-    [JsonConverter(typeof(StringEnumConverter))]
-    public XmiStructuralCurveMemberTypeEnum CurveMemberType { get; set; }
-    // public List<XmiStructuralPointConnection> Nodes { get; set; }
-    // public List<XmiSegment> Segments { get; set; }
-
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberSystemLineEnum SystemLine { get; set; }
-    // public XmiStructuralPointConnection BeginNode { get; set; }
-    // public XmiStructuralPointConnection EndNode { get; set; }
-    public double Length { get; set; }
 
+    public double Length { get; set; }
 
     public string LocalAxisX { get; set; }
     public string LocalAxisY { get; set; }
     public string LocalAxisZ { get; set; }
 
+    public double BeginNodeXOffset { get; set; }
+    public double EndNodeXOffset { get; set; }
     public double BeginNodeYOffset { get; set; }
     public double EndNodeYOffset { get; set; }
     public double BeginNodeZOffset { get; set; }
     public double EndNodeZOffset { get; set; }
-    public double BeginNodeXOffset { get; set; }
-    public double EndNodeXOffset { get; set; }
-
 
     public string EndFixityStart { get; set; }
     public string EndFixityEnd { get; set; }
 
-
-
-
     /// <summary>
-    /// Configures a new <see cref="XmiStructuralCurveMember"/> with system line metadata and local axis offsets.
+    /// Creates a new <see cref="XmiColumn"/> physical element.
     /// </summary>
-    /// <param name="id">Unique identifier for the member entity.</param>
-    /// <param name="name">Friendly name exposed to client applications.</param>
-    /// <param name="ifcguid">IFC GUID reference for traceability.</param>
-    /// <param name="nativeId">Identifier from the authoring tool.</param>
-    /// <param name="description">Optional descriptive text.</param>
-    /// <param name="curveMemberType">Member type classification (beam, column, etc.).</param>
+    /// <param name="id">Unique identifier for the column.</param>
+    /// <param name="name">Friendly name for the column.</param>
+    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="nativeId">Authoring system identifier.</param>
+    /// <param name="description">Context describing the column.</param>
     /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
-    /// <param name="length">Analytical length of the element.</param>
+    /// <param name="length">Physical length of the column.</param>
     /// <param name="localAxisX">Serialized orientation of local X.</param>
     /// <param name="localAxisY">Serialized orientation of local Y.</param>
     /// <param name="localAxisZ">Serialized orientation of local Z.</param>
@@ -63,22 +51,14 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
     /// <param name="endNodeZOffset">Z offset applied to the end node.</param>
     /// <param name="endFixityStart">Boundary condition definition at the start.</param>
     /// <param name="endFixityEnd">Boundary condition definition at the end.</param>
-    public XmiStructuralCurveMember(
+    public XmiColumn(
         string id,
         string name,
         string ifcguid,
         string nativeId,
         string description,
-        // XmiCrossSection crossSection,
-        // XmiStructuralStorey storey,
-        XmiStructuralCurveMemberTypeEnum curveMemberType,
-        // List<XmiStructuralPointConnection> nodes,
-        // List<XmiSegment> segments,
         XmiStructuralCurveMemberSystemLineEnum systemLine,
-        // XmiStructuralPointConnection beginNode,
-        // XmiStructuralPointConnection endNode,
         double length,
-
         string localAxisX,
         string localAxisY,
         string localAxisZ,
@@ -88,48 +68,35 @@ public class XmiStructuralCurveMember : XmiBaseEntity, IEquatable<XmiStructuralC
         double endNodeYOffset,
         double beginNodeZOffset,
         double endNodeZOffset,
-
-
         string endFixityStart,
         string endFixityEnd
-
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCurveMember))
+    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiColumn))
     {
-        // CrossSection = crossSection;
-        // Storey = storey;
-        CurveMemberType = curveMemberType;
-        // Nodes = nodes;
-        // Segments = segments;
         SystemLine = systemLine;
-        // BeginNode = beginNode;
-        // EndNode = endNode;
         Length = length;
         LocalAxisX = localAxisX;
         LocalAxisY = localAxisY;
         LocalAxisZ = localAxisZ;
+        BeginNodeXOffset = beginNodeXOffset;
+        EndNodeXOffset = endNodeXOffset;
         BeginNodeYOffset = beginNodeYOffset;
         EndNodeYOffset = endNodeYOffset;
         BeginNodeZOffset = beginNodeZOffset;
         EndNodeZOffset = endNodeZOffset;
-        BeginNodeXOffset = beginNodeXOffset;
-        EndNodeXOffset = endNodeXOffset;
         EndFixityStart = endFixityStart;
         EndFixityEnd = endFixityEnd;
-
     }
 
-    public bool Equals(XmiStructuralCurveMember? other)
+    public bool Equals(XmiColumn? other)
     {
         if (other == null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object? obj) => Equals(obj as XmiStructuralCurveMember);
+    public override bool Equals(object? obj) => Equals(obj as XmiColumn);
 
     public override int GetHashCode()
     {
         return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
     }
 }
-
-

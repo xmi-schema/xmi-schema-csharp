@@ -1,7 +1,7 @@
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 
-namespace XmiSchema.Core.Tests.Models.Entities;
+namespace XmiSchema.Core.Tests.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Exercises the surface member entity and its equality semantics.

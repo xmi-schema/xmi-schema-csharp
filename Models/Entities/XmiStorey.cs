@@ -1,11 +1,12 @@
 using System;
+using XmiSchema.Core.Enums;
 
 namespace XmiSchema.Core.Entities;
 
 /// <summary>
 /// Defines an analytical storey level within the built environment, capturing elevation, mass, and reaction metadata.
 /// </summary>
-public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey>
+public class XmiStorey : XmiBaseEntity, IEquatable<XmiStorey>
 {
     public double StoreyElevation { get; set; }
     public double StoreyMass { get; set; }
@@ -14,7 +15,7 @@ public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey
     public string StoreyVerticalReaction { get; set; }
 
     /// <summary>
-    /// Creates a new <see cref="XmiStructuralStorey"/> bound to a specific elevation.
+    /// Creates a new <see cref="XmiStorey"/> bound to a specific elevation.
     /// </summary>
     /// <param name="id">Unique identifier for the storey.</param>
     /// <param name="name">Friendly name (e.g., Level 3).</param>
@@ -26,7 +27,7 @@ public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey
     /// <param name="storeyHorizontalReactionX">Serialized horizontal reaction constraint along X.</param>
     /// <param name="storeyHorizontalReactionY">Serialized horizontal reaction constraint along Y.</param>
     /// <param name="storeyVerticalReaction">Serialized vertical reaction value.</param>
-    public XmiStructuralStorey(
+    public XmiStorey(
         string id,
         string name,
         string ifcguid,
@@ -37,7 +38,7 @@ public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey
         string storeyHorizontalReactionX,
         string storeyHorizontalReactionY,
         string storeyVerticalReaction
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralStorey))
+    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStorey), XmiBaseEntityDomainEnum.Shared)
     {
         StoreyElevation = storeyElevation;
         StoreyMass = storeyMass;
@@ -46,13 +47,13 @@ public class XmiStructuralStorey : XmiBaseEntity, IEquatable<XmiStructuralStorey
         StoreyVerticalReaction = storeyVerticalReaction;
     }
 
-    public bool Equals(XmiStructuralStorey? other)
+    public bool Equals(XmiStorey? other)
     {
         if (other == null) return false;
         return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
     }
 
-    public override bool Equals(object? obj) => Equals(obj as XmiStructuralStorey);
+    public override bool Equals(object? obj) => Equals(obj as XmiStorey);
 
     public override int GetHashCode()
     {
