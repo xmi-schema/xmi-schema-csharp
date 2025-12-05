@@ -442,8 +442,12 @@ namespace XmiSchema.Core.Models
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            try
+
+            return ExecuteTransaction<XmiStructuralCurveMember>("CreateXmiStructuralCurveMember", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 var existingCrossSection = GetEntitiesOfType<XmiCrossSection>()
                     .FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
 
@@ -486,28 +490,24 @@ namespace XmiSchema.Core.Models
                     endFixityEnd
                 );
 
-                AddXmiStructuralCurveMember(curveMember);
+                entitiesToAdd.Add(curveMember);
 
                 var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
-                AddXmiHasCrossSection(crossSectionRelation);
+                relationshipsToAdd.Add(crossSectionRelation);
 
                 if (existingStorey != null)
                 {
                     var storeyRelation = new XmiHasStorey(curveMember, existingStorey);
-                    AddXmiHasStorey(storeyRelation);
+                    relationshipsToAdd.Add(storeyRelation);
                 }
 
                 var beginNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingBeginNode);
                 var endNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingEndNode);
-                AddXmiHasStructuralPointConnection(beginNodeRelation);
-                AddXmiHasStructuralPointConnection(endNodeRelation);
+                relationshipsToAdd.Add(beginNodeRelation);
+                relationshipsToAdd.Add(endNodeRelation);
 
-                return curveMember;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create structural curve member.", ex);
-            }
+                return (curveMember, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
         /// <summary>
@@ -541,8 +541,11 @@ namespace XmiSchema.Core.Models
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
-            try
+            return ExecuteTransaction<XmiCrossSection>("CreateXmiCrossSection", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 XmiMaterial? existingMaterial = null;
 
                 // Safe handling: only reuse material references when a native ID is provided.
@@ -572,20 +575,16 @@ namespace XmiSchema.Core.Models
                     torsionalConstant
                 );
 
-                AddXmiCrossSection(crossSection);
+                entitiesToAdd.Add(crossSection);
 
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(crossSection, existingMaterial);
-                    AddXmiHasMaterial(materialRelation);
+                    relationshipsToAdd.Add(materialRelation);
                 }
 
-                return crossSection;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create structural cross-section.", ex);
-            }
+                return (crossSection, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
 
@@ -659,14 +658,18 @@ namespace XmiSchema.Core.Models
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
-            try
+            return ExecuteTransaction<XmiMaterial>("CreateXmiMaterial", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 var existingMaterial = GetEntitiesOfType<XmiMaterial>()
                     .FirstOrDefault(m => m.NativeId == nativeId);
 
                 if (existingMaterial != null)
                 {
-                    return existingMaterial;
+                    // Return existing material, no transaction needed
+                    return (existingMaterial, entitiesToAdd, relationshipsToAdd);
                 }
 
                 var material = new XmiMaterial(
@@ -684,14 +687,10 @@ namespace XmiSchema.Core.Models
                     thermalCoefficient
                 );
 
-                AddXmiMaterial(material);
+                entitiesToAdd.Add(material);
 
-                return material;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create structural material.", ex);
-            }
+                return (material, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
         /// <summary>
@@ -719,8 +718,14 @@ namespace XmiSchema.Core.Models
             double height
         )
         {
-            try
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            return ExecuteTransaction<XmiStructuralSurfaceMember>("CreateXmiStructuralSurfaceMember", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 XmiStorey? existingStorey = null;
                 if (storey != null)
                 {
@@ -753,26 +758,22 @@ namespace XmiSchema.Core.Models
                     height
                 );
 
-                AddXmiStructuralSurfaceMember(surfaceMember);
+                entitiesToAdd.Add(surfaceMember);
 
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(surfaceMember, existingMaterial);
-                    AddXmiHasMaterial(materialRelation);
+                    relationshipsToAdd.Add(materialRelation);
                 }
 
                 if (existingStorey != null)
                 {
                     var storeyRelation = new XmiHasStorey(surfaceMember, existingStorey);
-                    AddXmiHasStorey(storeyRelation);
+                    relationshipsToAdd.Add(storeyRelation);
                 }
 
-                return surfaceMember;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create structural surface member.", ex);
-            }
+                return (surfaceMember, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
     }
 }
