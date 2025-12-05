@@ -36,9 +36,9 @@ public class XmiModelCollectionTests
     {
         var model = new XmiModel();
 
-        var materials = model.GetEntitiesOfType<XmiMaterial>();
-        var points = model.GetEntitiesOfType<XmiPoint3D>();
-        var beams = model.GetEntitiesOfType<XmiBeam>();
+        var materials = model.GetXmiEntitiesOfType<XmiMaterial>();
+        var points = model.GetXmiEntitiesOfType<XmiPoint3D>();
+        var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
         Assert.Empty(materials);
         Assert.Empty(points);
@@ -55,7 +55,7 @@ public class XmiModelCollectionTests
         model.AddXmiMaterial(TestModelFactory.CreateMaterial());
         model.AddXmiPoint3D(TestModelFactory.CreatePoint());
 
-        var beams = model.GetEntitiesOfType<XmiBeam>();
+        var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
         Assert.Empty(beams);
     }
@@ -77,7 +77,7 @@ public class XmiModelCollectionTests
         model.AddXmiPoint3D(point2);
         model.AddXmiStorey(storey);
 
-        var points = model.GetEntitiesOfType<XmiPoint3D>();
+        var points = model.GetXmiEntitiesOfType<XmiPoint3D>();
 
         Assert.Equal(2, points.Count);
         Assert.Contains(point1, points);
@@ -100,7 +100,7 @@ public class XmiModelCollectionTests
         model.AddXmiMaterial(mat3);
 
         Assert.Equal(3, model.Entities.Count);
-        Assert.Equal(3, model.GetEntitiesOfType<XmiMaterial>().Count);
+        Assert.Equal(3, model.GetXmiEntitiesOfType<XmiMaterial>().Count);
     }
 
     /// <summary>
@@ -375,7 +375,7 @@ public class XmiModelCollectionTests
         }
 
         Assert.Equal(1000, model.Entities.Count);
-        Assert.Equal(1000, model.GetEntitiesOfType<XmiPoint3D>().Count);
+        Assert.Equal(1000, model.GetXmiEntitiesOfType<XmiPoint3D>().Count);
     }
 
     /// <summary>
@@ -445,8 +445,8 @@ public class XmiModelCollectionTests
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
-        var list1 = model.GetEntitiesOfType<XmiMaterial>();
-        var list2 = model.GetEntitiesOfType<XmiMaterial>();
+        var list1 = model.GetXmiEntitiesOfType<XmiMaterial>();
+        var list2 = model.GetXmiEntitiesOfType<XmiMaterial>();
 
         Assert.NotSame(list1, list2);
         Assert.Equal(list1.Count, list2.Count);

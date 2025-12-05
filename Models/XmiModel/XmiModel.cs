@@ -280,36 +280,53 @@ namespace XmiSchema.Core.Models
             XmiPoint3D point
         )
         {
+            // Validate required parameters
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-            try
-            {
-                var tempConnection = new XmiStructuralPointConnection(
-                    id,
-                    name,
-                    ifcGuid,
-                    nativeId,
-                    description
-                );
+            if (point == null) throw new ArgumentNullException(nameof(point), "Point is required");
 
-                var existingConnectionId = FindMatchingPointConnectionByPoint3D(tempConnection);
-                if (existingConnectionId != null)
+            return ExecuteTransaction<XmiStructuralPointConnection>("CreateXmiStructuralPointConnection", () =>
+            {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
+                // Find or use the provided point
+                var existingPoint = GetXmiEntitiesOfType<XmiPoint3D>()
+                    .FirstOrDefault(p => p.Equals(point));
+
+                // If no matching point found in model, we'll need to add the provided point
+                if (existingPoint == null)
                 {
-                    return GetEntitiesOfType<XmiStructuralPointConnection>()
-                        .FirstOrDefault(c => c.Id == existingConnectionId) ?? tempConnection;
+                    existingPoint = point;
+                    entitiesToAdd.Add(point);
                 }
 
-                // Look for an existing storey with the same native identifier; fall back to the provided one if missing.
+                // Check if a connection already exists at this point location
+                var existingConnection = Relationships
+                    .OfType<XmiHasPoint3D>()
+                    .Where(rel => rel.Source is XmiStructuralPointConnection)
+                    .FirstOrDefault(rel => ArePointsEqual(rel.Target as XmiPoint3D, existingPoint));
+
+                if (existingConnection != null && existingConnection.Source is XmiStructuralPointConnection existingConn)
+                {
+                    // Return existing connection, no transaction needed
+                    return (existingConn, new List<XmiBaseEntity>(), new List<XmiBaseRelationship>());
+                }
+
+                // Find or use the provided storey
                 XmiStorey? existingStorey = null;
                 if (storey != null)
                 {
-                    existingStorey = GetEntitiesOfType<XmiStorey>()
-                        .FirstOrDefault(s => s.Id == storey.Id) ?? storey;
-                }
+                    existingStorey = GetXmiEntitiesOfType<XmiStorey>()
+                        .FirstOrDefault(s => s.Id == storey.Id);
 
-                // Reuse an existing point with matching coordinates whenever possible.
-                var existingPoint = GetEntitiesOfType<XmiPoint3D>()
-                    .FirstOrDefault(p => p.Equals(point)) ?? point;
+                    // If storey not found in model, use the provided one
+                    if (existingStorey == null)
+                    {
+                        existingStorey = storey;
+                        entitiesToAdd.Add(storey);
+                    }
+                }
 
                 var connection = new XmiStructuralPointConnection(
                     id,
@@ -319,33 +336,26 @@ namespace XmiSchema.Core.Models
                     description
                 );
 
-                AddXmiStructuralPointConnection(connection);
+                entitiesToAdd.Add(connection);
 
                 if (existingStorey != null)
                 {
                     var storeyRelation = new XmiHasStorey(connection, existingStorey);
-                    AddXmiHasStorey(storeyRelation);
+                    relationshipsToAdd.Add(storeyRelation);
                 }
 
-                if (existingPoint != null)
-                {
-                    var pointRelation = new XmiHasPoint3D(connection, existingPoint);
-                    AddXmiHasPoint3D(pointRelation);
-                }
+                var pointRelation = new XmiHasPoint3D(connection, existingPoint);
+                relationshipsToAdd.Add(pointRelation);
 
-                return connection;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create or reuse a structural point connection.", ex);
-            }
+                return (connection, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
         /// <summary>
         /// Returns all entities of the requested type.
         /// </summary>
         /// <typeparam name="T">Subtype of <see cref="XmiBaseEntity"/> to retrieve.</typeparam>
-        public List<T> GetEntitiesOfType<T>() where T : XmiBaseEntity
+        public List<T> GetXmiEntitiesOfType<T>() where T : XmiBaseEntity
         {
             return Entities.OfType<T>().ToList();
         }
@@ -382,7 +392,7 @@ namespace XmiSchema.Core.Models
                 var relationshipsToAdd = new List<XmiBaseRelationship>();
 
                 var tempPoint = new XmiPoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
-                var existingPoints = GetEntitiesOfType<XmiPoint3D>();
+                var existingPoints = GetXmiEntitiesOfType<XmiPoint3D>();
                 var existingPoint = existingPoints.FirstOrDefault(p => p.Equals(tempPoint));
 
                 if (existingPoint != null)
@@ -440,32 +450,38 @@ namespace XmiSchema.Core.Models
             string endFixityEnd
         )
         {
+            // Validate required parameters
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (crossSection == null) throw new ArgumentNullException(nameof(crossSection), "CrossSection is required");
+            if (beginNode == null) throw new ArgumentNullException(nameof(beginNode), "BeginNode is required");
+            if (endNode == null) throw new ArgumentNullException(nameof(endNode), "EndNode is required");
+            if (nodes == null || nodes.Count == 0) throw new ArgumentException("Nodes list cannot be null or empty", nameof(nodes));
+            if (segments == null || segments.Count == 0) throw new ArgumentException("Segments list cannot be null or empty", nameof(segments));
 
             return ExecuteTransaction<XmiStructuralCurveMember>("CreateXmiStructuralCurveMember", () =>
             {
                 var entitiesToAdd = new List<XmiBaseEntity>();
                 var relationshipsToAdd = new List<XmiBaseRelationship>();
 
-                var existingCrossSection = GetEntitiesOfType<XmiCrossSection>()
+                var existingCrossSection = GetXmiEntitiesOfType<XmiCrossSection>()
                     .FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
 
                 XmiStorey? existingStorey = null;
                 if (storey != null)
                 {
-                    existingStorey = GetEntitiesOfType<XmiStorey>()
+                    existingStorey = GetXmiEntitiesOfType<XmiStorey>()
                         .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
                 }
 
                 var existingBeginNodeId = FindMatchingPointConnectionByPoint3D(beginNode);
                 var existingBeginNode = existingBeginNodeId != null
-                    ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId) ?? beginNode
+                    ? GetXmiEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId) ?? beginNode
                     : beginNode;
 
                 var existingEndNodeId = FindMatchingPointConnectionByPoint3D(endNode);
                 var existingEndNode = existingEndNodeId != null
-                    ? GetEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId) ?? endNode
+                    ? GetXmiEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId) ?? endNode
                     : endNode;
 
                 var curveMember = new XmiStructuralCurveMember(
@@ -501,8 +517,9 @@ namespace XmiSchema.Core.Models
                     relationshipsToAdd.Add(storeyRelation);
                 }
 
-                var beginNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingBeginNode);
-                var endNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingEndNode);
+                // Create relationships with ConnectionType to indicate begin/end nodes
+                var beginNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingBeginNode, "BeginNode");
+                var endNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingEndNode, "EndNode");
                 relationshipsToAdd.Add(beginNodeRelation);
                 relationshipsToAdd.Add(endNodeRelation);
 
@@ -551,7 +568,7 @@ namespace XmiSchema.Core.Models
                 // Safe handling: only reuse material references when a native ID is provided.
                 if (material != null && !string.IsNullOrEmpty(material.NativeId))
                 {
-                    var materials = GetEntitiesOfType<XmiMaterial>() ?? Enumerable.Empty<XmiMaterial>();
+                    var materials = GetXmiEntitiesOfType<XmiMaterial>() ?? Enumerable.Empty<XmiMaterial>();
                     existingMaterial = materials.FirstOrDefault(m => m?.NativeId == material.NativeId) ?? material;
                 }
 
@@ -611,7 +628,7 @@ namespace XmiSchema.Core.Models
                 var entitiesToAdd = new List<XmiBaseEntity>();
                 var relationshipsToAdd = new List<XmiBaseRelationship>();
 
-                var existingStorey = GetEntitiesOfType<XmiStorey>()
+                var existingStorey = GetXmiEntitiesOfType<XmiStorey>()
                     .FirstOrDefault(s => s.NativeId == nativeId);
 
                 if (existingStorey != null)
@@ -663,7 +680,7 @@ namespace XmiSchema.Core.Models
                 var entitiesToAdd = new List<XmiBaseEntity>();
                 var relationshipsToAdd = new List<XmiBaseRelationship>();
 
-                var existingMaterial = GetEntitiesOfType<XmiMaterial>()
+                var existingMaterial = GetXmiEntitiesOfType<XmiMaterial>()
                     .FirstOrDefault(m => m.NativeId == nativeId);
 
                 if (existingMaterial != null)
@@ -729,7 +746,7 @@ namespace XmiSchema.Core.Models
                 XmiStorey? existingStorey = null;
                 if (storey != null)
                 {
-                    existingStorey = GetEntitiesOfType<XmiStorey>()
+                    existingStorey = GetXmiEntitiesOfType<XmiStorey>()
                         .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
                 }
 
@@ -737,7 +754,7 @@ namespace XmiSchema.Core.Models
 
                 if (material != null && !string.IsNullOrEmpty(material.NativeId))
                 {
-                    var materials = GetEntitiesOfType<XmiMaterial>() ?? Enumerable.Empty<XmiMaterial>();
+                    var materials = GetXmiEntitiesOfType<XmiMaterial>() ?? Enumerable.Empty<XmiMaterial>();
                     existingMaterial = materials.FirstOrDefault(m => m?.NativeId == material.NativeId) ?? material;
                 }
 

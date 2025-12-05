@@ -136,14 +136,14 @@ namespace XmiSchema.Core.Manager
         public List<T> GetXmiEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].GetEntitiesOfType<T>();
+            return Models[modelIndex].GetXmiEntitiesOfType<T>();
         }
 
         /// <inheritdoc />
         public T? GetXmiEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.Id == id);
+            return Models[modelIndex].GetXmiEntitiesOfType<T>().FirstOrDefault(e => e.Id == id);
         }
 
         /// <summary>
