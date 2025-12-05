@@ -334,7 +334,7 @@ public class XmiFactoryErrorHandlingTests
         var point = TestModelFactory.CreatePoint();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStructuralPointConnection(
+            manager.CreateXmiStructuralPointConnection(
                 0, null!, "Connection", "", "", "",
                 storey, point
             ));

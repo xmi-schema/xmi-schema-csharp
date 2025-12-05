@@ -24,8 +24,8 @@ var storey = manager.CreateXmiStorey(
 var basePoint = manager.CreateXmiPoint3D(0, "pt-start", "Start", "pt-guid", "PT_START", "Start point", 0, 0, 0);
 var topPoint = manager.CreateXmiPoint3D(0, "pt-end", "End", "pt-guid-2", "PT_END", "End point", 0, 0, 3);
 
-var startConnection = manager.CreateStructuralPointConnection(0, "pc-start", "Start Node", "pc-guid", "PC_START", "Column base", storey, basePoint);
-var endConnection = manager.CreateStructuralPointConnection(0, "pc-end", "End Node", "pc-guid-2", "PC_END", "Column top", storey, topPoint);
+var startConnection = manager.CreateXmiStructuralPointConnection(0, "pc-start", "Start Node", "pc-guid", "PC_START", "Column base", storey, basePoint);
+var endConnection = manager.CreateXmiStructuralPointConnection(0, "pc-end", "End Node", "pc-guid-2", "PC_END", "Column top", storey, topPoint);
 
 var material = manager.CreateXmiMaterial(
     0,
