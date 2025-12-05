@@ -227,7 +227,7 @@ public class XmiSerializationTests
     {
         var material = new XmiMaterial(
             "mat-1", "Material", "", "native", "",
-            XmiStructuralMaterialTypeEnum.Concrete, 30, 25,
+            XmiMaterialTypeEnum.Concrete, 30, 25,
             "30000", "12000", "0.2", 1.0
         );
 
@@ -287,7 +287,7 @@ public class XmiSerializationTests
 
         var material = JsonConvert.DeserializeObject<XmiMaterial>(json, _settings);
 
-        Assert.Equal(XmiStructuralMaterialTypeEnum.Steel, material!.MaterialType);
+        Assert.Equal(XmiMaterialTypeEnum.Steel, material!.MaterialType);
         Assert.Equal(XmiBaseEntityDomainEnum.Shared, material.Type);
     }
 
@@ -300,7 +300,7 @@ public class XmiSerializationTests
     {
         var material = new XmiMaterial(
             "mat-1", "Material", "", "", "", // Empty strings
-            XmiStructuralMaterialTypeEnum.Steel, 50, 78.5,
+            XmiMaterialTypeEnum.Steel, 50, 78.5,
             "200000", "80000", "0.3", 1.2
         );
 
@@ -328,7 +328,7 @@ public class XmiSerializationTests
     public void XmiModel_SerializesWithEntities()
     {
         var model = new XmiModel();
-        model.AddXmiStructuralMaterial(TestModelFactory.CreateMaterial());
+        model.AddXmiMaterial(TestModelFactory.CreateMaterial());
         model.AddXmiPoint3D(TestModelFactory.CreatePoint());
 
         var json = JsonConvert.SerializeObject(model, _settings);
@@ -345,11 +345,11 @@ public class XmiSerializationTests
         var material = TestModelFactory.CreateMaterial();
         var crossSection = TestModelFactory.CreateCrossSection();
 
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
         model.AddXmiCrossSection(crossSection);
 
         var relation = new XmiHasMaterial(crossSection, material);
-        model.AddXmiHasStructuralMaterial(relation);
+        model.AddXmiHasMaterial(relation);
 
         var json = JsonConvert.SerializeObject(model, _settings);
 
@@ -482,9 +482,9 @@ public class XmiSerializationTests
         var manager = new XmiManager();
         var model = new XmiModel();
 
-        model.AddXmiStructuralMaterial(TestModelFactory.CreateMaterial());
+        model.AddXmiMaterial(TestModelFactory.CreateMaterial());
         model.AddXmiPoint3D(TestModelFactory.CreatePoint());
-        model.AddXmiStructuralStorey(TestModelFactory.CreateStorey());
+        model.AddXmiStorey(TestModelFactory.CreateStorey());
 
         manager.Models.Add(model);
 
@@ -505,9 +505,9 @@ public class XmiSerializationTests
         var material = TestModelFactory.CreateMaterial();
         var crossSection = TestModelFactory.CreateCrossSection();
 
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
         model.AddXmiCrossSection(crossSection);
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(crossSection, material));
+        model.AddXmiHasMaterial(new XmiHasMaterial(crossSection, material));
 
         manager.Models.Add(model);
 
@@ -592,14 +592,14 @@ public class XmiSerializationTests
         var point = TestModelFactory.CreatePoint();
         var connection = TestModelFactory.CreatePointConnection();
 
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
         model.AddXmiCrossSection(crossSection);
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiStorey(storey);
         model.AddXmiPoint3D(point);
         model.AddXmiStructuralPointConnection(connection);
 
         // Add relationships
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(crossSection, material));
+        model.AddXmiHasMaterial(new XmiHasMaterial(crossSection, material));
         model.AddXmiHasStorey(new XmiHasStorey(connection, storey));
         model.AddXmiHasPoint3D(new XmiHasPoint3D(connection, point));
 
@@ -679,7 +679,7 @@ public class XmiSerializationTests
     {
         var material = new XmiMaterial(
             "mat-1", "Material \"with quotes\"", "ifc\nguid", "native\\id", "Description: special & chars",
-            XmiStructuralMaterialTypeEnum.Steel, 50, 78.5,
+            XmiMaterialTypeEnum.Steel, 50, 78.5,
             "200000", "80000", "0.3", 1.2
         );
 
@@ -697,7 +697,7 @@ public class XmiSerializationTests
     {
         var material = new XmiMaterial(
             "mat-1", "材料", "ifc-guid", "native-中文", "描述",
-            XmiStructuralMaterialTypeEnum.Steel, 50, 78.5,
+            XmiMaterialTypeEnum.Steel, 50, 78.5,
             "200000", "80000", "0.3", 1.2
         );
 

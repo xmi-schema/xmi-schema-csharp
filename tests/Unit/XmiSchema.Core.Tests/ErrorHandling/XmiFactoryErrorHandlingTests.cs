@@ -65,14 +65,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralMaterial_ThrowsWhenIdIsNull()
+    public void CreateMaterial_ThrowsWhenIdIsNull()
     {
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralMaterial(
+            model.CreateMaterial(
                 null!, "Material", "", "", "",
-                XmiStructuralMaterialTypeEnum.Steel,
+                XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
             ));
 
@@ -80,14 +80,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralMaterial_ThrowsWhenNameIsNull()
+    public void CreateMaterial_ThrowsWhenNameIsNull()
     {
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralMaterial(
+            model.CreateMaterial(
                 "mat-1", null!, "", "", "",
-                XmiStructuralMaterialTypeEnum.Steel,
+                XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
             ));
 
@@ -95,12 +95,12 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralStorey_ThrowsWhenIdIsNull()
+    public void CreateStorey_ThrowsWhenIdIsNull()
     {
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralStorey(
+            model.CreateStorey(
                 null!, "Storey", "", "", "",
                 12.0, 1000, "Fx", "Fy", "Fz"
             ));
@@ -215,7 +215,7 @@ public class XmiFactoryErrorHandlingTests
         var material = TestModelFactory.CreateMaterial();
 
         var exception = Assert.Throws<IndexOutOfRangeException>(() =>
-            manager.AddXmiStructuralMaterialToModel(0, material));
+            manager.AddXmiMaterialToModel(0, material));
 
         Assert.NotNull(exception);
     }
@@ -227,7 +227,7 @@ public class XmiFactoryErrorHandlingTests
         var material = TestModelFactory.CreateMaterial();
 
         var exception = Assert.Throws<IndexOutOfRangeException>(() =>
-            manager.AddXmiStructuralMaterialToModel(-1, material));
+            manager.AddXmiMaterialToModel(-1, material));
 
         Assert.NotNull(exception);
     }
@@ -281,14 +281,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void XmiManager_CreateStructuralMaterial_ThrowsWhenNameIsNull()
+    public void XmiManager_CreateMaterial_ThrowsWhenNameIsNull()
     {
         var manager = TestModelFactory.CreateManagerWithModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStructuralMaterial(
+            manager.CreateMaterial(
                 0, "mat-1", null!, "", "", "",
-                XmiStructuralMaterialTypeEnum.Steel,
+                XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
             ));
 
@@ -296,12 +296,12 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void XmiManager_CreateStructuralStorey_ThrowsWhenIdIsEmpty()
+    public void XmiManager_CreateStorey_ThrowsWhenIdIsEmpty()
     {
         var manager = TestModelFactory.CreateManagerWithModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStructuralStorey(
+            manager.CreateStorey(
                 0, "", "Storey", "", "", "",
                 12.0, 1000, "Fx", "Fy", "Fz"
             ));
@@ -483,15 +483,15 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralMaterial_WrapsExceptionInInvalidOperationException()
+    public void CreateMaterial_WrapsExceptionInInvalidOperationException()
     {
         var model = new XmiModel();
 
         try
         {
-            model.CreateStructuralMaterial(
+            model.CreateMaterial(
                 "mat-1", null!, "", "", "",
-                XmiStructuralMaterialTypeEnum.Steel,
+                XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
             );
             Assert.Fail("Expected exception was not thrown");
@@ -503,13 +503,13 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralStorey_WrapsExceptionInInvalidOperationException()
+    public void CreateStorey_WrapsExceptionInInvalidOperationException()
     {
         var model = new XmiModel();
 
         try
         {
-            model.CreateStructuralStorey(
+            model.CreateStorey(
                 "str-1", null!, "", "", "",
                 12.0, 1000, "Fx", "Fy", "Fz"
             );
@@ -560,19 +560,19 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralMaterial_ReusesExistingMaterialWithSameNativeId()
+    public void CreateMaterial_ReusesExistingMaterialWithSameNativeId()
     {
         var model = new XmiModel();
 
-        var mat1 = model.CreateStructuralMaterial(
+        var mat1 = model.CreateMaterial(
             "mat-1", "Material 1", "", "native-1", "",
-            XmiStructuralMaterialTypeEnum.Steel,
+            XmiMaterialTypeEnum.Steel,
             50, 78.5, "200000", "80000", "0.3", 1.2
         );
 
-        var mat2 = model.CreateStructuralMaterial(
+        var mat2 = model.CreateMaterial(
             "mat-2", "Material 2", "", "native-1", "",
-            XmiStructuralMaterialTypeEnum.Concrete,
+            XmiMaterialTypeEnum.Concrete,
             30, 25, "30000", "12000", "0.2", 1.0
         );
 
@@ -582,16 +582,16 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralStorey_ReusesExistingStoreyWithSameNativeId()
+    public void CreateStorey_ReusesExistingStoreyWithSameNativeId()
     {
         var model = new XmiModel();
 
-        var storey1 = model.CreateStructuralStorey(
+        var storey1 = model.CreateStorey(
             "str-1", "Storey 1", "", "native-1", "",
             12.0, 1000, "Fx", "Fy", "Fz"
         );
 
-        var storey2 = model.CreateStructuralStorey(
+        var storey2 = model.CreateStorey(
             "str-2", "Storey 2", "", "native-1", "",
             15.0, 1200, "Fx2", "Fy2", "Fz2"
         );
@@ -606,9 +606,9 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var material = model.CreateStructuralMaterial(
+        var material = model.CreateMaterial(
             "mat-1", "Material", "", "native-mat", "",
-            XmiStructuralMaterialTypeEnum.Steel,
+            XmiMaterialTypeEnum.Steel,
             50, 78.5, "200000", "80000", "0.3", 1.2
         );
 
@@ -647,13 +647,13 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralMaterial_AllowsZeroValues()
+    public void CreateMaterial_AllowsZeroValues()
     {
         var model = new XmiModel();
 
-        var material = model.CreateStructuralMaterial(
+        var material = model.CreateMaterial(
             "mat-1", "Material", "", "", "",
-            XmiStructuralMaterialTypeEnum.Steel,
+            XmiMaterialTypeEnum.Steel,
             0, 0, "0", "0", "0", 0
         );
 
@@ -663,11 +663,11 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralStorey_AllowsNegativeElevation()
+    public void CreateStorey_AllowsNegativeElevation()
     {
         var model = new XmiModel();
 
-        var storey = model.CreateStructuralStorey(
+        var storey = model.CreateStorey(
             "str-1", "Basement", "", "", "",
             -5.0, 1000, "Fx", "Fy", "Fz"
         );
@@ -700,7 +700,7 @@ public class XmiFactoryErrorHandlingTests
 
         var material = new XmiMaterial(
             "mat-1", "Material", "", "", "",
-            XmiStructuralMaterialTypeEnum.Steel,
+            XmiMaterialTypeEnum.Steel,
             50, 78.5, "200000", "80000", "0.3", 1.2
         );
 

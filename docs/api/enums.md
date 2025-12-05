@@ -75,7 +75,7 @@ Analytical plane location for surface elements.
 
 ## Material Enums
 
-### XmiStructuralMaterialTypeEnum
+### XmiMaterialTypeEnum
 
 Material categories.
 

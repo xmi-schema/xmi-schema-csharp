@@ -52,7 +52,7 @@ public class XmiModelCollectionTests
     public void GetEntitiesOfType_NoMatchingType_ReturnsEmptyList()
     {
         var model = new XmiModel();
-        model.AddXmiStructuralMaterial(TestModelFactory.CreateMaterial());
+        model.AddXmiMaterial(TestModelFactory.CreateMaterial());
         model.AddXmiPoint3D(TestModelFactory.CreatePoint());
 
         var beams = model.GetEntitiesOfType<XmiBeam>();
@@ -72,10 +72,10 @@ public class XmiModelCollectionTests
         var point2 = TestModelFactory.CreatePoint("pt-2");
         var storey = TestModelFactory.CreateStorey();
 
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
         model.AddXmiPoint3D(point1);
         model.AddXmiPoint3D(point2);
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiStorey(storey);
 
         var points = model.GetEntitiesOfType<XmiPoint3D>();
 
@@ -95,9 +95,9 @@ public class XmiModelCollectionTests
         var mat2 = TestModelFactory.CreateMaterial("mat-2");
         var mat3 = TestModelFactory.CreateMaterial("mat-3");
 
-        model.AddXmiStructuralMaterial(mat1);
-        model.AddXmiStructuralMaterial(mat2);
-        model.AddXmiStructuralMaterial(mat3);
+        model.AddXmiMaterial(mat1);
+        model.AddXmiMaterial(mat2);
+        model.AddXmiMaterial(mat3);
 
         Assert.Equal(3, model.Entities.Count);
         Assert.Equal(3, model.GetEntitiesOfType<XmiMaterial>().Count);
@@ -115,7 +115,7 @@ public class XmiModelCollectionTests
 
         // Add relationship without adding entities to the model
         var relation = new XmiHasMaterial(source, target);
-        model.AddXmiHasStructuralMaterial(relation);
+        model.AddXmiHasMaterial(relation);
 
         Assert.Empty(model.Entities);
         Assert.Single(model.Relationships);
@@ -132,11 +132,11 @@ public class XmiModelCollectionTests
         var curveMember = TestModelFactory.CreateCurveMember();
 
         // Only add the target entity
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
 
         // Add relationship with source not in Entities collection
         var relation = new XmiHasMaterial(curveMember, material);
-        model.AddXmiHasStructuralMaterial(relation);
+        model.AddXmiHasMaterial(relation);
 
         Assert.Single(model.Entities);
         Assert.Single(model.Relationships);
@@ -158,7 +158,7 @@ public class XmiModelCollectionTests
 
         // Add relationship with target not in Entities collection
         var relation = new XmiHasMaterial(curveMember, material);
-        model.AddXmiHasStructuralMaterial(relation);
+        model.AddXmiHasMaterial(relation);
 
         Assert.Single(model.Entities);
         Assert.Single(model.Relationships);
@@ -177,7 +177,7 @@ public class XmiModelCollectionTests
 
         // Add relationship without adding either entity
         var relation = new XmiHasMaterial(curveMember, material);
-        model.AddXmiHasStructuralMaterial(relation);
+        model.AddXmiHasMaterial(relation);
 
         Assert.Empty(model.Entities);
         Assert.Single(model.Relationships);
@@ -196,11 +196,11 @@ public class XmiModelCollectionTests
         var storey = TestModelFactory.CreateStorey();
 
         model.AddXmiStructuralCurveMember(curveMember);
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
         model.AddXmiCrossSection(crossSection);
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiStorey(storey);
 
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(curveMember, material));
+        model.AddXmiHasMaterial(new XmiHasMaterial(curveMember, material));
         model.AddXmiHasCrossSection(new XmiHasCrossSection(curveMember, crossSection));
         model.AddXmiHasStorey(new XmiHasStorey(curveMember, storey));
 
@@ -219,13 +219,13 @@ public class XmiModelCollectionTests
         var target = TestModelFactory.CreateMaterial();
 
         model.AddXmiStructuralCurveMember(source);
-        model.AddXmiStructuralMaterial(target);
+        model.AddXmiMaterial(target);
 
         var relation1 = new XmiHasMaterial(source, target);
         var relation2 = new XmiHasMaterial(source, target);
 
-        model.AddXmiHasStructuralMaterial(relation1);
-        model.AddXmiHasStructuralMaterial(relation2);
+        model.AddXmiHasMaterial(relation1);
+        model.AddXmiHasMaterial(relation2);
 
         Assert.Equal(2, model.Relationships.Count);
     }
@@ -242,10 +242,10 @@ public class XmiModelCollectionTests
         var mat2 = TestModelFactory.CreateMaterial("mat-2");
         var storey = TestModelFactory.CreateStorey();
 
-        model.AddXmiStructuralMaterial(mat1);
+        model.AddXmiMaterial(mat1);
         model.AddXmiPoint3D(point);
-        model.AddXmiStructuralMaterial(mat2);
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiMaterial(mat2);
+        model.AddXmiStorey(storey);
 
         Assert.Equal(4, model.Entities.Count);
         Assert.Same(mat1, model.Entities[0]);
@@ -270,9 +270,9 @@ public class XmiModelCollectionTests
         var rel2 = new XmiHasStorey(source1, storey);
         var rel3 = new XmiHasMaterial(source2, material);
 
-        model.AddXmiHasStructuralMaterial(rel1);
+        model.AddXmiHasMaterial(rel1);
         model.AddXmiHasStorey(rel2);
-        model.AddXmiHasStructuralMaterial(rel3);
+        model.AddXmiHasMaterial(rel3);
 
         Assert.Equal(3, model.Relationships.Count);
         Assert.Same(rel1, model.Relationships[0]);
@@ -326,9 +326,9 @@ public class XmiModelCollectionTests
         var material = TestModelFactory.CreateMaterial();
         var storey = TestModelFactory.CreateStorey();
 
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source1, material));
+        model.AddXmiHasMaterial(new XmiHasMaterial(source1, material));
         model.AddXmiHasStorey(new XmiHasStorey(source1, storey));
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source2, material));
+        model.AddXmiHasMaterial(new XmiHasMaterial(source2, material));
 
         var source1Relations = model.Relationships.Where(r => r.Source.Id == source1.Id).ToList();
 
@@ -348,9 +348,9 @@ public class XmiModelCollectionTests
         var material1 = TestModelFactory.CreateMaterial("mat-1");
         var material2 = TestModelFactory.CreateMaterial("mat-2");
 
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source1, material1));
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source2, material1));
-        model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source2, material2));
+        model.AddXmiHasMaterial(new XmiHasMaterial(source1, material1));
+        model.AddXmiHasMaterial(new XmiHasMaterial(source2, material1));
+        model.AddXmiHasMaterial(new XmiHasMaterial(source2, material2));
 
         var material1Relations = model.Relationships
             .OfType<XmiHasMaterial>()
@@ -390,7 +390,7 @@ public class XmiModelCollectionTests
         for (int i = 0; i < 1000; i++)
         {
             var source = TestModelFactory.CreateCurveMember($"cm-{i}");
-            model.AddXmiHasStructuralMaterial(new XmiHasMaterial(source, material));
+            model.AddXmiHasMaterial(new XmiHasMaterial(source, material));
         }
 
         Assert.Equal(1000, model.Relationships.Count);
@@ -443,7 +443,7 @@ public class XmiModelCollectionTests
     {
         var model = new XmiModel();
         var material = TestModelFactory.CreateMaterial();
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
 
         var list1 = model.GetEntitiesOfType<XmiMaterial>();
         var list2 = model.GetEntitiesOfType<XmiMaterial>();

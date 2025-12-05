@@ -11,7 +11,7 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
 public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralCurveMember>
 {
     // public XmiCrossSection CrossSection { get; set; }
-    // public XmiStructuralStorey Storey { get; set; }
+    // public XmiStorey Storey { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberTypeEnum CurveMemberType { get; set; }
     // public List<XmiStructuralPointConnection> Nodes { get; set; }
@@ -71,7 +71,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
         string nativeId,
         string description,
         // XmiCrossSection crossSection,
-        // XmiStructuralStorey storey,
+        // XmiStorey storey,
         XmiStructuralCurveMemberTypeEnum curveMemberType,
         // List<XmiStructuralPointConnection> nodes,
         // List<XmiSegment> segments,

@@ -25,7 +25,7 @@ var material = new XmiMaterial(
     "ifc-guid",
     "MAT-1",
     "Structural steel",
-    XmiStructuralMaterialTypeEnum.Steel,
+    XmiMaterialTypeEnum.Steel,
     345,       // Yield strength (MPa)
     78.5,      // Density (kN/m³)
     "200000",  // Young's modulus (MPa)
@@ -33,7 +33,7 @@ var material = new XmiMaterial(
     "0.3",     // Poisson's ratio
     1.2        // Thermal expansion (×10⁻⁵/°C)
 );
-model.AddXmiStructuralMaterial(material);
+model.AddXmiMaterial(material);
 
 // Create a cross-section
 var crossSection = new XmiCrossSection(
@@ -204,8 +204,8 @@ model.AddXmiHasStructuralCurveMember(hasStructuralCurve);
 
 ```csharp
 // Assign material to cross-section
-var hasMaterial = new XmiHasStructuralMaterial(crossSection, material);
-model.AddXmiHasStructuralMaterial(hasMaterial);
+var hasMaterial = new XmiHasMaterial(crossSection, material);
+model.AddXmiHasMaterial(hasMaterial);
 
 // Assign cross-section to curve member
 var hasSection = new XmiHasCrossSection(curveMember, crossSection);
@@ -240,7 +240,7 @@ var storey = new XmiStorey(
     "Fy",      // Reaction Y
     "Fz"       // Reaction Z
 );
-model.AddXmiStructuralStorey(storey);
+model.AddXmiStorey(storey);
 
 // Link point connection to storey
 var hasStorey = new XmiHasStorey(pointConn1, storey);
@@ -293,10 +293,10 @@ var model = new XmiModel();
 // Create material
 var steel = new XmiMaterial(
     "mat-steel", "Steel", "guid", "STEEL", "A992",
-    XmiStructuralMaterialTypeEnum.Steel,
+    XmiMaterialTypeEnum.Steel,
     345, 78.5, "200000", "80000", "0.3", 1.2
 );
-model.AddXmiStructuralMaterial(steel);
+model.AddXmiMaterial(steel);
 
 // Create section
 var wSection = new XmiCrossSection(
@@ -330,8 +330,8 @@ model.AddXmiStructuralCurveMember(analytical);
 // Link everything
 model.AddXmiHasStructuralCurveMember(
     new XmiHasStructuralCurveMember(beam, analytical));
-model.AddXmiHasStructuralMaterial(
-    new XmiHasStructuralMaterial(wSection, steel));
+model.AddXmiHasMaterial(
+    new XmiHasMaterial(wSection, steel));
 model.AddXmiHasCrossSection(
     new XmiHasCrossSection(analytical, wSection));
 

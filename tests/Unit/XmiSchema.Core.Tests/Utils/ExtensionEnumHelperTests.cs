@@ -14,9 +14,9 @@ public class ExtensionEnumHelperTests
     [Fact]
     public void FromEnumValue_ReturnsMatchingValue()
     {
-        var result = ExtensionEnumHelper.FromEnumValue<XmiStructuralMaterialTypeEnum>("steel");
+        var result = ExtensionEnumHelper.FromEnumValue<XmiMaterialTypeEnum>("steel");
 
-        Assert.Equal(XmiStructuralMaterialTypeEnum.Steel, result);
+        Assert.Equal(XmiMaterialTypeEnum.Steel, result);
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class ExtensionEnumHelperTests
     [Fact]
     public void FromEnumValue_ReturnsNullWhenMissing()
     {
-        var result = ExtensionEnumHelper.FromEnumValue<XmiStructuralMaterialTypeEnum>("not-a-value");
+        var result = ExtensionEnumHelper.FromEnumValue<XmiMaterialTypeEnum>("not-a-value");
 
         Assert.Null(result);
     }

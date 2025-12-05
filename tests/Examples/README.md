@@ -9,4 +9,4 @@ This folder houses runnable samples that demonstrate how downstream agents can c
   ```bash
   dotnet run --project tests/Examples/StructuralGraphSample/StructuralGraphSample.csproj
   ```
-- **Highlights:** Shows how to chain the creation helpers (`CreateStructuralMaterial`, `CreateStructuralCurveMember`, `BuildJson`) and is a good starting point for creating regression fixtures or docs snippets.
+- **Highlights:** Shows how to chain the creation helpers (`CreateMaterial`, `CreateStructuralCurveMember`, `BuildJson`) and is a good starting point for creating regression fixtures or docs snippets.

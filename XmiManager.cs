@@ -30,10 +30,10 @@ namespace XmiSchema.Core.Manager
 
         // ========== 添加实体 ==========
         /// <inheritdoc />
-        public void AddXmiStructuralMaterialToModel(int modelIndex, XmiMaterial material)
+        public void AddXmiMaterialToModel(int modelIndex, XmiMaterial material)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiStructuralMaterial(material);
+            Models[modelIndex].AddXmiMaterial(material);
         }
 
         /// <inheritdoc />
@@ -65,10 +65,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiStructuralStoreyToModel(int modelIndex, XmiStorey storey)
+        public void AddXmiStoreyToModel(int modelIndex, XmiStorey storey)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiStructuralStorey(storey);
+            Models[modelIndex].AddXmiStorey(storey);
         }
 
         /// <inheritdoc />
@@ -98,10 +98,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasMaterial relation)
+        public void AddXmiHasMaterialToModel(int modelIndex, XmiHasMaterial relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasStructuralMaterial(relation);
+            Models[modelIndex].AddXmiHasMaterial(relation);
         }
 
         /// <inheritdoc />
@@ -228,14 +228,14 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiMaterial CreateStructuralMaterial(
+        public XmiMaterial CreateMaterial(
             int modelIndex,
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterialTypeEnum materialType,
+            XmiMaterialTypeEnum materialType,
             double grade,
             double unitWeight,
             string eModulus,
@@ -245,7 +245,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralMaterial(
+            return Models[modelIndex].CreateMaterial(
                 id, name, ifcGuid, nativeId, description,
                 materialType, grade, unitWeight,
                 eModulus, gModulus, poissonRatio, thermalCoefficient
@@ -288,7 +288,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStorey CreateStructuralStorey(
+        public XmiStorey CreateStorey(
             int modelIndex,
             string id,
             string name,
@@ -303,7 +303,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralStorey(
+            return Models[modelIndex].CreateStorey(
                 id, name, ifcGuid, nativeId, description,
                 storeyElevation, storeyMass,
                 storeyHorizontalReactionX, storeyHorizontalReactionY, storeyVerticalReaction

@@ -23,7 +23,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the <see cref="XmiModel"/> in <see cref="Models"/>.</param>
         /// <param name="material">Material entity that should be appended to the model.</param>
-        void AddXmiStructuralMaterialToModel(int modelIndex, XmiMaterial material);
+        void AddXmiMaterialToModel(int modelIndex, XmiMaterial material);
 
         /// <summary>
         /// Adds a structural cross-section to the requested model.
@@ -58,7 +58,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="storey">Storey entity to add.</param>
-        void AddXmiStructuralStoreyToModel(int modelIndex, XmiStorey storey);
+        void AddXmiStoreyToModel(int modelIndex, XmiStorey storey);
 
         /// <summary>
         /// Adds a point entity to the requested model.
@@ -86,7 +86,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="relation">Relationship referencing the structural material.</param>
-        void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasMaterial relation);
+        void AddXmiHasMaterialToModel(int modelIndex, XmiHasMaterial relation);
 
         /// <summary>
         /// Adds a relationship that links a structural node (point connection) to other entities.
@@ -168,14 +168,14 @@ namespace XmiSchema.Core.Manager
         /// <param name="poissonRatio">Poisson ratio.</param>
         /// <param name="thermalCoefficient">Thermal coefficient.</param>
         /// <returns>The created <see cref="XmiMaterial"/> instance.</returns>
-        XmiMaterial CreateStructuralMaterial(
+        XmiMaterial CreateMaterial(
             int modelIndex,
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterialTypeEnum materialType,
+            XmiMaterialTypeEnum materialType,
             double grade,
             double unitWeight,
             string eModulus,
@@ -244,7 +244,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="storeyHorizontalReactionY">Horizontal reaction along y-axis.</param>
         /// <param name="storeyVerticalReaction">Vertical reaction.</param>
         /// <returns>The created <see cref="XmiStorey"/>.</returns>
-        XmiStorey CreateStructuralStorey(
+        XmiStorey CreateStorey(
             int modelIndex,
             string id,
             string name,

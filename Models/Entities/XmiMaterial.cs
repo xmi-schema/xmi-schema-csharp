@@ -8,7 +8,7 @@ namespace XmiSchema.Core.Entities;
 /// </summary>
 public class XmiMaterial : XmiBaseEntity, IEquatable<XmiMaterial>
 {
-    public XmiStructuralMaterialTypeEnum MaterialType { get; set; }
+    public XmiMaterialTypeEnum MaterialType { get; set; }
     public double Grade { get; set; }
     public double UnitWeight { get; set; }
 
@@ -25,14 +25,14 @@ public class XmiMaterial : XmiBaseEntity, IEquatable<XmiMaterial>
     /// </summary>
     /// <param name="id">Unique identifier inside the XMI document.</param>
     /// <param name="name">Human readable label for the material; falls back to <paramref name="id"/>.</param>
-        /// <param name="ifcGuid">Optional IFC GUID that links the material back to its native BIM object.</param>
+    /// <param name="ifcGuid">Optional IFC GUID that links the material back to its native BIM object.</param>
     /// <param name="nativeId">Identifier coming from the source authoring tool.</param>
     /// <param name="description">Free-form description explaining when the material is used.</param>
     /// <param name="materialType">Generalized material category (concrete, steel, etc.).</param>
     /// <param name="grade">Producer grade/strength number.</param>
     /// <param name="unitWeight">Mass density expressed in the preferred unit system.</param>
-        /// <param name="elasticModulus">Elastic modulus (E) captured as a string to preserve precision and units.</param>
-        /// <param name="shearModulus">Shear modulus (G) string representation.</param>
+    /// <param name="elasticModulus">Elastic modulus (E) captured as a string to preserve precision and units.</param>
+    /// <param name="shearModulus">Shear modulus (G) string representation.</param>
     /// <param name="poissonRatio">Poisson ratio value.</param>
     /// <param name="thermalCoefficient">Thermal expansion coefficient.</param>
     public XmiMaterial(
@@ -41,7 +41,7 @@ public class XmiMaterial : XmiBaseEntity, IEquatable<XmiMaterial>
         string ifcGuid,
         string nativeId,
         string description,
-        XmiStructuralMaterialTypeEnum materialType,
+        XmiMaterialTypeEnum materialType,
         double grade,
         double unitWeight,
         string elasticModulus,

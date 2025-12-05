@@ -46,7 +46,7 @@ Analytical model entities for structural analysis:
 - **XmiStructuralCurveMember** - Linear analytical members (beams, columns, bracing)
 - **XmiStructuralSurfaceMember** - Surface analytical members (slabs, walls, shells)
 - **XmiStructuralPointConnection** - Nodal connection points
-- **XmiStructuralStorey** - Building levels with elevation and mass properties
+- **XmiStorey** - Building levels with elevation and mass properties
 
 ### [Other Entities](entities)
 
@@ -71,7 +71,7 @@ Graph edges connecting entities:
 
 - **XmiHasStructuralCurveMember** - Link physical to analytical curve members
 - **XmiHasCrossSection** - Assign sections to members
-- **XmiHasStructuralMaterial** - Assign materials to sections/members
+- **XmiHasMaterial** - Assign materials to sections/members
 - **XmiHasGeometry** - Link entities to geometry
 - **XmiHasStructuralNode** - Connect members to nodes
 - **XmiHasStorey** - Place entities on building levels
@@ -92,7 +92,7 @@ Enumeration types and constants:
 - **XmiSegmentTypeEnum** - Geometry families
 
 ### Materials & Shapes
-- **XmiStructuralMaterialTypeEnum** - Material categories
+- **XmiMaterialTypeEnum** - Material categories
 - **XmiShapeEnum** - Cross-section shapes
 
 ### Units

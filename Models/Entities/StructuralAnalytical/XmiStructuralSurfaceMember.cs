@@ -14,7 +14,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     public double Thickness { get; set; }
     public XmiStructuralSurfaceMemberSystemPlaneEnum SystemPlane { get; set; }
     // public List<XmiStructuralPointConnection> Nodes { get; set; }
-    // public XmiStructuralStorey Storey { get; set; }
+    // public XmiStorey Storey { get; set; }
 
     // public List<XmiSegment> Segments { get; set; }
     public double Area { get; set; }
@@ -52,7 +52,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
         double thickness,
         XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
         // List<XmiStructuralPointConnection> nodes,
-        // XmiStructuralStorey storey,
+        // XmiStorey storey,
         // List<XmiSegment> segments,
         double area,
         double zOffset,

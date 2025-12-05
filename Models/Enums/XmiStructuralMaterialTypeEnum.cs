@@ -1,5 +1,6 @@
 namespace XmiSchema.Core.Enums;
-public enum XmiStructuralMaterialTypeEnum
+
+public enum XmiMaterialTypeEnum
 {
     [EnumValue("Concrete")] Concrete,
     [EnumValue("Steel")] Steel,
@@ -10,5 +11,5 @@ public enum XmiStructuralMaterialTypeEnum
     [EnumValue("Others")] Others,
     [EnumValue("Rebar")] Rebar,
     [EnumValue("Tendon")] Tendon,
-        [EnumValue("Unknown")] Unknown
+    [EnumValue("Unknown")] Unknown
 }

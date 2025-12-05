@@ -11,7 +11,7 @@ var manager = new XmiManager();
 manager.Models.Add(new XmiModel());
 
 // Create basic metadata
-var storey = manager.CreateStructuralStorey(
+var storey = manager.CreateStorey(
     modelIndex: 0,
     id: "storey-1",
     name: "Level 1",
@@ -30,14 +30,14 @@ var topPoint = manager.CreatePoint3D(0, "pt-end", "End", "pt-guid-2", "PT_END", 
 var startConnection = manager.CreateStructuralPointConnection(0, "pc-start", "Start Node", "pc-guid", "PC_START", "Column base", storey, basePoint);
 var endConnection = manager.CreateStructuralPointConnection(0, "pc-end", "End Node", "pc-guid-2", "PC_END", "Column top", storey, topPoint);
 
-var material = manager.CreateStructuralMaterial(
+var material = manager.CreateMaterial(
     0,
     "mat-1",
     "Concrete C40",
     "mat-guid",
     "MAT_C40",
     "Typical concrete",
-    XmiStructuralMaterialTypeEnum.Concrete,
+    XmiMaterialTypeEnum.Concrete,
     grade: 40,
     unitWeight: 24,
     eModulus: "33000",

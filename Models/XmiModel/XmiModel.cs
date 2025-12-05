@@ -23,7 +23,7 @@ namespace XmiSchema.Core.Models
         /// Adds a structural material entity to the model.
         /// </summary>
         /// <param name="material">Material to insert.</param>
-        public void AddXmiStructuralMaterial(XmiMaterial material)
+        public void AddXmiMaterial(XmiMaterial material)
         {
             Entities.Add(material);
         }
@@ -68,7 +68,7 @@ namespace XmiSchema.Core.Models
         /// Adds a storey entity to the model.
         /// </summary>
         /// <param name="storey">Storey entity.</param>
-        public void AddXmiStructuralStorey(XmiStorey storey)
+        public void AddXmiStorey(XmiStorey storey)
         {
             Entities.Add(storey);
         }
@@ -131,7 +131,7 @@ namespace XmiSchema.Core.Models
         /// Adds a material relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStructuralMaterial(XmiHasMaterial relation)
+        public void AddXmiHasMaterial(XmiHasMaterial relation)
         {
             Relationships.Add(relation);
         }
@@ -507,7 +507,7 @@ namespace XmiSchema.Core.Models
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(crossSection, existingMaterial);
-                    AddXmiHasStructuralMaterial(materialRelation);
+                    AddXmiHasMaterial(materialRelation);
                 }
 
                 return crossSection;
@@ -524,7 +524,7 @@ namespace XmiSchema.Core.Models
         /// Creates or reuses a structural storey by native identifier.
         /// </summary>
         /// <returns>The created or reused storey.</returns>
-        public XmiStorey CreateStructuralStorey(
+        public XmiStorey CreateStorey(
             string id,
             string name,
             string ifcGuid,
@@ -563,7 +563,7 @@ namespace XmiSchema.Core.Models
                     storeyVerticalReaction
                 );
 
-                AddXmiStructuralStorey(storey);
+                AddXmiStorey(storey);
 
                 return storey;
             }
@@ -577,13 +577,13 @@ namespace XmiSchema.Core.Models
         /// Creates or reuses a structural material identified by <paramref name="nativeId"/>.
         /// </summary>
         /// <returns>The created or reused material.</returns>
-        public XmiMaterial CreateStructuralMaterial(
+        public XmiMaterial CreateMaterial(
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterialTypeEnum materialType,
+            XmiMaterialTypeEnum materialType,
             double grade,
             double unitWeight,
             string eModulus,
@@ -620,7 +620,7 @@ namespace XmiSchema.Core.Models
                     thermalCoefficient
                 );
 
-                AddXmiStructuralMaterial(material);
+                AddXmiMaterial(material);
 
                 return material;
             }
@@ -690,7 +690,7 @@ namespace XmiSchema.Core.Models
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(surfaceMember, existingMaterial);
-                    AddXmiHasStructuralMaterial(materialRelation);
+                    AddXmiHasMaterial(materialRelation);
                 }
 
                 var storeyRelation = new XmiHasStorey(surfaceMember, existingStorey);

@@ -11,6 +11,6 @@ Relationship entities inherit from `XmiBaseRelationship` and form the edges of t
 | `XmiHasMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiMaterial` |
 | `XmiHasStructuralNode` | Declares a member’s analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
 | `XmiHasCrossSection` | Specifies which cross-section a member uses. | `XmiStructuralCurveMember` → `XmiCrossSection` |
-| `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStructuralStorey` |
+| `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStorey` |
 
 Whenever you add new entity types, introduce matching relationships so consuming systems can navigate the graph. Keep constructors consistent with the `<id, source, target, ...>` signature and cover them with unit tests in `tests/XmiSchema.Core.Tests/Relationships`.*** End Patch

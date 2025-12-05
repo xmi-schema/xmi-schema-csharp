@@ -21,7 +21,7 @@ internal static class TestModelFactory
             "ifc-guid",
             id.ToUpperInvariant(),
             "Test material",
-            XmiStructuralMaterialTypeEnum.Steel,
+            XmiMaterialTypeEnum.Steel,
             50,
             78.5,
             "200000",
@@ -206,8 +206,8 @@ internal static class TestModelFactory
     internal static XmiModel CreateModelWithBasics()
     {
         var model = new XmiModel();
-        model.AddXmiStructuralMaterial(CreateMaterial());
-        model.AddXmiStructuralStorey(CreateStorey());
+        model.AddXmiMaterial(CreateMaterial());
+        model.AddXmiStorey(CreateStorey());
         model.AddXmiPoint3D(CreatePoint());
         model.AddXmiStructuralPointConnection(CreatePointConnection());
         model.AddXmiStructuralCurveMember(CreateCurveMember());

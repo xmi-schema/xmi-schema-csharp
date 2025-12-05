@@ -33,12 +33,12 @@ public class XmiModelTests
     /// Materials sharing the same native id are deduplicated.
     /// </summary>
     [Fact]
-    public void CreateStructuralMaterial_ReusesNativeId()
+    public void CreateMaterial_ReusesNativeId()
     {
         var model = new XmiModel();
 
-        var first = model.CreateStructuralMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiStructuralMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
-        var second = model.CreateStructuralMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiStructuralMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
+        var first = model.CreateMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
+        var second = model.CreateMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
 
         Assert.Same(first, second);
         Assert.Single(model.Entities.OfType<XmiMaterial>());
@@ -53,7 +53,7 @@ public class XmiModelTests
         var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var point = TestModelFactory.CreatePoint();
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiStorey(storey);
         model.AddXmiPoint3D(point);
 
         var connection = model.CreateStructurePointConnection("pc-1", "Node", "ifc", "native", "desc", storey, point);
@@ -71,7 +71,7 @@ public class XmiModelTests
     {
         var model = new XmiModel();
         var material = TestModelFactory.CreateMaterial();
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiMaterial(material);
 
         var section = model.CreateStructuralCrossSection(
             "sec-1",
@@ -109,7 +109,7 @@ public class XmiModelTests
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiCrossSection(crossSection);
-        model.AddXmiStructuralStorey(storey);
+        model.AddXmiStorey(storey);
         model.AddXmiStructuralPointConnection(beginNode);
         model.AddXmiStructuralPointConnection(endNode);
 
@@ -155,8 +155,8 @@ public class XmiModelTests
         var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var material = TestModelFactory.CreateMaterial();
-        model.AddXmiStructuralStorey(storey);
-        model.AddXmiStructuralMaterial(material);
+        model.AddXmiStorey(storey);
+        model.AddXmiMaterial(material);
 
         var member = model.CreateStructuralSurfaceMember(
             "surf-1",

@@ -110,7 +110,7 @@ var point = new XmiPoint3D("pt-1", "Point", "guid", "PT-1", "coords", 0, 0, 0);
 var hasPoint = new XmiHasPoint3D(pointConnection, point);
 ```
 
-## XmiStructuralStorey
+## XmiStorey
 
 Represents a level with elevation, mass, and reaction info. Link point connections or surfaces to storeys for vertical organization.
 

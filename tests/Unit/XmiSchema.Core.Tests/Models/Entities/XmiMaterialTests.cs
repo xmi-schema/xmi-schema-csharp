@@ -16,7 +16,7 @@ public class XmiMaterialTests
     {
         var material = TestModelFactory.CreateMaterial();
 
-        Assert.Equal(XmiStructuralMaterialTypeEnum.Steel, material.MaterialType);
+        Assert.Equal(XmiMaterialTypeEnum.Steel, material.MaterialType);
         Assert.Equal(78.5, material.UnitWeight);
         Assert.Equal("200000", material.ElasticModulus);
     }
