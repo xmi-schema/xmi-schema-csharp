@@ -27,8 +27,8 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical
             string ifcGuid,
             string nativeId,
             string description //,
-            // XmiStructuralStorey storey,
-            // XmiPoint3D point
+                               // XmiStorey storey,
+                               // XmiPoint3D point
         ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralPointConnection))
         {
             // Storey = storey;

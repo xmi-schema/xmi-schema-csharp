@@ -23,7 +23,7 @@ public class XmiSegment : XmiBaseEntity
     /// </summary>
     /// <param name="id">Unique identifier inside the Cross Model Information graph.</param>
     /// <param name="name">Readable label; uses <paramref name="id"/> when omitted.</param>
-    /// <param name="ifcguid">IFC GUID that links to the originating BIM element.</param>
+    /// <param name="ifcGuid">IFC GUID that links to the originating BIM element.</param>
     /// <param name="nativeId">Source identifier from the authoring system.</param>
     /// <param name="description">Free-form notes about the segment.</param>
     /// <param name="position">Normalized position value along the parent member (0-1).</param>
@@ -31,7 +31,7 @@ public class XmiSegment : XmiBaseEntity
     public XmiSegment(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         // XmiBaseGeometry geometry,
@@ -39,7 +39,7 @@ public class XmiSegment : XmiBaseEntity
         // XmiStructuralPointConnection beginNode,
         // XmiStructuralPointConnection endNode,
         XmiSegmentTypeEnum segmentType
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiSegment), XmiBaseEntityDomainEnum.Shared)
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiSegment), XmiBaseEntityDomainEnum.Shared)
     {
         // Geometry = geometry;
         Position = position;

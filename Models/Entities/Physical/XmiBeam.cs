@@ -32,7 +32,7 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
     /// </summary>
     /// <param name="id">Unique identifier for the beam.</param>
     /// <param name="name">Friendly name for the beam.</param>
-    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the beam.</param>
     /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
@@ -49,7 +49,7 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
     public XmiBeam(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         XmiSystemLineEnum systemLine,
@@ -63,7 +63,7 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
         double endNodeYOffset,
         double beginNodeZOffset,
         double endNodeZOffset
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiBeam))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiBeam))
     {
         SystemLine = systemLine;
         Length = length;

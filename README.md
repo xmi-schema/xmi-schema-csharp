@@ -26,12 +26,12 @@ using XmiSchema.Core.Parameters;
 var manager = new XmiManager();
 manager.Models.Add(new XmiModel());
 
-var storey = manager.CreateStructuralStorey(0, "Storey-1", "Level 1", "ifc-guid", "LEVEL_1", "Ground floor", 0, 900, "Fx", "Fy", "Fz");
+var storey = manager.CreateStorey(0, "Storey-1", "Level 1", "ifc-guid", "LEVEL_1", "Ground floor", 0, 900, "Fx", "Fy", "Fz");
 var point = manager.CreatePoint3D(0, "pt-1", "Grid A/1", "pt-guid", "PT_A1", "Column base", 0, 0, 0);
 var connection = manager.CreateStructuralPointConnection(0, "pc-1", "Node", "pc-guid", "PC_A1", "Column node", storey, point);
 
-var material = manager.CreateStructuralMaterial(0, "mat-1", "Steel", "mat-guid", "MAT_S355", "Sample material", XmiStructuralMaterialTypeEnum.Steel, 50, 78.5, "210000", "81000", "0.3", 1.2);
-var section = manager.CreateStructuralCrossSection(
+var material = manager.CreateMaterial(0, "mat-1", "Steel", "mat-guid", "MAT_S355", "Sample material", XmiMaterialTypeEnum.Steel, 50, 78.5, "210000", "81000", "0.3", 1.2);
+var section = manager.CreateCrossSection(
     0,
     "sec-1",
     "IPE300",
@@ -54,7 +54,7 @@ var section = manager.CreateStructuralCrossSection(
 
 var curveMember = manager.CreateStructuralCurveMember(0, "cur-1", "Beam A", "cur-guid", "BEAM_A", "Sample beam", section, storey, XmiStructuralCurveMemberTypeEnum.Beam,
     new List<XmiStructuralPointConnection> { connection, connection }, new List<XmiSegment> { new("seg-1", "Segment", "seg-guid", "SEG_1", "Segment", 0f, XmiSegmentTypeEnum.Line) },
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, connection, connection, 5, "1,0,0", "0,1,0", "0,0,1", 0, 0, 0, 0, 0, 0, "Fixed", "Pinned");
+    XmiSystemLineEnum.MiddleMiddle, connection, connection, 5, "1,0,0", "0,1,0", "0,0,1", 0, 0, 0, 0, 0, 0, "Fixed", "Pinned");
 
 var json = manager.BuildJson(0);
 Console.WriteLine(json);

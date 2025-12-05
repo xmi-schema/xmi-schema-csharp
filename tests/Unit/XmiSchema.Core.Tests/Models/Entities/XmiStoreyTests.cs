@@ -11,12 +11,12 @@ public class XmiStoreyTests
     /// Ensures all constructor arguments are mapped to properties.
     /// </summary>
     [Fact]
-    public void Constructor_AssignsReactions()
+    public void Constructor_AssignsProperties()
     {
         var storey = TestModelFactory.CreateStorey();
 
-        Assert.Equal("Fx", storey.StoreyHorizontalReactionX);
-        Assert.Equal("Fz", storey.StoreyVerticalReaction);
+        Assert.Equal(12.0, storey.StoreyElevation);
+        Assert.Equal(1000, storey.StoreyMass);
     }
 
     /// <summary>

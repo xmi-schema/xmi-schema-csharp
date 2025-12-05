@@ -3,20 +3,20 @@ using XmiSchema.Core.Relationships;
 namespace XmiSchema.Core.Tests.Models.Relationships;
 
 /// <summary>
-/// Validates <see cref="XmiHasStructuralNode"/> constructors.
+/// Validates <see cref="XmiHasStructuralPointConnectiontConnection"/> constructors.
 /// </summary>
-public class XmiHasStructuralNodeTests
+public class XmiHasStructuralPointConnectionTests
 {
     [Fact]
     public void Constructor_AssignsMetadata()
     {
-        var relation = new XmiHasStructuralNode(
+        var relation = new XmiHasStructuralPointConnection(
             "rel-node",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreatePointConnection(),
             "AttachedTo",
             "desc",
-            nameof(XmiHasStructuralNode));
+            nameof(XmiHasStructuralPointConnection));
 
         Assert.Equal("rel-node", relation.Id);
         Assert.Equal("AttachedTo", relation.Name);
@@ -25,7 +25,7 @@ public class XmiHasStructuralNodeTests
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var relation = new XmiHasStructuralNode(TestModelFactory.CreateCurveMember(), TestModelFactory.CreatePointConnection());
+        var relation = new XmiHasStructuralPointConnection(TestModelFactory.CreateCurveMember(), TestModelFactory.CreatePointConnection());
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }

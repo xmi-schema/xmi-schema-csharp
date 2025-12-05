@@ -158,12 +158,12 @@ public class XmiCustomGeometry : XmiBaseGeometry
     public XmiCustomGeometry(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         double property1,
         double property2)
-        : base(id, name, ifcguid, nativeId, description, nameof(XmiCustomGeometry))
+        : base(id, name, ifcGuid, nativeId, description, nameof(XmiCustomGeometry))
     {
         Property1 = property1;
         Property2 = property2;

@@ -14,7 +14,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     public double Thickness { get; set; }
     public XmiStructuralSurfaceMemberSystemPlaneEnum SystemPlane { get; set; }
     // public List<XmiStructuralPointConnection> Nodes { get; set; }
-    // public XmiStructuralStorey Storey { get; set; }
+    // public XmiStorey Storey { get; set; }
 
     // public List<XmiSegment> Segments { get; set; }
     public double Area { get; set; }
@@ -29,7 +29,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     /// </summary>
     /// <param name="id">Unique XMI identifier.</param>
     /// <param name="name">Human readable title.</param>
-    /// <param name="ifcguid">Optional IFC GUID.</param>
+    /// <param name="ifcGuid">Optional IFC GUID.</param>
     /// <param name="nativeId">Native authoring-system identifier.</param>
     /// <param name="description">Description of the surface.</param>
     /// <param name="surfaceMemberType">Surface type classification.</param>
@@ -44,7 +44,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     public XmiStructuralSurfaceMember(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         // XmiMaterial material,
@@ -52,7 +52,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
         double thickness,
         XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
         // List<XmiStructuralPointConnection> nodes,
-        // XmiStructuralStorey storey,
+        // XmiStorey storey,
         // List<XmiSegment> segments,
         double area,
         double zOffset,
@@ -60,7 +60,7 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
         string localAxisY,
         string localAxisZ,
         double height
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralSurfaceMember))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralSurfaceMember))
     {
         // Material = material;
         SurfaceMemberType = surfaceMemberType;

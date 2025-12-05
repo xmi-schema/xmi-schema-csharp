@@ -15,7 +15,7 @@ Represents a physical beam element - typically a horizontal structural member.
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `SystemLine` | `XmiStructuralCurveMemberSystemLineEnum` | Relative position of the analytical line inside the physical profile |
+| `SystemLine` | `XmiSystemLineEnum` | Relative position of the analytical line inside the physical profile |
 | `Length` | `double` | Physical length of the beam |
 | `LocalAxisX` | `string` | Serialized orientation of local X axis |
 | `LocalAxisY` | `string` | Serialized orientation of local Y axis |
@@ -38,7 +38,7 @@ var beam = new XmiBeam(
     "ifc-guid",
     "BEAM-1",
     "Main support beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,
     "1,0,0", "0,1,0", "0,0,1",
     0.1, 0.1, 0, 0, 0, 0,
@@ -63,7 +63,7 @@ var column = new XmiColumn(
     "ifc-guid",
     "COL-1",
     "Ground floor column",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     3.5,
     "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0,
@@ -78,7 +78,7 @@ Represents a physical slab element - typically a horizontal plate.
 ### Properties
 
 Inherits base properties from `XmiBasePhysicalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 
@@ -99,7 +99,7 @@ Represents a physical wall element - typically a vertical plate.
 ### Properties
 
 Inherits base properties from `XmiBasePhysicalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 

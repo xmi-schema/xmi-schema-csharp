@@ -15,10 +15,10 @@ Relationship entities inherit from `XmiBaseRelationship` and form the edges of t
 | `XmiHasLine3D` | Specialised helper for line references. | `XmiStructuralCurveMember` → `XmiLine3D` |
 | `XmiHasPoint3D` | Connects point connections to coordinates. | `XmiStructuralPointConnection` → `XmiPoint3D` |
 | `XmiHasSegment` | Links curve members to their `XmiSegment` definitions. | `XmiStructuralCurveMember` → `XmiSegment` |
-| `XmiHasStructuralMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiMaterial` |
-| `XmiHasStructuralNode` | Declares a member's analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
+| `XmiHasMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiMaterial` |
+| `XmiHasStructuralPointConnection` | Declares a member's analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
 | `XmiHasCrossSection` | Specifies which cross-section a member uses. | `XmiStructuralCurveMember` → `XmiCrossSection` |
-| `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStructuralStorey` |
+| `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStorey` |
 | `XmiHasStructuralCurveMember` | Links physical elements to analytical curve members. | `XmiBasePhysicalEntity` → `XmiBaseStructuralAnalyticalEntity` |
 
 ## XmiHasStructuralCurveMember
@@ -62,7 +62,7 @@ var crossSection = new XmiCrossSection(
 var relationship = new XmiHasCrossSection(curveMember, crossSection);
 ```
 
-## XmiHasStructuralMaterial
+## XmiHasMaterial
 
 Assigns material properties to sections or members.
 
@@ -75,7 +75,7 @@ var material = new XmiMaterial(
     "ifc-guid",
     "MAT-1",
     "Structural steel",
-    XmiStructuralMaterialTypeEnum.Steel,
+    XmiMaterialTypeEnum.Steel,
     345, // Yield strength
     78.5, // Density
     "200000", // Young's modulus
@@ -84,7 +84,7 @@ var material = new XmiMaterial(
     1.2 // Thermal expansion
 );
 
-var relationship = new XmiHasStructuralMaterial(crossSection, material);
+var relationship = new XmiHasMaterial(crossSection, material);
 ```
 
 ## XmiHasGeometry
@@ -107,7 +107,7 @@ var line = new XmiLine3D(
 var relationship = new XmiHasGeometry(curveMember, line);
 ```
 
-## XmiHasStructuralNode
+## XmiHasStructuralPointConnection
 
 Connects structural members to their nodal connections.
 
@@ -116,8 +116,8 @@ Connects structural members to their nodal connections.
 ```csharp
 var pointConnection = new XmiStructuralPointConnection(...);
 
-var hasStartNode = new XmiHasStructuralNode(curveMember, pointConnection);
-var hasEndNode = new XmiHasStructuralNode(curveMember, pointConnection);
+var hasStartNode = new XmiHasStructuralPointConnection(curveMember, pointConnection);
+var hasEndNode = new XmiHasStructuralPointConnection(curveMember, pointConnection);
 ```
 
 ## XmiHasStorey

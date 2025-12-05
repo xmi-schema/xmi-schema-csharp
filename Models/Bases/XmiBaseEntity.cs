@@ -9,13 +9,13 @@ namespace XmiSchema.Core.Entities
     /// </summary>
     public class XmiBaseEntity
     {
-        [JsonProperty(PropertyName = "ID", Order = 0)]
+        [JsonProperty(PropertyName = "id", Order = 0)]
         public string Id { get; set; }
 
         [JsonProperty(Order = 1)]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "IFCGUID", Order = 2)]
+        [JsonProperty(PropertyName = "ifcGuid", Order = 2)]
         public string IfcGuid { get; set; }
 
         [JsonProperty(Order = 3)]
@@ -37,7 +37,7 @@ namespace XmiSchema.Core.Entities
         /// </summary>
         /// <param name="id">Stable identifier for the entity.</param>
         /// <param name="name">Display name; defaults to <paramref name="id"/>.</param>
-        /// <param name="ifcguid">IFC GUID reference when available.</param>
+        /// <param name="ifcGuid">IFC GUID reference when available.</param>
         /// <param name="nativeId">Identifier from the native source system.</param>
         /// <param name="description">Describes the entity purpose.</param>
         /// <param name="entityType">Type hint emitted in payloads.</param>
@@ -54,6 +54,7 @@ namespace XmiSchema.Core.Entities
         {
             Id = id;
             Name = string.IsNullOrWhiteSpace(name) ? id : name;
+            
             IfcGuid = ifcGuid;
             NativeId = nativeId;
             Description = description;

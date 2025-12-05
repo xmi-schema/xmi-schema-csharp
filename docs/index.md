@@ -28,7 +28,7 @@ var beam = new XmiBeam(
     "ifc-guid",
     "BEAM-1",
     "Main support beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,
     "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0,

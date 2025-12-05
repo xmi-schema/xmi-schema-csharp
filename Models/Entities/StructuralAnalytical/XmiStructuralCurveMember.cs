@@ -11,7 +11,7 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
 public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralCurveMember>
 {
     // public XmiCrossSection CrossSection { get; set; }
-    // public XmiStructuralStorey Storey { get; set; }
+    // public XmiStorey Storey { get; set; }
     [JsonConverter(typeof(StringEnumConverter))]
     public XmiStructuralCurveMemberTypeEnum CurveMemberType { get; set; }
     // public List<XmiStructuralPointConnection> Nodes { get; set; }
@@ -47,7 +47,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     /// </summary>
     /// <param name="id">Unique identifier for the member entity.</param>
     /// <param name="name">Friendly name exposed to client applications.</param>
-    /// <param name="ifcguid">IFC GUID reference for traceability.</param>
+    /// <param name="ifcGuid">IFC GUID reference for traceability.</param>
     /// <param name="nativeId">Identifier from the authoring tool.</param>
     /// <param name="description">Optional descriptive text.</param>
     /// <param name="curveMemberType">Member type classification (beam, column, etc.).</param>
@@ -67,11 +67,11 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     public XmiStructuralCurveMember(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         // XmiCrossSection crossSection,
-        // XmiStructuralStorey storey,
+        // XmiStorey storey,
         XmiStructuralCurveMemberTypeEnum curveMemberType,
         // List<XmiStructuralPointConnection> nodes,
         // List<XmiSegment> segments,
@@ -94,7 +94,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
         string endFixityStart,
         string endFixityEnd
 
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCurveMember))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralCurveMember))
     {
         // CrossSection = crossSection;
         // Storey = storey;

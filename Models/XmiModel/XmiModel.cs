@@ -23,7 +23,7 @@ namespace XmiSchema.Core.Models
         /// Adds a structural material entity to the model.
         /// </summary>
         /// <param name="material">Material to insert.</param>
-        public void AddXmiStructuralMaterial(XmiMaterial material)
+        public void AddXmiMaterial(XmiMaterial material)
         {
             Entities.Add(material);
         }
@@ -68,7 +68,7 @@ namespace XmiSchema.Core.Models
         /// Adds a storey entity to the model.
         /// </summary>
         /// <param name="storey">Storey entity.</param>
-        public void AddXmiStructuralStorey(XmiStorey storey)
+        public void AddXmiStorey(XmiStorey storey)
         {
             Entities.Add(storey);
         }
@@ -131,7 +131,7 @@ namespace XmiSchema.Core.Models
         /// Adds a material relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStructuralMaterial(XmiHasMaterial relation)
+        public void AddXmiHasMaterial(XmiHasMaterial relation)
         {
             Relationships.Add(relation);
         }
@@ -140,7 +140,7 @@ namespace XmiSchema.Core.Models
         /// Adds a structural node relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasStructuralNode(XmiHasStructuralNode relation)
+        public void AddXmiHasStructuralPointConnection(XmiHasStructuralPointConnection relation)
         {
             Relationships.Add(relation);
         }
@@ -212,7 +212,7 @@ namespace XmiSchema.Core.Models
         /// <param name="ifcGuid">IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier.</param>
         /// <param name="description">Description for the connection.</param>
-        /// <param name="storey">Storey containing the connection.</param>
+        /// <param name="storey">Optional storey containing the connection.</param>
         /// <param name="point">Point geometry representing the node.</param>
         /// <returns>An existing or newly created connection.</returns>
         public XmiStructuralPointConnection CreateStructurePointConnection(
@@ -221,7 +221,7 @@ namespace XmiSchema.Core.Models
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiPoint3D point
         )
         {
@@ -245,8 +245,12 @@ namespace XmiSchema.Core.Models
                 }
 
                 // Look for an existing storey with the same native identifier; fall back to the provided one if missing.
-                var existingStorey = GetEntitiesOfType<XmiStorey>()
-                    .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                XmiStorey? existingStorey = null;
+                if (storey != null)
+                {
+                    existingStorey = GetEntitiesOfType<XmiStorey>()
+                        .FirstOrDefault(s => s.Id == storey.Id) ?? storey;
+                }
 
                 // Reuse an existing point with matching coordinates whenever possible.
                 var existingPoint = GetEntitiesOfType<XmiPoint3D>()
@@ -262,8 +266,11 @@ namespace XmiSchema.Core.Models
 
                 AddXmiStructuralPointConnection(connection);
 
-                var storeyRelation = new XmiHasStorey(connection, existingStorey);
-                AddXmiHasStorey(storeyRelation);
+                if (existingStorey != null)
+                {
+                    var storeyRelation = new XmiHasStorey(connection, existingStorey);
+                    AddXmiHasStorey(storeyRelation);
+                }
 
                 if (existingPoint != null)
                 {
@@ -357,7 +364,7 @@ namespace XmiSchema.Core.Models
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -385,8 +392,12 @@ namespace XmiSchema.Core.Models
                 var existingCrossSection = GetEntitiesOfType<XmiCrossSection>()
                     .FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
 
-                var existingStorey = GetEntitiesOfType<XmiStorey>()
-                    .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                XmiStorey? existingStorey = null;
+                if (storey != null)
+                {
+                    existingStorey = GetEntitiesOfType<XmiStorey>()
+                        .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                }
 
                 var existingBeginNodeId = FindMatchingPointConnectionByPoint3D(beginNode);
                 var existingBeginNode = existingBeginNodeId != null
@@ -423,14 +434,18 @@ namespace XmiSchema.Core.Models
                 AddXmiStructuralCurveMember(curveMember);
 
                 var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
-                var storeyRelation = new XmiHasStorey(curveMember, existingStorey);
-                var beginNodeRelation = new XmiHasStructuralNode(curveMember, existingBeginNode);
-                var endNodeRelation = new XmiHasStructuralNode(curveMember, existingEndNode);
-
                 AddXmiHasCrossSection(crossSectionRelation);
-                AddXmiHasStorey(storeyRelation);
-                AddXmiHasStructuralNode(beginNodeRelation);
-                AddXmiHasStructuralNode(endNodeRelation);
+
+                if (existingStorey != null)
+                {
+                    var storeyRelation = new XmiHasStorey(curveMember, existingStorey);
+                    AddXmiHasStorey(storeyRelation);
+                }
+
+                var beginNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingBeginNode);
+                var endNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingEndNode);
+                AddXmiHasStructuralPointConnection(beginNodeRelation);
+                AddXmiHasStructuralPointConnection(endNodeRelation);
 
                 return curveMember;
             }
@@ -444,7 +459,7 @@ namespace XmiSchema.Core.Models
         /// Creates a structural cross-section, reusing an existing material relationship when a matching native ID is found.
         /// </summary>
         /// <returns>The created cross-section entity.</returns>
-        public XmiCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateCrossSection(
             string id,
             string name,
             string ifcGuid,
@@ -507,7 +522,7 @@ namespace XmiSchema.Core.Models
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(crossSection, existingMaterial);
-                    AddXmiHasStructuralMaterial(materialRelation);
+                    AddXmiHasMaterial(materialRelation);
                 }
 
                 return crossSection;
@@ -521,20 +536,17 @@ namespace XmiSchema.Core.Models
 
 
         /// <summary>
-        /// Creates or reuses a structural storey by native identifier.
+        /// Creates or reuses a storey by native identifier.
         /// </summary>
         /// <returns>The created or reused storey.</returns>
-        public XmiStorey CreateStructuralStorey(
+        public XmiStorey CreateStorey(
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
             double storeyElevation,
-            double storeyMass,
-            string storeyHorizontalReactionX,
-            string storeyHorizontalReactionY,
-            string storeyVerticalReaction
+            double storeyMass
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
@@ -557,19 +569,16 @@ namespace XmiSchema.Core.Models
                     nativeId,
                     description,
                     storeyElevation,
-                    storeyMass,
-                    storeyHorizontalReactionX,
-                    storeyHorizontalReactionY,
-                    storeyVerticalReaction
+                    storeyMass
                 );
 
-                AddXmiStructuralStorey(storey);
+                AddXmiStorey(storey);
 
                 return storey;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Failed to create structural storey.", ex);
+                throw new InvalidOperationException("Failed to create storey.", ex);
             }
         }
 
@@ -577,13 +586,13 @@ namespace XmiSchema.Core.Models
         /// Creates or reuses a structural material identified by <paramref name="nativeId"/>.
         /// </summary>
         /// <returns>The created or reused material.</returns>
-        public XmiMaterial CreateStructuralMaterial(
+        public XmiMaterial CreateMaterial(
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterialTypeEnum materialType,
+            XmiMaterialTypeEnum materialType,
             double grade,
             double unitWeight,
             string eModulus,
@@ -620,7 +629,7 @@ namespace XmiSchema.Core.Models
                     thermalCoefficient
                 );
 
-                AddXmiStructuralMaterial(material);
+                AddXmiMaterial(material);
 
                 return material;
             }
@@ -645,7 +654,7 @@ namespace XmiSchema.Core.Models
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStorey storey,
+            XmiStorey? storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,
@@ -657,8 +666,12 @@ namespace XmiSchema.Core.Models
         {
             try
             {
-                var existingStorey = GetEntitiesOfType<XmiStorey>()
-                    .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                XmiStorey? existingStorey = null;
+                if (storey != null)
+                {
+                    existingStorey = GetEntitiesOfType<XmiStorey>()
+                        .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                }
 
                 XmiMaterial? existingMaterial = null;
 
@@ -690,11 +703,14 @@ namespace XmiSchema.Core.Models
                 if (existingMaterial != null)
                 {
                     var materialRelation = new XmiHasMaterial(surfaceMember, existingMaterial);
-                    AddXmiHasStructuralMaterial(materialRelation);
+                    AddXmiHasMaterial(materialRelation);
                 }
 
-                var storeyRelation = new XmiHasStorey(surfaceMember, existingStorey);
-                AddXmiHasStorey(storeyRelation);
+                if (existingStorey != null)
+                {
+                    var storeyRelation = new XmiHasStorey(surfaceMember, existingStorey);
+                    AddXmiHasStorey(storeyRelation);
+                }
 
                 return surfaceMember;
             }

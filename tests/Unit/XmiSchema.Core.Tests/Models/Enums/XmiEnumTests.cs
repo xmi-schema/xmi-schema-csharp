@@ -41,13 +41,13 @@ public class XmiEnumTests
     }
 
     [Fact]
-    public void XmiStructuralMaterialTypeEnum_HasExpectedValues()
+    public void XmiMaterialTypeEnum_HasExpectedValues()
     {
-        Assert.Equal(0, (int)XmiStructuralMaterialTypeEnum.Concrete);
-        Assert.Equal(1, (int)XmiStructuralMaterialTypeEnum.Steel);
-        Assert.Equal(2, (int)XmiStructuralMaterialTypeEnum.Timber);
-        Assert.Equal(3, (int)XmiStructuralMaterialTypeEnum.Aluminium);
-        Assert.Equal(5, (int)XmiStructuralMaterialTypeEnum.Masonry);
+        Assert.Equal(0, (int)XmiMaterialTypeEnum.Concrete);
+        Assert.Equal(1, (int)XmiMaterialTypeEnum.Steel);
+        Assert.Equal(2, (int)XmiMaterialTypeEnum.Timber);
+        Assert.Equal(3, (int)XmiMaterialTypeEnum.Aluminium);
+        Assert.Equal(5, (int)XmiMaterialTypeEnum.Masonry);
     }
 
     [Fact]
@@ -113,18 +113,18 @@ public class XmiEnumTests
     }
 
     [Fact]
-    public void XmiStructuralMaterialTypeEnum_CanBeUsedInSwitch()
+    public void XmiMaterialTypeEnum_CanBeUsedInSwitch()
     {
-        var materialType = XmiStructuralMaterialTypeEnum.Steel;
+        var materialType = XmiMaterialTypeEnum.Steel;
 
         string result = materialType switch
         {
-            XmiStructuralMaterialTypeEnum.Concrete => "Concrete",
-            XmiStructuralMaterialTypeEnum.Steel => "Steel",
-            XmiStructuralMaterialTypeEnum.Timber => "Timber",
-            XmiStructuralMaterialTypeEnum.Aluminium => "Aluminium",
-            XmiStructuralMaterialTypeEnum.Masonry => "Masonry",
-            XmiStructuralMaterialTypeEnum.Others => "Others",
+            XmiMaterialTypeEnum.Concrete => "Concrete",
+            XmiMaterialTypeEnum.Steel => "Steel",
+            XmiMaterialTypeEnum.Timber => "Timber",
+            XmiMaterialTypeEnum.Aluminium => "Aluminium",
+            XmiMaterialTypeEnum.Masonry => "Masonry",
+            XmiMaterialTypeEnum.Others => "Others",
             _ => "Unknown"
         };
 
@@ -137,7 +137,7 @@ public class XmiEnumTests
         Assert.Equal("Shared", XmiBaseEntityDomainEnum.Shared.ToString());
         Assert.Equal("Line", XmiSegmentTypeEnum.Line.ToString());
         Assert.Equal("Beam", XmiStructuralCurveMemberTypeEnum.Beam.ToString());
-        Assert.Equal("Concrete", XmiStructuralMaterialTypeEnum.Concrete.ToString());
+        Assert.Equal("Concrete", XmiMaterialTypeEnum.Concrete.ToString());
         Assert.Equal("Wall", XmiStructuralSurfaceMemberTypeEnum.Wall.ToString());
         Assert.Equal("OneWay", XmiStructuralSurfaceMemberSpanTypeEnum.OneWay.ToString());
         Assert.Equal("Meter", XmiUnitEnum.Meter.ToString());
@@ -153,8 +153,8 @@ public class XmiEnumTests
             Enum.Parse<XmiSegmentTypeEnum>("CircularArc"));
         Assert.Equal(XmiStructuralCurveMemberTypeEnum.Column,
             Enum.Parse<XmiStructuralCurveMemberTypeEnum>("Column"));
-        Assert.Equal(XmiStructuralMaterialTypeEnum.Steel,
-            Enum.Parse<XmiStructuralMaterialTypeEnum>("Steel"));
+        Assert.Equal(XmiMaterialTypeEnum.Steel,
+            Enum.Parse<XmiMaterialTypeEnum>("Steel"));
     }
 
     [Fact]
@@ -167,11 +167,11 @@ public class XmiEnumTests
     [Fact]
     public void EnumValues_CanBeIterated()
     {
-        var materialTypes = Enum.GetValues<XmiStructuralMaterialTypeEnum>();
+        var materialTypes = Enum.GetValues<XmiMaterialTypeEnum>();
 
-        Assert.Contains(XmiStructuralMaterialTypeEnum.Concrete, materialTypes);
-        Assert.Contains(XmiStructuralMaterialTypeEnum.Steel, materialTypes);
-        Assert.Contains(XmiStructuralMaterialTypeEnum.Timber, materialTypes);
+        Assert.Contains(XmiMaterialTypeEnum.Concrete, materialTypes);
+        Assert.Contains(XmiMaterialTypeEnum.Steel, materialTypes);
+        Assert.Contains(XmiMaterialTypeEnum.Timber, materialTypes);
         Assert.Equal(10, materialTypes.Length);
     }
 

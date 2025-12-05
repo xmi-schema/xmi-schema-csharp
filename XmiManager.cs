@@ -30,10 +30,10 @@ namespace XmiSchema.Core.Manager
 
         // ========== 添加实体 ==========
         /// <inheritdoc />
-        public void AddXmiStructuralMaterialToModel(int modelIndex, XmiMaterial material)
+        public void AddXmiMaterialToModel(int modelIndex, XmiMaterial material)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiStructuralMaterial(material);
+            Models[modelIndex].AddXmiMaterial(material);
         }
 
         /// <inheritdoc />
@@ -65,10 +65,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiStructuralStoreyToModel(int modelIndex, XmiStorey storey)
+        public void AddXmiStoreyToModel(int modelIndex, XmiStorey storey)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiStructuralStorey(storey);
+            Models[modelIndex].AddXmiStorey(storey);
         }
 
         /// <inheritdoc />
@@ -98,17 +98,17 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralMaterialToModel(int modelIndex, XmiHasMaterial relation)
+        public void AddXmiHasMaterialToModel(int modelIndex, XmiHasMaterial relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasStructuralMaterial(relation);
+            Models[modelIndex].AddXmiHasMaterial(relation);
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode relation)
+        public void AddXmiHasStructuralPointConnectionToModel(int modelIndex, XmiHasStructuralPointConnection relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasStructuralNode(relation);
+            Models[modelIndex].AddXmiHasStructuralPointConnection(relation);
         }
 
         /// <inheritdoc />
@@ -199,7 +199,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiPoint3D point
         )
         {
@@ -228,14 +228,14 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiMaterial CreateStructuralMaterial(
+        public XmiMaterial CreateMaterial(
             int modelIndex,
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStructuralMaterialTypeEnum materialType,
+            XmiMaterialTypeEnum materialType,
             double grade,
             double unitWeight,
             string eModulus,
@@ -245,7 +245,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralMaterial(
+            return Models[modelIndex].CreateMaterial(
                 id, name, ifcGuid, nativeId, description,
                 materialType, grade, unitWeight,
                 eModulus, gModulus, poissonRatio, thermalCoefficient
@@ -253,7 +253,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -276,7 +276,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralCrossSection(
+            return Models[modelIndex].CreateCrossSection(
                 id, name, ifcGuid, nativeId, description,
                 material, shape, parameters,
                 area, secondMomentOfAreaXAxis, secondMomentOfAreaYAxis,
@@ -288,7 +288,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStorey CreateStructuralStorey(
+        public XmiStorey CreateStorey(
             int modelIndex,
             string id,
             string name,
@@ -296,17 +296,13 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             double storeyElevation,
-            double storeyMass,
-            string storeyHorizontalReactionX,
-            string storeyHorizontalReactionY,
-            string storeyVerticalReaction
+            double storeyMass
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralStorey(
+            return Models[modelIndex].CreateStorey(
                 id, name, ifcGuid, nativeId, description,
-                storeyElevation, storeyMass,
-                storeyHorizontalReactionX, storeyHorizontalReactionY, storeyVerticalReaction
+                storeyElevation, storeyMass
             );
         }
 
@@ -319,7 +315,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -367,7 +363,7 @@ namespace XmiSchema.Core.Manager
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStorey storey,
+            XmiStorey? storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,

@@ -25,7 +25,7 @@ var material = new XmiMaterial(
     "ifc-guid",
     "MAT-1",
     "Structural steel",
-    XmiStructuralMaterialTypeEnum.Steel,
+    XmiMaterialTypeEnum.Steel,
     345,       // Yield strength (MPa)
     78.5,      // Density (kN/m³)
     "200000",  // Young's modulus (MPa)
@@ -33,7 +33,7 @@ var material = new XmiMaterial(
     "0.3",     // Poisson's ratio
     1.2        // Thermal expansion (×10⁻⁵/°C)
 );
-model.AddXmiStructuralMaterial(material);
+model.AddXmiMaterial(material);
 
 // Create a cross-section
 var crossSection = new XmiCrossSection(
@@ -54,7 +54,7 @@ var crossSection = new XmiCrossSection(
     0.134,     // Radius of gyration Z
     0.0000012  // Warping constant
 );
-model.AddXmiStructuralCrossSection(crossSection);
+model.AddXmiCrossSection(crossSection);
 ```
 
 ## Creating Physical Elements
@@ -70,7 +70,7 @@ var beam = new XmiBeam(
     "ifc-guid-beam",
     "BEAM-1",
     "Primary structural beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,       // Length (m)
     "1,0,0",   // Local X axis
     "0,1,0",   // Local Y axis
@@ -96,7 +96,7 @@ var column = new XmiColumn(
     "ifc-guid-col",
     "COL-1",
     "Concrete support column",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     3.5,       // Length (m)
     "1,0,0",   // Local X axis
     "0,1,0",   // Local Y axis
@@ -144,7 +144,7 @@ var curveMember = new XmiStructuralCurveMember(
     "CUR-1",
     "Analytical representation",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,       // Length
     "1,0,0",   // Local X
     "0,1,0",   // Local Y
@@ -204,8 +204,8 @@ model.AddXmiHasStructuralCurveMember(hasStructuralCurve);
 
 ```csharp
 // Assign material to cross-section
-var hasMaterial = new XmiHasStructuralMaterial(crossSection, material);
-model.AddXmiHasStructuralMaterial(hasMaterial);
+var hasMaterial = new XmiHasMaterial(crossSection, material);
+model.AddXmiHasMaterial(hasMaterial);
 
 // Assign cross-section to curve member
 var hasSection = new XmiHasCrossSection(curveMember, crossSection);
@@ -235,12 +235,9 @@ var storey = new XmiStorey(
     "STR-1",
     "Ground floor",
     0.0,       // Elevation
-    1000,      // Mass per area
-    "Fx",      // Reaction X
-    "Fy",      // Reaction Y
-    "Fz"       // Reaction Z
+    1000       // Mass
 );
-model.AddXmiStructuralStorey(storey);
+model.AddXmiStorey(storey);
 
 // Link point connection to storey
 var hasStorey = new XmiHasStorey(pointConn1, storey);
@@ -293,10 +290,10 @@ var model = new XmiModel();
 // Create material
 var steel = new XmiMaterial(
     "mat-steel", "Steel", "guid", "STEEL", "A992",
-    XmiStructuralMaterialTypeEnum.Steel,
+    XmiMaterialTypeEnum.Steel,
     345, 78.5, "200000", "80000", "0.3", 1.2
 );
-model.AddXmiStructuralMaterial(steel);
+model.AddXmiMaterial(steel);
 
 // Create section
 var wSection = new XmiCrossSection(
@@ -306,12 +303,12 @@ var wSection = new XmiCrossSection(
     0.00497, 0.0000234, 0.0000567, 0.000891,
     0.000234, 0.00567, 0.0034, 0.134, 0.0000012
 );
-model.AddXmiStructuralCrossSection(wSection);
+model.AddXmiCrossSection(wSection);
 
 // Create beam
 var beam = new XmiBeam(
     "beam-1", "Floor Beam", "guid", "BEAM-1", "Main beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     6.0, "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0, "Fixed", "Fixed"
 );
@@ -321,7 +318,7 @@ model.AddXmiBeam(beam);
 var analytical = new XmiStructuralCurveMember(
     "cur-1", "Analytical", "guid", "CUR-1", "Analysis",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     6.0, "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0, "Fixed", "Fixed"
 );
@@ -330,8 +327,8 @@ model.AddXmiStructuralCurveMember(analytical);
 // Link everything
 model.AddXmiHasStructuralCurveMember(
     new XmiHasStructuralCurveMember(beam, analytical));
-model.AddXmiHasStructuralMaterial(
-    new XmiHasStructuralMaterial(wSection, steel));
+model.AddXmiHasMaterial(
+    new XmiHasMaterial(wSection, steel));
 model.AddXmiHasCrossSection(
     new XmiHasCrossSection(analytical, wSection));
 

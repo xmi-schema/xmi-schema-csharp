@@ -16,7 +16,7 @@ Beam/column/bracing equivalent with offsets, system line, and fixities. This is 
 | Property | Type | Description |
 | --- | --- | --- |
 | `CurveMemberType` | `XmiStructuralCurveMemberTypeEnum` | Classification (Beam, Column, Bracing) |
-| `SystemLine` | `XmiStructuralCurveMemberSystemLineEnum` | Location of analytical line relative to profile |
+| `SystemLine` | `XmiSystemLineEnum` | Location of analytical line relative to profile |
 | `Length` | `double` | Analytical length |
 | `LocalAxisX` | `string` | Local X axis orientation |
 | `LocalAxisY` | `string` | Local Y axis orientation |
@@ -40,7 +40,7 @@ var curveMember = new XmiStructuralCurveMember(
     "CUR-1",
     "Analytical curve member",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,
     "1,0,0", "0,1,0", "0,0,1",
     0.1, 0.1, 0, 0, 0, 0,
@@ -92,7 +92,7 @@ Analytical node that ties members and storeys together. Create through `XmiModel
 ### Properties
 
 Inherits base properties from `XmiBaseStructuralAnalyticalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 
@@ -110,19 +110,16 @@ var point = new XmiPoint3D("pt-1", "Point", "guid", "PT-1", "coords", 0, 0, 0);
 var hasPoint = new XmiHasPoint3D(pointConnection, point);
 ```
 
-## XmiStructuralStorey
+## XmiStorey
 
-Represents a level with elevation, mass, and reaction info. Link point connections or surfaces to storeys for vertical organization.
+Represents a generic building level with elevation and mass info. Can be used for structural, architectural, or any defined storey. Link point connections or surfaces to storeys for vertical organization.
 
 ### Properties
 
 | Property | Type | Description |
 | --- | --- | --- |
 | `Elevation` | `double` | Height above reference datum |
-| `MassPerArea` | `double` | Distributed mass |
-| `ReactionX` | `string` | X-direction reaction forces |
-| `ReactionY` | `string` | Y-direction reaction forces |
-| `ReactionZ` | `string` | Z-direction reaction forces |
+| `Mass` | `double` | Total mass assigned to the storey |
 
 ### Example
 
@@ -133,9 +130,8 @@ var storey = new XmiStorey(
     "ifc-guid",
     "STR-1",
     "Ground floor level",
-    0.0,
-    1000,
-    "Fx", "Fy", "Fz"
+    0.0,       // Elevation
+    1000       // Mass
 );
 ```
 

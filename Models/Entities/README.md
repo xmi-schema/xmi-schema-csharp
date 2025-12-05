@@ -9,9 +9,9 @@ This folder contains the business objects that describe the built-environment gr
 | `XmiStructuralCurveMember` | Beam/column/bracing equivalent with offsets, system line, and fixities. | Use when modeling linear members extracted from authoring tools. |
 | `XmiMaterial` | Material definition with grade, density, and stiffness constants. | Shared across sections or members so consumers can look up properties. |
 | `XmiStructuralPointConnection` | Analytical node that ties members and storeys together. | Create through `XmiModel.CreateStructurePointConnection` to automatically reuse identical coordinates. |
-| `XmiStructuralStorey` | Represents a level with elevation, mass, and reaction info. | Link point connections or surfaces to storeys for vertical organization. |
+| `XmiStorey` | Represents a level with elevation, mass, and reaction info. | Link point connections or surfaces to storeys for vertical organization. |
 | `XmiStructuralSurfaceMember` | Plate, slab, or wall element capturing thickness, axes, and plane metadata. | Use to model surface-based analytical elements. |
-| `XmiStructuralUnit` | Maps entity attributes to `XmiUnitEnum` units for conversion. | Persist the measurement standard for downstream validation. |
+| `XmiUnit` | Maps entity attributes to `XmiUnitEnum` units for conversion. | Persist the measurement standard for downstream validation. |
 
 > `XmiCrossSection.Parameters` wraps an `IXmiShapeParameters` implementation (e.g., `RectangularShapeParameters`). Each class exposes a typed constructor but serializes to the same dictionary shown in `XmiShapeEnumParameters.md`.
 

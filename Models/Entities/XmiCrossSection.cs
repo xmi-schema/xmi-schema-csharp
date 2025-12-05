@@ -30,7 +30,7 @@ public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
     /// </summary>
     /// <param name="id">Unique local identifier.</param>
     /// <param name="name">Human readable name for reports.</param>
-    /// <param name="ifcguid">Optional IFC GUID reference.</param>
+    /// <param name="ifcGuid">Optional IFC GUID reference.</param>
     /// <param name="nativeId">Source-system identifier.</param>
     /// <param name="description">Explanation of origin or use.</param>
     /// <param name="shape">Generic shape classification (I, T, L, etc.).</param>
@@ -48,7 +48,7 @@ public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
     public XmiCrossSection(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         // XmiMaterial material,
@@ -64,7 +64,7 @@ public class XmiCrossSection : XmiBaseGeometry, IEquatable<XmiCrossSection>
         double plasticModulusXAxis,
         double plasticModulusYAxis,
         double torsionalConstant
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiCrossSection))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiCrossSection))
     {
 
         // Material = material;
