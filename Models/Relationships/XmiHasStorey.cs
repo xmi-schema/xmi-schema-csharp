@@ -24,7 +24,7 @@ public class XmiHasStorey : XmiBaseRelationship
         string name,
         string description,
         string entityName
-    ) : base(id, source, target, name, description, nameof(XmiHasStorey), "Association")
+    ) : base(id, source, target, name, description, nameof(XmiHasStorey))
     {
     }
 
@@ -36,7 +36,7 @@ public class XmiHasStorey : XmiBaseRelationship
     public XmiHasStorey(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasStorey), "Association")
+    ) : base(source, target, nameof(XmiHasStorey))
     {
     }
 }

@@ -16,16 +16,14 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     /// <param name="name">Relationship label.</param>
     /// <param name="description">Notes describing the assignment.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasStructuralCurveMember(
         string id,
         XmiBasePhysicalEntity source,
         XmiBaseStructuralAnalyticalEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasStructuralCurveMember), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasStructuralCurveMember))
     {
     }
 
@@ -37,7 +35,7 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     public XmiHasStructuralCurveMember(
         XmiBasePhysicalEntity source,
         XmiBaseStructuralAnalyticalEntity target
-    ) : base(source, target, nameof(XmiHasStructuralCurveMember), "Association")
+    ) : base(source, target, nameof(XmiHasStructuralCurveMember))
     {
     }
 }

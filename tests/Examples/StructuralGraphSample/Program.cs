@@ -78,7 +78,7 @@ var curveMember = manager.CreateStructuralCurveMember(
     XmiStructuralCurveMemberTypeEnum.Column,
     new List<XmiStructuralPointConnection> { startConnection, endConnection },
     new List<XmiSegment> { new("seg-1", "Segment", "seg-guid", "SEG_1", "Straight segment", 0f, XmiSegmentTypeEnum.Line) },
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     startConnection,
     endConnection,
     length: 3.0,

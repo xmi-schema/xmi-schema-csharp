@@ -24,8 +24,7 @@ public class XmiHasStructuralCurveMemberTests
             curveMember,
             "PhysicalToAnalytical",
             "Links physical beam to analytical curve",
-            nameof(XmiHasStructuralCurveMember),
-            "Association");
+            nameof(XmiHasStructuralCurveMember));
 
         Assert.Equal("rel-curve-1", relation.Id);
         Assert.Equal("PhysicalToAnalytical", relation.Name);

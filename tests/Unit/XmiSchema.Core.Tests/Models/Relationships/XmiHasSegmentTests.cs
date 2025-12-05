@@ -16,8 +16,7 @@ public class XmiHasSegmentTests
             TestModelFactory.CreateSegment(),
             "Contains",
             "desc",
-            nameof(XmiHasSegment),
-            "Association");
+            nameof(XmiHasSegment));
 
         Assert.Equal("rel-seg", relation.Id);
         Assert.Equal("Contains", relation.Name);

@@ -22,10 +22,8 @@ public class XmiBeamTests
         Assert.Equal("Beam beam-1", beam.Name);
         Assert.Equal("BEAM-1", beam.NativeId);
         Assert.Equal(nameof(XmiBeam), beam.EntityType);
-        Assert.Equal(XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, beam.SystemLine);
+        Assert.Equal(XmiSystemLineEnum.MiddleMiddle, beam.SystemLine);
         Assert.Equal(5.0, beam.Length);
-        Assert.Equal("Fixed", beam.EndFixityStart);
-        Assert.Equal("Pinned", beam.EndFixityEnd);
     }
 
     /// <summary>

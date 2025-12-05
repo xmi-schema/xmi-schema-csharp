@@ -16,16 +16,14 @@ public class XmiHasMaterial : XmiBaseRelationship
     /// <param name="name">Relationship label.</param>
     /// <param name="description">Notes describing the binding.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasMaterial(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasMaterial), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasMaterial))
     {
     }
 
@@ -37,7 +35,7 @@ public class XmiHasMaterial : XmiBaseRelationship
     public XmiHasMaterial(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasMaterial), "Association")
+    ) : base(source, target, nameof(XmiHasMaterial))
     {
     }
 }

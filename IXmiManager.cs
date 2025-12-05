@@ -300,7 +300,7 @@ namespace XmiSchema.Core.Manager
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
-            XmiStructuralCurveMemberSystemLineEnum systemLine,
+            XmiSystemLineEnum systemLine,
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
             double length,

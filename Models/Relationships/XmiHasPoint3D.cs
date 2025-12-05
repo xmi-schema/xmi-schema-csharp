@@ -17,16 +17,14 @@ public class XmiHasPoint3D : XmiBaseRelationship
     /// <param name="name">Label for the edge.</param>
     /// <param name="description">Notes explaining the binding.</param>
     /// <param name="entityName">Serialized entity type name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasPoint3D(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasPoint3D), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasPoint3D))
     {
     }
 
@@ -38,7 +36,7 @@ public class XmiHasPoint3D : XmiBaseRelationship
     public XmiHasPoint3D(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasPoint3D), "Association")
+    ) : base(source, target, nameof(XmiHasPoint3D))
     {
     }
 }

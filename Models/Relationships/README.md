@@ -1,6 +1,6 @@
 # Relationships
 
-Relationship entities inherit from `XmiBaseRelationship` and form the edges of the Cross Model Information graph. Each relationship pairs a source entity with a target entity, exposing the association through a UML type string.
+Relationship entities inherit from `XmiBaseRelationship` and form the edges of the Cross Model Information graph. Each relationship pairs a source entity with a target entity.
 
 | Relationship | Purpose | Common Source → Target |
 | --- | --- | --- |

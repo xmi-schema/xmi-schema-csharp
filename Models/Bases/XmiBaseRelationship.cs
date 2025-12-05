@@ -13,7 +13,6 @@ public class XmiBaseRelationship
     public string Name { get; set; }
     public string Description { get; set; }
     public string EntityType { get; set; }
-    public string UmlType { get; set; }
     /// <summary>
     /// Initializes a fully-described relationship.
     /// </summary>
@@ -23,15 +22,13 @@ public class XmiBaseRelationship
     /// <param name="name">Readable label.</param>
     /// <param name="description">Notes for downstream consumers.</param>
     /// <param name="entityType">Type name recorded in the payload.</param>
-    /// <param name="umlType">UML stereotype for the edge.</param>
     public XmiBaseRelationship(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityType,
-        string umlType
+        string entityType
     )
     {
         Id = id;
@@ -40,7 +37,6 @@ public class XmiBaseRelationship
         Name = string.IsNullOrEmpty(name) ? "Unnamed"  : name;
         Description = string.IsNullOrEmpty(description) ? "" : description;
         EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseRelationship) : entityType;
-        UmlType = string.IsNullOrEmpty(umlType)? "": umlType;
     }
     /// <summary>
     /// Generates a relationship with a new identifier using the provided endpoints.
@@ -48,9 +44,8 @@ public class XmiBaseRelationship
     /// <param name="source">Entity at the origin of the edge.</param>
     /// <param name="target">Entity at the destination of the edge.</param>
     /// <param name="entityType">Type name recorded in the payload.</param>
-    /// <param name="umlType">UML stereotype for the edge.</param>
-    public XmiBaseRelationship(XmiBaseEntity source, XmiBaseEntity target, string entityType, string umlType)
-            : this(Guid.NewGuid().ToString(), source, target, entityType, "", entityType, umlType)
-    {        
+    public XmiBaseRelationship(XmiBaseEntity source, XmiBaseEntity target, string entityType)
+            : this(Guid.NewGuid().ToString(), source, target, entityType, "", entityType)
+    {
     }
 }

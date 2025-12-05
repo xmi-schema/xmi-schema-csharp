@@ -16,16 +16,14 @@ public class XmiHasCrossSection : XmiBaseRelationship
     /// <param name="name">Relationship label.</param>
     /// <param name="description">Notes describing the assignment.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    /// <param name="umlType">UML stereotype.</param>
     public XmiHasCrossSection(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
-        string entityName,
-        string umlType
-    ) : base(id, source, target, name, description, nameof(XmiHasCrossSection), "Association")
+        string entityName
+    ) : base(id, source, target, name, description, nameof(XmiHasCrossSection))
     {
     }
 
@@ -37,7 +35,7 @@ public class XmiHasCrossSection : XmiBaseRelationship
     public XmiHasCrossSection(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasCrossSection), "Association")
+    ) : base(source, target, nameof(XmiHasCrossSection))
     {
     }
 }

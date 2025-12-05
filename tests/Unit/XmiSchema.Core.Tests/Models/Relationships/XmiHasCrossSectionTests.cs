@@ -16,8 +16,7 @@ public class XmiHasCrossSectionTests
             TestModelFactory.CreateCrossSection(),
             "Uses",
             "desc",
-            nameof(XmiHasCrossSection),
-            "Association");
+            nameof(XmiHasCrossSection));
 
         Assert.Equal("rel-sec", relation.Id);
         Assert.Equal(nameof(XmiHasCrossSection), relation.EntityType);

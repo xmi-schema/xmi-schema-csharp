@@ -93,7 +93,7 @@ internal static class TestModelFactory
             id.ToUpperInvariant(),
             "Curve member",
             XmiStructuralCurveMemberTypeEnum.Beam,
-            XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+            XmiSystemLineEnum.MiddleMiddle,
             5.0,
             "1,0,0",
             "0,1,0",
@@ -159,7 +159,7 @@ internal static class TestModelFactory
             "ifc-guid",
             id.ToUpperInvariant(),
             "Steel beam",
-            XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+            XmiSystemLineEnum.MiddleMiddle,
             5.0,
             "1,0,0",
             "0,1,0",
@@ -169,9 +169,7 @@ internal static class TestModelFactory
             0,
             0,
             0,
-            0,
-            "Fixed",
-            "Pinned");
+            0);
 
     internal static XmiColumn CreateColumn(string id = "col-1") =>
         new(id,
@@ -179,7 +177,7 @@ internal static class TestModelFactory
             "ifc-guid",
             id.ToUpperInvariant(),
             "Concrete column",
-            XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+            XmiSystemLineEnum.MiddleMiddle,
             3.5,
             "1,0,0",
             "0,1,0",
@@ -189,9 +187,7 @@ internal static class TestModelFactory
             0,
             0,
             0,
-            0,
-            "Fixed",
-            "Fixed");
+            0);
 
     internal static XmiSlab CreateSlab(string id = "slab-1") =>
         new(id,

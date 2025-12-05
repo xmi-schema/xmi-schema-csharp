@@ -16,8 +16,7 @@ public class XmiHasMaterialTests
             TestModelFactory.CreateMaterial(),
             "Uses",
             "desc",
-            nameof(XmiHasMaterial),
-            "Association");
+            nameof(XmiHasMaterial));
 
         Assert.Equal("rel-mat", relation.Id);
         Assert.Equal("Uses", relation.Name);
