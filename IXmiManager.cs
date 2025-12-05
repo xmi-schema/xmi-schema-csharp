@@ -72,7 +72,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="entities">Entities to append to the model verbatim.</param>
-        void AddEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities);
+        void AddXmiEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities);
 
         /// <summary>
         /// Adds a relationship connecting a source entity to a point geometry.
@@ -115,7 +115,7 @@ namespace XmiSchema.Core.Manager
         /// <typeparam name="T">Concrete entity type to filter.</typeparam>
         /// <param name="modelIndex">Zero-based index of the model to query.</param>
         /// <returns>List containing all entities of <typeparamref name="T"/>.</returns>
-        List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity;
+        List<T> GetXmiEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity;
 
         /// <summary>
         /// Retrieves the first entity whose identifier matches the supplied id.
@@ -124,7 +124,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="modelIndex">Zero-based index of the model to query.</param>
         /// <param name="id">Entity identifier to match.</param>
         /// <returns>Entity instance or <c>null</c> when not found.</returns>
-        T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity;
+        T? GetXmiEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity;
 
         /// <summary>
         /// Creates a point geometry within the requested model.
@@ -139,7 +139,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="y">Y coordinate in model units.</param>
         /// <param name="z">Z coordinate in model units.</param>
         /// <returns>The created <see cref="XmiPoint3D"/> instance.</returns>
-        XmiPoint3D CreatePoint3D(
+        XmiPoint3D CreateXmiPoint3D(
             int modelIndex,
             string id,
             string name,
@@ -168,7 +168,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="poissonRatio">Poisson ratio.</param>
         /// <param name="thermalCoefficient">Thermal coefficient.</param>
         /// <returns>The created <see cref="XmiMaterial"/> instance.</returns>
-        XmiMaterial CreateMaterial(
+        XmiMaterial CreateXmiMaterial(
             int modelIndex,
             string id,
             string name,
@@ -207,7 +207,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="plasticModulusYAxis">Plastic modulus about y-axis.</param>
         /// <param name="torsionalConstant">Torsional constant.</param>
         /// <returns>The created <see cref="XmiCrossSection"/>.</returns>
-        XmiCrossSection CreateCrossSection(
+        XmiCrossSection CreateXmiCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -241,7 +241,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="storeyElevation">Elevation relative to global datum.</param>
         /// <param name="storeyMass">Total mass assigned to the storey.</param>
         /// <returns>The created <see cref="XmiStorey"/>.</returns>
-        XmiStorey CreateStorey(
+        XmiStorey CreateXmiStorey(
             int modelIndex,
             string id,
             string name,
@@ -282,7 +282,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="endFixityStart">Fixity condition at start.</param>
         /// <param name="endFixityEnd">Fixity condition at end.</param>
         /// <returns>The created <see cref="XmiStructuralCurveMember"/>.</returns>
-        XmiStructuralCurveMember CreateStructuralCurveMember(
+        XmiStructuralCurveMember CreateXmiStructuralCurveMember(
             int modelIndex,
             string id,
             string name,
@@ -334,7 +334,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="localAxisZ">Local axis Z vector.</param>
         /// <param name="height">Surface height or extrusion.</param>
         /// <returns>The created <see cref="XmiStructuralSurfaceMember"/>.</returns>
-        XmiStructuralSurfaceMember CreateStructuralSurfaceMember(
+        XmiStructuralSurfaceMember CreateXmiStructuralSurfaceMember(
             int modelIndex,
             string id,
             string name,
@@ -368,7 +368,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="storey">Optional storey containing the connection.</param>
         /// <param name="point">Point geometry represented by the connection.</param>
         /// <returns>The created <see cref="XmiStructuralPointConnection"/>.</returns>
-        XmiStructuralPointConnection CreateStructuralPointConnection(
+        XmiStructuralPointConnection CreateXmiStructuralPointConnection(
             int modelIndex,
             string id,
             string name,

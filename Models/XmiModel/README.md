@@ -3,7 +3,7 @@
 `XmiModel` is the central in-memory graph that stores every entity (`Entities`) and relationship (`Relationships`). Helper methods inside `XmiModel.cs` wrap the most common workflows:
 
 - `AddXmi*` methods append domain entities or relationships that have already been assembled elsewhere.
-- `CreateStructurePointConnection` and `CreatePoint3D` provide de-duplication logic so two connections that reference the same coordinates reuse the same IDs.
+- `CreateXmiStructuralPointConnection` and `CreatePoint3D` provide de-duplication logic so two connections that reference the same coordinates reuse the same IDs.
 - `FindMatchingPointConnectionByPoint3D` searches existing relationships to determine whether an imported node already exists; use this before creating new nodes from external software.
 - `GetEntitiesOfType<T>` returns strongly-typed subsets, enabling callers to run LINQ queries without casting.
 

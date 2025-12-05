@@ -80,7 +80,7 @@ namespace XmiSchema.Core.Manager
 
         // 批量添加
         /// <inheritdoc />
-        public void AddEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities)
+        public void AddXmiEntitiesToModel(int modelIndex, List<XmiBaseEntity> entities)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             foreach (var e in entities)
@@ -133,14 +133,14 @@ namespace XmiSchema.Core.Manager
         // }
 
         /// <inheritdoc />
-        public List<T> GetEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
+        public List<T> GetXmiEntitiesOfType<T>(int modelIndex) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].GetEntitiesOfType<T>();
         }
 
         /// <inheritdoc />
-        public T? GetEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
+        public T? GetXmiEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].GetEntitiesOfType<T>().FirstOrDefault(e => e.Id == id);
@@ -192,7 +192,7 @@ namespace XmiSchema.Core.Manager
 
         // ========== 创建实体 ==========
         /// <inheritdoc />
-        public XmiStructuralPointConnection CreateStructuralPointConnection(
+        public XmiStructuralPointConnection CreateXmiStructuralPointConnection(
             int modelIndex,
             string id,
             string name,
@@ -204,14 +204,14 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructurePointConnection(
+            return Models[modelIndex].CreateXmiStructuralPointConnection(
                 id, name, ifcGuid, nativeId, description,
                 storey, point
             );
         }
 
         /// <inheritdoc />
-        public XmiPoint3D CreatePoint3D(
+        public XmiPoint3D CreateXmiPoint3D(
             int modelIndex,
             string id,
             string name,
@@ -224,11 +224,11 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreatePoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
+            return Models[modelIndex].CreateXmiPoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
         }
 
         /// <inheritdoc />
-        public XmiMaterial CreateMaterial(
+        public XmiMaterial CreateXmiMaterial(
             int modelIndex,
             string id,
             string name,
@@ -245,7 +245,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateMaterial(
+            return Models[modelIndex].CreateXmiMaterial(
                 id, name, ifcGuid, nativeId, description,
                 materialType, grade, unitWeight,
                 eModulus, gModulus, poissonRatio, thermalCoefficient
@@ -253,7 +253,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiCrossSection CreateCrossSection(
+        public XmiCrossSection CreateXmiCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -276,7 +276,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateCrossSection(
+            return Models[modelIndex].CreateXmiCrossSection(
                 id, name, ifcGuid, nativeId, description,
                 material, shape, parameters,
                 area, secondMomentOfAreaXAxis, secondMomentOfAreaYAxis,
@@ -288,7 +288,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStorey CreateStorey(
+        public XmiStorey CreateXmiStorey(
             int modelIndex,
             string id,
             string name,
@@ -300,14 +300,14 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStorey(
+            return Models[modelIndex].CreateXmiStorey(
                 id, name, ifcGuid, nativeId, description,
                 storeyElevation, storeyMass
             );
         }
 
         /// <inheritdoc />
-        public XmiStructuralCurveMember CreateStructuralCurveMember(
+        public XmiStructuralCurveMember CreateXmiStructuralCurveMember(
             int modelIndex,
             string id,
             string name,
@@ -337,7 +337,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralCurveMember(
+            return Models[modelIndex].CreateXmiStructuralCurveMember(
                 id, name, ifcGuid, nativeId, description,
                 crossSection, storey, curveMemberType,
                 nodes, segments, systemLine,
@@ -351,7 +351,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiStructuralSurfaceMember CreateStructuralSurfaceMember(
+        public XmiStructuralSurfaceMember CreateXmiStructuralSurfaceMember(
             int modelIndex,
             string id,
             string name,
@@ -374,7 +374,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralSurfaceMember(
+            return Models[modelIndex].CreateXmiStructuralSurfaceMember(
                 id, name, ifcGuid, nativeId, description,
                 material, surfaceMemberType, thickness, systemPlane,
                 nodes, storey, segments,

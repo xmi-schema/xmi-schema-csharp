@@ -22,8 +22,8 @@ public class XmiModelTests
     {
         var model = new XmiModel();
 
-        var first = model.CreatePoint3D("pt-1", "Point", "ifc", "native", "desc", 1, 2, 3);
-        var second = model.CreatePoint3D("pt-2", "Point", "ifc", "native2", "desc", 1, 2, 3);
+        var first = model.CreateXmiPoint3D("pt-1", "Point", "ifc", "native", "desc", 1, 2, 3);
+        var second = model.CreateXmiPoint3D("pt-2", "Point", "ifc", "native2", "desc", 1, 2, 3);
 
         Assert.Same(first, second);
         Assert.Single(model.Entities.OfType<XmiPoint3D>());
@@ -37,8 +37,8 @@ public class XmiModelTests
     {
         var model = new XmiModel();
 
-        var first = model.CreateMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
-        var second = model.CreateMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
+        var first = model.CreateXmiMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
+        var second = model.CreateXmiMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
 
         Assert.Same(first, second);
         Assert.Single(model.Entities.OfType<XmiMaterial>());
@@ -48,7 +48,7 @@ public class XmiModelTests
     /// Creating a point connection attaches storey and point relationships.
     /// </summary>
     [Fact]
-    public void CreateStructurePointConnection_AddsRelationships()
+    public void CreateXmiStructuralPointConnection_AddsRelationships()
     {
         var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
@@ -56,7 +56,7 @@ public class XmiModelTests
         model.AddXmiStorey(storey);
         model.AddXmiPoint3D(point);
 
-        var connection = model.CreateStructurePointConnection("pc-1", "Node", "ifc", "native", "desc", storey, point);
+        var connection = model.CreateXmiStructuralPointConnection("pc-1", "Node", "ifc", "native", "desc", storey, point);
 
         Assert.Contains(model.Entities.OfType<XmiStructuralPointConnection>(), e => e.Id == connection.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == connection && r.Target == storey);
@@ -73,7 +73,7 @@ public class XmiModelTests
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
-        var section = model.CreateCrossSection(
+        var section = model.CreateXmiCrossSection(
             "sec-1",
             "Section",
             "ifc",
@@ -113,7 +113,7 @@ public class XmiModelTests
         model.AddXmiStructuralPointConnection(beginNode);
         model.AddXmiStructuralPointConnection(endNode);
 
-        var member = model.CreateStructuralCurveMember(
+        var member = model.CreateXmiStructuralCurveMember(
             "cur-1",
             "Member",
             "ifc",
@@ -158,7 +158,7 @@ public class XmiModelTests
         model.AddXmiStorey(storey);
         model.AddXmiMaterial(material);
 
-        var member = model.CreateStructuralSurfaceMember(
+        var member = model.CreateXmiStructuralSurfaceMember(
             "surf-1",
             "Surface",
             "ifc",

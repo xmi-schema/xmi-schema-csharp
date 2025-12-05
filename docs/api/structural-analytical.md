@@ -87,7 +87,7 @@ var surfaceMember = new XmiStructuralSurfaceMember(
 
 ## XmiStructuralPointConnection
 
-Analytical node that ties members and storeys together. Create through `XmiModel.CreateStructurePointConnection` to automatically reuse identical coordinates.
+Analytical node that ties members and storeys together. Create through `XmiModel.CreateXmiStructuralPointConnection` to automatically reuse identical coordinates.
 
 ### Properties
 

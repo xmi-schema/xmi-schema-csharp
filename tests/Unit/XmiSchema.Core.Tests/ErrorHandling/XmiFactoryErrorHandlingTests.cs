@@ -24,7 +24,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreatePoint3D(null!, "Point", "", "", "", 0, 0, 0));
+            model.CreateXmiPoint3D(null!, "Point", "", "", "", 0, 0, 0));
 
         Assert.Contains("ID cannot be null or empty", exception.Message);
         Assert.Equal("id", exception.ParamName);
@@ -36,7 +36,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreatePoint3D("", "Point", "", "", "", 0, 0, 0));
+            model.CreateXmiPoint3D("", "Point", "", "", "", 0, 0, 0));
 
         Assert.Contains("ID cannot be null or empty", exception.Message);
     }
@@ -47,7 +47,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreatePoint3D("pt-1", null!, "", "", "", 0, 0, 0));
+            model.CreateXmiPoint3D("pt-1", null!, "", "", "", 0, 0, 0));
 
         Assert.Contains("Name cannot be null or empty", exception.Message);
         Assert.Equal("name", exception.ParamName);
@@ -59,7 +59,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreatePoint3D("pt-1", "", "", "", "", 0, 0, 0));
+            model.CreateXmiPoint3D("pt-1", "", "", "", "", 0, 0, 0));
 
         Assert.Contains("Name cannot be null or empty", exception.Message);
     }
@@ -70,7 +70,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateMaterial(
+            model.CreateXmiMaterial(
                 null!, "Material", "", "", "",
                 XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
@@ -85,7 +85,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateMaterial(
+            model.CreateXmiMaterial(
                 "mat-1", null!, "", "", "",
                 XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
@@ -100,7 +100,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStorey(
+            model.CreateXmiStorey(
                 null!, "Storey", "", "", "",
                 12.0, 1000
             ));
@@ -115,7 +115,7 @@ public class XmiFactoryErrorHandlingTests
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateCrossSection(
+            model.CreateXmiCrossSection(
                 null!, "Section", "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -131,7 +131,7 @@ public class XmiFactoryErrorHandlingTests
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateCrossSection(
+            model.CreateXmiCrossSection(
                 "sec-1", "", "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -141,14 +141,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructurePointConnection_ThrowsWhenIdIsNull()
+    public void CreateXmiStructuralPointConnection_ThrowsWhenIdIsNull()
     {
         var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var point = TestModelFactory.CreatePoint();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructurePointConnection(
+            model.CreateXmiStructuralPointConnection(
                 null!, "Connection", "", "", "",
                 storey, point
             ));
@@ -166,7 +166,7 @@ public class XmiFactoryErrorHandlingTests
         var endNode = TestModelFactory.CreatePointConnection();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralCurveMember(
+            model.CreateXmiStructuralCurveMember(
                 null!, "Curve", "", "", "",
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
@@ -190,7 +190,7 @@ public class XmiFactoryErrorHandlingTests
         var endNode = TestModelFactory.CreatePointConnection();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralCurveMember(
+            model.CreateXmiStructuralCurveMember(
                 "cur-1", "", "", "", "",
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
@@ -248,7 +248,7 @@ public class XmiFactoryErrorHandlingTests
         var manager = new XmiManager();
 
         Assert.Throws<IndexOutOfRangeException>(() =>
-            manager.GetEntitiesOfType<XmiMaterial>(0));
+            manager.GetXmiEntitiesOfType<XmiMaterial>(0));
     }
 
     [Fact]
@@ -257,7 +257,7 @@ public class XmiFactoryErrorHandlingTests
         var manager = new XmiManager();
 
         Assert.Throws<IndexOutOfRangeException>(() =>
-            manager.GetEntityById<XmiMaterial>(0, "mat-1"));
+            manager.GetXmiEntityById<XmiMaterial>(0, "mat-1"));
     }
 
     [Fact]
@@ -275,7 +275,7 @@ public class XmiFactoryErrorHandlingTests
         var manager = TestModelFactory.CreateManagerWithModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreatePoint3D(0, null!, "Point", "", "", "", 0, 0, 0));
+            manager.CreateXmiPoint3D(0, null!, "Point", "", "", "", 0, 0, 0));
 
         Assert.Contains("ID cannot be null or empty", exception.Message);
     }
@@ -286,7 +286,7 @@ public class XmiFactoryErrorHandlingTests
         var manager = TestModelFactory.CreateManagerWithModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateMaterial(
+            manager.CreateXmiMaterial(
                 0, "mat-1", null!, "", "", "",
                 XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
@@ -301,7 +301,7 @@ public class XmiFactoryErrorHandlingTests
         var manager = TestModelFactory.CreateManagerWithModel();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStorey(
+            manager.CreateXmiStorey(
                 0, "", "Storey", "", "", "",
                 12.0, 1000
             ));
@@ -317,7 +317,7 @@ public class XmiFactoryErrorHandlingTests
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateCrossSection(
+            manager.CreateXmiCrossSection(
                 0, "sec-1", "", "", "", "",
                 material, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -352,7 +352,7 @@ public class XmiFactoryErrorHandlingTests
         var endNode = TestModelFactory.CreatePointConnection();
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStructuralCurveMember(
+            manager.CreateXmiStructuralCurveMember(
                 0, "", "Curve", "", "", "",
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
@@ -472,7 +472,7 @@ public class XmiFactoryErrorHandlingTests
         // Trigger internal exception by passing null name (after id validation)
         try
         {
-            model.CreatePoint3D("pt-1", null!, "", "", "", 0, 0, 0);
+            model.CreateXmiPoint3D("pt-1", null!, "", "", "", 0, 0, 0);
             Assert.Fail("Expected exception was not thrown");
         }
         catch (ArgumentException ex)
@@ -489,7 +489,7 @@ public class XmiFactoryErrorHandlingTests
 
         try
         {
-            model.CreateMaterial(
+            model.CreateXmiMaterial(
                 "mat-1", null!, "", "", "",
                 XmiMaterialTypeEnum.Steel,
                 50, 78.5, "200000", "80000", "0.3", 1.2
@@ -509,7 +509,7 @@ public class XmiFactoryErrorHandlingTests
 
         try
         {
-            model.CreateStorey(
+            model.CreateXmiStorey(
                 "str-1", null!, "", "", "",
                 12.0, 1000
             );
@@ -529,7 +529,7 @@ public class XmiFactoryErrorHandlingTests
 
         try
         {
-            model.CreateCrossSection(
+            model.CreateXmiCrossSection(
                 "sec-1", null!, "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -551,8 +551,8 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var point1 = model.CreatePoint3D("pt-1", "Point 1", "", "", "", 1, 2, 3);
-        var point2 = model.CreatePoint3D("pt-2", "Point 2", "", "", "", 1, 2, 3);
+        var point1 = model.CreateXmiPoint3D("pt-1", "Point 1", "", "", "", 1, 2, 3);
+        var point2 = model.CreateXmiPoint3D("pt-2", "Point 2", "", "", "", 1, 2, 3);
 
         // Should reuse the same point instance
         Assert.Same(point1, point2);
@@ -564,13 +564,13 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var mat1 = model.CreateMaterial(
+        var mat1 = model.CreateXmiMaterial(
             "mat-1", "Material 1", "", "native-1", "",
             XmiMaterialTypeEnum.Steel,
             50, 78.5, "200000", "80000", "0.3", 1.2
         );
 
-        var mat2 = model.CreateMaterial(
+        var mat2 = model.CreateXmiMaterial(
             "mat-2", "Material 2", "", "native-1", "",
             XmiMaterialTypeEnum.Concrete,
             30, 25, "30000", "12000", "0.2", 1.0
@@ -586,12 +586,12 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var storey1 = model.CreateStorey(
+        var storey1 = model.CreateXmiStorey(
             "str-1", "Storey 1", "", "native-1", "",
             12.0, 1000
         );
 
-        var storey2 = model.CreateStorey(
+        var storey2 = model.CreateXmiStorey(
             "str-2", "Storey 2", "", "native-1", "",
             15.0, 1200
         );
@@ -606,7 +606,7 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var material = model.CreateMaterial(
+        var material = model.CreateXmiMaterial(
             "mat-1", "Material", "", "native-mat", "",
             XmiMaterialTypeEnum.Steel,
             50, 78.5, "200000", "80000", "0.3", 1.2
@@ -614,7 +614,7 @@ public class XmiFactoryErrorHandlingTests
 
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateCrossSection(
+        var crossSection = model.CreateXmiCrossSection(
             "sec-1", "Section", "", "", "",
             material, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -636,7 +636,7 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var point = model.CreatePoint3D(
+        var point = model.CreateXmiPoint3D(
             "pt-1", "Point", "", "", "",
             double.MaxValue / 2, double.MinValue / 2, 0
         );
@@ -651,7 +651,7 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var material = model.CreateMaterial(
+        var material = model.CreateXmiMaterial(
             "mat-1", "Material", "", "", "",
             XmiMaterialTypeEnum.Steel,
             0, 0, "0", "0", "0", 0
@@ -667,7 +667,7 @@ public class XmiFactoryErrorHandlingTests
     {
         var model = new XmiModel();
 
-        var storey = model.CreateStorey(
+        var storey = model.CreateXmiStorey(
             "str-1", "Basement", "", "", "",
             -5.0, 1000
         );
@@ -682,7 +682,7 @@ public class XmiFactoryErrorHandlingTests
         var model = new XmiModel();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateCrossSection(
+        var crossSection = model.CreateXmiCrossSection(
             "sec-1", "Section", "", "", "",
             null, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -706,7 +706,7 @@ public class XmiFactoryErrorHandlingTests
 
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateCrossSection(
+        var crossSection = model.CreateXmiCrossSection(
             "sec-1", "Section", "", "", "",
             material, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009

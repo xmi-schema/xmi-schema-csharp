@@ -29,7 +29,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns empty list when no entities exist.
+    /// Validates GetXmiEntitiesOfType returns empty list when no entities exist.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_EmptyModel_ReturnsEmptyList()
@@ -46,7 +46,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns empty list when no matching type exists.
+    /// Validates GetXmiEntitiesOfType returns empty list when no matching type exists.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_NoMatchingType_ReturnsEmptyList()
@@ -61,7 +61,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns only entities of the specified type.
+    /// Validates GetXmiEntitiesOfType returns only entities of the specified type.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_MixedEntities_ReturnsOnlyMatchingType()
@@ -436,7 +436,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns a new list (not a reference to internal collection).
+    /// Validates GetXmiEntitiesOfType returns a new list (not a reference to internal collection).
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_ReturnsNewList()

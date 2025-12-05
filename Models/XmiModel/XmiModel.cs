@@ -20,6 +20,11 @@ namespace XmiSchema.Core.Models
         public List<XmiBaseRelationship> Relationships { get; set; } = new();
 
         /// <summary>
+        /// Logs errors that occur during Create operations.
+        /// </summary>
+        public List<string> ErrorLog { get; } = new();
+
+        /// <summary>
         /// Adds a structural material entity to the model.
         /// </summary>
         /// <param name="material">Material to insert.</param>
@@ -205,6 +210,56 @@ namespace XmiSchema.Core.Models
         }
 
         /// <summary>
+        /// Executes a creation operation as a transaction. If any step fails, nothing is added to the model and errors are logged.
+        /// </summary>
+        /// <typeparam name="T">The type of entity being created.</typeparam>
+        /// <param name="operationName">Name of the operation for error logging.</param>
+        /// <param name="createAction">Action that performs the creation logic and returns the created entity.</param>
+        /// <returns>The created entity if successful, null if failed.</returns>
+        private T? ExecuteTransaction<T>(string operationName, Func<(T? entity, List<XmiBaseEntity> entitiesToAdd, List<XmiBaseRelationship> relationshipsToAdd)> createAction) where T : class
+        {
+            var entitiesSnapshot = new List<XmiBaseEntity>(Entities);
+            var relationshipsSnapshot = new List<XmiBaseRelationship>(Relationships);
+
+            try
+            {
+                var (entity, entitiesToAdd, relationshipsToAdd) = createAction();
+
+                if (entity == null)
+                {
+                    var errorMsg = $"{operationName} failed: Creation returned null.";
+                    ErrorLog.Add(errorMsg);
+                    return null;
+                }
+
+                // All validations passed, commit the transaction
+                foreach (var e in entitiesToAdd)
+                {
+                    Entities.Add(e);
+                }
+
+                foreach (var r in relationshipsToAdd)
+                {
+                    Relationships.Add(r);
+                }
+
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                // Rollback to snapshot
+                Entities.Clear();
+                Entities.AddRange(entitiesSnapshot);
+                Relationships.Clear();
+                Relationships.AddRange(relationshipsSnapshot);
+
+                var errorMsg = $"{operationName} failed: {ex.Message}";
+                ErrorLog.Add(errorMsg);
+                throw new InvalidOperationException(errorMsg, ex);
+            }
+        }
+
+        /// <summary>
         /// Creates or reuses a structural point connection for the provided storey and coordinate.
         /// </summary>
         /// <param name="id">Unique identifier for the new connection.</param>
@@ -215,7 +270,7 @@ namespace XmiSchema.Core.Models
         /// <param name="storey">Optional storey containing the connection.</param>
         /// <param name="point">Point geometry representing the node.</param>
         /// <returns>An existing or newly created connection.</returns>
-        public XmiStructuralPointConnection CreateStructurePointConnection(
+        public XmiStructuralPointConnection CreateXmiStructuralPointConnection(
             string id,
             string name,
             string ifcGuid,
@@ -307,7 +362,7 @@ namespace XmiSchema.Core.Models
         /// <param name="y">Y coordinate.</param>
         /// <param name="z">Z coordinate.</param>
         /// <returns>The newly created point.</returns>
-        public XmiPoint3D CreatePoint3D(
+        public XmiPoint3D CreateXmiPoint3D(
             string id,
             string name,
             string ifcGuid,
@@ -321,15 +376,19 @@ namespace XmiSchema.Core.Models
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
-            try
+            return ExecuteTransaction<XmiPoint3D>("CreateXmiPoint3D", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 var tempPoint = new XmiPoint3D(id, name, ifcGuid, nativeId, description, x, y, z);
                 var existingPoints = GetEntitiesOfType<XmiPoint3D>();
                 var existingPoint = existingPoints.FirstOrDefault(p => p.Equals(tempPoint));
 
                 if (existingPoint != null)
                 {
-                    return existingPoint;
+                    // Return existing point, no transaction needed
+                    return (existingPoint, entitiesToAdd, relationshipsToAdd);
                 }
 
                 var point = new XmiPoint3D(
@@ -343,21 +402,17 @@ namespace XmiSchema.Core.Models
                     z
                 );
 
-                AddXmiPoint3D(point);
+                entitiesToAdd.Add(point);
 
-                return point;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create Point3D.", ex);
-            }
+                return (point, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
         /// <summary>
         /// Creates or reuses a structural curve member, wiring up cross-section, storey, and node relationships.
         /// </summary>
         /// <returns>The created curve member.</returns>
-        public XmiStructuralCurveMember CreateStructuralCurveMember(
+        public XmiStructuralCurveMember CreateXmiStructuralCurveMember(
             string id,
             string name,
             string ifcGuid,
@@ -459,7 +514,7 @@ namespace XmiSchema.Core.Models
         /// Creates a structural cross-section, reusing an existing material relationship when a matching native ID is found.
         /// </summary>
         /// <returns>The created cross-section entity.</returns>
-        public XmiCrossSection CreateCrossSection(
+        public XmiCrossSection CreateXmiCrossSection(
             string id,
             string name,
             string ifcGuid,
@@ -539,7 +594,7 @@ namespace XmiSchema.Core.Models
         /// Creates or reuses a storey by native identifier.
         /// </summary>
         /// <returns>The created or reused storey.</returns>
-        public XmiStorey CreateStorey(
+        public XmiStorey CreateXmiStorey(
             string id,
             string name,
             string ifcGuid,
@@ -552,14 +607,18 @@ namespace XmiSchema.Core.Models
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
 
-            try
+            return ExecuteTransaction<XmiStorey>("CreateXmiStorey", () =>
             {
+                var entitiesToAdd = new List<XmiBaseEntity>();
+                var relationshipsToAdd = new List<XmiBaseRelationship>();
+
                 var existingStorey = GetEntitiesOfType<XmiStorey>()
                     .FirstOrDefault(s => s.NativeId == nativeId);
 
                 if (existingStorey != null)
                 {
-                    return existingStorey;
+                    // Return existing storey, no transaction needed
+                    return (existingStorey, entitiesToAdd, relationshipsToAdd);
                 }
 
                 var storey = new XmiStorey(
@@ -572,21 +631,17 @@ namespace XmiSchema.Core.Models
                     storeyMass
                 );
 
-                AddXmiStorey(storey);
+                entitiesToAdd.Add(storey);
 
-                return storey;
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException("Failed to create storey.", ex);
-            }
+                return (storey, entitiesToAdd, relationshipsToAdd);
+            })!;
         }
 
         /// <summary>
         /// Creates or reuses a structural material identified by <paramref name="nativeId"/>.
         /// </summary>
         /// <returns>The created or reused material.</returns>
-        public XmiMaterial CreateMaterial(
+        public XmiMaterial CreateXmiMaterial(
             string id,
             string name,
             string ifcGuid,
@@ -643,7 +698,7 @@ namespace XmiSchema.Core.Models
         /// Creates a structural surface member and wires the relevant storey and material relationships.
         /// </summary>
         /// <returns>The created surface member.</returns>
-        public XmiStructuralSurfaceMember CreateStructuralSurfaceMember(
+        public XmiStructuralSurfaceMember CreateXmiStructuralSurfaceMember(
             string id,
             string name,
             string ifcGuid,

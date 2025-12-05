@@ -37,7 +37,7 @@ public class XmiManagerTests
         var storey = TestModelFactory.CreateStorey("storey-lookup");
         manager.AddXmiStoreyToModel(0, storey);
 
-        var result = manager.GetEntityById<XmiStorey>(0, storey.Id);
+        var result = manager.GetXmiEntityById<XmiStorey>(0, storey.Id);
 
         Assert.NotNull(result);
         Assert.Equal(storey.Id, result!.Id);
