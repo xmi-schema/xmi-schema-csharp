@@ -28,15 +28,15 @@ public class XmiArc3D : XmiBaseGeometry
         string ifcGuid,
         string nativeId,
         string description,
-        XmiPoint3D startPoint ,
-        XmiPoint3D endPoint ,
-        XmiPoint3D centerPoint ,
+        XmiPoint3D startPoint,
+        XmiPoint3D endPoint,
+        XmiPoint3D centerPoint,
         float radius
     ) : base(id, name, ifcGuid, nativeId, description)
     {
-        StartPoint  = startPoint ;
-        EndPoint  = endPoint ;
-        CenterPoint  = centerPoint ;
+        StartPoint = startPoint;
+        EndPoint = endPoint;
+        CenterPoint = centerPoint;
         Radius = radius;
         EntityType = nameof(XmiArc3D);
     }

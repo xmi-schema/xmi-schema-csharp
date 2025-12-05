@@ -13,16 +13,16 @@ public class XmiSlab : XmiBasePhysicalEntity, IEquatable<XmiSlab>
     /// </summary>
     /// <param name="id">Unique identifier for the slab.</param>
     /// <param name="name">Friendly name for the slab.</param>
-    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the slab.</param>
     public XmiSlab(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiSlab))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiSlab))
     {
     }
 

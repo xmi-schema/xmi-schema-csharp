@@ -32,7 +32,7 @@ public class XmiColumn : XmiBasePhysicalEntity, IEquatable<XmiColumn>
     /// </summary>
     /// <param name="id">Unique identifier for the column.</param>
     /// <param name="name">Friendly name for the column.</param>
-    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the column.</param>
     /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
@@ -49,7 +49,7 @@ public class XmiColumn : XmiBasePhysicalEntity, IEquatable<XmiColumn>
     public XmiColumn(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         XmiSystemLineEnum systemLine,
@@ -63,7 +63,7 @@ public class XmiColumn : XmiBasePhysicalEntity, IEquatable<XmiColumn>
         double endNodeYOffset,
         double beginNodeZOffset,
         double endNodeZOffset
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiColumn))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiColumn))
     {
         SystemLine = systemLine;
         Length = length;

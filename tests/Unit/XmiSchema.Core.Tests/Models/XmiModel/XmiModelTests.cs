@@ -143,7 +143,7 @@ public class XmiModelTests
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member && r.Target == crossSection);
         Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == member && r.Target == storey);
-        Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralNode>().Count());
+        Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralPointConnection>().Count());
     }
 
     /// <summary>

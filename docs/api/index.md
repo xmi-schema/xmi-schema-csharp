@@ -73,7 +73,7 @@ Graph edges connecting entities:
 - **XmiHasCrossSection** - Assign sections to members
 - **XmiHasMaterial** - Assign materials to sections/members
 - **XmiHasGeometry** - Link entities to geometry
-- **XmiHasStructuralNode** - Connect members to nodes
+- **XmiHasStructuralPointConnection** - Connect members to nodes
 - **XmiHasStorey** - Place entities on building levels
 - **XmiHasSegment** - Link curve members to segments
 

@@ -105,10 +105,10 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode relation)
+        public void AddXmiHasStructuralPointConnectionToModel(int modelIndex, XmiHasStructuralPointConnection relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasStructuralNode(relation);
+            Models[modelIndex].AddXmiHasStructuralPointConnection(relation);
         }
 
         /// <inheritdoc />
@@ -199,7 +199,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiPoint3D point
         )
         {
@@ -296,17 +296,13 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             double storeyElevation,
-            double storeyMass,
-            string storeyHorizontalReactionX,
-            string storeyHorizontalReactionY,
-            string storeyVerticalReaction
+            double storeyMass
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateStorey(
                 id, name, ifcGuid, nativeId, description,
-                storeyElevation, storeyMass,
-                storeyHorizontalReactionX, storeyHorizontalReactionY, storeyVerticalReaction
+                storeyElevation, storeyMass
             );
         }
 
@@ -319,7 +315,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -367,7 +363,7 @@ namespace XmiSchema.Core.Manager
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStorey storey,
+            XmiStorey? storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,

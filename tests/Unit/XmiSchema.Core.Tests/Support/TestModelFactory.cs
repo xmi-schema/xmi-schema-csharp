@@ -55,10 +55,7 @@ internal static class TestModelFactory
             id.ToUpperInvariant(),
             "Level description",
             12.0,
-            1000,
-            "Fx",
-            "Fy",
-            "Fz");
+            1000);
 
     internal static XmiPoint3D CreatePoint(string id = "pt-1", double x = 1, double y = 2, double z = 3) =>
         new(id,

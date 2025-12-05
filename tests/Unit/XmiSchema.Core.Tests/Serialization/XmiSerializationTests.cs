@@ -176,7 +176,7 @@ public class XmiSerializationTests
 
         // Verify custom JSON property names from [JsonProperty] attributes
         Assert.NotNull(jObject["ID"]); // Not "Id"
-        Assert.NotNull(jObject["IFCGUID"]); // Not "IfcGuid"
+        Assert.NotNull(jObject["ifcGuid"]); // Not "ifcGuid"
     }
 
     [Fact]
@@ -211,7 +211,7 @@ public class XmiSerializationTests
         var jObject = JObject.Parse(json);
 
         Assert.NotNull(jObject["ID"]);
-        Assert.NotNull(jObject["IFCGUID"]);
+        Assert.NotNull(jObject["ifcGuid"]);
         Assert.NotNull(jObject["EModulus"]);
         Assert.NotNull(jObject["GModulus"]);
         Assert.Equal("200000", jObject["EModulus"]!.ToString());
@@ -271,7 +271,7 @@ public class XmiSerializationTests
         var json = @"{
             ""ID"": ""mat-1"",
             ""Name"": ""Material"",
-            ""IFCGUID"": """",
+            ""ifcGuid"": """",
             ""NativeId"": ""native"",
             ""Description"": """",
             ""EntityType"": ""XmiMaterial"",

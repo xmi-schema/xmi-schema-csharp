@@ -19,10 +19,7 @@ var storey = manager.CreateStorey(
     nativeId: "LEVEL_1",
     description: "Entry level",
     storeyElevation: 0,
-    storeyMass: 800,
-    storeyHorizontalReactionX: "Fx",
-    storeyHorizontalReactionY: "Fy",
-    storeyVerticalReaction: "Fz");
+    storeyMass: 800);
 
 var basePoint = manager.CreatePoint3D(0, "pt-start", "Start", "pt-guid", "PT_START", "Start point", 0, 0, 0);
 var topPoint = manager.CreatePoint3D(0, "pt-end", "End", "pt-guid-2", "PT_END", "End point", 0, 0, 3);

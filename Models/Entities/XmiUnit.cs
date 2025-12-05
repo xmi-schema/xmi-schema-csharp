@@ -16,7 +16,7 @@ public class XmiUnit : XmiBaseEntity
     /// </summary>
     /// <param name="id">Unique identifier.</param>
     /// <param name="name">Readable name for the mapping.</param>
-    /// <param name="ifcguid">Optional IFC GUID reference.</param>
+    /// <param name="ifcGuid">Optional IFC GUID reference.</param>
     /// <param name="nativeId">Original identifier from the authoring tool.</param>
     /// <param name="description">Notes about the mapping.</param>
     /// <param name="entity">Name of the entity whose attribute uses this unit.</param>
@@ -25,13 +25,13 @@ public class XmiUnit : XmiBaseEntity
     public XmiUnit(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         string entity,
         string attribute,
         XmiUnitEnum unit
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiUnit), XmiBaseEntityDomainEnum.Shared)
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiUnit), XmiBaseEntityDomainEnum.Shared)
     {
         Entity = entity;
         Attribute = attribute;

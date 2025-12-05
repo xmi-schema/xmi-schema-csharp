@@ -93,7 +93,7 @@ namespace XmiSchema.Core.Manager
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="relation">Relationship referencing the structural node.</param>
-        void AddXmiHasStructuralNodeToModel(int modelIndex, XmiHasStructuralNode relation);
+        void AddXmiHasStructuralPointConnectionToModel(int modelIndex, XmiHasStructuralPointConnection relation);
 
         /// <summary>
         /// Adds a relationship that binds a structural cross-section to an owning entity.
@@ -230,7 +230,7 @@ namespace XmiSchema.Core.Manager
         );
 
         /// <summary>
-        /// Creates a structural storey record for the requested model.
+        /// Creates a storey record for the requested model.
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the destination model.</param>
         /// <param name="id">Stable identifier for the storey.</param>
@@ -240,9 +240,6 @@ namespace XmiSchema.Core.Manager
         /// <param name="description">Optional description for the storey.</param>
         /// <param name="storeyElevation">Elevation relative to global datum.</param>
         /// <param name="storeyMass">Total mass assigned to the storey.</param>
-        /// <param name="storeyHorizontalReactionX">Horizontal reaction along x-axis.</param>
-        /// <param name="storeyHorizontalReactionY">Horizontal reaction along y-axis.</param>
-        /// <param name="storeyVerticalReaction">Vertical reaction.</param>
         /// <returns>The created <see cref="XmiStorey"/>.</returns>
         XmiStorey CreateStorey(
             int modelIndex,
@@ -252,10 +249,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             double storeyElevation,
-            double storeyMass,
-            string storeyHorizontalReactionX,
-            string storeyHorizontalReactionY,
-            string storeyVerticalReaction
+            double storeyMass
         );
 
         /// <summary>
@@ -268,7 +262,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the member.</param>
         /// <param name="crossSection">Cross-section applied to the member.</param>
-        /// <param name="storey">Storey containing the member.</param>
+        /// <param name="storey">Optional storey containing the member.</param>
         /// <param name="curveMemberType">Curve member classification.</param>
         /// <param name="nodes">Nodes participating in the member.</param>
         /// <param name="segments">Optional explicit segments describing geometry.</param>
@@ -296,7 +290,7 @@ namespace XmiSchema.Core.Manager
             string nativeId,
             string description,
             XmiCrossSection crossSection,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
@@ -331,7 +325,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="thickness">Member thickness.</param>
         /// <param name="systemPlane">Plane classification.</param>
         /// <param name="nodes">Nodes defining the surface boundary.</param>
-        /// <param name="storey">Storey containing the surface.</param>
+        /// <param name="storey">Optional storey containing the surface.</param>
         /// <param name="segments">Segments describing surface outline.</param>
         /// <param name="area">Surface area.</param>
         /// <param name="zOffset">Vertical offset.</param>
@@ -352,7 +346,7 @@ namespace XmiSchema.Core.Manager
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
             List<XmiStructuralPointConnection> nodes,
-            XmiStorey storey,
+            XmiStorey? storey,
             List<XmiSegment> segments,
             double area,
             double zOffset,
@@ -371,7 +365,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="ifcGuid">Optional IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the point connection.</param>
-        /// <param name="storey">Storey containing the connection.</param>
+        /// <param name="storey">Optional storey containing the connection.</param>
         /// <param name="point">Point geometry represented by the connection.</param>
         /// <returns>The created <see cref="XmiStructuralPointConnection"/>.</returns>
         XmiStructuralPointConnection CreateStructuralPointConnection(
@@ -381,7 +375,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiStorey storey,
+            XmiStorey? storey,
             XmiPoint3D point
         );
 

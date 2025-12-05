@@ -4,47 +4,36 @@ using XmiSchema.Core.Enums;
 namespace XmiSchema.Core.Entities;
 
 /// <summary>
-/// Defines an analytical storey level within the built environment, capturing elevation, mass, and reaction metadata.
+/// Defines a generic storey level within the built environment, capturing elevation and mass metadata.
+/// Can represent structural, architectural, or any defined building level.
 /// </summary>
 public class XmiStorey : XmiBaseEntity, IEquatable<XmiStorey>
 {
     public double StoreyElevation { get; set; }
     public double StoreyMass { get; set; }
-    public string StoreyHorizontalReactionX { get; set; }
-    public string StoreyHorizontalReactionY { get; set; }
-    public string StoreyVerticalReaction { get; set; }
 
     /// <summary>
     /// Creates a new <see cref="XmiStorey"/> bound to a specific elevation.
     /// </summary>
     /// <param name="id">Unique identifier for the storey.</param>
     /// <param name="name">Friendly name (e.g., Level 3).</param>
-    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the storey.</param>
     /// <param name="storeyElevation">Elevation measured in the project units.</param>
     /// <param name="storeyMass">Total mass assigned to the level.</param>
-    /// <param name="storeyHorizontalReactionX">Serialized horizontal reaction constraint along X.</param>
-    /// <param name="storeyHorizontalReactionY">Serialized horizontal reaction constraint along Y.</param>
-    /// <param name="storeyVerticalReaction">Serialized vertical reaction value.</param>
     public XmiStorey(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         double storeyElevation,
-        double storeyMass,
-        string storeyHorizontalReactionX,
-        string storeyHorizontalReactionY,
-        string storeyVerticalReaction
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStorey), XmiBaseEntityDomainEnum.Shared)
+        double storeyMass
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStorey), XmiBaseEntityDomainEnum.Shared)
     {
         StoreyElevation = storeyElevation;
         StoreyMass = storeyMass;
-        StoreyHorizontalReactionX = storeyHorizontalReactionX;
-        StoreyHorizontalReactionY = storeyHorizontalReactionY;
-        StoreyVerticalReaction = storeyVerticalReaction;
     }
 
     public bool Equals(XmiStorey? other)

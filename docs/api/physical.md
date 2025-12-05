@@ -78,7 +78,7 @@ Represents a physical slab element - typically a horizontal plate.
 ### Properties
 
 Inherits base properties from `XmiBasePhysicalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 
@@ -99,7 +99,7 @@ Represents a physical wall element - typically a vertical plate.
 ### Properties
 
 Inherits base properties from `XmiBasePhysicalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 

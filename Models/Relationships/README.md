@@ -9,7 +9,7 @@ Relationship entities inherit from `XmiBaseRelationship` and form the edges of t
 | `XmiHasPoint3D` | Connects point connections to coordinates. | `XmiStructuralPointConnection` → `XmiPoint3D` |
 | `XmiHasSegment` | Links curve members to their `XmiSegment` definitions. | `XmiStructuralCurveMember` → `XmiSegment` |
 | `XmiHasMaterial` | Assigns materials to consuming entities. | Cross section / member → `XmiMaterial` |
-| `XmiHasStructuralNode` | Declares a member’s analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
+| `XmiHasStructuralPointConnection` | Declares a member’s analytical node dependency. | `XmiStructuralCurveMember` → `XmiStructuralPointConnection` |
 | `XmiHasCrossSection` | Specifies which cross-section a member uses. | `XmiStructuralCurveMember` → `XmiCrossSection` |
 | `XmiHasStorey` | Places an entity on a storey level. | Point connection → `XmiStorey` |
 

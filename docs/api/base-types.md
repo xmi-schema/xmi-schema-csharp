@@ -9,12 +9,12 @@ The base layer defines traits shared by every entity, geometry, and relationship
 
 ## XmiBaseEntity
 
-Provides identifiers (`ID`, `IFCGUID`, `NativeId`), descriptive text, and an `EntityType` string that controls serialization. All entities must inherit from this class and invoke its constructor with a sensible fallback name.
+Provides identifiers (`ID`, `ifcGuid`, `NativeId`), descriptive text, and an `EntityType` string that controls serialization. All entities must inherit from this class and invoke its constructor with a sensible fallback name.
 
 **Key Properties:**
 - `Id`: Unique identifier
 - `Name`: Friendly display name
-- `IfcGuid`: IFC GUID for BIM interoperability
+- `ifcGuid`: IFC GUID for BIM interoperability
 - `NativeId`: Authoring system identifier
 - `Description`: Contextual description
 - `EntityType`: Discriminator for serialization

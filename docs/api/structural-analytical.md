@@ -92,7 +92,7 @@ Analytical node that ties members and storeys together. Create through `XmiModel
 ### Properties
 
 Inherits base properties from `XmiBaseStructuralAnalyticalEntity`:
-- `Id`, `Name`, `IfcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
+- `Id`, `Name`, `ifcGuid`, `NativeId`, `Description`, `EntityType`, `Type`
 
 ### Example
 

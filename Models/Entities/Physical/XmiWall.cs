@@ -13,16 +13,16 @@ public class XmiWall : XmiBasePhysicalEntity, IEquatable<XmiWall>
     /// </summary>
     /// <param name="id">Unique identifier for the wall.</param>
     /// <param name="name">Friendly name for the wall.</param>
-    /// <param name="ifcguid">Related IFC GUID.</param>
+    /// <param name="ifcGuid">Related IFC GUID.</param>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the wall.</param>
     public XmiWall(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiWall))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiWall))
     {
     }
 

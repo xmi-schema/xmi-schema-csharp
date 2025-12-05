@@ -47,7 +47,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     /// </summary>
     /// <param name="id">Unique identifier for the member entity.</param>
     /// <param name="name">Friendly name exposed to client applications.</param>
-    /// <param name="ifcguid">IFC GUID reference for traceability.</param>
+    /// <param name="ifcGuid">IFC GUID reference for traceability.</param>
     /// <param name="nativeId">Identifier from the authoring tool.</param>
     /// <param name="description">Optional descriptive text.</param>
     /// <param name="curveMemberType">Member type classification (beam, column, etc.).</param>
@@ -67,7 +67,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     public XmiStructuralCurveMember(
         string id,
         string name,
-        string ifcguid,
+        string ifcGuid,
         string nativeId,
         string description,
         // XmiCrossSection crossSection,
@@ -94,7 +94,7 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
         string endFixityStart,
         string endFixityEnd
 
-    ) : base(id, name, ifcguid, nativeId, description, nameof(XmiStructuralCurveMember))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralCurveMember))
     {
         // CrossSection = crossSection;
         // Storey = storey;
