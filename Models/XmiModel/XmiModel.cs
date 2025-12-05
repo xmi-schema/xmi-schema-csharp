@@ -444,7 +444,7 @@ namespace XmiSchema.Core.Models
         /// Creates a structural cross-section, reusing an existing material relationship when a matching native ID is found.
         /// </summary>
         /// <returns>The created cross-section entity.</returns>
-        public XmiCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateCrossSection(
             string id,
             string name,
             string ifcGuid,

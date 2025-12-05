@@ -109,13 +109,13 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_ThrowsWhenIdIsNull()
+    public void CreateCrossSection_ThrowsWhenIdIsNull()
     {
         var model = new XmiModel();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralCrossSection(
+            model.CreateCrossSection(
                 null!, "Section", "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -125,13 +125,13 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_ThrowsWhenNameIsEmpty()
+    public void CreateCrossSection_ThrowsWhenNameIsEmpty()
     {
         var model = new XmiModel();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            model.CreateStructuralCrossSection(
+            model.CreateCrossSection(
                 "sec-1", "", "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -310,14 +310,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void XmiManager_CreateStructuralCrossSection_ThrowsWhenNameIsEmpty()
+    public void XmiManager_CreateCrossSection_ThrowsWhenNameIsEmpty()
     {
         var manager = TestModelFactory.CreateManagerWithModel();
         var material = TestModelFactory.CreateMaterial();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         var exception = Assert.Throws<ArgumentException>(() =>
-            manager.CreateStructuralCrossSection(
+            manager.CreateCrossSection(
                 0, "sec-1", "", "", "", "",
                 material, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -522,14 +522,14 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_WrapsExceptionInInvalidOperationException()
+    public void CreateCrossSection_WrapsExceptionInInvalidOperationException()
     {
         var model = new XmiModel();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
         try
         {
-            model.CreateStructuralCrossSection(
+            model.CreateCrossSection(
                 "sec-1", null!, "", "", "",
                 null, XmiShapeEnum.Rectangular, parameters,
                 0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -602,7 +602,7 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_ReusesExistingMaterial()
+    public void CreateCrossSection_ReusesExistingMaterial()
     {
         var model = new XmiModel();
 
@@ -614,7 +614,7 @@ public class XmiFactoryErrorHandlingTests
 
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateStructuralCrossSection(
+        var crossSection = model.CreateCrossSection(
             "sec-1", "Section", "", "", "",
             material, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -677,12 +677,12 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_WorksWithNullMaterial()
+    public void CreateCrossSection_WorksWithNullMaterial()
     {
         var model = new XmiModel();
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateStructuralCrossSection(
+        var crossSection = model.CreateCrossSection(
             "sec-1", "Section", "", "", "",
             null, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009
@@ -694,7 +694,7 @@ public class XmiFactoryErrorHandlingTests
     }
 
     [Fact]
-    public void CreateStructuralCrossSection_WorksWithMaterialHavingEmptyNativeId()
+    public void CreateCrossSection_WorksWithMaterialHavingEmptyNativeId()
     {
         var model = new XmiModel();
 
@@ -706,7 +706,7 @@ public class XmiFactoryErrorHandlingTests
 
         var parameters = new RectangularShapeParameters(0.3, 0.6);
 
-        var crossSection = model.CreateStructuralCrossSection(
+        var crossSection = model.CreateCrossSection(
             "sec-1", "Section", "", "", "",
             material, XmiShapeEnum.Rectangular, parameters,
             0.18, 0.002, 0.003, 0.01, 0.02, 0.0005, 0.0006, 0.0007, 0.0008, 0.0009

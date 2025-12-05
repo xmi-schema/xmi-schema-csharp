@@ -253,7 +253,7 @@ namespace XmiSchema.Core.Manager
         }
 
         /// <inheritdoc />
-        public XmiCrossSection CreateStructuralCrossSection(
+        public XmiCrossSection CreateCrossSection(
             int modelIndex,
             string id,
             string name,
@@ -276,7 +276,7 @@ namespace XmiSchema.Core.Manager
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            return Models[modelIndex].CreateStructuralCrossSection(
+            return Models[modelIndex].CreateCrossSection(
                 id, name, ifcGuid, nativeId, description,
                 material, shape, parameters,
                 area, secondMomentOfAreaXAxis, secondMomentOfAreaYAxis,

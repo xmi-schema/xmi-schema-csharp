@@ -54,7 +54,7 @@ var crossSection = new XmiCrossSection(
     0.134,     // Radius of gyration Z
     0.0000012  // Warping constant
 );
-model.AddXmiStructuralCrossSection(crossSection);
+model.AddXmiCrossSection(crossSection);
 ```
 
 ## Creating Physical Elements
@@ -306,7 +306,7 @@ var wSection = new XmiCrossSection(
     0.00497, 0.0000234, 0.0000567, 0.000891,
     0.000234, 0.00567, 0.0034, 0.134, 0.0000012
 );
-model.AddXmiStructuralCrossSection(wSection);
+model.AddXmiCrossSection(wSection);
 
 // Create beam
 var beam = new XmiBeam(

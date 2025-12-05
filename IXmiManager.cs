@@ -207,7 +207,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="plasticModulusYAxis">Plastic modulus about y-axis.</param>
         /// <param name="torsionalConstant">Torsional constant.</param>
         /// <returns>The created <see cref="XmiCrossSection"/>.</returns>
-        XmiCrossSection CreateStructuralCrossSection(
+        XmiCrossSection CreateCrossSection(
             int modelIndex,
             string id,
             string name,

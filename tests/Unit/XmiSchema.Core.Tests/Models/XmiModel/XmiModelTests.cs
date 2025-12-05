@@ -67,13 +67,13 @@ public class XmiModelTests
     /// Creating a cross-section with a known material establishes the material relationship.
     /// </summary>
     [Fact]
-    public void CreateStructuralCrossSection_AddsMaterialRelationship()
+    public void CreateCrossSection_AddsMaterialRelationship()
     {
         var model = new XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
-        var section = model.CreateStructuralCrossSection(
+        var section = model.CreateCrossSection(
             "sec-1",
             "Section",
             "ifc",

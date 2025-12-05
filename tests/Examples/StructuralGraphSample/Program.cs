@@ -45,7 +45,7 @@ var material = manager.CreateMaterial(
     poissonRatio: "0.2",
     thermalCoefficient: 1.0);
 
-var crossSection = manager.CreateStructuralCrossSection(
+var crossSection = manager.CreateCrossSection(
     0,
     "sec-rect",
     "400x400",

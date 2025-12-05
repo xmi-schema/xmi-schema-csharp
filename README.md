@@ -31,7 +31,7 @@ var point = manager.CreatePoint3D(0, "pt-1", "Grid A/1", "pt-guid", "PT_A1", "Co
 var connection = manager.CreateStructuralPointConnection(0, "pc-1", "Node", "pc-guid", "PC_A1", "Column node", storey, point);
 
 var material = manager.CreateMaterial(0, "mat-1", "Steel", "mat-guid", "MAT_S355", "Sample material", XmiMaterialTypeEnum.Steel, 50, 78.5, "210000", "81000", "0.3", 1.2);
-var section = manager.CreateStructuralCrossSection(
+var section = manager.CreateCrossSection(
     0,
     "sec-1",
     "IPE300",
