@@ -249,7 +249,7 @@ namespace XmiSchema.Core.Models
                 if (storey != null)
                 {
                     existingStorey = GetEntitiesOfType<XmiStorey>()
-                        .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
+                        .FirstOrDefault(s => s.Id == storey.Id) ?? storey;
                 }
 
                 // Reuse an existing point with matching coordinates whenever possible.

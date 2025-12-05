@@ -112,17 +112,14 @@ var hasPoint = new XmiHasPoint3D(pointConnection, point);
 
 ## XmiStorey
 
-Represents a level with elevation, mass, and reaction info. Link point connections or surfaces to storeys for vertical organization.
+Represents a generic building level with elevation and mass info. Can be used for structural, architectural, or any defined storey. Link point connections or surfaces to storeys for vertical organization.
 
 ### Properties
 
 | Property | Type | Description |
 | --- | --- | --- |
 | `Elevation` | `double` | Height above reference datum |
-| `MassPerArea` | `double` | Distributed mass |
-| `ReactionX` | `string` | X-direction reaction forces |
-| `ReactionY` | `string` | Y-direction reaction forces |
-| `ReactionZ` | `string` | Z-direction reaction forces |
+| `Mass` | `double` | Total mass assigned to the storey |
 
 ### Example
 
@@ -133,9 +130,8 @@ var storey = new XmiStorey(
     "ifc-guid",
     "STR-1",
     "Ground floor level",
-    0.0,
-    1000,
-    "Fx", "Fy", "Fz"
+    0.0,       // Elevation
+    1000       // Mass
 );
 ```
 

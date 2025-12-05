@@ -175,8 +175,8 @@ public class XmiSerializationTests
         var jObject = JObject.Parse(json);
 
         // Verify custom JSON property names from [JsonProperty] attributes
-        Assert.NotNull(jObject["ID"]); // Not "Id"
-        Assert.NotNull(jObject["ifcGuid"]); // Not "ifcGuid"
+        Assert.NotNull(jObject["id"]); // Not "Id"
+        Assert.NotNull(jObject["ifcGuid"]);  // Not "IfcGuid"
     }
 
     [Fact]
@@ -210,7 +210,7 @@ public class XmiSerializationTests
         var json = JsonConvert.SerializeObject(material, _settings);
         var jObject = JObject.Parse(json);
 
-        Assert.NotNull(jObject["ID"]);
+        Assert.NotNull(jObject["id"]);
         Assert.NotNull(jObject["ifcGuid"]);
         Assert.NotNull(jObject["EModulus"]);
         Assert.NotNull(jObject["GModulus"]);
@@ -457,8 +457,8 @@ public class XmiSerializationTests
         var source = jObject["Source"] as JObject;
         var target = jObject["Target"] as JObject;
 
-        Assert.Equal(crossSection.Id, source!["ID"]!.ToString());
-        Assert.Equal(material.Id, target!["ID"]!.ToString());
+        Assert.Equal(crossSection.Id, source!["id"]!.ToString());
+        Assert.Equal(material.Id, target!["id"]!.ToString());
     }
 
     #endregion

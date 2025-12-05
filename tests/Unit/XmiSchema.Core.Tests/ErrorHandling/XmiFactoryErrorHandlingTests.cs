@@ -102,7 +102,7 @@ public class XmiFactoryErrorHandlingTests
         var exception = Assert.Throws<ArgumentException>(() =>
             model.CreateStorey(
                 null!, "Storey", "", "", "",
-                12.0, 1000, "Fx", "Fy", "Fz"
+                12.0, 1000
             ));
 
         Assert.Contains("ID cannot be null or empty", exception.Message);
@@ -303,7 +303,7 @@ public class XmiFactoryErrorHandlingTests
         var exception = Assert.Throws<ArgumentException>(() =>
             manager.CreateStorey(
                 0, "", "Storey", "", "", "",
-                12.0, 1000, "Fx", "Fy", "Fz"
+                12.0, 1000
             ));
 
         Assert.Contains("ID cannot be null or empty", exception.Message);
@@ -511,7 +511,7 @@ public class XmiFactoryErrorHandlingTests
         {
             model.CreateStorey(
                 "str-1", null!, "", "", "",
-                12.0, 1000, "Fx", "Fy", "Fz"
+                12.0, 1000
             );
             Assert.Fail("Expected exception was not thrown");
         }
@@ -588,12 +588,12 @@ public class XmiFactoryErrorHandlingTests
 
         var storey1 = model.CreateStorey(
             "str-1", "Storey 1", "", "native-1", "",
-            12.0, 1000, "Fx", "Fy", "Fz"
+            12.0, 1000
         );
 
         var storey2 = model.CreateStorey(
             "str-2", "Storey 2", "", "native-1", "",
-            15.0, 1200, "Fx2", "Fy2", "Fz2"
+            15.0, 1200
         );
 
         // Should reuse existing storey
@@ -669,7 +669,7 @@ public class XmiFactoryErrorHandlingTests
 
         var storey = model.CreateStorey(
             "str-1", "Basement", "", "", "",
-            -5.0, 1000, "Fx", "Fy", "Fz"
+            -5.0, 1000
         );
 
         Assert.NotNull(storey);

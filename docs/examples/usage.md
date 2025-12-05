@@ -235,10 +235,7 @@ var storey = new XmiStorey(
     "STR-1",
     "Ground floor",
     0.0,       // Elevation
-    1000,      // Mass per area
-    "Fx",      // Reaction X
-    "Fy",      // Reaction Y
-    "Fz"       // Reaction Z
+    1000       // Mass
 );
 model.AddXmiStorey(storey);
 
