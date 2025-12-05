@@ -70,7 +70,7 @@ var beam = new XmiBeam(
     "ifc-guid-beam",
     "BEAM-1",
     "Primary structural beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,       // Length (m)
     "1,0,0",   // Local X axis
     "0,1,0",   // Local Y axis
@@ -96,7 +96,7 @@ var column = new XmiColumn(
     "ifc-guid-col",
     "COL-1",
     "Concrete support column",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     3.5,       // Length (m)
     "1,0,0",   // Local X axis
     "0,1,0",   // Local Y axis
@@ -144,7 +144,7 @@ var curveMember = new XmiStructuralCurveMember(
     "CUR-1",
     "Analytical representation",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,       // Length
     "1,0,0",   // Local X
     "0,1,0",   // Local Y
@@ -311,7 +311,7 @@ model.AddXmiStructuralCrossSection(wSection);
 // Create beam
 var beam = new XmiBeam(
     "beam-1", "Floor Beam", "guid", "BEAM-1", "Main beam",
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     6.0, "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0, "Fixed", "Fixed"
 );
@@ -321,7 +321,7 @@ model.AddXmiBeam(beam);
 var analytical = new XmiStructuralCurveMember(
     "cur-1", "Analytical", "guid", "CUR-1", "Analysis",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     6.0, "1,0,0", "0,1,0", "0,0,1",
     0, 0, 0, 0, 0, 0, "Fixed", "Fixed"
 );

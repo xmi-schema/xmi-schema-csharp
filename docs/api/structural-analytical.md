@@ -16,7 +16,7 @@ Beam/column/bracing equivalent with offsets, system line, and fixities. This is 
 | Property | Type | Description |
 | --- | --- | --- |
 | `CurveMemberType` | `XmiStructuralCurveMemberTypeEnum` | Classification (Beam, Column, Bracing) |
-| `SystemLine` | `XmiStructuralCurveMemberSystemLineEnum` | Location of analytical line relative to profile |
+| `SystemLine` | `XmiSystemLineEnum` | Location of analytical line relative to profile |
 | `Length` | `double` | Analytical length |
 | `LocalAxisX` | `string` | Local X axis orientation |
 | `LocalAxisY` | `string` | Local Y axis orientation |
@@ -40,7 +40,7 @@ var curveMember = new XmiStructuralCurveMember(
     "CUR-1",
     "Analytical curve member",
     XmiStructuralCurveMemberTypeEnum.Beam,
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle,
+    XmiSystemLineEnum.MiddleMiddle,
     5.0,
     "1,0,0", "0,1,0", "0,0,1",
     0.1, 0.1, 0, 0, 0, 0,

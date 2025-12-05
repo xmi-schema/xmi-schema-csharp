@@ -33,7 +33,7 @@ Classification of curve members.
 - `Rigid` - Rigid link
 - `Unknown` - Unclassified member
 
-### XmiStructuralCurveMemberSystemLineEnum
+### XmiSystemLineEnum
 
 Location of the analytical line relative to the physical profile.
 

@@ -7,7 +7,7 @@ Enumerations in this folder standardize string values flowing through the Cross 
 | `XmiSegmentTypeEnum` | Geometry families for `XmiSegment` (line, circular arc, spline, etc.). |
 | `XmiShapeEnum` | Profile shapes for `XmiCrossSection`. |
 | `XmiStructuralCurveMemberTypeEnum` | Classification of curve members (beam, column, bracing). |
-| `XmiStructuralCurveMemberSystemLineEnum` | Location of the analytical line relative to the profile. |
+| `XmiSystemLineEnum` | Location of the analytical line relative to the profile. |
 | `XmiMaterialTypeEnum` | Material categories (concrete, steel, timber, etc.). |
 | `XmiStructuralSurfaceMemberTypeEnum` | Slab/wall/panel classifications. |
 | `XmiStructuralSurfaceMemberSpanTypeEnum` | Span behavior of surface members (one-way, two-way). |

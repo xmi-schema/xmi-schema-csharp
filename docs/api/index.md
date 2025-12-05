@@ -87,7 +87,7 @@ Enumeration types and constants:
 - **XmiStructuralSurfaceMemberTypeEnum** - Surface member classifications
 
 ### Geometry & Position
-- **XmiStructuralCurveMemberSystemLineEnum** - Analytical line positions
+- **XmiSystemLineEnum** - Analytical line positions
 - **XmiStructuralSurfaceMemberSystemPlaneEnum** - Analytical plane positions
 - **XmiSegmentTypeEnum** - Geometry families
 

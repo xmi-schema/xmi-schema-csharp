@@ -54,7 +54,7 @@ var section = manager.CreateStructuralCrossSection(
 
 var curveMember = manager.CreateStructuralCurveMember(0, "cur-1", "Beam A", "cur-guid", "BEAM_A", "Sample beam", section, storey, XmiStructuralCurveMemberTypeEnum.Beam,
     new List<XmiStructuralPointConnection> { connection, connection }, new List<XmiSegment> { new("seg-1", "Segment", "seg-guid", "SEG_1", "Segment", 0f, XmiSegmentTypeEnum.Line) },
-    XmiStructuralCurveMemberSystemLineEnum.MiddleMiddle, connection, connection, 5, "1,0,0", "0,1,0", "0,0,1", 0, 0, 0, 0, 0, 0, "Fixed", "Pinned");
+    XmiSystemLineEnum.MiddleMiddle, connection, connection, 5, "1,0,0", "0,1,0", "0,0,1", 0, 0, 0, 0, 0, 0, "Fixed", "Pinned");
 
 var json = manager.BuildJson(0);
 Console.WriteLine(json);
