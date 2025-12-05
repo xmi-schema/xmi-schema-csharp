@@ -55,7 +55,7 @@ Additional business objects:
 - **XmiCrossSection** - Profile geometry and section properties
 - **XmiMaterial** - Material definitions with mechanical properties
 - **XmiSegment** - Sub-spans along curve members
-- **XmiStructuralUnit** - Unit mappings for attributes
+- **XmiUnit** - Unit mappings for attributes
 
 ## [Geometries](geometries)
 
