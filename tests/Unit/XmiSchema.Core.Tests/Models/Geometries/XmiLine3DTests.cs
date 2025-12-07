@@ -3,7 +3,7 @@ using XmiSchema.Core.Geometries;
 namespace XmiSchema.Core.Tests.Models.Geometries;
 
 /// <summary>
-/// Verifies the <see cref="XmiLine3D"/> geometric endpoints are stored.
+/// Verifies the <see cref="XmiLine3d"/> geometric endpoints are stored.
 /// </summary>
 public class XmiLine3DTests
 {

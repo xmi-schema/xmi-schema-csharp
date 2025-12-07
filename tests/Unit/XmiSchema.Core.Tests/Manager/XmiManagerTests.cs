@@ -37,7 +37,7 @@ public class XmiManagerTests
         var storey = TestModelFactory.CreateStorey("storey-lookup");
         manager.AddXmiStoreyToModel(0, storey);
 
-        var result = manager.GetEntityById<XmiStorey>(0, storey.Id);
+        var result = manager.GetXmiEntityById<XmiStorey>(0, storey.Id);
 
         Assert.NotNull(result);
         Assert.Equal(storey.Id, result!.Id);
@@ -59,8 +59,8 @@ public class XmiManagerTests
         model.AddXmiPoint3D(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
-        model.AddXmiHasPoint3D(new XmiHasPoint3D(first, point));
-        model.AddXmiHasPoint3D(new XmiHasPoint3D(second, point));
+        model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
+        model.AddXmiHasPoint3D(new XmiHasPoint3d(second, point));
 
         var match = manager.FindMatchingPointConnectionByPoint3D(0, first);
 

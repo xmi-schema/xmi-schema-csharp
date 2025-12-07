@@ -11,7 +11,7 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical
     public class XmiStructuralPointConnection : XmiBaseStructuralAnalyticalEntity, IEquatable<XmiStructuralPointConnection>
     {
         public XmiStorey? Storey { get; set; }
-        public XmiPoint3D? Point { get; set; }
+        public XmiPoint3d? Point { get; set; }
 
         /// <summary>
         /// Initializes a new <see cref="XmiStructuralPointConnection"/> that can be linked to storeys and geometry.
@@ -28,7 +28,7 @@ namespace XmiSchema.Core.Models.Entities.StructuralAnalytical
             string nativeId,
             string description //,
                                // XmiStorey storey,
-                               // XmiPoint3D point
+                               // XmiPoint3d point
         ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralPointConnection))
         {
             // Storey = storey;

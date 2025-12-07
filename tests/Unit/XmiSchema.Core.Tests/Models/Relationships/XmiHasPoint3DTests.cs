@@ -4,7 +4,7 @@ using XmiSchema.Core.Relationships;
 namespace XmiSchema.Core.Tests.Models.Relationships;
 
 /// <summary>
-/// Covers the constructors on <see cref="XmiHasPoint3D"/>.
+/// Covers the constructors on <see cref="XmiHasPoint3d"/>.
 /// </summary>
 public class XmiHasPoint3DTests
 {
@@ -14,17 +14,17 @@ public class XmiHasPoint3DTests
     [Fact]
     public void Constructor_WithExplicitValues_AssignsMetadata()
     {
-        var relation = new XmiHasPoint3D(
+        var relation = new XmiHasPoint3d(
             "rel-1",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreatePointConnection(),
             "Owns",
             "desc",
-            nameof(XmiHasPoint3D));
+            nameof(XmiHasPoint3d));
 
         Assert.Equal("rel-1", relation.Id);
         Assert.Equal("Owns", relation.Name);
-        Assert.Equal(nameof(XmiHasPoint3D), relation.EntityType);
+        Assert.Equal(nameof(XmiHasPoint3d), relation.EntityType);
     }
 
     /// <summary>
@@ -33,9 +33,9 @@ public class XmiHasPoint3DTests
     [Fact]
     public void Constructor_WithAutoIdentifier_GeneratesId()
     {
-        var relation = new XmiHasPoint3D(TestModelFactory.CreateCurveMember(), TestModelFactory.CreatePointConnection());
+        var relation = new XmiHasPoint3d(TestModelFactory.CreateCurveMember(), TestModelFactory.CreatePointConnection());
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
-        Assert.Equal(nameof(XmiHasPoint3D), relation.Name);
+        Assert.Equal(nameof(XmiHasPoint3d), relation.Name);
     }
 }

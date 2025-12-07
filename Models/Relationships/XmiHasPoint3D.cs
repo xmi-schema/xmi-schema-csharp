@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Relationships;
 /// <summary>
 /// Connects a structural entity to a point reference, typically used for structural nodes.
 /// </summary>
-public class XmiHasPoint3D : XmiBaseRelationship
+public class XmiHasPoint3d : XmiBaseRelationship
 {
     /// <summary>
     /// Creates a descriptive point relationship record.
@@ -17,14 +17,14 @@ public class XmiHasPoint3D : XmiBaseRelationship
     /// <param name="name">Label for the edge.</param>
     /// <param name="description">Notes explaining the binding.</param>
     /// <param name="entityName">Serialized entity type name.</param>
-    public XmiHasPoint3D(
+    public XmiHasPoint3d(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
         string entityName
-    ) : base(id, source, target, name, description, nameof(XmiHasPoint3D))
+    ) : base(id, source, target, name, description, nameof(XmiHasPoint3d))
     {
     }
 
@@ -33,10 +33,10 @@ public class XmiHasPoint3D : XmiBaseRelationship
     /// </summary>
     /// <param name="source">Entity that owns the point.</param>
     /// <param name="target">Target entity containing the coordinate.</param>
-    public XmiHasPoint3D(
+    public XmiHasPoint3d(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasPoint3D))
+    ) : base(source, target, nameof(XmiHasPoint3d))
     {
     }
 }

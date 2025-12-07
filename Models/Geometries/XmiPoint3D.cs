@@ -5,7 +5,7 @@ namespace XmiSchema.Core.Geometries;
 /// <summary>
 /// Represents a spatial point in the Cross Model Information schema with tolerance aware comparisons.
 /// </summary>
-public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
+public class XmiPoint3d : XmiBaseGeometry, IEquatable<XmiPoint3d>
 {
     private const double Tolerance = 1e-10;
 
@@ -19,7 +19,7 @@ public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
     public double Z { get; set; }
 
     /// <summary>
-    /// Initializes a new <see cref="XmiPoint3D"/> with project coordinates.
+    /// Initializes a new <see cref="XmiPoint3d"/> with project coordinates.
     /// </summary>
     /// <param name="id">Unique identifier.</param>
     /// <param name="name">Display name.</param>
@@ -29,7 +29,7 @@ public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
     /// <param name="x">X coordinate.</param>
     /// <param name="y">Y coordinate.</param>
     /// <param name="z">Z coordinate.</param>
-    public XmiPoint3D(
+    public XmiPoint3d(
         string id,
         string name,
         string ifcGuid,
@@ -38,15 +38,15 @@ public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
         double x,
         double y,
         double z
-    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiPoint3D))
+    ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiPoint3d))
     {
         X = x;
         Y = y;
         Z = z;
-        EntityType = nameof(XmiPoint3D);
+        EntityType = nameof(XmiPoint3d);
     }
 
-    public bool Equals(XmiPoint3D? other)
+    public bool Equals(XmiPoint3d? other)
     {
         if (other == null) return false;
 
@@ -55,7 +55,7 @@ public class XmiPoint3D : XmiBaseGeometry, IEquatable<XmiPoint3D>
                Math.Abs(Z - other.Z) < Tolerance;
     }
 
-    // public override bool Equals(object obj) => Equals(obj as XmiPoint3D);
+    // public override bool Equals(object obj) => Equals(obj as XmiPoint3d);
 
     public override int GetHashCode()
     {

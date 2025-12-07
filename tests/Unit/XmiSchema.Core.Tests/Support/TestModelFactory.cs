@@ -3,7 +3,6 @@ using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
-using XmiSchema.Core.Models;
 using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
@@ -57,7 +56,7 @@ internal static class TestModelFactory
             12.0,
             1000);
 
-    internal static XmiPoint3D CreatePoint(string id = "pt-1", double x = 1, double y = 2, double z = 3) =>
+    internal static XmiPoint3d CreatePoint(string id = "pt-1", double x = 1, double y = 2, double z = 3) =>
         new(id,
             $"Point {id}",
             "ifc-guid",
@@ -130,7 +129,7 @@ internal static class TestModelFactory
             nameof(XmiStructuralCurveMember.Length),
             XmiUnitEnum.Meter);
 
-    internal static XmiLine3D CreateLine(string id = "line-1") =>
+    internal static XmiLine3d CreateLine(string id = "line-1") =>
         new(id,
             $"Line {id}",
             "ifc-guid",
@@ -139,7 +138,7 @@ internal static class TestModelFactory
             CreatePoint("line-start"),
             CreatePoint("line-end", 4, 5, 6));
 
-    internal static XmiArc3D CreateArc(string id = "arc-1") =>
+    internal static XmiArc3d CreateArc(string id = "arc-1") =>
         new(id,
             $"Arc {id}",
             "ifc-guid",

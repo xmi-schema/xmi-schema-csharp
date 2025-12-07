@@ -5,7 +5,6 @@ using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
-using XmiSchema.Core.Models;
 using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
@@ -100,7 +99,7 @@ public class XmiSerializationTests
     {
         var original = TestModelFactory.CreatePoint("pt-1", 1.5, 2.5, 3.5);
         var json = JsonConvert.SerializeObject(original, _settings);
-        var deserialized = JsonConvert.DeserializeObject<XmiPoint3D>(json, _settings);
+        var deserialized = JsonConvert.DeserializeObject<XmiPoint3d>(json, _settings);
 
         Assert.NotNull(deserialized);
         Assert.Equal(original.X, deserialized!.X);
@@ -244,7 +243,7 @@ public class XmiSerializationTests
         var json = JsonConvert.SerializeObject(point, _settings);
 
         Assert.Contains("\"Type\"", json);
-        Assert.Contains("\"Geometry\"", json); // XmiPoint3D has Geometry type
+        Assert.Contains("\"Geometry\"", json); // XmiPoint3d has Geometry type
     }
 
     [Fact]
@@ -314,7 +313,7 @@ public class XmiSerializationTests
     [Fact]
     public void EmptyStrings_AreSerializedAsEmptyStrings()
     {
-        var point = new XmiPoint3D("pt-1", "Point", "", "", "", 1, 2, 3);
+        var point = new XmiPoint3d("pt-1", "Point", "", "", "", 1, 2, 3);
         var json = JsonConvert.SerializeObject(point, _settings);
 
         Assert.Contains("\"\"", json); // Empty strings are preserved
@@ -335,7 +334,7 @@ public class XmiSerializationTests
 
         Assert.Contains("\"Entities\"", json);
         Assert.Contains("XmiMaterial", json);
-        Assert.Contains("XmiPoint3D", json);
+        Assert.Contains("XmiPoint3d", json);
     }
 
     [Fact]
@@ -406,13 +405,13 @@ public class XmiSerializationTests
     {
         var connection = TestModelFactory.CreatePointConnection();
         var point = TestModelFactory.CreatePoint();
-        var relation = new XmiHasPoint3D(connection, point);
+        var relation = new XmiHasPoint3d(connection, point);
 
         var json = JsonConvert.SerializeObject(relation, _settings);
 
         Assert.Contains("\"Source\"", json);
         Assert.Contains("\"Target\"", json);
-        Assert.Contains("XmiHasPoint3D", json);
+        Assert.Contains("XmiHasPoint3d", json);
     }
 
     [Fact]
@@ -601,7 +600,7 @@ public class XmiSerializationTests
         // Add relationships
         model.AddXmiHasMaterial(new XmiHasMaterial(crossSection, material));
         model.AddXmiHasStorey(new XmiHasStorey(connection, storey));
-        model.AddXmiHasPoint3D(new XmiHasPoint3D(connection, point));
+        model.AddXmiHasPoint3D(new XmiHasPoint3d(connection, point));
 
         var json = JsonConvert.SerializeObject(model, _settings);
         var jObject = JObject.Parse(json);
@@ -713,7 +712,7 @@ public class XmiSerializationTests
     [Fact]
     public void VeryLargeNumbers_SerializeCorrectly()
     {
-        var point = new XmiPoint3D(
+        var point = new XmiPoint3d(
             "pt-1", "Point", "", "", "",
             double.MaxValue / 2, // Very large number
             double.MinValue / 2, // Very small (negative) number
@@ -721,7 +720,7 @@ public class XmiSerializationTests
         );
 
         var json = JsonConvert.SerializeObject(point, _settings);
-        var deserialized = JsonConvert.DeserializeObject<XmiPoint3D>(json, _settings);
+        var deserialized = JsonConvert.DeserializeObject<XmiPoint3d>(json, _settings);
 
         Assert.NotNull(deserialized);
         Assert.Equal(point.X, deserialized!.X);
@@ -731,7 +730,7 @@ public class XmiSerializationTests
     [Fact]
     public void ZeroValues_SerializeCorrectly()
     {
-        var point = new XmiPoint3D("pt-1", "Origin", "", "", "", 0, 0, 0);
+        var point = new XmiPoint3d("pt-1", "Origin", "", "", "", 0, 0, 0);
         var json = JsonConvert.SerializeObject(point, _settings);
 
         Assert.Contains("\"X\": 0", json);

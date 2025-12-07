@@ -9,7 +9,7 @@ namespace XmiSchema.Core.Tests.Models.Entities.StructuralAnalytical;
 public class XmiStructuralPointConnectionTests
 {
     /// <summary>
-    /// Connections compare equality based on the referenced <see cref="XmiPoint3D"/>.
+    /// Connections compare equality based on the referenced <see cref="XmiPoint3d"/>.
     /// </summary>
     [Fact]
     public void Equals_UsesPointCoordinate()
@@ -19,7 +19,7 @@ public class XmiStructuralPointConnectionTests
         var point = TestModelFactory.CreatePoint("pt-shared");
 
         a.Point = point;
-        b.Point = new XmiPoint3D(point.Id, point.Name, point.IfcGuid, point.NativeId, point.Description, point.X, point.Y, point.Z);
+        b.Point = new XmiPoint3d(point.Id, point.Name, point.IfcGuid, point.NativeId, point.Description, point.X, point.Y, point.Z);
 
         Assert.True(a.Equals(b));
         Assert.Equal(a.GetHashCode(), b.GetHashCode());

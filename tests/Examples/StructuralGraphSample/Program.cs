@@ -11,7 +11,7 @@ var manager = new XmiManager();
 manager.Models.Add(new XmiModel());
 
 // Create basic metadata
-var storey = manager.CreateStorey(
+var storey = manager.CreateXmiStorey(
     modelIndex: 0,
     id: "storey-1",
     name: "Level 1",
@@ -21,13 +21,13 @@ var storey = manager.CreateStorey(
     storeyElevation: 0,
     storeyMass: 800);
 
-var basePoint = manager.CreatePoint3D(0, "pt-start", "Start", "pt-guid", "PT_START", "Start point", 0, 0, 0);
-var topPoint = manager.CreatePoint3D(0, "pt-end", "End", "pt-guid-2", "PT_END", "End point", 0, 0, 3);
+var basePoint = manager.CreateXmiPoint3D(0, "pt-start", "Start", "pt-guid", "PT_START", "Start point", 0, 0, 0);
+var topPoint = manager.CreateXmiPoint3D(0, "pt-end", "End", "pt-guid-2", "PT_END", "End point", 0, 0, 3);
 
-var startConnection = manager.CreateStructuralPointConnection(0, "pc-start", "Start Node", "pc-guid", "PC_START", "Column base", storey, basePoint);
-var endConnection = manager.CreateStructuralPointConnection(0, "pc-end", "End Node", "pc-guid-2", "PC_END", "Column top", storey, topPoint);
+var startConnection = manager.CreateXmiStructuralPointConnection(0, "pc-start", "Start Node", "pc-guid", "PC_START", "Column base", storey, basePoint);
+var endConnection = manager.CreateXmiStructuralPointConnection(0, "pc-end", "End Node", "pc-guid-2", "PC_END", "Column top", storey, topPoint);
 
-var material = manager.CreateMaterial(
+var material = manager.CreateXmiMaterial(
     0,
     "mat-1",
     "Concrete C40",
@@ -42,7 +42,7 @@ var material = manager.CreateMaterial(
     poissonRatio: "0.2",
     thermalCoefficient: 1.0);
 
-var crossSection = manager.CreateCrossSection(
+var crossSection = manager.CreateXmiCrossSection(
     0,
     "sec-rect",
     "400x400",
@@ -63,7 +63,7 @@ var crossSection = manager.CreateCrossSection(
     plasticModulusYAxis: 0.02,
     torsionalConstant: 0.0005);
 
-var curveMember = manager.CreateStructuralCurveMember(
+var curveMember = manager.CreateXmiStructuralCurveMember(
     0,
     "col-1",
     "Grid A/1 Column",

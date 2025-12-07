@@ -3,7 +3,6 @@ using System.Linq;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Geometries;
-using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Models.Entities.Physical;
@@ -29,16 +28,16 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns empty list when no entities exist.
+    /// Validates GetXmiEntitiesOfType returns empty list when no entities exist.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_EmptyModel_ReturnsEmptyList()
     {
         var model = new XmiModel();
 
-        var materials = model.GetEntitiesOfType<XmiMaterial>();
-        var points = model.GetEntitiesOfType<XmiPoint3D>();
-        var beams = model.GetEntitiesOfType<XmiBeam>();
+        var materials = model.GetXmiEntitiesOfType<XmiMaterial>();
+        var points = model.GetXmiEntitiesOfType<XmiPoint3d>();
+        var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
         Assert.Empty(materials);
         Assert.Empty(points);
@@ -46,7 +45,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns empty list when no matching type exists.
+    /// Validates GetXmiEntitiesOfType returns empty list when no matching type exists.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_NoMatchingType_ReturnsEmptyList()
@@ -55,13 +54,13 @@ public class XmiModelCollectionTests
         model.AddXmiMaterial(TestModelFactory.CreateMaterial());
         model.AddXmiPoint3D(TestModelFactory.CreatePoint());
 
-        var beams = model.GetEntitiesOfType<XmiBeam>();
+        var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
         Assert.Empty(beams);
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns only entities of the specified type.
+    /// Validates GetXmiEntitiesOfType returns only entities of the specified type.
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_MixedEntities_ReturnsOnlyMatchingType()
@@ -77,7 +76,7 @@ public class XmiModelCollectionTests
         model.AddXmiPoint3D(point2);
         model.AddXmiStorey(storey);
 
-        var points = model.GetEntitiesOfType<XmiPoint3D>();
+        var points = model.GetXmiEntitiesOfType<XmiPoint3d>();
 
         Assert.Equal(2, points.Count);
         Assert.Contains(point1, points);
@@ -100,7 +99,7 @@ public class XmiModelCollectionTests
         model.AddXmiMaterial(mat3);
 
         Assert.Equal(3, model.Entities.Count);
-        Assert.Equal(3, model.GetEntitiesOfType<XmiMaterial>().Count);
+        Assert.Equal(3, model.GetXmiEntitiesOfType<XmiMaterial>().Count);
     }
 
     /// <summary>
@@ -289,7 +288,7 @@ public class XmiModelCollectionTests
         var model = new XmiModel();
 
         var firstMaterial = model.Entities.OfType<XmiMaterial>().FirstOrDefault();
-        var anyPoints = model.Entities.OfType<XmiPoint3D>().Any();
+        var anyPoints = model.Entities.OfType<XmiPoint3d>().Any();
         var materialCount = model.Entities.OfType<XmiMaterial>().Count();
 
         Assert.Null(firstMaterial);
@@ -375,7 +374,7 @@ public class XmiModelCollectionTests
         }
 
         Assert.Equal(1000, model.Entities.Count);
-        Assert.Equal(1000, model.GetEntitiesOfType<XmiPoint3D>().Count);
+        Assert.Equal(1000, model.GetXmiEntitiesOfType<XmiPoint3d>().Count);
     }
 
     /// <summary>
@@ -436,7 +435,7 @@ public class XmiModelCollectionTests
     }
 
     /// <summary>
-    /// Validates GetEntitiesOfType returns a new list (not a reference to internal collection).
+    /// Validates GetXmiEntitiesOfType returns a new list (not a reference to internal collection).
     /// </summary>
     [Fact]
     public void GetEntitiesOfType_ReturnsNewList()
@@ -445,15 +444,15 @@ public class XmiModelCollectionTests
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
-        var list1 = model.GetEntitiesOfType<XmiMaterial>();
-        var list2 = model.GetEntitiesOfType<XmiMaterial>();
+        var list1 = model.GetXmiEntitiesOfType<XmiMaterial>();
+        var list2 = model.GetXmiEntitiesOfType<XmiMaterial>();
 
         Assert.NotSame(list1, list2);
         Assert.Equal(list1.Count, list2.Count);
     }
 
     /// <summary>
-    /// Validates FindMatchingPointConnectionByPoint3D returns null when relationships collection is empty.
+    /// Validates FindMatchingXmiStructuralPointConnectionByPoint3D returns null when relationships collection is empty.
     /// </summary>
     [Fact]
     public void FindMatchingPointConnectionByPoint3D_EmptyRelationships_ReturnsNull()
@@ -461,27 +460,27 @@ public class XmiModelCollectionTests
         var model = new XmiModel();
         var connection = TestModelFactory.CreatePointConnection("pc-1");
 
-        var result = model.FindMatchingPointConnectionByPoint3D(connection);
+        var result = model.FindMatchingXmiStructuralPointConnectionByPoint3D(connection);
 
         Assert.Null(result);
     }
 
     /// <summary>
-    /// Validates FindMatchingPointConnectionByPoint3D returns null when no matching point exists.
+    /// Validates FindMatchingXmiStructuralPointConnectionByPoint3D returns null when no matching point exists.
     /// </summary>
     [Fact]
     public void FindMatchingPointConnectionByPoint3D_NoMatchingPoint_ReturnsNull()
     {
         var model = new XmiModel();
         var connection1 = TestModelFactory.CreatePointConnection("pc-1");
-        var point1 = new XmiPoint3D("pt-1", "Point1", "", "", "", 1, 2, 3);
+        var point1 = new XmiPoint3d("pt-1", "Point1", "", "", "", 1, 2, 3);
 
         var connection2 = TestModelFactory.CreatePointConnection("pc-2");
-        var point2 = new XmiPoint3D("pt-2", "Point2", "", "", "", 4, 5, 6);
+        var point2 = new XmiPoint3d("pt-2", "Point2", "", "", "", 4, 5, 6);
 
-        model.AddXmiHasPoint3D(new XmiHasPoint3D(connection1, point1));
+        model.AddXmiHasPoint3D(new XmiHasPoint3d(connection1, point1));
 
-        var result = model.FindMatchingPointConnectionByPoint3D(connection2);
+        var result = model.FindMatchingXmiStructuralPointConnectionByPoint3D(connection2);
 
         Assert.Null(result);
     }

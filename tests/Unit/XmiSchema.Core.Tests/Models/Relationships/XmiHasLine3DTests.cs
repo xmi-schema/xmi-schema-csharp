@@ -10,13 +10,13 @@ public class XmiHasLine3DTests
     [Fact]
     public void Constructor_AssignsMetadata()
     {
-        var relation = new XmiHasLine3D(
+        var relation = new XmiHasLine3d(
             "rel-line",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreateCurveMember("curve-b"),
             "AlignedWith",
             "desc",
-            nameof(XmiHasLine3D));
+            nameof(XmiHasLine3d));
 
         Assert.Equal("rel-line", relation.Id);
         Assert.Equal("AlignedWith", relation.Name);
@@ -25,7 +25,7 @@ public class XmiHasLine3DTests
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var relation = new XmiHasLine3D(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCurveMember("curve-b"));
+        var relation = new XmiHasLine3d(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateCurveMember("curve-b"));
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }

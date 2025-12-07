@@ -3,7 +3,7 @@ using XmiSchema.Core.Geometries;
 namespace XmiSchema.Core.Tests.Models.Geometries;
 
 /// <summary>
-/// Validates the positional logic of <see cref="XmiPoint3D"/>.
+/// Validates the positional logic of <see cref="XmiPoint3d"/>.
 /// </summary>
 public class XmiPoint3DTests
 {

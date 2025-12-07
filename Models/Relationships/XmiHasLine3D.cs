@@ -6,7 +6,7 @@ namespace XmiSchema.Core.Relationships;
 /// <summary>
 /// Associates two entities along a line relationship, typically between members and line geometry references.
 /// </summary>
-public class XmiHasLine3D : XmiBaseRelationship
+public class XmiHasLine3d : XmiBaseRelationship
 {
     /// <summary>
     /// Creates a relationship that is fully configured for serialization.
@@ -17,14 +17,14 @@ public class XmiHasLine3D : XmiBaseRelationship
     /// <param name="name">Label for the edge.</param>
     /// <param name="description">Additional notes.</param>
     /// <param name="entityName">Serialized entity name.</param>
-    public XmiHasLine3D(
+    public XmiHasLine3d(
         string id,
         XmiBaseEntity source,
         XmiBaseEntity target,
         string name,
         string description,
         string entityName
-    ) : base(id, source, target, name, description, nameof(XmiHasLine3D))
+    ) : base(id, source, target, name, description, nameof(XmiHasLine3d))
     {
     }
 
@@ -33,10 +33,10 @@ public class XmiHasLine3D : XmiBaseRelationship
     /// </summary>
     /// <param name="source">Owning entity.</param>
     /// <param name="target">Related entity.</param>
-    public XmiHasLine3D(
+    public XmiHasLine3d(
         XmiBaseEntity source,
         XmiBaseEntity target
-    ) : base(source, target, nameof(XmiHasLine3D))
+    ) : base(source, target, nameof(XmiHasLine3d))
     {
     }
 }
