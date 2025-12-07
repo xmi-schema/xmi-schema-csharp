@@ -354,7 +354,7 @@ namespace XmiSchema.Core
         }
 
         /// <summary>
-        /// Creates or reuses a structural curve member, wiring up cross-section, storey, and node relationships.
+        /// Creates or reuses a structural curve member, optionally wiring up cross-section, storey, and node relationships.
         /// </summary>
         /// <returns>The created curve member.</returns>
         public XmiStructuralCurveMember CreateXmiStructuralCurveMember(
@@ -363,7 +363,7 @@ namespace XmiSchema.Core
             string ifcGuid,
             string nativeId,
             string description,
-            XmiCrossSection crossSection,
+            XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
@@ -389,8 +389,14 @@ namespace XmiSchema.Core
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
             try
             {
-                var existingCrossSection = GetXmiEntitiesOfType<XmiCrossSection>()
-                    .FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
+                XmiCrossSection? existingCrossSection = null;
+                if (crossSection != null)
+                {
+                    var crossSections = GetXmiEntitiesOfType<XmiCrossSection>();
+                    existingCrossSection = !string.IsNullOrEmpty(crossSection.NativeId)
+                        ? crossSections.FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection
+                        : crossSection;
+                }
 
                 XmiStorey? existingStorey = null;
                 if (storey != null)
@@ -433,8 +439,11 @@ namespace XmiSchema.Core
 
                 AddXmiStructuralCurveMember(curveMember);
 
-                var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
-                AddXmiHasCrossSection(crossSectionRelation);
+                if (existingCrossSection != null)
+                {
+                    var crossSectionRelation = new XmiHasCrossSection(curveMember, existingCrossSection);
+                    AddXmiHasCrossSection(crossSectionRelation);
+                }
 
                 if (existingStorey != null)
                 {

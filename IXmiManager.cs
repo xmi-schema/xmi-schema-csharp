@@ -4,6 +4,7 @@ using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Core.Models.Entities.Physical;
 
 namespace XmiSchema.Core.Manager
 {
@@ -30,6 +31,34 @@ namespace XmiSchema.Core.Manager
         /// <param name="modelIndex">Zero-based index of the model receiving the cross-section.</param>
         /// <param name="crossSection">Cross-section entity to add.</param>
         void AddXmiCrossSectionToModel(int modelIndex, XmiCrossSection crossSection);
+
+        /// <summary>
+        /// Adds a beam physical element to the requested model.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the destination model.</param>
+        /// <param name="beam">Beam entity to add.</param>
+        void AddXmiBeamToModel(int modelIndex, XmiBeam beam);
+
+        /// <summary>
+        /// Adds a column physical element to the requested model.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the destination model.</param>
+        /// <param name="column">Column entity to add.</param>
+        void AddXmiColumnToModel(int modelIndex, XmiColumn column);
+
+        /// <summary>
+        /// Adds a slab physical element to the requested model.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the destination model.</param>
+        /// <param name="slab">Slab entity to add.</param>
+        void AddXmiSlabToModel(int modelIndex, XmiSlab slab);
+
+        /// <summary>
+        /// Adds a wall physical element to the requested model.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the destination model.</param>
+        /// <param name="wall">Wall entity to add.</param>
+        void AddXmiWallToModel(int modelIndex, XmiWall wall);
 
         /// <summary>
         /// Adds a structural curve member to the requested model.
@@ -109,6 +138,13 @@ namespace XmiSchema.Core.Manager
         void AddXmiHasStoreyToModel(int modelIndex, XmiHasStorey relation);
 
         /// <summary>
+        /// Adds a relationship connecting a physical element to its structural curve member.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the destination model.</param>
+        /// <param name="relation">Relationship referencing the analytical curve member.</param>
+        void AddXmiHasStructuralCurveMemberToModel(int modelIndex, XmiHasStructuralCurveMember relation);
+
+        /// <summary>
         /// Retrieves entities of a specific type from the target model.
         /// </summary>
         /// <typeparam name="T">Concrete entity type to filter.</typeparam>
@@ -124,6 +160,22 @@ namespace XmiSchema.Core.Manager
         /// <param name="id">Entity identifier to match.</param>
         /// <returns>Entity instance or <c>null</c> when not found.</returns>
         T? GetXmiEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity;
+
+        /// <summary>
+        /// Finds a structural point connection in the specified model that references the same point coordinates as the provided connection.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the model to query.</param>
+        /// <param name="inputConnection">Connection to match.</param>
+        /// <returns>The ID for the matching connection if found; otherwise null.</returns>
+        string? FindMatchingPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection);
+
+        /// <summary>
+        /// Alias for <see cref="FindMatchingPointConnectionByPoint3D"/> matching the XmiModel signature for parity.
+        /// </summary>
+        /// <param name="modelIndex">Zero-based index of the model to query.</param>
+        /// <param name="inputConnection">Connection to match.</param>
+        /// <returns>The ID for the matching connection if found; otherwise null.</returns>
+        string? FindMatchingXmiStructuralPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection);
 
         /// <summary>
         /// Creates a point geometry within the requested model.
@@ -260,7 +312,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="ifcGuid">Optional IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the member.</param>
-        /// <param name="crossSection">Cross-section applied to the member.</param>
+        /// <param name="crossSection">Optional cross-section applied to the member.</param>
         /// <param name="storey">Optional storey containing the member.</param>
         /// <param name="curveMemberType">Curve member classification.</param>
         /// <param name="nodes">Nodes participating in the member.</param>
@@ -288,7 +340,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiCrossSection crossSection,
+            XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
 using XmiSchema.Core.Manager;
-using XmiSchema.Core.Models;
+using XmiSchema.Core;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 

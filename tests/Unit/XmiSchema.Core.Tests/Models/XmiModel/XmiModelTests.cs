@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Enums;
@@ -142,6 +143,50 @@ public class XmiModelTests
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
         Assert.Contains(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member && r.Target == crossSection);
         Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == member && r.Target == storey);
+        Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralPointConnection>().Count());
+    }
+
+    /// <summary>
+    /// Curve members can be created without a cross-section when upstream data omits it.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_AllowsNullCrossSection()
+    {
+        var model = new XmiModel();
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-2",
+            "Member no cs",
+            "ifc",
+            "native-no-cs",
+            "desc",
+            null,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Column,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            4.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        Assert.DoesNotContain(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralPointConnection>().Count());
     }
 

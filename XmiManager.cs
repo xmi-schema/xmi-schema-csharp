@@ -9,6 +9,7 @@ using XmiSchema.Core.Parameters;
 using Newtonsoft.Json;
 using System.Reflection;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Core.Models.Entities.Physical;
 
 namespace XmiSchema.Core.Manager
 {
@@ -40,6 +41,34 @@ namespace XmiSchema.Core.Manager
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             Models[modelIndex].AddXmiCrossSection(crossSection);
+        }
+
+        /// <inheritdoc />
+        public void AddXmiBeamToModel(int modelIndex, XmiBeam beam)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            Models[modelIndex].AddXmiBeam(beam);
+        }
+
+        /// <inheritdoc />
+        public void AddXmiColumnToModel(int modelIndex, XmiColumn column)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            Models[modelIndex].AddXmiColumn(column);
+        }
+
+        /// <inheritdoc />
+        public void AddXmiSlabToModel(int modelIndex, XmiSlab slab)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            Models[modelIndex].AddXmiSlab(slab);
+        }
+
+        /// <inheritdoc />
+        public void AddXmiWallToModel(int modelIndex, XmiWall wall)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            Models[modelIndex].AddXmiWall(wall);
         }
 
         /// <inheritdoc />
@@ -124,6 +153,13 @@ namespace XmiSchema.Core.Manager
             Models[modelIndex].AddXmiHasStorey(relation);
         }
 
+        /// <inheritdoc />
+        public void AddXmiHasStructuralCurveMemberToModel(int modelIndex, XmiHasStructuralCurveMember relation)
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            Models[modelIndex].AddXmiHasStructuralCurveMember(relation);
+        }
+
         // ========== 查询 ==========
         // public string GetMatchingPoint3DId(int modelIndex, XmiPoint3d importedPoint)
         // {
@@ -173,6 +209,10 @@ namespace XmiSchema.Core.Manager
 
             return match?.Source?.Id;
         }
+
+        /// <inheritdoc />
+        public string? FindMatchingXmiStructuralPointConnectionByPoint3D(int modelIndex, XmiStructuralPointConnection inputConnection) =>
+            FindMatchingPointConnectionByPoint3D(modelIndex, inputConnection);
 
         /// <summary>
         /// Compares two point instances using the provided tolerance.
@@ -313,7 +353,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiCrossSection crossSection,
+            XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
