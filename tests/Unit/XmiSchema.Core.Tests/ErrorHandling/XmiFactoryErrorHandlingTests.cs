@@ -168,6 +168,7 @@ public class XmiFactoryErrorHandlingTests
         var exception = Assert.Throws<ArgumentException>(() =>
             model.CreateXmiStructuralCurveMember(
                 null!, "Curve", "", "", "",
+                null,
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,
@@ -192,6 +193,7 @@ public class XmiFactoryErrorHandlingTests
         var exception = Assert.Throws<ArgumentException>(() =>
             model.CreateXmiStructuralCurveMember(
                 "cur-1", "", "", "", "",
+                null,
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,
@@ -354,6 +356,7 @@ public class XmiFactoryErrorHandlingTests
         var exception = Assert.Throws<ArgumentException>(() =>
             manager.CreateXmiStructuralCurveMember(
                 0, "", "Curve", "", "", "",
+                null,
                 crossSection, storey, XmiStructuralCurveMemberTypeEnum.Beam,
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,

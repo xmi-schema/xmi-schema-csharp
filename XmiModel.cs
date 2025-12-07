@@ -354,7 +354,239 @@ namespace XmiSchema.Core
         }
 
         /// <summary>
-        /// Creates or reuses a structural curve member, optionally wiring up cross-section, storey, and node relationships.
+        /// Creates a beam physical element and optionally links a material.
+        /// </summary>
+        /// <returns>The created beam.</returns>
+        public XmiBeam CreateXmiBeam(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                XmiMaterial? existingMaterial = null;
+                if (material != null && !string.IsNullOrEmpty(material.NativeId))
+                {
+                    existingMaterial = GetXmiEntitiesOfType<XmiMaterial>().FirstOrDefault(m => m.NativeId == material.NativeId) ?? material;
+                }
+
+                var beam = new XmiBeam(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    systemLine,
+                    length,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    beginNodeXOffset,
+                    endNodeXOffset,
+                    beginNodeYOffset,
+                    endNodeYOffset,
+                    beginNodeZOffset,
+                    endNodeZOffset
+                );
+
+                AddXmiBeam(beam);
+
+                if (existingMaterial != null)
+                {
+                    AddXmiHasMaterial(new XmiHasMaterial(beam, existingMaterial));
+                }
+
+                return beam;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create beam.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a column physical element and optionally links a material.
+        /// </summary>
+        /// <returns>The created column.</returns>
+        public XmiColumn CreateXmiColumn(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                XmiMaterial? existingMaterial = null;
+                if (material != null && !string.IsNullOrEmpty(material.NativeId))
+                {
+                    existingMaterial = GetXmiEntitiesOfType<XmiMaterial>().FirstOrDefault(m => m.NativeId == material.NativeId) ?? material;
+                }
+
+                var column = new XmiColumn(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    systemLine,
+                    length,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    beginNodeXOffset,
+                    endNodeXOffset,
+                    beginNodeYOffset,
+                    endNodeYOffset,
+                    beginNodeZOffset,
+                    endNodeZOffset
+                );
+
+                AddXmiColumn(column);
+
+                if (existingMaterial != null)
+                {
+                    AddXmiHasMaterial(new XmiHasMaterial(column, existingMaterial));
+                }
+
+                return column;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create column.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a slab physical element and optionally links a material.
+        /// </summary>
+        /// <returns>The created slab.</returns>
+        public XmiSlab CreateXmiSlab(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                XmiMaterial? existingMaterial = null;
+                if (material != null && !string.IsNullOrEmpty(material.NativeId))
+                {
+                    existingMaterial = GetXmiEntitiesOfType<XmiMaterial>().FirstOrDefault(m => m.NativeId == material.NativeId) ?? material;
+                }
+
+                var slab = new XmiSlab(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description
+                );
+
+                AddXmiSlab(slab);
+
+                if (existingMaterial != null)
+                {
+                    AddXmiHasMaterial(new XmiHasMaterial(slab, existingMaterial));
+                }
+
+                return slab;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create slab.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a wall physical element and optionally links a material.
+        /// </summary>
+        /// <returns>The created wall.</returns>
+        public XmiWall CreateXmiWall(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                XmiMaterial? existingMaterial = null;
+                if (material != null && !string.IsNullOrEmpty(material.NativeId))
+                {
+                    existingMaterial = GetXmiEntitiesOfType<XmiMaterial>().FirstOrDefault(m => m.NativeId == material.NativeId) ?? material;
+                }
+
+                var wall = new XmiWall(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description
+                );
+
+                AddXmiWall(wall);
+
+                if (existingMaterial != null)
+                {
+                    AddXmiHasMaterial(new XmiHasMaterial(wall, existingMaterial));
+                }
+
+                return wall;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create wall.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates or reuses a structural curve member, optionally wiring up material, cross-section, storey, and node relationships.
         /// </summary>
         /// <returns>The created curve member.</returns>
         public XmiStructuralCurveMember CreateXmiStructuralCurveMember(
@@ -363,6 +595,7 @@ namespace XmiSchema.Core
             string ifcGuid,
             string nativeId,
             string description,
+            XmiMaterial? material,
             XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
@@ -389,6 +622,12 @@ namespace XmiSchema.Core
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
             try
             {
+                XmiMaterial? existingMaterial = null;
+                if (material != null && !string.IsNullOrEmpty(material.NativeId))
+                {
+                    existingMaterial = GetXmiEntitiesOfType<XmiMaterial>().FirstOrDefault(m => m.NativeId == material.NativeId) ?? material;
+                }
+
                 XmiCrossSection? existingCrossSection = null;
                 if (crossSection != null)
                 {
@@ -438,6 +677,12 @@ namespace XmiSchema.Core
                 );
 
                 AddXmiStructuralCurveMember(curveMember);
+
+                if (existingMaterial != null)
+                {
+                    var materialRelation = new XmiHasMaterial(curveMember, existingMaterial);
+                    AddXmiHasMaterial(materialRelation);
+                }
 
                 if (existingCrossSection != null)
                 {
@@ -658,7 +903,7 @@ namespace XmiSchema.Core
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial material,
+            XmiMaterial? material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,

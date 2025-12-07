@@ -6,6 +6,7 @@ using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Core.Models.Entities.Physical;
 
 namespace XmiSchema.Core.Tests.Models.GraphModel;
 
@@ -105,10 +106,12 @@ public class XmiModelTests
     {
         var model = new XmiModel();
         var crossSection = TestModelFactory.CreateCrossSection();
+        var material = TestModelFactory.CreateMaterial();
         var storey = TestModelFactory.CreateStorey();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiCrossSection(crossSection);
+        model.AddXmiMaterial(material);
         model.AddXmiStorey(storey);
         model.AddXmiStructuralPointConnection(beginNode);
         model.AddXmiStructuralPointConnection(endNode);
@@ -119,6 +122,7 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
+            material,
             crossSection,
             storey,
             XmiStructuralCurveMemberTypeEnum.Beam,
@@ -141,6 +145,7 @@ public class XmiModelTests
             "Pinned");
 
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        Assert.Contains(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == member && r.Target == material);
         Assert.Contains(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member && r.Target == crossSection);
         Assert.Contains(model.Relationships.OfType<XmiHasStorey>(), r => r.Source == member && r.Target == storey);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralPointConnection>().Count());
@@ -166,6 +171,7 @@ public class XmiModelTests
             "desc",
             null,
             null,
+            null,
             XmiStructuralCurveMemberTypeEnum.Column,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
@@ -188,6 +194,126 @@ public class XmiModelTests
         Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
         Assert.DoesNotContain(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member);
         Assert.Equal(2, model.Relationships.OfType<XmiHasStructuralPointConnection>().Count());
+    }
+
+    /// <summary>
+    /// Creating a surface member supports optional materials.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralSurfaceMember_AllowsNullMaterial()
+    {
+        var model = new XmiModel();
+        var storey = TestModelFactory.CreateStorey();
+        var begin = TestModelFactory.CreatePointConnection("pc-a");
+        var end = TestModelFactory.CreatePointConnection("pc-b");
+        model.AddXmiStorey(storey);
+        model.AddXmiStructuralPointConnection(begin);
+        model.AddXmiStructuralPointConnection(end);
+
+        var member = model.CreateXmiStructuralSurfaceMember(
+            "surf-no-mat",
+            "Surface without material",
+            "ifc",
+            "native",
+            "desc",
+            null,
+            XmiStructuralSurfaceMemberTypeEnum.Slab,
+            0.2,
+            XmiStructuralSurfaceMemberSystemPlaneEnum.Middle,
+            new List<XmiStructuralPointConnection> { begin, end },
+            storey,
+            new List<XmiSegment>(),
+            12.5,
+            0.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0.3);
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralSurfaceMember>(), e => e.Id == member.Id);
+        Assert.DoesNotContain(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == member);
+    }
+
+    /// <summary>
+    /// Beam factory links material when supplied.
+    /// </summary>
+    [Fact]
+    public void CreateBeam_AddsMaterialRelationshipWhenProvided()
+    {
+        var model = new XmiModel();
+        var material = TestModelFactory.CreateMaterial();
+        model.AddXmiMaterial(material);
+
+        var beam = model.CreateXmiBeam(
+            "beam-create",
+            "Beam create",
+            "ifc",
+            "native",
+            "desc",
+            material,
+            XmiSystemLineEnum.MiddleMiddle,
+            5.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0);
+
+        Assert.Contains(model.Entities.OfType<XmiBeam>(), e => e.Id == beam.Id);
+        Assert.Contains(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == beam && r.Target == material);
+    }
+
+    /// <summary>
+    /// Column/slab/wall factories tolerate missing material.
+    /// </summary>
+    [Fact]
+    public void CreatePhysicalElements_AllowNullMaterial()
+    {
+        var model = new XmiModel();
+
+        var column = model.CreateXmiColumn(
+            "col-create",
+            "Column create",
+            "ifc",
+            "native",
+            "desc",
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            3.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0);
+
+        var slab = model.CreateXmiSlab(
+            "slab-create",
+            "Slab create",
+            "ifc",
+            "native",
+            "desc",
+            null);
+
+        var wall = model.CreateXmiWall(
+            "wall-create",
+            "Wall create",
+            "ifc",
+            "native",
+            "desc",
+            null);
+
+        Assert.Contains(model.Entities.OfType<XmiColumn>(), e => e.Id == column.Id);
+        Assert.Contains(model.Entities.OfType<XmiSlab>(), e => e.Id == slab.Id);
+        Assert.Contains(model.Entities.OfType<XmiWall>(), e => e.Id == wall.Id);
+        Assert.DoesNotContain(model.Relationships.OfType<XmiHasMaterial>(), r => r.Source == column || r.Source == slab || r.Source == wall);
     }
 
     /// <summary>

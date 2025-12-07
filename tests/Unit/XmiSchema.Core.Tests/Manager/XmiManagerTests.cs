@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using XmiSchema.Core.Entities;
+using XmiSchema.Core.Enums;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
@@ -134,6 +135,40 @@ public class XmiManagerTests
         Assert.Contains("\"nodes\"", json);
         Assert.Contains(connection.Id, json);
         Assert.Contains(storey.Id, json);
+    }
+
+    /// <summary>
+    /// Create helpers for physical elements attach materials when provided.
+    /// </summary>
+    [Fact]
+    public void CreateBeam_WithMaterial_AddsRelationship()
+    {
+        var manager = TestModelFactory.CreateManagerWithModel();
+        var material = TestModelFactory.CreateMaterial("mat-beam");
+        manager.AddXmiMaterialToModel(0, material);
+
+        var beam = manager.CreateXmiBeam(
+            0,
+            "beam-create",
+            "Beam create",
+            "ifc",
+            "native",
+            "desc",
+            material,
+            XmiSystemLineEnum.MiddleMiddle,
+            4.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0);
+
+        Assert.Contains(manager.Models[0].Entities.OfType<XmiBeam>(), e => e.Id == beam.Id);
+        Assert.Contains(manager.Models[0].Relationships.OfType<XmiHasMaterial>(), r => r.Source == beam && r.Target == material);
     }
 
     /// <summary>

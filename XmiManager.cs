@@ -181,6 +181,104 @@ namespace XmiSchema.Core.Manager
             return Models[modelIndex].GetXmiEntitiesOfType<T>().FirstOrDefault(e => e.Id == id);
         }
 
+        /// <inheritdoc />
+        public XmiBeam CreateXmiBeam(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateXmiBeam(
+                id, name, ifcGuid, nativeId, description, material,
+                systemLine, length, localAxisX, localAxisY, localAxisZ,
+                beginNodeXOffset, endNodeXOffset,
+                beginNodeYOffset, endNodeYOffset,
+                beginNodeZOffset, endNodeZOffset
+            );
+        }
+
+        /// <inheritdoc />
+        public XmiColumn CreateXmiColumn(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateXmiColumn(
+                id, name, ifcGuid, nativeId, description, material,
+                systemLine, length, localAxisX, localAxisY, localAxisZ,
+                beginNodeXOffset, endNodeXOffset,
+                beginNodeYOffset, endNodeYOffset,
+                beginNodeZOffset, endNodeZOffset
+            );
+        }
+
+        /// <inheritdoc />
+        public XmiSlab CreateXmiSlab(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateXmiSlab(
+                id, name, ifcGuid, nativeId, description, material
+            );
+        }
+
+        /// <inheritdoc />
+        public XmiWall CreateXmiWall(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        )
+        {
+            if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
+            return Models[modelIndex].CreateXmiWall(
+                id, name, ifcGuid, nativeId, description, material
+            );
+        }
+
         /// <summary>
         /// Attempts to locate a different point connection that references an identical <see cref="XmiPoint3d"/>.
         /// </summary>
@@ -353,6 +451,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
+            XmiMaterial? material,
             XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
@@ -378,7 +477,7 @@ namespace XmiSchema.Core.Manager
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiStructuralCurveMember(
                 id, name, ifcGuid, nativeId, description,
-                crossSection, storey, curveMemberType,
+                material, crossSection, storey, curveMemberType,
                 nodes, segments, systemLine,
                 beginNode, endNode, length,
                 localAxisX, localAxisY, localAxisZ,
@@ -397,7 +496,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial material,
+            XmiMaterial? material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,

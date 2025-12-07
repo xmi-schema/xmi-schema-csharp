@@ -70,6 +70,7 @@ var curveMember = manager.CreateXmiStructuralCurveMember(
     "cur-guid",
     "COLUMN_A1",
     "Sample column",
+    material,
     crossSection,
     storey,
     XmiStructuralCurveMemberTypeEnum.Column,

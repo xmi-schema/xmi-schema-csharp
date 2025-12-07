@@ -162,6 +162,80 @@ namespace XmiSchema.Core.Manager
         T? GetXmiEntityById<T>(int modelIndex, string id) where T : XmiBaseEntity;
 
         /// <summary>
+        /// Creates a beam physical element in the specified model.
+        /// </summary>
+        XmiBeam CreateXmiBeam(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        );
+
+        /// <summary>
+        /// Creates a column physical element in the specified model.
+        /// </summary>
+        XmiColumn CreateXmiColumn(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material,
+            XmiSystemLineEnum systemLine,
+            double length,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double beginNodeXOffset,
+            double endNodeXOffset,
+            double beginNodeYOffset,
+            double endNodeYOffset,
+            double beginNodeZOffset,
+            double endNodeZOffset
+        );
+
+        /// <summary>
+        /// Creates a slab physical element in the specified model.
+        /// </summary>
+        XmiSlab CreateXmiSlab(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        );
+
+        /// <summary>
+        /// Creates a wall physical element in the specified model.
+        /// </summary>
+        XmiWall CreateXmiWall(
+            int modelIndex,
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiMaterial? material
+        );
+
+        /// <summary>
         /// Finds a structural point connection in the specified model that references the same point coordinates as the provided connection.
         /// </summary>
         /// <param name="modelIndex">Zero-based index of the model to query.</param>
@@ -312,6 +386,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="ifcGuid">Optional IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the member.</param>
+        /// <param name="material">Optional material applied to the member.</param>
         /// <param name="crossSection">Optional cross-section applied to the member.</param>
         /// <param name="storey">Optional storey containing the member.</param>
         /// <param name="curveMemberType">Curve member classification.</param>
@@ -340,6 +415,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
+            XmiMaterial? material,
             XmiCrossSection? crossSection,
             XmiStorey? storey,
             XmiStructuralCurveMemberTypeEnum curveMemberType,
@@ -371,7 +447,7 @@ namespace XmiSchema.Core.Manager
         /// <param name="ifcGuid">Optional IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the surface.</param>
-        /// <param name="material">Material applied to the surface.</param>
+        /// <param name="material">Optional material applied to the surface.</param>
         /// <param name="surfaceMemberType">Surface member classification.</param>
         /// <param name="thickness">Member thickness.</param>
         /// <param name="systemPlane">Plane classification.</param>
@@ -392,7 +468,7 @@ namespace XmiSchema.Core.Manager
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial material,
+            XmiMaterial? material,
             XmiStructuralSurfaceMemberTypeEnum surfaceMemberType,
             double thickness,
             XmiStructuralSurfaceMemberSystemPlaneEnum systemPlane,
