@@ -191,6 +191,7 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
             string localAxisX,
@@ -206,7 +207,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiBeam(
-                id, name, ifcGuid, nativeId, description, material,
+                id, name, ifcGuid, nativeId, description, material, segments,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
@@ -223,6 +224,7 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
             string localAxisX,
@@ -238,7 +240,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiColumn(
-                id, name, ifcGuid, nativeId, description, material,
+                id, name, ifcGuid, nativeId, description, material, segments,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
