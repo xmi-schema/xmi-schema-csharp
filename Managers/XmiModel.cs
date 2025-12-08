@@ -367,8 +367,9 @@ namespace XmiSchema.Managers
             try
             {
                 var tempPoint = new XmiPoint3d(id, name, ifcGuid, nativeId, description, x, y, z);
-                var existingPoints = GetXmiEntitiesOfType<XmiPoint3d>();
-                var existingPoint = existingPoints.FirstOrDefault(p => p.Equals(tempPoint));
+                var existingPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => p.Equals(tempPoint));
 
                 if (existingPoint != null)
                 {
@@ -393,6 +394,135 @@ namespace XmiSchema.Managers
             catch (Exception ex)
             {
                 throw new InvalidOperationException("Failed to create Point3D.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a 3D line geometry and wires start/end point relationships, reusing points when possible.
+        /// </summary>
+        /// <returns>The created line.</returns>
+        public XmiLine3d CreateXmiLine3d(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiPoint3d startPoint,
+            XmiPoint3d endPoint
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                var existingStartPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, startPoint)) ?? startPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
+                {
+                    AddXmiPoint3d(existingStartPoint);
+                }
+
+                var existingEndPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, endPoint)) ?? endPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
+                {
+                    AddXmiPoint3d(existingEndPoint);
+                }
+
+                var line = new XmiLine3d(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    existingStartPoint,
+                    existingEndPoint
+                );
+
+                AddXmiLine3d(line);
+
+                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingEndPoint, XmiPoint3dTypeEnum.End));
+
+                return line;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create line geometry.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a 3D arc geometry and wires start/end/center point relationships, reusing points when possible.
+        /// </summary>
+        /// <returns>The created arc.</returns>
+        public XmiArc3d CreateXmiArc3d(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiPoint3d startPoint,
+            XmiPoint3d endPoint,
+            XmiPoint3d centerPoint,
+            float radius
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                var existingStartPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, startPoint)) ?? startPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
+                {
+                    AddXmiPoint3d(existingStartPoint);
+                }
+
+                var existingEndPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, endPoint)) ?? endPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
+                {
+                    AddXmiPoint3d(existingEndPoint);
+                }
+
+                var existingCenterPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, centerPoint)) ?? centerPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingCenterPoint)))
+                {
+                    AddXmiPoint3d(existingCenterPoint);
+                }
+
+                var arc = new XmiArc3d(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    existingStartPoint,
+                    existingEndPoint,
+                    existingCenterPoint,
+                    radius
+                );
+
+                AddXmiArc3d(arc);
+
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingEndPoint, XmiPoint3dTypeEnum.End));
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingCenterPoint, XmiPoint3dTypeEnum.Center));
+
+                return arc;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create arc geometry.", ex);
             }
         }
 
