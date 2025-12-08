@@ -975,14 +975,10 @@ public class XmiModelTests
         var storedLine = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
         Assert.NotNull(storedLine);
 
-        // Verify segment -> geometry relationship
-        var geometryRelation = model.Relationships.OfType<XmiHasGeometry>().FirstOrDefault(r => r.Source == segment);
-        Assert.NotNull(geometryRelation);
-        Assert.Equal(storedLine, geometryRelation.Target);
-
-        // Verify line -> point relationships (should be 2: start and end)
-        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == storedLine).ToList();
-        Assert.Equal(2, pointRelations.Count);
+        // Verify segment -> line relationship
+        var lineRelation = model.Relationships.OfType<XmiHasLine3d>().FirstOrDefault(r => r.Source == segment);
+        Assert.NotNull(lineRelation);
+        Assert.Equal(storedLine, lineRelation.Target);
     }
 
     /// <summary>
@@ -1008,17 +1004,10 @@ public class XmiModelTests
         line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
         Assert.NotNull(line);
 
-        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == line).ToList();
-
-        // Verify start point relationship has Start type
-        var startRelation = pointRelations.FirstOrDefault(r => r.Target == startPoint);
-        Assert.NotNull(startRelation);
-        Assert.Equal(XmiPoint3dTypeEnum.Start, startRelation.PointType);
-
-        // Verify end point relationship has End type
-        var endRelation = pointRelations.FirstOrDefault(r => r.Target == endPoint);
-        Assert.NotNull(endRelation);
-        Assert.Equal(XmiPoint3dTypeEnum.End, endRelation.PointType);
+        // Verify segment -> line relationship exists
+        var lineRelation = model.Relationships.OfType<XmiHasLine3d>().FirstOrDefault(r => r.Source == segment);
+        Assert.NotNull(lineRelation);
+        Assert.Equal(line, lineRelation.Target);
     }
 
     /// <summary>
@@ -1051,14 +1040,10 @@ public class XmiModelTests
         Assert.NotNull(storedArc);
         Assert.Equal(5.0f, storedArc.Radius);
 
-        // Verify segment -> geometry relationship
-        var geometryRelation = model.Relationships.OfType<XmiHasGeometry>().FirstOrDefault(r => r.Source == segment);
-        Assert.NotNull(geometryRelation);
-        Assert.Equal(storedArc, geometryRelation.Target);
-
-        // Verify arc -> point relationships (should be 3: start, end, and center)
-        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == storedArc).ToList();
-        Assert.Equal(3, pointRelations.Count);
+        // Verify segment -> arc relationship
+        var arcRelation = model.Relationships.OfType<XmiHasArc3d>().FirstOrDefault(r => r.Source == segment);
+        Assert.NotNull(arcRelation);
+        Assert.Equal(storedArc, arcRelation.Target);
     }
 
     /// <summary>

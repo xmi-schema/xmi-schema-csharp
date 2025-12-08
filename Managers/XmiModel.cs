@@ -1225,37 +1225,6 @@ namespace XmiSchema.Managers
                     AddXmiLine3d(existingLine);
                 }
 
-                // Ensure points exist and align with the stored line instance.
-                var existingStartPoint = Entities
-                    .OfType<XmiPoint3d>()
-                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, existingLine.StartPoint)) ?? existingLine.StartPoint;
-                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
-                {
-                    AddXmiPoint3d(existingStartPoint);
-                }
-
-                var existingEndPoint = Entities
-                    .OfType<XmiPoint3d>()
-                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, existingLine.EndPoint)) ?? existingLine.EndPoint;
-                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
-                {
-                    AddXmiPoint3d(existingEndPoint);
-                }
-
-                existingLine.StartPoint = existingStartPoint;
-                existingLine.EndPoint = existingEndPoint;
-
-                // Make sure the line has point relationships (add only if missing to avoid duplicates).
-                if (!Relationships.OfType<XmiHasPoint3d>().Any(r => r.Source == existingLine && r.PointType == XmiPoint3dTypeEnum.Start))
-                {
-                    AddXmiHasPoint3d(new XmiHasPoint3d(existingLine, existingStartPoint, XmiPoint3dTypeEnum.Start));
-                }
-
-                if (!Relationships.OfType<XmiHasPoint3d>().Any(r => r.Source == existingLine && r.PointType == XmiPoint3dTypeEnum.End))
-                {
-                    AddXmiHasPoint3d(new XmiHasPoint3d(existingLine, existingEndPoint, XmiPoint3dTypeEnum.End));
-                }
-
                 // Create the segment
                 var segment = new XmiSegment(
                     id,
@@ -1268,8 +1237,8 @@ namespace XmiSchema.Managers
                 );
                 AddXmiSegment(segment);
 
-                // Create segment -> geometry relationship
-                AddXmiHasGeometry(new XmiHasGeometry(segment, existingLine));
+                // Create segment -> line relationship
+                AddXmiHasGeometry(new XmiHasLine3d(segment, existingLine));
 
                 return segment;
             }
@@ -1317,35 +1286,6 @@ namespace XmiSchema.Managers
                     AddXmiArc3d(existingArc);
                 }
 
-                // Ensure points exist and align with the stored arc instance.
-                var existingStartPoint = Entities
-                    .OfType<XmiPoint3d>()
-                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, existingArc.StartPoint)) ?? existingArc.StartPoint;
-                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
-                {
-                    AddXmiPoint3d(existingStartPoint);
-                }
-
-                var existingEndPoint = Entities
-                    .OfType<XmiPoint3d>()
-                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, existingArc.EndPoint)) ?? existingArc.EndPoint;
-                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
-                {
-                    AddXmiPoint3d(existingEndPoint);
-                }
-
-                var existingCenterPoint = Entities
-                    .OfType<XmiPoint3d>()
-                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, existingArc.CenterPoint)) ?? existingArc.CenterPoint;
-                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingCenterPoint)))
-                {
-                    AddXmiPoint3d(existingCenterPoint);
-                }
-
-                existingArc.StartPoint = existingStartPoint;
-                existingArc.EndPoint = existingEndPoint;
-                existingArc.CenterPoint = existingCenterPoint;
-
                 // Create the segment
                 var segment = new XmiSegment(
                     id,
@@ -1358,24 +1298,8 @@ namespace XmiSchema.Managers
                 );
                 AddXmiSegment(segment);
 
-                // Create segment -> geometry relationship
-                AddXmiHasGeometry(new XmiHasGeometry(segment, existingArc));
-
-                // Ensure arc has point relationships (add only if missing to avoid duplicates).
-                if (!Relationships.OfType<XmiHasPoint3d>().Any(r => r.Source == existingArc && r.PointType == XmiPoint3dTypeEnum.Start))
-                {
-                    AddXmiHasPoint3d(new XmiHasPoint3d(existingArc, existingStartPoint, XmiPoint3dTypeEnum.Start));
-                }
-
-                if (!Relationships.OfType<XmiHasPoint3d>().Any(r => r.Source == existingArc && r.PointType == XmiPoint3dTypeEnum.End))
-                {
-                    AddXmiHasPoint3d(new XmiHasPoint3d(existingArc, existingEndPoint, XmiPoint3dTypeEnum.End));
-                }
-
-                if (!Relationships.OfType<XmiHasPoint3d>().Any(r => r.Source == existingArc && r.PointType == XmiPoint3dTypeEnum.Center))
-                {
-                    AddXmiHasPoint3d(new XmiHasPoint3d(existingArc, existingCenterPoint, XmiPoint3dTypeEnum.Center));
-                }
+                // Create segment -> arc relationship
+                AddXmiHasGeometry(new XmiHasArc3d(segment, existingArc));
 
                 return segment;
             }
