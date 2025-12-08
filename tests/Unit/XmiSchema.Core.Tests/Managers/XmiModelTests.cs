@@ -195,6 +195,69 @@ public class XmiModelTests
     }
 
     /// <summary>
+    /// Curve member creation skips cross-section relationships when no section was persisted.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_DoesNotLinkPlaceholderCrossSection()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        var placeholderCrossSection = new XmiCrossSection(
+            "sec-missing",
+            "Missing Section",
+            "ifc",
+            "",
+            "desc",
+            XmiShapeEnum.Rectangular,
+            new RectangularShapeParameters(0.2, 0.4),
+            0.08,
+            0.001,
+            0.0015,
+            0.01,
+            0.015,
+            0.0003,
+            0.00035,
+            0.0004,
+            0.00045,
+            0.0005);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-3",
+            "Member no section instance",
+            "ifc",
+            "native-no-section",
+            "desc",
+            null,
+            placeholderCrossSection,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Column,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            4.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        Assert.DoesNotContain(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member);
+    }
+
+    /// <summary>
     /// Creating a surface member supports optional materials.
     /// </summary>
     [Fact]

@@ -627,12 +627,10 @@ namespace XmiSchema.Managers
                 }
 
                 XmiCrossSection? existingCrossSection = null;
-                if (crossSection != null)
+                if (crossSection != null && !string.IsNullOrEmpty(crossSection.NativeId))
                 {
                     var crossSections = GetXmiEntitiesOfType<XmiCrossSection>();
-                    existingCrossSection = !string.IsNullOrEmpty(crossSection.NativeId)
-                        ? crossSections.FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection
-                        : crossSection;
+                    existingCrossSection = crossSections.FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
                 }
 
                 XmiStorey? existingStorey = null;
