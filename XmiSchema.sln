@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36717.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema", "XmiSchema.csproj", "{451D13C9-360E-1846-43F2-79F623CBDDA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema.Tests", "tests\Unit\XmiSchema.Core.Tests\XmiSchema.Tests.csproj", "{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{451D13C9-360E-1846-43F2-79F623CBDDA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{451D13C9-360E-1846-43F2-79F623CBDDA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{451D13C9-360E-1846-43F2-79F623CBDDA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{451D13C9-360E-1846-43F2-79F623CBDDA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {475800C9-C02A-4B00-BC99-E78997F16231}
+	EndGlobalSection
+EndGlobal

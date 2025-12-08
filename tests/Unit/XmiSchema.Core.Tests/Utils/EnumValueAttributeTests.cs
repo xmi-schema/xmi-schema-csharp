@@ -1,6 +1,7 @@
-using XmiSchema.Core.Enums;
+using XmiSchema.Entities.Bases;
 
-namespace XmiSchema.Core.Tests.Utils;
+using XmiSchema.Enums;
+namespace XmiSchema.Tests.Utils;
 
 /// <summary>
 /// Verifies the simple attribute used to annotate enums.

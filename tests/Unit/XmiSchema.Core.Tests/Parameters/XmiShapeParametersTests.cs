@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Parameters;
-
-namespace XmiSchema.Core.Tests.Parameters;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Parameters;
+using XmiSchema.Enums;
+namespace XmiSchema.Tests.Parameters;
 
 /// <summary>
 /// Covers the strongly typed shape parameter classes and their lookup metadata.

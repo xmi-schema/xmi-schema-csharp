@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>XmiSchema</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <Version>0.9.1</Version>
+
+
+    <PackageId>XmiSchema</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://xmi-schema.com/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xmi-schema/xmi-schema-csharp</RepositoryUrl>
+    <PackageTags>xmi-schema; schema; built environment; construction</PackageTags>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests/**" />
+    <EmbeddedResource Remove="tests/**" />
+    <None Remove="tests/**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Docs\api\" />
+    <Folder Include="Docs\examples\" />
+  </ItemGroup>
+
+</Project>

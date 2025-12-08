@@ -1,7 +1,7 @@
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Utils;
-
-namespace XmiSchema.Core.Tests.Utils;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Utils;
+using XmiSchema.Enums;
+namespace XmiSchema.Tests.Utils;
 
 /// <summary>
 /// Tests the enum helper used to resolve serialized values.
