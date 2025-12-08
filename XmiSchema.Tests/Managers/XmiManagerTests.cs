@@ -3,8 +3,7 @@ using XmiSchema.Entities.Commons;
 using XmiSchema.Entities.Relationships;
 using XmiSchema.Enums;
 using XmiSchema.Managers;
-using XmiSchema.Tests.Managers;
-namespace XmiSchema.Tests.Manager;
+namespace XmiSchema.Tests.Managers;
 
 /// <summary>
 /// Exercises the orchestration helpers on <see cref="XmiManager"/>.
@@ -81,8 +80,8 @@ public class XmiManagerTests
         model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(second, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(first, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(second, point));
 
         var match = manager.FindMatchingPointConnectionByPoint3D(0, first);
 
@@ -105,8 +104,8 @@ public class XmiManagerTests
         model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(second, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(first, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(second, point));
 
         var match = manager.FindMatchingXmiStructuralPointConnectionByPoint3D(0, first);
 

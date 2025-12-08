@@ -123,7 +123,7 @@ namespace XmiSchema.Managers
         public void AddXmiHasPoint3DToModel(int modelIndex, XmiHasPoint3d relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasPoint3D(relation);
+            Models[modelIndex].AddXmiHasPoint3d(relation);
         }
 
         /// <inheritdoc />

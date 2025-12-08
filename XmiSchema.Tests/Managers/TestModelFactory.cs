@@ -8,7 +8,7 @@ using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
 using XmiSchema.Managers;
 
-namespace XmiSchema.Tests.Support;
+namespace XmiSchema.Tests.Managers;
 
 /// <summary>
 /// Creates fully-populated domain objects that keep the unit tests terse.

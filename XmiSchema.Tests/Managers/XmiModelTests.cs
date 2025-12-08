@@ -5,12 +5,10 @@ using XmiSchema.Entities.Geometries;
 using XmiSchema.Entities.Commons;
 using XmiSchema.Entities.Relationships;
 using XmiSchema.Enums;
+using XmiSchema.Managers;
 
 namespace XmiSchema.Tests.Managers;
 
-/// <summary>
-/// Covers the factory helpers exposed on <see cref="Core.XmiModel"/>.
-/// </summary>
 public class XmiModelTests
 {
     /// <summary>
@@ -19,7 +17,7 @@ public class XmiModelTests
     [Fact]
     public void CreatePoint3D_ReusesExistingPoint()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
 
         var first = model.CreateXmiPoint3d("pt-1", "Point", "ifc", "native", "desc", 1, 2, 3);
         var second = model.CreateXmiPoint3d("pt-2", "Point", "ifc", "native2", "desc", 1, 2, 3);
@@ -34,7 +32,7 @@ public class XmiModelTests
     [Fact]
     public void CreateMaterial_ReusesNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
 
         var first = model.CreateXmiMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
         var second = model.CreateXmiMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
@@ -49,7 +47,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructurePointConnection_AddsRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var point = TestModelFactory.CreatePoint();
         model.AddXmiStorey(storey);
@@ -68,7 +66,7 @@ public class XmiModelTests
     [Fact]
     public void CreateCrossSection_AddsMaterialRelationship()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
@@ -102,7 +100,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_AddsExpectedRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var crossSection = TestModelFactory.CreateCrossSection();
         var material = TestModelFactory.CreateMaterial();
         var storey = TestModelFactory.CreateStorey();
@@ -155,7 +153,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_AllowsNullCrossSection()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiStructuralPointConnection(beginNode);
@@ -200,7 +198,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_DoesNotLinkPlaceholderCrossSection()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiStructuralPointConnection(beginNode);
@@ -263,7 +261,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_DoesNotLinkCrossSectionWithNullNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiStructuralPointConnection(beginNode);
@@ -326,7 +324,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_ReusesCrossSectionByNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var existingCrossSection = TestModelFactory.CreateCrossSection();
         model.AddXmiCrossSection(existingCrossSection);
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
@@ -394,7 +392,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_ReusesMaterialByNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var existingMaterial = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(existingMaterial);
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
@@ -457,7 +455,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_ReusesStoreyByNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var existingStorey = TestModelFactory.CreateStorey();
         model.AddXmiStorey(existingStorey);
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
@@ -517,7 +515,7 @@ public class XmiModelTests
     [InlineData("")]
     public void CreateStructuralCurveMember_ThrowsWhenIdIsNullOrEmpty(string? invalidId)
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
 
@@ -558,7 +556,7 @@ public class XmiModelTests
     [InlineData("")]
     public void CreateStructuralCurveMember_ThrowsWhenNameIsNullOrEmpty(string? invalidName)
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
 
@@ -597,7 +595,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralSurfaceMember_AllowsNullMaterial()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var begin = TestModelFactory.CreatePointConnection("pc-a");
         var end = TestModelFactory.CreatePointConnection("pc-b");
@@ -635,7 +633,7 @@ public class XmiModelTests
     [Fact]
     public void CreateBeam_AddsMaterialRelationshipWhenProvided()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
@@ -669,7 +667,7 @@ public class XmiModelTests
     [Fact]
     public void CreatePhysicalElements_AllowNullMaterial()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
 
         var column = model.CreateXmiColumn(
             "col-create",
@@ -719,7 +717,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralSurfaceMember_AttachesRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiStorey(storey);
@@ -756,7 +754,7 @@ public class XmiModelTests
     [Fact]
     public void CreateBeam_WithSegments_AddsSegmentRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var segment1 = TestModelFactory.CreateSegment("seg-beam-1");
         var segment2 = TestModelFactory.CreateSegment("seg-beam-2");
         var segments = new List<XmiSegment> { segment1, segment2 };
@@ -792,7 +790,7 @@ public class XmiModelTests
     [Fact]
     public void CreateColumn_WithSegments_AddsSegmentRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var segment = TestModelFactory.CreateSegment("seg-col");
         var segments = new List<XmiSegment> { segment };
 
@@ -827,7 +825,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_WithSegments_AddsSegmentRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         var segment1 = TestModelFactory.CreateSegment("seg-curve-1");
@@ -874,7 +872,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralSurfaceMember_WithSegments_AddsSegmentRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var segment1 = TestModelFactory.CreateSegment("seg-surf-1");
         var segment2 = TestModelFactory.CreateSegment("seg-surf-2");
         var segment3 = TestModelFactory.CreateSegment("seg-surf-3");
@@ -910,7 +908,7 @@ public class XmiModelTests
     [Fact]
     public void CreateBeam_ReusesExistingSegmentByNativeId()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var existingSegment = TestModelFactory.CreateSegment("seg-existing");
         model.Entities.Add(existingSegment);
 
@@ -955,11 +953,10 @@ public class XmiModelTests
     [Fact]
     public void CreateLineSegment_CreatesGeometryAndPointRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var startPoint = new XmiPoint3d("pt-start", "Start", "ifc", "native-start", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-end", "End", "ifc", "native-end", "desc", 5, 0, 0);
-        model.AddXmiPoint3d(startPoint);
-        model.AddXmiPoint3d(endPoint);
+        var line = model.CreateXmiLine3d("line-seg-1", "Line", "ifc-line", "native-line", "desc-line", startPoint, endPoint);
 
         var segment = model.CreateXmiLineSegment(
             "seg-line-1",
@@ -968,24 +965,23 @@ public class XmiModelTests
             "native-seg-line",
             "desc",
             0.5f,
-            startPoint,
-            endPoint);
+            line);
 
         // Verify segment was created
         Assert.Contains(model.Entities.OfType<XmiSegment>(), e => e.Id == segment.Id);
         Assert.Equal(XmiSegmentTypeEnum.Line, segment.SegmentType);
 
         // Verify line geometry was created
-        var line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
-        Assert.NotNull(line);
+        var storedLine = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
+        Assert.NotNull(storedLine);
 
         // Verify segment -> geometry relationship
         var geometryRelation = model.Relationships.OfType<XmiHasGeometry>().FirstOrDefault(r => r.Source == segment);
         Assert.NotNull(geometryRelation);
-        Assert.Equal(line, geometryRelation.Target);
+        Assert.Equal(storedLine, geometryRelation.Target);
 
         // Verify line -> point relationships (should be 2: start and end)
-        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == line).ToList();
+        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == storedLine).ToList();
         Assert.Equal(2, pointRelations.Count);
     }
 
@@ -995,11 +991,10 @@ public class XmiModelTests
     [Fact]
     public void CreateLineSegment_SetsCorrectPointTypes()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var startPoint = new XmiPoint3d("pt-start", "Start", "ifc", "native-start", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-end", "End", "ifc", "native-end", "desc", 5, 0, 0);
-        model.AddXmiPoint3d(startPoint);
-        model.AddXmiPoint3d(endPoint);
+        var line = model.CreateXmiLine3d("line-pt", "Line PT", "ifc-line", "native-line-pt", "desc-line", startPoint, endPoint);
 
         var segment = model.CreateXmiLineSegment(
             "seg-line-pt",
@@ -1008,10 +1003,9 @@ public class XmiModelTests
             "native-seg-line-pt",
             "desc",
             0.5f,
-            startPoint,
-            endPoint);
+            line);
 
-        var line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
+        line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
         Assert.NotNull(line);
 
         var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == line).ToList();
@@ -1033,13 +1027,11 @@ public class XmiModelTests
     [Fact]
     public void CreateArcSegment_CreatesGeometryAndPointRelationships()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var startPoint = new XmiPoint3d("pt-arc-start", "Start", "ifc", "native-arc-start", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-arc-end", "End", "ifc", "native-arc-end", "desc", 10, 0, 0);
         var centerPoint = new XmiPoint3d("pt-arc-center", "Center", "ifc", "native-arc-center", "desc", 5, 5, 0);
-        model.AddXmiPoint3d(startPoint);
-        model.AddXmiPoint3d(endPoint);
-        model.AddXmiPoint3d(centerPoint);
+        var arc = model.CreateXmiArc3d("arc-seg-1", "Arc", "ifc-arc", "native-arc", "desc-arc", startPoint, endPoint, centerPoint, 5.0f);
 
         var segment = model.CreateXmiArcSegment(
             "seg-arc-1",
@@ -1048,27 +1040,24 @@ public class XmiModelTests
             "native-seg-arc",
             "desc",
             0.5f,
-            startPoint,
-            endPoint,
-            centerPoint,
-            5.0f);
+            arc);
 
         // Verify segment was created
         Assert.Contains(model.Entities.OfType<XmiSegment>(), e => e.Id == segment.Id);
         Assert.Equal(XmiSegmentTypeEnum.CircularArc, segment.SegmentType);
 
         // Verify arc geometry was created with radius property
-        var arc = model.Entities.OfType<XmiArc3d>().FirstOrDefault();
-        Assert.NotNull(arc);
-        Assert.Equal(5.0f, arc.Radius);
+        var storedArc = model.Entities.OfType<XmiArc3d>().FirstOrDefault();
+        Assert.NotNull(storedArc);
+        Assert.Equal(5.0f, storedArc.Radius);
 
         // Verify segment -> geometry relationship
         var geometryRelation = model.Relationships.OfType<XmiHasGeometry>().FirstOrDefault(r => r.Source == segment);
         Assert.NotNull(geometryRelation);
-        Assert.Equal(arc, geometryRelation.Target);
+        Assert.Equal(storedArc, geometryRelation.Target);
 
         // Verify arc -> point relationships (should be 3: start, end, and center)
-        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == arc).ToList();
+        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == storedArc).ToList();
         Assert.Equal(3, pointRelations.Count);
     }
 
@@ -1078,13 +1067,14 @@ public class XmiModelTests
     [Fact]
     public void CreateLineSegment_ReusesExistingPointsByCoordinates()
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var existingPoint = new XmiPoint3d("pt-existing", "Existing", "ifc", "native-existing", "desc", 0, 0, 0);
         model.AddXmiPoint3d(existingPoint);
 
-        // Create a new point with same coordinates but different ID
+        // Create a new line with a start point at identical coordinates
         var duplicateStartPoint = new XmiPoint3d("pt-duplicate", "Duplicate", "ifc", "native-dup", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-end-new", "End New", "ifc", "native-end-new", "desc", 10, 0, 0);
+        var line = model.CreateXmiLine3d("line-reuse", "Line reuse", "ifc-line", "native-line-reuse", "desc-line", duplicateStartPoint, endPoint);
 
         var segment = model.CreateXmiLineSegment(
             "seg-line-reuse",
@@ -1093,11 +1083,10 @@ public class XmiModelTests
             "native-seg-line-reuse",
             "desc",
             0.5f,
-            duplicateStartPoint,
-            endPoint);
+            line);
 
         // Verify line uses the existing point (by coordinates)
-        var line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
+        line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
         Assert.NotNull(line);
         Assert.Equal(existingPoint, line.StartPoint);
     }
@@ -1110,9 +1099,10 @@ public class XmiModelTests
     [InlineData("")]
     public void CreateLineSegment_ThrowsWhenIdIsNullOrEmpty(string? invalidId)
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var startPoint = new XmiPoint3d("pt-start", "Start", "ifc", "native-start", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-end", "End", "ifc", "native-end", "desc", 5, 0, 0);
+        var line = model.CreateXmiLine3d("line-throw", "Line throw", "ifc-line", "native-line-throw", "desc-line", startPoint, endPoint);
 
         Assert.Throws<ArgumentException>(() => model.CreateXmiLineSegment(
             invalidId!,
@@ -1121,8 +1111,7 @@ public class XmiModelTests
             "native",
             "desc",
             0.5f,
-            startPoint,
-            endPoint));
+            line));
     }
 
     /// <summary>
@@ -1133,10 +1122,11 @@ public class XmiModelTests
     [InlineData("")]
     public void CreateArcSegment_ThrowsWhenNameIsNullOrEmpty(string? invalidName)
     {
-        var model = new XmiSchema.Managers.XmiModel();
+        var model = new XmiModel();
         var startPoint = new XmiPoint3d("pt-start", "Start", "ifc", "native-start", "desc", 0, 0, 0);
         var endPoint = new XmiPoint3d("pt-end", "End", "ifc", "native-end", "desc", 10, 0, 0);
         var centerPoint = new XmiPoint3d("pt-center", "Center", "ifc", "native-center", "desc", 5, 5, 0);
+        var arc = model.CreateXmiArc3d("arc-throw", "Arc Throw", "ifc-arc", "native-arc-throw", "desc-arc", startPoint, endPoint, centerPoint, 5.0f);
 
         Assert.Throws<ArgumentException>(() => model.CreateXmiArcSegment(
             "seg-arc",
@@ -1145,9 +1135,6 @@ public class XmiModelTests
             "native",
             "desc",
             0.5f,
-            startPoint,
-            endPoint,
-            centerPoint,
-            5.0f));
+            arc));
     }
 }

@@ -5,9 +5,9 @@ using XmiSchema.Entities.Physical;
 using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Entities.Bases;
 using XmiSchema.Parameters;
-using XmiSchema.Tests.Support;
 using XmiSchema.Enums;
-namespace XmiSchema.Tests.Entities;
+using XmiSchema.Tests.Managers;
+namespace XmiSchema.Tests.Entities.Commons;
 
 /// <summary>
 /// Tests the cross-section entity covering property assignment and equality.

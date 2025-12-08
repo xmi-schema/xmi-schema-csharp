@@ -3,6 +3,7 @@ using XmiSchema.Managers;
 using XmiSchema.Parameters;
 using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Enums;
+using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.ErrorHandling;
 
 /// <summary>
