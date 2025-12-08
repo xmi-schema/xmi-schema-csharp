@@ -990,6 +990,44 @@ public class XmiModelTests
     }
 
     /// <summary>
+    /// CreateXmiLineSegment sets correct point types on relationships.
+    /// </summary>
+    [Fact]
+    public void CreateLineSegment_SetsCorrectPointTypes()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var startPoint = new XmiPoint3d("pt-start", "Start", "ifc", "native-start", "desc", 0, 0, 0);
+        var endPoint = new XmiPoint3d("pt-end", "End", "ifc", "native-end", "desc", 5, 0, 0);
+        model.AddXmiPoint3d(startPoint);
+        model.AddXmiPoint3d(endPoint);
+
+        var segment = model.CreateXmiLineSegment(
+            "seg-line-pt",
+            "Line Segment PointType",
+            "ifc",
+            "native-seg-line-pt",
+            "desc",
+            0.5f,
+            startPoint,
+            endPoint);
+
+        var line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
+        Assert.NotNull(line);
+
+        var pointRelations = model.Relationships.OfType<XmiHasPoint3d>().Where(r => r.Source == line).ToList();
+
+        // Verify start point relationship has Start type
+        var startRelation = pointRelations.FirstOrDefault(r => r.Target == startPoint);
+        Assert.NotNull(startRelation);
+        Assert.Equal(XmiPoint3dTypeEnum.Start, startRelation.PointType);
+
+        // Verify end point relationship has End type
+        var endRelation = pointRelations.FirstOrDefault(r => r.Target == endPoint);
+        Assert.NotNull(endRelation);
+        Assert.Equal(XmiPoint3dTypeEnum.End, endRelation.PointType);
+    }
+
+    /// <summary>
     /// CreateXmiArcSegment creates segment with geometry and point relationships.
     /// </summary>
     [Fact]

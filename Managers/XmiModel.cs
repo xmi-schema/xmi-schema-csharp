@@ -1119,9 +1119,9 @@ namespace XmiSchema.Managers
                 // Create segment -> geometry relationship
                 AddXmiHasGeometry(new XmiHasGeometry(segment, line));
 
-                // Create line -> point relationships
-                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingStartPoint));
-                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingEndPoint));
+                // Create line -> point relationships with point type
+                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3D(new XmiHasPoint3d(line, existingEndPoint, XmiPoint3dTypeEnum.End));
 
                 return segment;
             }
@@ -1201,10 +1201,10 @@ namespace XmiSchema.Managers
                 // Create segment -> geometry relationship
                 AddXmiHasGeometry(new XmiHasGeometry(segment, arc));
 
-                // Create arc -> point relationships
-                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingStartPoint));
-                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingEndPoint));
-                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingCenterPoint));
+                // Create arc -> point relationships with point type
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingEndPoint, XmiPoint3dTypeEnum.End));
+                AddXmiHasPoint3D(new XmiHasPoint3d(arc, existingCenterPoint, XmiPoint3dTypeEnum.Center));
 
                 return segment;
             }
