@@ -82,13 +82,13 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Restore solution
-        run: dotnet restore xmi-schema-Csharp.Core.sln
+        run: dotnet restore XmiSchema.sln
 
       - name: Build solution
-        run: dotnet build xmi-schema-Csharp.Core.sln --configuration Release --no-restore
+        run: dotnet build XmiSchema.sln --configuration Release --no-restore
 
       - name: Run unit tests
-        run: dotnet test xmi-schema-Csharp.Core.sln --configuration Release --no-build --logger trx
+        run: dotnet test XmiSchema.sln --configuration Release --no-build --logger trx
 
   publish-nuget:
     name: Publish to NuGet
@@ -108,12 +108,12 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Restore solution
-        run: dotnet restore xmi-schema-Csharp.Core.sln
+        run: dotnet restore XmiSchema.sln
 
       - name: Pack NuGet artifact
         run: |
           VERSION="${{ needs.versioning.outputs.new_version }}"
-          dotnet pack ./xmi-schema-Csharp.Core.csproj \
+          dotnet pack ./XmiSchema.csproj \
             --configuration Release \
             --output ./packages \
             /p:PackageVersion=$VERSION
