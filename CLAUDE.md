@@ -211,8 +211,6 @@ tests/
   4. Pack and publish to NuGet
   5. Create GitHub release with enhanced changelog
 
-**Note**: The release workflow references legacy file names (`xmi-schema-Csharp.Core.sln` and `xmi-schema-Csharp.Core.csproj`) which may need updating to match the current naming (`XmiSchema.sln` and `XmiSchema.csproj`).
-
 ## Important Notes
 
 - **JSON Serialization**: Uses Newtonsoft.Json. Polymorphic entities rely on the `EntityType` discriminator.
