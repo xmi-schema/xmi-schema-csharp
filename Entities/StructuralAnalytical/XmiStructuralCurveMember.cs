@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
 
 namespace XmiSchema.Entities.StructuralAnalytical;
@@ -22,25 +23,17 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     // public XmiStructuralPointConnection BeginNode { get; set; }
     // public XmiStructuralPointConnection EndNode { get; set; }
     public double Length { get; set; }
-
-
-    public string LocalAxisX { get; set; }
-    public string LocalAxisY { get; set; }
-    public string LocalAxisZ { get; set; }
-
+    public XmiAxis LocalAxisX { get; set; }
+    public XmiAxis LocalAxisY { get; set; }
+    public XmiAxis LocalAxisZ { get; set; }
     public double BeginNodeYOffset { get; set; }
     public double EndNodeYOffset { get; set; }
     public double BeginNodeZOffset { get; set; }
     public double EndNodeZOffset { get; set; }
     public double BeginNodeXOffset { get; set; }
     public double EndNodeXOffset { get; set; }
-
-
     public string EndFixityStart { get; set; }
     public string EndFixityEnd { get; set; }
-
-
-
 
     /// <summary>
     /// Configures a new <see cref="XmiStructuralCurveMember"/> with system line metadata and local axis offsets.
@@ -53,9 +46,9 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     /// <param name="curveMemberType">Member type classification (beam, column, etc.).</param>
     /// <param name="systemLine">Relative position of the analytical line inside the physical profile.</param>
     /// <param name="length">Analytical length of the element.</param>
-    /// <param name="localAxisX">Serialized orientation of local X.</param>
-    /// <param name="localAxisY">Serialized orientation of local Y.</param>
-    /// <param name="localAxisZ">Serialized orientation of local Z.</param>
+    /// <param name="localAxisX">Unit direction of local X.</param>
+    /// <param name="localAxisY">Unit direction of local Y.</param>
+    /// <param name="localAxisZ">Unit direction of local Z.</param>
     /// <param name="beginNodeXOffset">X offset applied to the start node.</param>
     /// <param name="endNodeXOffset">X offset applied to the end node.</param>
     /// <param name="beginNodeYOffset">Y offset applied to the start node.</param>
@@ -80,9 +73,9 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
         // XmiStructuralPointConnection endNode,
         double length,
 
-        string localAxisX,
-        string localAxisY,
-        string localAxisZ,
+        XmiAxis localAxisX,
+        XmiAxis localAxisY,
+        XmiAxis localAxisZ,
         double beginNodeXOffset,
         double endNodeXOffset,
         double beginNodeYOffset,

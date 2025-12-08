@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema", "XmiSchema.csproj", "{451D13C9-360E-1846-43F2-79F623CBDDA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema.Tests", "tests\Unit\XmiSchema.Core.Tests\XmiSchema.Tests.csproj", "{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema.Tests", "XmiSchema.Tests\XmiSchema.Tests.csproj", "{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

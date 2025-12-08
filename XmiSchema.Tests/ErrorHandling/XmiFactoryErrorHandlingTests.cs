@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
 using XmiSchema.Entities.Commons;
 using XmiSchema.Managers;
-using XmiSchema.Entities.Physical;
-using XmiSchema.Entities.Bases;
-using XmiSchema.Entities.Geometries;
 using XmiSchema.Parameters;
 using XmiSchema.Entities.StructuralAnalytical;
-using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
 using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.ErrorHandling;
@@ -17,6 +11,10 @@ namespace XmiSchema.Tests.ErrorHandling;
 /// </summary>
 public class XmiFactoryErrorHandlingTests
 {
+    private static readonly XmiAxis AxisX = new(1, 0, 0);
+    private static readonly XmiAxis AxisY = new(0, 1, 0);
+    private static readonly XmiAxis AxisZ = new(0, 0, 1);
+
     #region XmiModel Factory Method Error Tests
 
     [Fact]
@@ -174,7 +172,7 @@ public class XmiFactoryErrorHandlingTests
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,
                 beginNode, endNode, 5.0,
-                "1,0,0", "0,1,0", "0,0,1",
+                AxisX, AxisY, AxisZ,
                 0, 0, 0, 0, 0, 0,
                 "Fixed", "Pinned"
             ));
@@ -199,7 +197,7 @@ public class XmiFactoryErrorHandlingTests
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,
                 beginNode, endNode, 5.0,
-                "1,0,0", "0,1,0", "0,0,1",
+                AxisX, AxisY, AxisZ,
                 0, 0, 0, 0, 0, 0,
                 "Fixed", "Pinned"
             ));
@@ -362,7 +360,7 @@ public class XmiFactoryErrorHandlingTests
                 new List<XmiStructuralPointConnection>(), null,
                 XmiSystemLineEnum.MiddleMiddle,
                 beginNode, endNode, 5.0,
-                "1,0,0", "0,1,0", "0,0,1",
+                AxisX, AxisY, AxisZ,
                 0, 0, 0, 0, 0, 0,
                 "Fixed", "Pinned"
             ));
@@ -723,3 +721,4 @@ public class XmiFactoryErrorHandlingTests
 
     #endregion
 }
+

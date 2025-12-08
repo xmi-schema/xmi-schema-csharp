@@ -10,8 +10,7 @@ using XmiSchema.Entities.Geometries;
 using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
 using XmiSchema.Managers;
-using XmiSchema.Tests.Managers;
-namespace XmiSchema.Tests.Serialization;
+namespace XmiSchema.Tests.Managers;
 
 /// <summary>
 /// Validates JSON serialization and deserialization of all XMI entities, relationships, and models.
@@ -600,7 +599,7 @@ public class XmiSerializationTests
         // Add relationships
         model.AddXmiHasMaterial(new XmiHasMaterial(crossSection, material));
         model.AddXmiHasStorey(new XmiHasStorey(connection, storey));
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(connection, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(connection, point));
 
         var json = JsonConvert.SerializeObject(model, _settings);
         var jObject = JObject.Parse(json);

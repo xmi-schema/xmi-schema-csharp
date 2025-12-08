@@ -120,7 +120,7 @@ namespace XmiSchema.Managers
         /// Adds a point relationship to the model.
         /// </summary>
         /// <param name="relation">Relationship instance.</param>
-        public void AddXmiHasPoint3D(XmiHasPoint3d relation)
+        public void AddXmiHasPoint3d(XmiHasPoint3d relation)
         {
             Relationships.Add(relation);
         }
@@ -171,13 +171,76 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
+        /// Adds a segment relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasSegment(XmiHasSegment relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
+        /// Adds a geometry relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasGeometry(XmiHasGeometry relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
+        /// Adds a line geometry relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasLine3d(XmiHasLine3d relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
+        /// Adds an arc geometry relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasArc3d(XmiHasArc3d relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
+        /// Adds a line geometry entity to the model.
+        /// </summary>
+        /// <param name="line">Line entity to add.</param>
+        public void AddXmiLine3d(XmiLine3d line)
+        {
+            Entities.Add(line);
+        }
+
+        /// <summary>
+        /// Adds an arc geometry entity to the model.
+        /// </summary>
+        /// <param name="arc">Arc entity to add.</param>
+        public void AddXmiArc3d(XmiArc3d arc)
+        {
+            Entities.Add(arc);
+        }
+
+        /// <summary>
+        /// Adds a segment entity to the model.
+        /// </summary>
+        /// <param name="segment">Segment entity to add.</param>
+        public void AddXmiSegment(XmiSegment segment)
+        {
+            Entities.Add(segment);
+        }
+
+        /// <summary>
         /// Finds a structural point connection that references the same physical point as the provided connection.
         /// </summary>
         /// <param name="inputConnection">Connection to match.</param>
         /// <returns>The ID for the matching connection if found; otherwise null.</returns>
-        public string? FindMatchingXmiStructuralPointConnectionByPoint3D(XmiStructuralPointConnection inputConnection)
+        public string? FindMatchingXmiStructuralPointConnectionByPoint3d(XmiStructuralPointConnection inputConnection)
         {
-            // Step 1: retrieve the Point3D referenced by the incoming connection via existing relationships.
+            // Step 1: retrieve the Point3d referenced by the incoming connection via existing relationships.
             var inputPoint = Relationships
                 .OfType<XmiHasPoint3d>()
                 .FirstOrDefault(rel => rel.Source?.Id == inputConnection.Id)
@@ -235,7 +298,7 @@ namespace XmiSchema.Managers
                     description
                 );
 
-                var existingConnectionId = FindMatchingXmiStructuralPointConnectionByPoint3D(tempConnection);
+                var existingConnectionId = FindMatchingXmiStructuralPointConnectionByPoint3d(tempConnection);
                 if (existingConnectionId != null)
                 {
                     return GetXmiEntitiesOfType<XmiStructuralPointConnection>()
@@ -273,7 +336,7 @@ namespace XmiSchema.Managers
                 if (existingPoint != null)
                 {
                     var pointRelation = new XmiHasPoint3d(connection, existingPoint);
-                    AddXmiHasPoint3D(pointRelation);
+                    AddXmiHasPoint3d(pointRelation);
                 }
 
                 return connection;
@@ -322,8 +385,9 @@ namespace XmiSchema.Managers
             try
             {
                 var tempPoint = new XmiPoint3d(id, name, ifcGuid, nativeId, description, x, y, z);
-                var existingPoints = GetXmiEntitiesOfType<XmiPoint3d>();
-                var existingPoint = existingPoints.FirstOrDefault(p => p.Equals(tempPoint));
+                var existingPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => p.Equals(tempPoint));
 
                 if (existingPoint != null)
                 {
@@ -347,12 +411,141 @@ namespace XmiSchema.Managers
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Failed to create Point3D.", ex);
+                throw new InvalidOperationException("Failed to create Point3d.", ex);
             }
         }
 
         /// <summary>
-        /// Creates a beam physical element and optionally links a material.
+        /// Creates a 3D line geometry and wires start/end point relationships, reusing points when possible.
+        /// </summary>
+        /// <returns>The created line.</returns>
+        public XmiLine3d CreateXmiLine3d(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiPoint3d startPoint,
+            XmiPoint3d endPoint
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                var existingStartPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, startPoint)) ?? startPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
+                {
+                    AddXmiPoint3d(existingStartPoint);
+                }
+
+                var existingEndPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, endPoint)) ?? endPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
+                {
+                    AddXmiPoint3d(existingEndPoint);
+                }
+
+                var line = new XmiLine3d(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    existingStartPoint,
+                    existingEndPoint
+                );
+
+                AddXmiLine3d(line);
+
+                AddXmiHasPoint3d(new XmiHasPoint3d(line, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3d(new XmiHasPoint3d(line, existingEndPoint, XmiPoint3dTypeEnum.End));
+
+                return line;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create line geometry.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a 3D arc geometry and wires start/end/center point relationships, reusing points when possible.
+        /// </summary>
+        /// <returns>The created arc.</returns>
+        public XmiArc3d CreateXmiArc3d(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            XmiPoint3d startPoint,
+            XmiPoint3d endPoint,
+            XmiPoint3d centerPoint,
+            float radius
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+            try
+            {
+                var existingStartPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, startPoint)) ?? startPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingStartPoint)))
+                {
+                    AddXmiPoint3d(existingStartPoint);
+                }
+
+                var existingEndPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, endPoint)) ?? endPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingEndPoint)))
+                {
+                    AddXmiPoint3d(existingEndPoint);
+                }
+
+                var existingCenterPoint = Entities
+                    .OfType<XmiPoint3d>()
+                    .FirstOrDefault(p => AreXmiPoint3dsEqual(p, centerPoint)) ?? centerPoint;
+                if (!Entities.OfType<XmiPoint3d>().Any(p => ReferenceEquals(p, existingCenterPoint)))
+                {
+                    AddXmiPoint3d(existingCenterPoint);
+                }
+
+                var arc = new XmiArc3d(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    existingStartPoint,
+                    existingEndPoint,
+                    existingCenterPoint,
+                    radius
+                );
+
+                AddXmiArc3d(arc);
+
+                AddXmiHasPoint3d(new XmiHasPoint3d(arc, existingStartPoint, XmiPoint3dTypeEnum.Start));
+                AddXmiHasPoint3d(new XmiHasPoint3d(arc, existingEndPoint, XmiPoint3dTypeEnum.End));
+                AddXmiHasPoint3d(new XmiHasPoint3d(arc, existingCenterPoint, XmiPoint3dTypeEnum.Center));
+
+                return arc;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create arc geometry.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a beam physical element and optionally links a material and segments.
         /// </summary>
         /// <returns>The created beam.</returns>
         public XmiBeam CreateXmiBeam(
@@ -362,11 +555,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -377,6 +571,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -412,6 +609,16 @@ namespace XmiSchema.Managers
                     AddXmiHasMaterial(new XmiHasMaterial(beam, existingMaterial));
                 }
 
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(beam, existingSegment));
+                    }
+                }
+
                 return beam;
             }
             catch (Exception ex)
@@ -421,7 +628,7 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a column physical element and optionally links a material.
+        /// Creates a column physical element and optionally links a material and segments.
         /// </summary>
         /// <returns>The created column.</returns>
         public XmiColumn CreateXmiColumn(
@@ -431,11 +638,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -446,6 +654,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -481,6 +692,16 @@ namespace XmiSchema.Managers
                     AddXmiHasMaterial(new XmiHasMaterial(column, existingMaterial));
                 }
 
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(column, existingSegment));
+                    }
+                }
+
                 return column;
             }
             catch (Exception ex)
@@ -490,7 +711,7 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a slab physical element and optionally links a material.
+        /// Creates a slab physical element and optionally links material and boundary segments.
         /// </summary>
         /// <returns>The created slab.</returns>
         public XmiSlab CreateXmiSlab(
@@ -499,11 +720,20 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double thickness
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -518,7 +748,12 @@ namespace XmiSchema.Managers
                     name,
                     ifcGuid,
                     nativeId,
-                    description
+                    description,
+                    zOffset,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    thickness
                 );
 
                 AddXmiSlab(slab);
@@ -526,6 +761,16 @@ namespace XmiSchema.Managers
                 if (existingMaterial != null)
                 {
                     AddXmiHasMaterial(new XmiHasMaterial(slab, existingMaterial));
+                }
+
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(slab, existingSegment));
+                    }
                 }
 
                 return slab;
@@ -537,7 +782,7 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a wall physical element and optionally links a material.
+        /// Creates a wall physical element and optionally links material and boundary segments.
         /// </summary>
         /// <returns>The created wall.</returns>
         public XmiWall CreateXmiWall(
@@ -546,11 +791,20 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double height
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -565,7 +819,12 @@ namespace XmiSchema.Managers
                     name,
                     ifcGuid,
                     nativeId,
-                    description
+                    description,
+                    zOffset,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    height
                 );
 
                 AddXmiWall(wall);
@@ -573,6 +832,16 @@ namespace XmiSchema.Managers
                 if (existingMaterial != null)
                 {
                     AddXmiHasMaterial(new XmiHasMaterial(wall, existingMaterial));
+                }
+
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(wall, existingSegment));
+                    }
                 }
 
                 return wall;
@@ -603,9 +872,9 @@ namespace XmiSchema.Managers
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -618,6 +887,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
             try
             {
                 XmiMaterial? existingMaterial = null;
@@ -627,12 +899,10 @@ namespace XmiSchema.Managers
                 }
 
                 XmiCrossSection? existingCrossSection = null;
-                if (crossSection != null)
+                if (crossSection != null && !string.IsNullOrEmpty(crossSection.NativeId))
                 {
                     var crossSections = GetXmiEntitiesOfType<XmiCrossSection>();
-                    existingCrossSection = !string.IsNullOrEmpty(crossSection.NativeId)
-                        ? crossSections.FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection
-                        : crossSection;
+                    existingCrossSection = crossSections.FirstOrDefault(c => c.NativeId == crossSection.NativeId) ?? crossSection;
                 }
 
                 XmiStorey? existingStorey = null;
@@ -642,12 +912,12 @@ namespace XmiSchema.Managers
                         .FirstOrDefault(s => s.NativeId == storey.NativeId) ?? storey;
                 }
 
-                var existingBeginNodeId = FindMatchingXmiStructuralPointConnectionByPoint3D(beginNode);
+                var existingBeginNodeId = FindMatchingXmiStructuralPointConnectionByPoint3d(beginNode);
                 var existingBeginNode = existingBeginNodeId != null
                     ? GetXmiEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingBeginNodeId) ?? beginNode
                     : beginNode;
 
-                var existingEndNodeId = FindMatchingXmiStructuralPointConnectionByPoint3D(endNode);
+                var existingEndNodeId = FindMatchingXmiStructuralPointConnectionByPoint3d(endNode);
                 var existingEndNode = existingEndNodeId != null
                     ? GetXmiEntitiesOfType<XmiStructuralPointConnection>().FirstOrDefault(n => n.Id == existingEndNodeId) ?? endNode
                     : endNode;
@@ -698,6 +968,16 @@ namespace XmiSchema.Managers
                 var endNodeRelation = new XmiHasStructuralPointConnection(curveMember, existingEndNode);
                 AddXmiHasStructuralPointConnection(beginNodeRelation);
                 AddXmiHasStructuralPointConnection(endNodeRelation);
+
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(curveMember, existingSegment));
+                    }
+                }
 
                 return curveMember;
             }
@@ -910,12 +1190,15 @@ namespace XmiSchema.Managers
             List<XmiSegment> segments,
             double area,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double height
         )
         {
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
             try
             {
                 XmiStorey? existingStorey = null;
@@ -964,11 +1247,143 @@ namespace XmiSchema.Managers
                     AddXmiHasStorey(storeyRelation);
                 }
 
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(surfaceMember, existingSegment));
+                    }
+                }
+
                 return surfaceMember;
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException("Failed to create structural surface member.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a line segment and links it to existing line geometry.
+        /// Creates: XmiSegment -> XmiHasLine3d -> existing XmiLine3d (line already manages any point relationships)
+        /// </summary>
+        /// <param name="id">Unique identifier for the segment.</param>
+        /// <param name="name">Human readable name.</param>
+        /// <param name="ifcGuid">Optional IFC GUID reference.</param>
+        /// <param name="nativeId">Native identifier from the authoring system.</param>
+        /// <param name="description">Optional description.</param>
+        /// <param name="position">Normalized position value along the parent member (0-1).</param>
+        /// <param name="line">Existing line geometry to associate.</param>
+        /// <returns>The created segment entity.</returns>
+        public XmiSegment CreateXmiLineSegment(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            float position,
+            XmiLine3d line
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (line == null) throw new ArgumentNullException(nameof(line));
+
+            try
+            {
+                var existingLine = Entities
+                    .OfType<XmiLine3d>()
+                    .FirstOrDefault(l => (!string.IsNullOrEmpty(line.NativeId) && l.NativeId == line.NativeId) || l.Id == line.Id)
+                    ?? line;
+
+                if (!Entities.OfType<XmiLine3d>().Any(l => ReferenceEquals(l, existingLine)))
+                {
+                    AddXmiLine3d(existingLine);
+                }
+
+                // Create the segment
+                var segment = new XmiSegment(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    position,
+                    XmiSegmentTypeEnum.Line
+                );
+                AddXmiSegment(segment);
+
+                // Create segment -> line relationship
+                AddXmiHasLine3d(new XmiHasLine3d(segment, existingLine));
+
+                return segment;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create line segment.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a circular arc segment and links it to existing arc geometry.
+        /// Creates: XmiSegment -> XmiHasArc3d -> existing XmiArc3d (arc already manages any point relationships)
+        /// </summary>
+        /// <param name="id">Unique identifier for the segment.</param>
+        /// <param name="name">Human readable name.</param>
+        /// <param name="ifcGuid">Optional IFC GUID reference.</param>
+        /// <param name="nativeId">Native identifier from the authoring system.</param>
+        /// <param name="description">Optional description.</param>
+        /// <param name="position">Normalized position value along the parent member (0-1).</param>
+        /// <param name="arc">Existing arc geometry to associate.</param>
+        /// <returns>The created segment entity.</returns>
+        public XmiSegment CreateXmiArcSegment(
+            string id,
+            string name,
+            string ifcGuid,
+            string nativeId,
+            string description,
+            float position,
+            XmiArc3d arc
+        )
+        {
+            if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
+            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (arc == null) throw new ArgumentNullException(nameof(arc));
+
+            try
+            {
+                var existingArc = Entities
+                    .OfType<XmiArc3d>()
+                    .FirstOrDefault(a => (!string.IsNullOrEmpty(arc.NativeId) && a.NativeId == arc.NativeId) || a.Id == arc.Id)
+                    ?? arc;
+
+                if (!Entities.OfType<XmiArc3d>().Any(a => ReferenceEquals(a, existingArc)))
+                {
+                    AddXmiArc3d(existingArc);
+                }
+
+                // Create the segment
+                var segment = new XmiSegment(
+                    id,
+                    name,
+                    ifcGuid,
+                    nativeId,
+                    description,
+                    position,
+                    XmiSegmentTypeEnum.CircularArc
+                );
+                AddXmiSegment(segment);
+
+                // Create segment -> arc relationship
+                AddXmiHasArc3d(new XmiHasArc3d(segment, existingArc));
+
+                return segment;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to create arc segment.", ex);
             }
         }
     }

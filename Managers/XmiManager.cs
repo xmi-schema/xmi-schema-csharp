@@ -123,7 +123,7 @@ namespace XmiSchema.Managers
         public void AddXmiHasPoint3DToModel(int modelIndex, XmiHasPoint3d relation)
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
-            Models[modelIndex].AddXmiHasPoint3D(relation);
+            Models[modelIndex].AddXmiHasPoint3d(relation);
         }
 
         /// <inheritdoc />
@@ -191,11 +191,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -206,7 +207,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiBeam(
-                id, name, ifcGuid, nativeId, description, material,
+                id, name, ifcGuid, nativeId, description, material, segments,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
@@ -223,11 +224,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -238,7 +240,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiColumn(
-                id, name, ifcGuid, nativeId, description, material,
+                id, name, ifcGuid, nativeId, description, material, segments,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
@@ -254,12 +256,19 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double thickness
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiSlab(
-                id, name, ifcGuid, nativeId, description, material
+                id, name, ifcGuid, nativeId, description, material,
+                segments, zOffset, localAxisX, localAxisY, localAxisZ, thickness
             );
         }
 
@@ -271,12 +280,19 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double height
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiWall(
-                id, name, ifcGuid, nativeId, description, material
+                id, name, ifcGuid, nativeId, description, material,
+                segments, zOffset, localAxisX, localAxisY, localAxisZ, height
             );
         }
 
@@ -462,9 +478,9 @@ namespace XmiSchema.Managers
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -506,9 +522,9 @@ namespace XmiSchema.Managers
             List<XmiSegment> segments,
             double area,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double height
         )
         {

@@ -3,14 +3,17 @@ using XmiSchema.Entities.Commons;
 using XmiSchema.Entities.Relationships;
 using XmiSchema.Enums;
 using XmiSchema.Managers;
-using XmiSchema.Tests.Managers;
-namespace XmiSchema.Tests.Manager;
+namespace XmiSchema.Tests.Managers;
 
 /// <summary>
 /// Exercises the orchestration helpers on <see cref="XmiManager"/>.
 /// </summary>
 public class XmiManagerTests
 {
+    private static readonly XmiAxis AxisX = new(1, 0, 0);
+    private static readonly XmiAxis AxisY = new(0, 1, 0);
+    private static readonly XmiAxis AxisZ = new(0, 0, 1);
+
     /// <summary>
     /// Ensures add helpers delegate to the underlying model list.
     /// </summary>
@@ -81,8 +84,8 @@ public class XmiManagerTests
         model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(second, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(first, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(second, point));
 
         var match = manager.FindMatchingPointConnectionByPoint3D(0, first);
 
@@ -105,8 +108,8 @@ public class XmiManagerTests
         model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
-        model.AddXmiHasPoint3D(new XmiHasPoint3d(second, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(first, point));
+        model.AddXmiHasPoint3d(new XmiHasPoint3d(second, point));
 
         var match = manager.FindMatchingXmiStructuralPointConnectionByPoint3D(0, first);
 
@@ -151,11 +154,12 @@ public class XmiManagerTests
             "native",
             "desc",
             material,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             4.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            AxisX,
+            AxisY,
+            AxisZ,
             0,
             0,
             0,

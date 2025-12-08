@@ -173,11 +173,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -197,11 +198,12 @@ namespace XmiSchema.Managers
             string nativeId,
             string description,
             XmiMaterial? material,
+            List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -220,7 +222,13 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double thickness
         );
 
         /// <summary>
@@ -233,7 +241,13 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
+            double height
         );
 
         /// <summary>
@@ -426,9 +440,9 @@ namespace XmiSchema.Managers
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -478,9 +492,9 @@ namespace XmiSchema.Managers
             List<XmiSegment> segments,
             double area,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double height
         );
 
