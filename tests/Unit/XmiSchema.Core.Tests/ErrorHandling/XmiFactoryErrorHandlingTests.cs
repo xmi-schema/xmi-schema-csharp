@@ -6,10 +6,10 @@ using XmiSchema.Entities.Physical;
 using XmiSchema.Entities.Bases;
 using XmiSchema.Entities.Geometries;
 using XmiSchema.Parameters;
-using XmiSchema.Tests.Support;
 using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
+using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.ErrorHandling;
 
 /// <summary>
@@ -694,7 +694,7 @@ public class XmiFactoryErrorHandlingTests
 
         Assert.NotNull(crossSection);
         Assert.Single(model.Entities);
-        Assert.Empty(model.Relationships); // No material relationship created
+        Assert.Empty(model.Relationships; // No material relationship created
     }
 
     [Fact]
@@ -718,7 +718,7 @@ public class XmiFactoryErrorHandlingTests
 
         Assert.NotNull(crossSection);
         // When material has empty NativeId, no relationship is created
-        Assert.Empty(model.Relationships);
+        Assert.Empty(model.Relationships;
     }
 
     #endregion

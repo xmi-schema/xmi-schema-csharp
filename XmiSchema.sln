@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36717.8 d17.14
+VisualStudioVersion = 17.14.36717.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema", "XmiSchema.csproj", "{451D13C9-360E-1846-43F2-79F623CBDDA9}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6A8410EE-3751-425B-8063-3757F81FA8A6}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit", "Unit", "{999E6A5E-8B72-451A-900E-8F45DB157A91}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmiSchema.Tests", "tests\Unit\XmiSchema.Core.Tests\XmiSchema.Tests.csproj", "{3F18B649-8FE7-45CC-876F-DBEFD09B5F86}"
 EndProject
@@ -31,9 +27,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {475800C9-C02A-4B00-BC99-E78997F16231}
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{999E6A5E-8B72-451A-900E-8F45DB157A91} = {6A8410EE-3751-425B-8063-3757F81FA8A6}
-		{3F18B649-8FE7-45CC-876F-DBEFD09B5F86} = {999E6A5E-8B72-451A-900E-8F45DB157A91}
 	EndGlobalSection
 EndGlobal
