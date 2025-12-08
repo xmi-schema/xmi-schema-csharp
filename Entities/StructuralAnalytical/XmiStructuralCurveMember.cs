@@ -22,25 +22,17 @@ public class XmiStructuralCurveMember : XmiBaseStructuralAnalyticalEntity, IEqua
     // public XmiStructuralPointConnection BeginNode { get; set; }
     // public XmiStructuralPointConnection EndNode { get; set; }
     public double Length { get; set; }
-
-
     public string LocalAxisX { get; set; }
     public string LocalAxisY { get; set; }
     public string LocalAxisZ { get; set; }
-
     public double BeginNodeYOffset { get; set; }
     public double EndNodeYOffset { get; set; }
     public double BeginNodeZOffset { get; set; }
     public double EndNodeZOffset { get; set; }
     public double BeginNodeXOffset { get; set; }
     public double EndNodeXOffset { get; set; }
-
-
     public string EndFixityStart { get; set; }
     public string EndFixityEnd { get; set; }
-
-
-
 
     /// <summary>
     /// Configures a new <see cref="XmiStructuralCurveMember"/> with system line metadata and local axis offsets.
