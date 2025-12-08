@@ -203,7 +203,12 @@ internal static class TestModelFactory
             $"Wall {id}",
             "ifc-guid",
             id.ToUpperInvariant(),
-            "Concrete wall");
+            "Concrete wall",
+            0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            3.0);
 
     internal static XmiModel CreateModelWithBasics()
     {

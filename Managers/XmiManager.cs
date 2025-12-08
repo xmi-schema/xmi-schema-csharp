@@ -280,12 +280,19 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double height
         )
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiWall(
-                id, name, ifcGuid, nativeId, description, material
+                id, name, ifcGuid, nativeId, description, material,
+                segments, zOffset, localAxisX, localAxisY, localAxisZ, height
             );
         }
 

@@ -773,7 +773,7 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a wall physical element and optionally links a material.
+        /// Creates a wall physical element and optionally links material and boundary segments.
         /// </summary>
         /// <returns>The created wall.</returns>
         public XmiWall CreateXmiWall(
@@ -782,7 +782,13 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double height
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
@@ -801,7 +807,12 @@ namespace XmiSchema.Managers
                     name,
                     ifcGuid,
                     nativeId,
-                    description
+                    description,
+                    zOffset,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    height
                 );
 
                 AddXmiWall(wall);
@@ -809,6 +820,16 @@ namespace XmiSchema.Managers
                 if (existingMaterial != null)
                 {
                     AddXmiHasMaterial(new XmiHasMaterial(wall, existingMaterial));
+                }
+
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(wall, existingSegment));
+                    }
                 }
 
                 return wall;

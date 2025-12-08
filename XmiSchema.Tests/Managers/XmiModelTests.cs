@@ -709,7 +709,13 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            null);
+            null,
+            null,
+            0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            3.0);
 
         Assert.Contains(model.Entities.OfType<XmiColumn>(), e => e.Id == column.Id);
         Assert.Contains(model.Entities.OfType<XmiSlab>(), e => e.Id == slab.Id);
@@ -854,6 +860,37 @@ public class XmiModelTests
         var segmentRelationships = model.Relationships.OfType<XmiHasSegment>().Where(r => r.Source == slab).ToList();
         Assert.Equal(2, segmentRelationships.Count);
         Assert.Equal(0.35, slab.Thickness);
+    }
+
+    /// <summary>
+    /// Wall factory wires segment relationships and records height metadata.
+    /// </summary>
+    [Fact]
+    public void CreateWall_WithSegments_AddsSegmentRelationships()
+    {
+        var model = new XmiModel();
+        var segment1 = TestModelFactory.CreateSegment("seg-wall-1");
+        var segment2 = TestModelFactory.CreateSegment("seg-wall-2");
+        var segments = new List<XmiSegment> { segment1, segment2 };
+
+        var wall = model.CreateXmiWall(
+            "wall-seg",
+            "Wall with segments",
+            "ifc",
+            "native-wall-seg",
+            "desc",
+            null,
+            segments,
+            0.2,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            4.2);
+
+        Assert.Contains(model.Entities.OfType<XmiWall>(), e => e.Id == wall.Id);
+        var segmentRelationships = model.Relationships.OfType<XmiHasSegment>().Where(r => r.Source == wall).ToList();
+        Assert.Equal(2, segmentRelationships.Count);
+        Assert.Equal(4.2, wall.Height);
     }
 
     /// <summary>
