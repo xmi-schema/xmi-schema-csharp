@@ -23,7 +23,7 @@ public class XmiColumnTests
         Assert.Equal("col-1", column.Id);
         Assert.Equal("Column col-1", column.Name);
         Assert.Equal("COL-1", column.NativeId);
-        Assert.Equal(nameof(XmiColumn), column.EntityType);
+        Assert.Equal(nameof(XmiColumn), column.EntityName);
         Assert.Equal(XmiSystemLineEnum.MiddleMiddle, column.SystemLine);
         Assert.Equal(3.5, column.Length);
     }
@@ -32,11 +32,11 @@ public class XmiColumnTests
     /// Verifies that XmiColumn inherits from XmiBasePhysicalEntity and has Physical type.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToPhysical()
+    public void Constructor_SetsDomainToPhysical()
     {
         var column = TestModelFactory.CreateColumn();
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, column.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, column.Domain);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(column);
     }
 

@@ -123,8 +123,8 @@ public class XmiSegmentTests
         Assert.Equal("ifc-guid-123", segment.IfcGuid);
         Assert.Equal("native-123", segment.NativeId);
         Assert.Equal("Test description", segment.Description);
-        Assert.Equal(nameof(XmiSegment), segment.EntityType);
-        Assert.Equal(XmiBaseEntityDomainEnum.Shared, segment.Type);
+        Assert.Equal(nameof(XmiSegment), segment.EntityName);
+        Assert.Equal(XmiBaseEntityDomainEnum.Shared, segment.Domain);
     }
 
     /// <summary>

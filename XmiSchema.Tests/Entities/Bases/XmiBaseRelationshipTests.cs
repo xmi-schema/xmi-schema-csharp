@@ -26,7 +26,7 @@ public class XmiBaseRelationshipTests
 
         Assert.Equal("Unnamed", relationship.Name);
         Assert.Equal(string.Empty, relationship.Description);
-        Assert.Equal(nameof(XmiBaseRelationship), relationship.EntityType);
+        Assert.Equal(nameof(XmiBaseRelationship), relationship.EntityName);
     }
 
     /// <summary>

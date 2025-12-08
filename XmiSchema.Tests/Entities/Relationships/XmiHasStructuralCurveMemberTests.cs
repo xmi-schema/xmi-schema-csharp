@@ -35,7 +35,7 @@ public class XmiHasStructuralCurveMemberTests
         Assert.Equal("PhysicalToAnalytical", relation.Name);
         Assert.Equal(beam, relation.Source);
         Assert.Equal(curveMember, relation.Target);
-        Assert.Equal(nameof(XmiHasStructuralCurveMember), relation.EntityType);
+        Assert.Equal(nameof(XmiHasStructuralCurveMember), relation.EntityName);
     }
 
     /// <summary>

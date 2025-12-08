@@ -20,7 +20,7 @@ public class XmiBeamTests
         Assert.Equal("beam-1", beam.Id);
         Assert.Equal("Beam beam-1", beam.Name);
         Assert.Equal("BEAM-1", beam.NativeId);
-        Assert.Equal(nameof(XmiBeam), beam.EntityType);
+        Assert.Equal(nameof(XmiBeam), beam.EntityName);
         Assert.Equal(XmiSystemLineEnum.MiddleMiddle, beam.SystemLine);
         Assert.Equal(5.0, beam.Length);
     }
@@ -29,11 +29,11 @@ public class XmiBeamTests
     /// Verifies that XmiBeam inherits from XmiBasePhysicalEntity and has Physical type.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToPhysical()
+    public void Constructor_SetsDomainToPhysical()
     {
         var beam = TestModelFactory.CreateBeam();
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, beam.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, beam.Domain);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(beam);
     }
 

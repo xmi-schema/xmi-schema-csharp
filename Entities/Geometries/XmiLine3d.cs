@@ -32,6 +32,6 @@ public class XmiLine3d : XmiBaseGeometry
     {
         StartPoint = startPoint;
         EndPoint = endPoint;
-        EntityType = nameof(XmiLine3d);
+        EntityName = nameof(XmiLine3d);
     }
 }

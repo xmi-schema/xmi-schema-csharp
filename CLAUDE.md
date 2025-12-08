@@ -69,7 +69,7 @@ The library is organized into the following namespaces:
 ### Core Types
 
 **Base Classes** (`XmiSchema.Entities.Bases`):
-- `XmiBaseEntity`: Root for all entities. Provides `ID`, `ifcGuid`, `NativeId`, `Description`, and `EntityType` (polymorphic discriminator for JSON serialization).
+- `XmiBaseEntity`: Root for all entities. Provides `ID`, `ifcGuid`, `NativeId`, `Description`, and `EntityName` (polymorphic discriminator for JSON serialization).
 - `XmiBaseGeometry`: Extends `XmiBaseEntity` for geometric primitives (points, lines, arcs).
 - `XmiBaseRelationship`: Base for all graph edges, holding source/target entity references and UML stereotypes.
 - `XmiBasePhysicalEntity`: Intermediate base for physical elements (beams, columns, slabs, walls).
@@ -135,12 +135,12 @@ Maintain consistent parameter order across all new entities:
 [id, name, ifcGuid, nativeId, description, ...domain-specific-args]
 ```
 
-### EntityType Discriminator
+### EntityName Discriminator
 All entity constructors must pass the entity type name to the base constructor:
 ```csharp
 public XmiBeam(...) : base("XmiBeam", id, name, ifcGuid, nativeId, description, domain)
 ```
-This ensures JSON serialization emits the correct `"EntityType"` discriminator for polymorphic deserialization.
+This ensures JSON serialization emits the correct `"EntityName"` discriminator for polymorphic deserialization.
 
 ### Relationship Constructors
 Provide two constructors:
@@ -213,7 +213,7 @@ tests/
 
 ## Important Notes
 
-- **JSON Serialization**: Uses Newtonsoft.Json. Polymorphic entities rely on the `EntityType` discriminator.
+- **JSON Serialization**: Uses Newtonsoft.Json. Polymorphic entities rely on the `EntityName` discriminator.
 - **Point Deduplication**: Always create points via `XmiModel.CreatePoint3D()` to avoid duplicate coordinates in the graph.
 - **Shape Parameters**: Reference `Enums/XmiShapeEnumParameters.cs` for the canonical list of parameter keys per shape type.
 - **Target Framework**: `net8.0` for both library and tests.

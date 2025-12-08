@@ -15,16 +15,16 @@ public abstract class XmiBaseGeometry : XmiBaseEntity
     /// <param name="ifcGuid">IFC GUID reference.</param>
     /// <param name="nativeId">Native identifier from the authoring tool.</param>
     /// <param name="description">Describes the geometry.</param>
-    /// <param name="entityType">Optional entity type override.</param>
+    /// <param name="entityName">Optional entity name override.</param>
     public XmiBaseGeometry(
         string id,
         string name,
         string ifcGuid,
         string nativeId,
         string description,
-        string? entityType = null)
+        string? entityName = null)
         : base(id, name, ifcGuid, nativeId, description,
-               string.IsNullOrEmpty(entityType) ? nameof(XmiBaseGeometry) : entityType,
+               string.IsNullOrEmpty(entityName) ? nameof(XmiBaseGeometry) : entityName,
                XmiBaseEntityDomainEnum.Geometry)
     {
     }

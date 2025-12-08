@@ -21,7 +21,7 @@ public class XmiHasMaterialTests
 
         Assert.Equal("rel-mat", relation.Id);
         Assert.Equal("Uses", relation.Name);
-        Assert.Equal(nameof(XmiHasMaterial), relation.EntityType);
+        Assert.Equal(nameof(XmiHasMaterial), relation.EntityName);
     }
 
     [Fact]

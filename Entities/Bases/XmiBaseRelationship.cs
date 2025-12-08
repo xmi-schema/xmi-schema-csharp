@@ -13,7 +13,7 @@ public class XmiBaseRelationship
     public XmiBaseEntity Target { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public string EntityType { get; set; }
+    public string EntityName { get; set; }
     /// <summary>
     /// Optional metadata bag for downstream consumers (e.g., nodeType=Begin/End).
     /// </summary>
@@ -26,7 +26,7 @@ public class XmiBaseRelationship
     /// <param name="target">Entity at the destination of the edge.</param>
     /// <param name="name">Readable label.</param>
     /// <param name="description">Notes for downstream consumers.</param>
-    /// <param name="entityType">Type name recorded in the payload.</param>
+    /// <param name="entityName">Entity name recorded in the payload.</param>
     /// <param name="properties">Optional metadata to attach to the relationship.</param>
     public XmiBaseRelationship(
         string id,
@@ -34,7 +34,7 @@ public class XmiBaseRelationship
         XmiBaseEntity target,
         string name,
         string description,
-        string entityType,
+        string entityName,
         Dictionary<string, string>? properties = null
     )
     {
@@ -43,7 +43,7 @@ public class XmiBaseRelationship
         Target = target;
         Name = string.IsNullOrEmpty(name) ? "Unnamed"  : name;
         Description = string.IsNullOrEmpty(description) ? "" : description;
-        EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseRelationship) : entityType;
+        EntityName = string.IsNullOrEmpty(entityName) ? nameof(XmiBaseRelationship) : entityName;
         Properties = properties ?? new Dictionary<string, string>();
     }
     /// <summary>
@@ -51,10 +51,10 @@ public class XmiBaseRelationship
     /// </summary>
     /// <param name="source">Entity at the origin of the edge.</param>
     /// <param name="target">Entity at the destination of the edge.</param>
-    /// <param name="entityType">Type name recorded in the payload.</param>
+    /// <param name="entityName">Entity name recorded in the payload.</param>
     /// <param name="properties">Optional metadata to attach to the relationship.</param>
-    public XmiBaseRelationship(XmiBaseEntity source, XmiBaseEntity target, string entityType, Dictionary<string, string>? properties = null)
-            : this(Guid.NewGuid().ToString(), source, target, entityType, "", entityType, properties)
+    public XmiBaseRelationship(XmiBaseEntity source, XmiBaseEntity target, string entityName, Dictionary<string, string>? properties = null)
+            : this(Guid.NewGuid().ToString(), source, target, entityName, "", entityName, properties)
     {
     }
 }

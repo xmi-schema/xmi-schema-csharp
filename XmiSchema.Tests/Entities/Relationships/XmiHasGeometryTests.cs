@@ -20,7 +20,7 @@ public class XmiHasGeometryTests
             nameof(XmiHasGeometry));
 
         Assert.Equal("rel-geom", relation.Id);
-        Assert.Equal(nameof(XmiHasGeometry), relation.EntityType);
+        Assert.Equal(nameof(XmiHasGeometry), relation.EntityName);
     }
 
     [Fact]

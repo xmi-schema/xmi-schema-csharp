@@ -29,7 +29,7 @@ public class XmiHasPoint3DTests
 
         Assert.Equal("rel-1", relation.Id);
         Assert.Equal("Owns", relation.Name);
-        Assert.Equal(nameof(XmiHasPoint3d), relation.EntityType);
+        Assert.Equal(nameof(XmiHasPoint3d), relation.EntityName);
     }
 
     /// <summary>
