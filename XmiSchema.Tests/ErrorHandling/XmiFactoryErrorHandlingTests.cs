@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
 using XmiSchema.Entities.Commons;
 using XmiSchema.Managers;
-using XmiSchema.Entities.Physical;
-using XmiSchema.Entities.Bases;
-using XmiSchema.Entities.Geometries;
 using XmiSchema.Parameters;
 using XmiSchema.Entities.StructuralAnalytical;
-using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
-using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.ErrorHandling;
 
 /// <summary>
