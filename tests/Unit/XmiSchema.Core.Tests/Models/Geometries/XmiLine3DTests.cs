@@ -1,11 +1,12 @@
 using XmiSchema.Tests.Support;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Verifies the <see cref="XmiLine3d"/> geometric endpoints are stored.
 /// </summary>
-public class XmiLine3DTests
+public class XmiLine3dTests
 {
     /// <summary>
     /// Ensures the constructor accepts and exposes both endpoints.

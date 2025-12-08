@@ -1,11 +1,12 @@
 using XmiSchema.Tests.Support;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Validates arc geometry metadata.
 /// </summary>
-public class XmiArc3DTests
+public class XmiArc3dTests
 {
     /// <summary>
     /// Ensures radius and references are stored.

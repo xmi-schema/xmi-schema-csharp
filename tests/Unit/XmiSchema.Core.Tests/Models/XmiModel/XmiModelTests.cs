@@ -1,13 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using XmiSchema.Core.Entities;
-using XmiSchema.Models.Bases;
-using XmiSchema.Core.Geometries;
-using XmiSchema.Core.Relationships;
-using XmiSchema.Core.Parameters;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
-using XmiSchema.Core.Models.Entities.Physical;
-using XmiSchema.Tests.Support;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Geometries;
+using XmiSchema.Models.Relationships;
+using XmiSchema.Models.Enums;
+using XmiSchema.Models.Commons;
 
 namespace XmiSchema.Tests.Models.XmiModel;
 
@@ -22,7 +19,7 @@ public class XmiModelTests
     [Fact]
     public void CreatePoint3D_ReusesExistingPoint()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
 
         var first = model.CreateXmiPoint3d("pt-1", "Point", "ifc", "native", "desc", 1, 2, 3);
         var second = model.CreateXmiPoint3d("pt-2", "Point", "ifc", "native2", "desc", 1, 2, 3);
@@ -37,7 +34,7 @@ public class XmiModelTests
     [Fact]
     public void CreateMaterial_ReusesNativeId()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
 
         var first = model.CreateXmiMaterial("mat-1", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
         var second = model.CreateXmiMaterial("mat-2", "Mat", "ifc", "NATIVE", "desc", XmiMaterialTypeEnum.Steel, 50, 78.5, "200000", "80000", "0.3", 1.1);
@@ -52,7 +49,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructurePointConnection_AddsRelationships()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var point = TestModelFactory.CreatePoint();
         model.AddXmiStorey(storey);
@@ -71,7 +68,7 @@ public class XmiModelTests
     [Fact]
     public void CreateCrossSection_AddsMaterialRelationship()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
@@ -105,7 +102,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_AddsExpectedRelationships()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var crossSection = TestModelFactory.CreateCrossSection();
         var material = TestModelFactory.CreateMaterial();
         var storey = TestModelFactory.CreateStorey();
@@ -158,7 +155,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralCurveMember_AllowsNullCrossSection()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
         var endNode = TestModelFactory.CreatePointConnection("pc-end");
         model.AddXmiStructuralPointConnection(beginNode);
@@ -203,7 +200,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralSurfaceMember_AllowsNullMaterial()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var begin = TestModelFactory.CreatePointConnection("pc-a");
         var end = TestModelFactory.CreatePointConnection("pc-b");
@@ -241,7 +238,7 @@ public class XmiModelTests
     [Fact]
     public void CreateBeam_AddsMaterialRelationshipWhenProvided()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
@@ -274,7 +271,7 @@ public class XmiModelTests
     [Fact]
     public void CreatePhysicalElements_AllowNullMaterial()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
 
         var column = model.CreateXmiColumn(
             "col-create",
@@ -323,7 +320,7 @@ public class XmiModelTests
     [Fact]
     public void CreateStructuralSurfaceMember_AttachesRelationships()
     {
-        var model = new XmiModel();
+        var model = new XmiSchema.Models.Commons.XmiModel();
         var storey = TestModelFactory.CreateStorey();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiStorey(storey);

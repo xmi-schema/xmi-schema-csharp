@@ -1,7 +1,10 @@
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Relationships;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Relationships;
 using XmiSchema.Tests.Support;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Models.Relationships;
 
 /// <summary>

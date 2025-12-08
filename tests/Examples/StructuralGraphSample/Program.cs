@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
 using XmiSchema.Models.Bases;
-using XmiSchema.Core.Manager;
-using XmiSchema.Core;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
-using XmiSchema.Core.Parameters;
+using XmiSchema.Models.Commons;
+using XmiSchema;
+using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Parameters;
 
 var manager = new XmiManager();
 manager.Models.Add(new XmiModel());

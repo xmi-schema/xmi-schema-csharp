@@ -1,12 +1,11 @@
-using XmiSchema.Core.Geometries;
-using XmiSchema.Tests.Support;
+using XmiSchema.Models.Geometries;
 
 namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Validates the positional logic of <see cref="XmiPoint3d"/>.
 /// </summary>
-public class XmiPoint3DTests
+public class XmiPoint3dTests
 {
     /// <summary>
     /// Ensures equality honors the built-in tolerance.

@@ -1,16 +1,17 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
 using XmiSchema.Models.Bases;
-using XmiSchema.Core.Geometries;
-using XmiSchema.Core.Manager;
-using XmiSchema.Core.Models.Entities.Physical;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
-using XmiSchema.Core.Parameters;
-using XmiSchema.Core.Relationships;
+using XmiSchema.Models.Geometries;
+using XmiSchema.Models.Parameters;
+using XmiSchema.Models.Relationships;
+using XmiSchema.Models.Enums;
 using XmiSchema.Tests.Support;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Serialization;
 
 /// <summary>

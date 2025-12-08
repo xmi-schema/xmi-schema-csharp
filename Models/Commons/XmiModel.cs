@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using XmiSchema.Models.Relationships;
 using XmiSchema.Models.Entities.StructuralAnalytical;
 using XmiSchema.Models.Enums;

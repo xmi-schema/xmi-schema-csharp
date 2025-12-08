@@ -1,6 +1,7 @@
 using XmiSchema.Models.Bases;
-using XmiSchema.Core.Utils;
+using XmiSchema.Utils;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Utils;
 
 /// <summary>

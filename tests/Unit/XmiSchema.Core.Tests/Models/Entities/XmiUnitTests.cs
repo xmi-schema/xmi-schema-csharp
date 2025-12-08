@@ -1,7 +1,8 @@
 using XmiSchema.Models.Bases;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
 using XmiSchema.Tests.Support;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Models.Entities;
 
 /// <summary>

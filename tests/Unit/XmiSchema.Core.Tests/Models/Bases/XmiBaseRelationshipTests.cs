@@ -1,8 +1,11 @@
 using System.Collections.Generic;
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Entities.StructuralAnalytical;
 using XmiSchema.Models.Bases;
-using XmiSchema.Core.Relationships;
+using XmiSchema.Models.Relationships;
 
+using XmiSchema.Models.Enums;
 namespace XmiSchema.Tests.Models.Bases;
 
 /// <summary>
