@@ -1,9 +1,9 @@
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Tests.Support;
 
-using XmiSchema.Models.Enums;
+using XmiSchema.Enums;
+using XmiSchema.Entities.Commons;
 namespace XmiSchema.Tests.Models.Entities;
 
 /// <summary>

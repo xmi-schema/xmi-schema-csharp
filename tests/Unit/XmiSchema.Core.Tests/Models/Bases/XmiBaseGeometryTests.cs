@@ -1,7 +1,7 @@
-using XmiSchema.Models.Geometries;
-using XmiSchema.Models.Bases;
+using XmiSchema.Entities.Geometries;
 
-using XmiSchema.Models.Enums;
+using XmiSchema.Enums;
+using XmiSchema.Entities.Bases;
 namespace XmiSchema.Tests.Models.Bases;
 
 /// <summary>

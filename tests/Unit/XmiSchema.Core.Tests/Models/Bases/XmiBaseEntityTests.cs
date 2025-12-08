@@ -1,5 +1,5 @@
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Enums;
 
 namespace XmiSchema.Tests.Models.Bases;
 

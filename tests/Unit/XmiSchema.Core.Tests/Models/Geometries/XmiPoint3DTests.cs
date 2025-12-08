@@ -1,4 +1,4 @@
-using XmiSchema.Models.Geometries;
+using XmiSchema.Entities.Geometries;
 
 namespace XmiSchema.Tests.Models.Geometries;
 

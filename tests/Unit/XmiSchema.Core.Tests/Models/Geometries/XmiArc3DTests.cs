@@ -1,6 +1,6 @@
 using XmiSchema.Tests.Support;
 
-using XmiSchema.Models.Enums;
+using XmiSchema.Enums;
 namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>

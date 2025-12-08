@@ -1,7 +1,7 @@
-using XmiSchema.Models.Relationships;
 using XmiSchema.Tests.Support;
 
-using XmiSchema.Models.Enums;
+using XmiSchema.Enums;
+using XmiSchema.Entities.Relationships;
 namespace XmiSchema.Tests.Models.Relationships;
 
 /// <summary>

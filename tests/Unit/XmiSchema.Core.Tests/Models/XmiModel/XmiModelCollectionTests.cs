@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Geometries;
-using XmiSchema.Models.Relationships;
-using XmiSchema.Models.Parameters;
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Parameters;
 using XmiSchema.Tests.Support;
-using XmiModel = XmiSchema.Models.Commons.XmiModel;
+using XmiModel = XmiSchema.Managers.XmiModel;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.Geometries;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Entities.Relationships;
+using XmiSchema.Enums;
 
 namespace XmiSchema.Tests.Models.XmiModel;
 
@@ -24,7 +24,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void NewModel_HasEmptyCollections()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         Assert.Empty(model.Entities);
         Assert.Empty(model.Relationships);
@@ -36,7 +36,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void GetEntitiesOfType_EmptyModel_ReturnsEmptyList()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         var materials = model.GetXmiEntitiesOfType<XmiMaterial>();
         var points = model.GetXmiEntitiesOfType<XmiPoint3d>();
@@ -53,9 +53,9 @@ public class XmiModelCollectionTests
     [Fact]
     public void GetEntitiesOfType_NoMatchingType_ReturnsEmptyList()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         model.AddXmiMaterial(TestModelFactory.CreateMaterial());
-        model.AddXmiPoint3D(TestModelFactory.CreatePoint());
+        model.AddXmiPoint3d(TestModelFactory.CreatePoint());
 
         var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
@@ -68,15 +68,15 @@ public class XmiModelCollectionTests
     [Fact]
     public void GetEntitiesOfType_MixedEntities_ReturnsOnlyMatchingType()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         var point1 = TestModelFactory.CreatePoint("pt-1");
         var point2 = TestModelFactory.CreatePoint("pt-2");
         var storey = TestModelFactory.CreateStorey();
 
         model.AddXmiMaterial(material);
-        model.AddXmiPoint3D(point1);
-        model.AddXmiPoint3D(point2);
+        model.AddXmiPoint3d(point1);
+        model.AddXmiPoint3d(point2);
         model.AddXmiStorey(storey);
 
         var points = model.GetXmiEntitiesOfType<XmiPoint3d>();
@@ -92,7 +92,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Entities_CanContainMultipleOfSameType()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var mat1 = TestModelFactory.CreateMaterial("mat-1");
         var mat2 = TestModelFactory.CreateMaterial("mat-2");
         var mat3 = TestModelFactory.CreateMaterial("mat-3");
@@ -111,7 +111,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_CanBeAddedWithoutCorrespondingEntities()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var source = TestModelFactory.CreateCurveMember();
         var target = TestModelFactory.CreateMaterial();
 
@@ -129,7 +129,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_OrphanedSource_DoesNotThrow()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         var curveMember = TestModelFactory.CreateCurveMember();
 
@@ -151,7 +151,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_OrphanedTarget_DoesNotThrow()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         var curveMember = TestModelFactory.CreateCurveMember();
 
@@ -173,7 +173,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_BothOrphaned_DoesNotThrow()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         var curveMember = TestModelFactory.CreateCurveMember();
 
@@ -191,7 +191,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_MultipleForSameEntity_Allowed()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var curveMember = TestModelFactory.CreateCurveMember();
         var material = TestModelFactory.CreateMaterial();
         var crossSection = TestModelFactory.CreateCrossSection();
@@ -216,7 +216,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_Duplicates_AreNotDeduplicatedAutomatically()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var source = TestModelFactory.CreateCurveMember();
         var target = TestModelFactory.CreateMaterial();
 
@@ -238,14 +238,14 @@ public class XmiModelCollectionTests
     [Fact]
     public void Entities_PreservesInsertionOrder()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var mat1 = TestModelFactory.CreateMaterial("mat-1");
         var point = TestModelFactory.CreatePoint("pt-1");
         var mat2 = TestModelFactory.CreateMaterial("mat-2");
         var storey = TestModelFactory.CreateStorey();
 
         model.AddXmiMaterial(mat1);
-        model.AddXmiPoint3D(point);
+        model.AddXmiPoint3d(point);
         model.AddXmiMaterial(mat2);
         model.AddXmiStorey(storey);
 
@@ -262,7 +262,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_PreservesInsertionOrder()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var source1 = TestModelFactory.CreateCurveMember("cm-1");
         var source2 = TestModelFactory.CreateCurveMember("cm-2");
         var material = TestModelFactory.CreateMaterial();
@@ -288,7 +288,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Entities_LinqQueries_WorkOnEmptyCollection()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         var firstMaterial = model.Entities.OfType<XmiMaterial>().FirstOrDefault();
         var anyPoints = model.Entities.OfType<XmiPoint3d>().Any();
@@ -305,7 +305,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_LinqQueries_WorkOnEmptyCollection()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         var firstRelation = model.Relationships.OfType<XmiHasMaterial>().FirstOrDefault();
         var anyStoreyRelations = model.Relationships.OfType<XmiHasStorey>().Any();
@@ -322,7 +322,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_FilterBySource_ReturnsMatchingRelationships()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var source1 = TestModelFactory.CreateCurveMember("cm-1");
         var source2 = TestModelFactory.CreateCurveMember("cm-2");
         var material = TestModelFactory.CreateMaterial();
@@ -344,7 +344,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_FilterByTarget_ReturnsMatchingRelationships()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var source1 = TestModelFactory.CreateCurveMember("cm-1");
         var source2 = TestModelFactory.CreateCurveMember("cm-2");
         var material1 = TestModelFactory.CreateMaterial("mat-1");
@@ -369,11 +369,11 @@ public class XmiModelCollectionTests
     [Fact]
     public void Entities_LargeCollection_HandledCorrectly()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         for (int i = 0; i < 1000; i++)
         {
-            model.AddXmiPoint3D(TestModelFactory.CreatePoint($"pt-{i}"));
+            model.AddXmiPoint3d(TestModelFactory.CreatePoint($"pt-{i}"));
         }
 
         Assert.Equal(1000, model.Entities.Count);
@@ -386,7 +386,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Relationships_LargeCollection_HandledCorrectly()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
 
         for (int i = 0; i < 1000; i++)
@@ -404,7 +404,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void Entities_MixedDomains_AllAllowed()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
 
         // Shared domain
         var point = TestModelFactory.CreatePoint("pt-1");
@@ -427,7 +427,7 @@ public class XmiModelCollectionTests
         // Functional/Structural domain
         var curveMember = TestModelFactory.CreateCurveMember("cm-1");
 
-        model.AddXmiPoint3D(point);
+        model.AddXmiPoint3d(point);
         model.AddXmiBeam(beam);
         model.AddXmiStructuralCurveMember(curveMember);
 
@@ -443,7 +443,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void GetEntitiesOfType_ReturnsNewList()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var material = TestModelFactory.CreateMaterial();
         model.AddXmiMaterial(material);
 
@@ -460,7 +460,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void FindMatchingPointConnectionByPoint3D_EmptyRelationships_ReturnsNull()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var connection = TestModelFactory.CreatePointConnection("pc-1");
 
         var result = model.FindMatchingXmiStructuralPointConnectionByPoint3D(connection);
@@ -474,7 +474,7 @@ public class XmiModelCollectionTests
     [Fact]
     public void FindMatchingPointConnectionByPoint3D_NoMatchingPoint_ReturnsNull()
     {
-        var model = new XmiSchema.Models.Commons.XmiModel();
+        var model = new XmiSchema.Managers.XmiModel();
         var connection1 = TestModelFactory.CreatePointConnection("pc-1");
         var point1 = new XmiPoint3d("pt-1", "Point1", "", "", "", 1, 2, 3);
 

@@ -1,17 +1,8 @@
-using System;
-using System.IO;
-using System.Linq;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models;
-using XmiSchema.Models.Relationships;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Tests.Support;
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Entities.Relationships;
+using XmiSchema.Enums;
+using XmiSchema.Managers;
 namespace XmiSchema.Tests.Manager;
 
 /// <summary>
@@ -86,7 +77,7 @@ public class XmiManagerTests
         var point = TestModelFactory.CreatePoint();
         var first = TestModelFactory.CreatePointConnection("pc-first");
         var second = TestModelFactory.CreatePointConnection("pc-second");
-        model.AddXmiPoint3D(point);
+        model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
         model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));
@@ -110,7 +101,7 @@ public class XmiManagerTests
         var point = TestModelFactory.CreatePoint();
         var first = TestModelFactory.CreatePointConnection("pc-first");
         var second = TestModelFactory.CreatePointConnection("pc-second");
-        model.AddXmiPoint3D(point);
+        model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(first);
         model.AddXmiStructuralPointConnection(second);
         model.AddXmiHasPoint3D(new XmiHasPoint3d(first, point));

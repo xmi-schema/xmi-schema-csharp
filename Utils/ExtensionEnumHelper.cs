@@ -1,5 +1,5 @@
 using System.Reflection;
-using XmiSchema.Models.Bases;
+using XmiSchema.Entities.Bases;
 
 namespace XmiSchema.Utils;
 

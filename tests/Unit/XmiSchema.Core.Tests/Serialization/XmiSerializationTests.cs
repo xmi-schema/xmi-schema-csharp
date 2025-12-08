@@ -1,17 +1,16 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Geometries;
-using XmiSchema.Models.Parameters;
-using XmiSchema.Models.Relationships;
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Parameters;
+using XmiSchema.Entities.Relationships;
 using XmiSchema.Tests.Support;
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Geometries;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Enums;
+using XmiSchema.Managers;
 namespace XmiSchema.Tests.Serialization;
 
 /// <summary>
@@ -329,7 +328,7 @@ public class XmiSerializationTests
     {
         var model = new XmiModel();
         model.AddXmiMaterial(TestModelFactory.CreateMaterial());
-        model.AddXmiPoint3D(TestModelFactory.CreatePoint());
+        model.AddXmiPoint3d(TestModelFactory.CreatePoint());
 
         var json = JsonConvert.SerializeObject(model, _settings);
 
@@ -387,7 +386,7 @@ public class XmiSerializationTests
 
         for (int i = 0; i < 5; i++)
         {
-            model.AddXmiPoint3D(TestModelFactory.CreatePoint($"pt-{i}", i, i * 2, i * 3));
+            model.AddXmiPoint3d(TestModelFactory.CreatePoint($"pt-{i}", i, i * 2, i * 3));
         }
 
         var json = JsonConvert.SerializeObject(model, _settings);
@@ -483,7 +482,7 @@ public class XmiSerializationTests
         var model = new XmiModel();
 
         model.AddXmiMaterial(TestModelFactory.CreateMaterial());
-        model.AddXmiPoint3D(TestModelFactory.CreatePoint());
+        model.AddXmiPoint3d(TestModelFactory.CreatePoint());
         model.AddXmiStorey(TestModelFactory.CreateStorey());
 
         manager.Models.Add(model);
@@ -595,7 +594,7 @@ public class XmiSerializationTests
         model.AddXmiMaterial(material);
         model.AddXmiCrossSection(crossSection);
         model.AddXmiStorey(storey);
-        model.AddXmiPoint3D(point);
+        model.AddXmiPoint3d(point);
         model.AddXmiStructuralPointConnection(connection);
 
         // Add relationships
@@ -643,7 +642,7 @@ public class XmiSerializationTests
         model.AddXmiColumn(TestModelFactory.CreateColumn());
         model.AddXmiSlab(TestModelFactory.CreateSlab());
         model.AddXmiWall(TestModelFactory.CreateWall());
-        model.AddXmiPoint3D(TestModelFactory.CreatePoint());
+        model.AddXmiPoint3d(TestModelFactory.CreatePoint());
 
         var json = JsonConvert.SerializeObject(model, _settings);
         var deserialized = JsonConvert.DeserializeObject<XmiModel>(json, _settings);
@@ -660,7 +659,7 @@ public class XmiSerializationTests
         // Add 100 entities
         for (int i = 0; i < 100; i++)
         {
-            model.AddXmiPoint3D(TestModelFactory.CreatePoint($"pt-{i}", i, i * 2, i * 3));
+            model.AddXmiPoint3d(TestModelFactory.CreatePoint($"pt-{i}", i, i * 2, i * 3));
         }
 
         var json = JsonConvert.SerializeObject(model, _settings);

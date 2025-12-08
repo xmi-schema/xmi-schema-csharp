@@ -1,8 +1,6 @@
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Bases;
-
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Enums;
 namespace XmiSchema.Tests.Models.Entities.Physical;
 
 /// <summary>

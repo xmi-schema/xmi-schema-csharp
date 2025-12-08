@@ -1,11 +1,10 @@
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Managers;
+using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Tests.Support;
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Enums;
 namespace XmiSchema.Tests.Models.Entities.Physical;
 
 /// <summary>

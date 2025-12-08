@@ -1,13 +1,12 @@
 using System.Collections.Generic;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Geometries;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Parameters;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Parameters;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Geometries;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Enums;
+using XmiSchema.Managers;
 
 namespace XmiSchema.Tests.Support;
 
@@ -206,7 +205,7 @@ internal static class TestModelFactory
         var model = new XmiModel();
         model.AddXmiMaterial(CreateMaterial());
         model.AddXmiStorey(CreateStorey());
-        model.AddXmiPoint3D(CreatePoint());
+        model.AddXmiPoint3d(CreatePoint());
         model.AddXmiStructuralPointConnection(CreatePointConnection());
         model.AddXmiStructuralCurveMember(CreateCurveMember());
         return model;

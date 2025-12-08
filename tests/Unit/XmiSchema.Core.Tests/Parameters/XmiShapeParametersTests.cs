@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Parameters;
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Parameters;
+using XmiSchema.Enums;
 namespace XmiSchema.Tests.Parameters;
 
 /// <summary>

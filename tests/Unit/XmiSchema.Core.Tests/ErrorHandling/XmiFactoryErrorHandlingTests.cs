@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
-using XmiSchema.Models.Commons;
-using XmiSchema.Models.Entities.Physical;
-using XmiSchema.Models.Entities.StructuralAnalytical;
-using XmiSchema.Models.Bases;
-using XmiSchema.Models.Geometries;
-using XmiSchema.Models.Parameters;
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Managers;
+using XmiSchema.Entities.Physical;
+using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Geometries;
+using XmiSchema.Parameters;
 using XmiSchema.Tests.Support;
-
-using XmiSchema.Models.Enums;
+using XmiSchema.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Enums;
 namespace XmiSchema.Tests.ErrorHandling;
 
 /// <summary>

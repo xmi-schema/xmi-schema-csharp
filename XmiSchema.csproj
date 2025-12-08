@@ -30,8 +30,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="docs\api\" />
-    <Folder Include="docs\examples\" />
+    <Folder Include="Docs\api\" />
+    <Folder Include="Docs\examples\" />
   </ItemGroup>
 
 </Project>
