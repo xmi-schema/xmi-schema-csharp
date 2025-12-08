@@ -92,9 +92,9 @@ internal static class TestModelFactory
             XmiStructuralCurveMemberTypeEnum.Beam,
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0.1,
             0.1,
             0,
@@ -115,9 +115,9 @@ internal static class TestModelFactory
             XmiStructuralSurfaceMemberSystemPlaneEnum.Middle,
             12.5,
             0.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0.3);
 
     internal static XmiUnit CreateUnit(string id = "unit-1") =>
@@ -158,9 +158,9 @@ internal static class TestModelFactory
             "Steel beam",
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0.1,
             0.1,
             0,
@@ -176,9 +176,9 @@ internal static class TestModelFactory
             "Concrete column",
             XmiSystemLineEnum.MiddleMiddle,
             3.5,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0,
             0,
             0,
@@ -193,9 +193,9 @@ internal static class TestModelFactory
             id.ToUpperInvariant(),
             "Concrete slab",
             0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0.3);
 
     internal static XmiWall CreateWall(string id = "wall-1") =>
@@ -205,9 +205,9 @@ internal static class TestModelFactory
             id.ToUpperInvariant(),
             "Concrete wall",
             0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             3.0);
 
     internal static XmiModel CreateModelWithBasics()

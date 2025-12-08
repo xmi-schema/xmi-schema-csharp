@@ -10,6 +10,10 @@ namespace XmiSchema.Tests.Managers;
 /// </summary>
 public class XmiManagerTests
 {
+    private static readonly XmiAxis AxisX = new(1, 0, 0);
+    private static readonly XmiAxis AxisY = new(0, 1, 0);
+    private static readonly XmiAxis AxisZ = new(0, 0, 1);
+
     /// <summary>
     /// Ensures add helpers delegate to the underlying model list.
     /// </summary>
@@ -153,9 +157,9 @@ public class XmiManagerTests
             null,
             XmiSystemLineEnum.MiddleMiddle,
             4.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            AxisX,
+            AxisY,
+            AxisZ,
             0,
             0,
             0,

@@ -1,5 +1,6 @@
 using System;
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 
 namespace XmiSchema.Entities.Physical;
 
@@ -9,9 +10,9 @@ namespace XmiSchema.Entities.Physical;
 public class XmiWall : XmiBasePhysicalEntity, IEquatable<XmiWall>
 {
     public double ZOffset { get; set; }
-    public string LocalAxisX { get; set; }
-    public string LocalAxisY { get; set; }
-    public string LocalAxisZ { get; set; }
+    public XmiAxis LocalAxisX { get; set; }
+    public XmiAxis LocalAxisY { get; set; }
+    public XmiAxis LocalAxisZ { get; set; }
     public double Height { get; set; }
 
     /// <summary>
@@ -23,9 +24,9 @@ public class XmiWall : XmiBasePhysicalEntity, IEquatable<XmiWall>
     /// <param name="nativeId">Authoring system identifier.</param>
     /// <param name="description">Context describing the wall.</param>
     /// <param name="zOffset">Offset along the Z axis relative to its host.</param>
-    /// <param name="localAxisX">Serialized orientation of local X.</param>
-    /// <param name="localAxisY">Serialized orientation of local Y.</param>
-    /// <param name="localAxisZ">Serialized orientation of local Z.</param>
+    /// <param name="localAxisX">Unit direction of local X.</param>
+    /// <param name="localAxisY">Unit direction of local Y.</param>
+    /// <param name="localAxisZ">Unit direction of local Z.</param>
     /// <param name="height">Physical height of the wall.</param>
     public XmiWall(
         string id,
@@ -34,9 +35,9 @@ public class XmiWall : XmiBasePhysicalEntity, IEquatable<XmiWall>
         string nativeId,
         string description,
         double zOffset,
-        string localAxisX,
-        string localAxisY,
-        string localAxisZ,
+        XmiAxis localAxisX,
+        XmiAxis localAxisY,
+        XmiAxis localAxisZ,
         double height
     ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiWall))
     {

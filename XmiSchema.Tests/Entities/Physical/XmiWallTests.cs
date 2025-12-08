@@ -17,7 +17,7 @@ public class XmiWallTests
     [Fact]
     public void Constructor_AssignsAllProperties()
     {
-        var wall = new XmiWall("wall-1", "W1", "ifc-wall", "native-wall-1", "Concrete wall", 0.4, "1,0,0", "0,1,0", "0,0,1", 3.2);
+        var wall = new XmiWall("wall-1", "W1", "ifc-wall", "native-wall-1", "Concrete wall", 0.4, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.2);
 
         Assert.Equal("wall-1", wall.Id);
         Assert.Equal("W1", wall.Name);
@@ -26,9 +26,9 @@ public class XmiWallTests
         Assert.Equal("Concrete wall", wall.Description);
         Assert.Equal(nameof(XmiWall), wall.EntityType);
         Assert.Equal(0.4, wall.ZOffset);
-        Assert.Equal("1,0,0", wall.LocalAxisX);
-        Assert.Equal("0,1,0", wall.LocalAxisY);
-        Assert.Equal("0,0,1", wall.LocalAxisZ);
+        Assert.Equal(new XmiAxis(1, 0, 0), wall.LocalAxisX);
+        Assert.Equal(new XmiAxis(0, 1, 0), wall.LocalAxisY);
+        Assert.Equal(new XmiAxis(0, 0, 1), wall.LocalAxisZ);
         Assert.Equal(3.2, wall.Height);
     }
 
@@ -38,7 +38,7 @@ public class XmiWallTests
     [Fact]
     public void Constructor_SetsTypeToPhysical()
     {
-        var wall = new XmiWall("wall-2", "W2", "ifc", "native", "desc", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
+        var wall = new XmiWall("wall-2", "W2", "ifc", "native", "desc", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
 
         Assert.Equal(XmiBaseEntityDomainEnum.Physical, wall.Type);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(wall);
@@ -50,8 +50,8 @@ public class XmiWallTests
     [Fact]
     public void Equals_UsesNativeId()
     {
-        var first = new XmiWall("wall-3", "W3", "ifc", "WALL-SHARED", "First wall", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
-        var second = new XmiWall("wall-4", "W4", "ifc2", "wall-shared", "Second wall", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
+        var first = new XmiWall("wall-3", "W3", "ifc", "WALL-SHARED", "First wall", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
+        var second = new XmiWall("wall-4", "W4", "ifc2", "wall-shared", "Second wall", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
 
         Assert.True(first.Equals(second));
     }
@@ -62,8 +62,8 @@ public class XmiWallTests
     [Fact]
     public void Equals_ReturnsFalseForDifferentNativeIds()
     {
-        var first = new XmiWall("wall-5", "W5", "ifc", "WALL-A", "Wall A", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
-        var second = new XmiWall("wall-6", "W6", "ifc", "WALL-B", "Wall B", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
+        var first = new XmiWall("wall-5", "W5", "ifc", "WALL-A", "Wall A", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
+        var second = new XmiWall("wall-6", "W6", "ifc", "WALL-B", "Wall B", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
 
         Assert.False(first.Equals(second));
     }
@@ -74,8 +74,8 @@ public class XmiWallTests
     [Fact]
     public void GetHashCode_ConsistentWithEquals()
     {
-        var first = new XmiWall("wall-7", "W7", "ifc", "WALL-HASH", "Wall", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
-        var second = new XmiWall("wall-8", "W8", "ifc", "wall-hash", "Wall", 0, "1,0,0", "0,1,0", "0,0,1", 3.0);
+        var first = new XmiWall("wall-7", "W7", "ifc", "WALL-HASH", "Wall", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
+        var second = new XmiWall("wall-8", "W8", "ifc", "wall-hash", "Wall", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
 
         Assert.Equal(first.GetHashCode(), second.GetHashCode());
     }

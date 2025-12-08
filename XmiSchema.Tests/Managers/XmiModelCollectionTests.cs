@@ -412,9 +412,9 @@ public class XmiModelCollectionTests
             "Physical beam",
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
-            "1,0,0",
-            "0,1,0",
-            "0,0,1",
+            new XmiAxis(1, 0, 0),
+            new XmiAxis(0, 1, 0),
+            new XmiAxis(0, 0, 1),
             0, 0, 0, 0, 0, 0
         );
 

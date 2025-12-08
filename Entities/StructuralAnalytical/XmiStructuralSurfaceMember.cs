@@ -1,5 +1,6 @@
 using System;
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 using XmiSchema.Enums;
 
 namespace XmiSchema.Entities.StructuralAnalytical;
@@ -19,9 +20,9 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     // public List<XmiSegment> Segments { get; set; }
     public double Area { get; set; }
     public double ZOffset { get; set; }
-    public string LocalAxisX { get; set; }
-    public string LocalAxisY { get; set; }
-    public string LocalAxisZ { get; set; }
+    public XmiAxis LocalAxisX { get; set; }
+    public XmiAxis LocalAxisY { get; set; }
+    public XmiAxis LocalAxisZ { get; set; }
     public double Height { get; set; }
 
     /// <summary>
@@ -37,9 +38,9 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
     /// <param name="systemPlane">Plane orientation relative to the model.</param>
     /// <param name="area">Planar area.</param>
     /// <param name="zOffset">Offset along the Z axis.</param>
-    /// <param name="localAxisX">Serialized local X axis orientation.</param>
-    /// <param name="localAxisY">Serialized local Y axis orientation.</param>
-    /// <param name="localAxisZ">Serialized local Z axis orientation.</param>
+    /// <param name="localAxisX">Unit direction of local X.</param>
+    /// <param name="localAxisY">Unit direction of local Y.</param>
+    /// <param name="localAxisZ">Unit direction of local Z.</param>
     /// <param name="height">Total extrusion height.</param>
     public XmiStructuralSurfaceMember(
         string id,
@@ -56,9 +57,9 @@ public class XmiStructuralSurfaceMember : XmiBaseStructuralAnalyticalEntity, IEq
         // List<XmiSegment> segments,
         double area,
         double zOffset,
-        string localAxisX,
-        string localAxisY,
-        string localAxisZ,
+        XmiAxis localAxisX,
+        XmiAxis localAxisY,
+        XmiAxis localAxisZ,
         double height
     ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiStructuralSurfaceMember))
     {

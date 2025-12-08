@@ -558,9 +558,9 @@ namespace XmiSchema.Managers
             List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -571,6 +571,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -638,9 +641,9 @@ namespace XmiSchema.Managers
             List<XmiSegment>? segments,
             XmiSystemLineEnum systemLine,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -651,6 +654,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -717,14 +723,17 @@ namespace XmiSchema.Managers
             XmiMaterial? material,
             List<XmiSegment>? segments,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double thickness
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -785,14 +794,17 @@ namespace XmiSchema.Managers
             XmiMaterial? material,
             List<XmiSegment>? segments,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double height
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
 
             try
             {
@@ -860,9 +872,9 @@ namespace XmiSchema.Managers
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
             double length,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double beginNodeXOffset,
             double endNodeXOffset,
             double beginNodeYOffset,
@@ -875,6 +887,9 @@ namespace XmiSchema.Managers
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
             if (string.IsNullOrEmpty(name)) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
             try
             {
                 XmiMaterial? existingMaterial = null;
@@ -1175,12 +1190,15 @@ namespace XmiSchema.Managers
             List<XmiSegment> segments,
             double area,
             double zOffset,
-            string localAxisX,
-            string localAxisY,
-            string localAxisZ,
+            XmiAxis localAxisX,
+            XmiAxis localAxisY,
+            XmiAxis localAxisZ,
             double height
         )
         {
+            if (localAxisX == null) throw new ArgumentNullException(nameof(localAxisX));
+            if (localAxisY == null) throw new ArgumentNullException(nameof(localAxisY));
+            if (localAxisZ == null) throw new ArgumentNullException(nameof(localAxisZ));
             try
             {
                 XmiStorey? existingStorey = null;
