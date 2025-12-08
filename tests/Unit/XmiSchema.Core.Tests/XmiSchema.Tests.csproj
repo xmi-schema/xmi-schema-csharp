@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\xmi-schema-Csharp.Core.csproj" />
+    <ProjectReference Include="..\..\..\XmiSchema.csproj" />
   </ItemGroup>
 
 </Project>

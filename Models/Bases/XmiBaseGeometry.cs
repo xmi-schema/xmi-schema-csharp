@@ -1,8 +1,7 @@
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Enums;
 
 
-namespace XmiSchema.Core.Geometries;
+namespace XmiSchema.Models.Bases;
 
 /// <summary>
 /// Base type for all geometric entities shared by the schema.

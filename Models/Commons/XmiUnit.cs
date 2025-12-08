@@ -1,6 +1,7 @@
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Models.Commons;
 
 /// <summary>
 /// Defines the measurement unit assigned to a given entity attribute, enabling consistent conversion during data exchange.

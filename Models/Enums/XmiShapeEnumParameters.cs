@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace XmiSchema.Core.Enums;
+namespace XmiSchema.Models.Enums;
 
 /// <summary>
 /// Provides the expected parameter set for each <see cref="XmiShapeEnum"/> entry.

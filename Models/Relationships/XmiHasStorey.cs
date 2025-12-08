@@ -1,7 +1,7 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Associates entities, such as point connections, to the storey they belong to.

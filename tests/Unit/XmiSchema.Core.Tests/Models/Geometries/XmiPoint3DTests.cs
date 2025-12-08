@@ -1,6 +1,7 @@
 using XmiSchema.Core.Geometries;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Geometries;
+namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Validates the positional logic of <see cref="XmiPoint3d"/>.

@@ -1,8 +1,8 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Entities
+namespace XmiSchema.Models.Bases
 {
     /// <summary>
     /// Provides the foundational metadata shared by every Cross Model Information entity.

@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Relationships;
 
-namespace XmiSchema.Core.Tests.Models.Bases;
+namespace XmiSchema.Tests.Models.Bases;
 
 /// <summary>
 /// Covers the shared logic implemented by <see cref="XmiBaseRelationship"/>.
@@ -38,5 +39,28 @@ public class XmiBaseRelationshipTests
 
         Assert.False(string.IsNullOrWhiteSpace(relationship.Id));
         Assert.Equal("EdgeType", relationship.Name);
+    }
+
+    /// <summary>
+    /// Properties bag is initialized and accepts custom metadata.
+    /// </summary>
+    [Fact]
+    public void Constructor_StoresCustomProperties()
+    {
+        var source = new XmiBaseEntity("src", "Source", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
+        var target = new XmiBaseEntity("tgt", "Target", "ifc", "native", string.Empty, string.Empty, XmiBaseEntityDomainEnum.Functional);
+
+        var relationship = new XmiBaseRelationship(
+            "rel-props",
+            source,
+            target,
+            "Edge",
+            "desc",
+            "EdgeType",
+            new Dictionary<string, string> { { "nodeType", "Begin" } }
+        );
+
+        Assert.True(relationship.Properties.ContainsKey("nodeType"));
+        Assert.Equal("Begin", relationship.Properties["nodeType"]);
     }
 }

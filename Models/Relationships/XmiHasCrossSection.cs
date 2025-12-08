@@ -1,6 +1,6 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Links members to the cross-section definition they reference.

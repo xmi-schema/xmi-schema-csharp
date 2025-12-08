@@ -1,10 +1,10 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Models.Entities.Physical;
+namespace XmiSchema.Models.Entities.Physical;
 
 /// <summary>
 /// Represents a physical beam element in the built environment.

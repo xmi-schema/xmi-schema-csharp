@@ -1,8 +1,8 @@
 using System;
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
+namespace XmiSchema.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Models plates, slabs, and other surface members in the XMI graph with system plane and local axes metadata.

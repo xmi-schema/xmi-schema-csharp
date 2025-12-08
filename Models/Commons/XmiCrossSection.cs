@@ -1,10 +1,10 @@
 using System;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Parameters;
-using XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
+using XmiSchema.Models.Parameters;
 
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Models.Commons;
 
 /// <summary>
 /// Captures geometric and analytical properties of a structural cross-section shared by curve or surface members.

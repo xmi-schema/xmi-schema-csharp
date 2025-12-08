@@ -1,4 +1,4 @@
-namespace XmiSchema.Core.Enums;
+namespace XmiSchema.Models.Bases;
 
 /// <summary>
 /// Maps enum members to serialized string values consumed by downstream systems.

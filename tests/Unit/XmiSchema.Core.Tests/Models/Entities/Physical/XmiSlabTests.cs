@@ -1,8 +1,8 @@
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Models.Entities.Physical;
 
-namespace XmiSchema.Core.Tests.Models.Entities.Physical;
+namespace XmiSchema.Tests.Models.Entities.Physical;
 
 /// <summary>
 /// Validates <see cref="XmiSlab"/> entity creation and properties.

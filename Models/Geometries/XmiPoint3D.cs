@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Geometries;
+namespace XmiSchema.Models.Geometries;
 
 /// <summary>
 /// Represents a spatial point in the Cross Model Information schema with tolerance aware comparisons.

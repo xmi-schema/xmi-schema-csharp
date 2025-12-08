@@ -1,9 +1,9 @@
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Enums;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Models.Entities.StructuralAnalytical;
+namespace XmiSchema.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Represents a linear structural element (beam, column, brace) in the XMI graph, storing alignment data and offsets.

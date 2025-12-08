@@ -1,7 +1,8 @@
 using System;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Models.Commons;
 
 /// <summary>
 /// Defines a generic storey level within the built environment, capturing elevation and mass metadata.

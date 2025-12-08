@@ -1,9 +1,9 @@
 using System;
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Commons;
+using XmiSchema.Models.Geometries;
 
-namespace XmiSchema.Core.Models.Entities.StructuralAnalytical
+namespace XmiSchema.Models.Entities.StructuralAnalytical
 {
     /// <summary>
     /// Represents a discrete analytical point that can connect members, nodes, or storey definitions.

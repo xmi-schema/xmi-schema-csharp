@@ -1,7 +1,7 @@
 using System;
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Models.Entities.Physical;
+namespace XmiSchema.Models.Entities.Physical;
 
 /// <summary>
 /// Represents a physical slab element in the built environment.

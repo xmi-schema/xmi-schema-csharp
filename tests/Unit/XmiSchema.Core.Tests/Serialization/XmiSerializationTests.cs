@@ -2,16 +2,16 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Relationships;
-using XmiSchema.Core.Tests.Support;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Serialization;
+namespace XmiSchema.Tests.Serialization;
 
 /// <summary>
 /// Validates JSON serialization and deserialization of all XMI entities, relationships, and models.

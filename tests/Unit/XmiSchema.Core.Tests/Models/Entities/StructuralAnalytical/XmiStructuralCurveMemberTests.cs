@@ -1,7 +1,8 @@
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Entities.StructuralAnalytical;
+namespace XmiSchema.Tests.Models.Entities.StructuralAnalytical;
 
 /// <summary>
 /// Ensures curve member metadata is carried through constructor arguments.

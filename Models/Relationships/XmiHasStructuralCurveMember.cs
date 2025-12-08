@@ -1,6 +1,6 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Links physical elements to their structural curve member analytical representation.

@@ -1,7 +1,8 @@
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Entities;
+namespace XmiSchema.Tests.Models.Entities;
 
 /// <summary>
 /// Exercises the lightweight unit mapping entity.

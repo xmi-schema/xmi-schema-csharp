@@ -1,6 +1,6 @@
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Entities
+namespace XmiSchema.Models.Bases
 {
     /// <summary>
     /// Base class for all structural analytical domain entities in the Cross Model Information schema.

@@ -1,6 +1,6 @@
-using XmiSchema.Core.Geometries;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Geometries;
+namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Validates arc geometry metadata.

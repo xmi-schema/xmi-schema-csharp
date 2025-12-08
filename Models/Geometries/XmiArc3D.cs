@@ -1,4 +1,6 @@
-namespace XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
+
+namespace XmiSchema.Models.Geometries;
 
 /// <summary>
 /// Represents a three-dimensional circular arc defined by start, end, and center points.

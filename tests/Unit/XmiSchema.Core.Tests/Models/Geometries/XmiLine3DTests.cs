@@ -1,6 +1,6 @@
-using XmiSchema.Core.Geometries;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Geometries;
+namespace XmiSchema.Tests.Models.Geometries;
 
 /// <summary>
 /// Verifies the <see cref="XmiLine3d"/> geometric endpoints are stored.

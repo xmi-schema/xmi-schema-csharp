@@ -1,7 +1,7 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Associates two entities along a line relationship, typically between members and line geometry references.

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
 
-namespace XmiSchema.Core.Tests.Support;
+namespace XmiSchema.Tests.Support;
 
 /// <summary>
 /// Creates fully-populated domain objects that keep the unit tests terse.

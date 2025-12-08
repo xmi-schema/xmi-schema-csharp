@@ -1,12 +1,12 @@
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Geometries;
-using XmiSchema.Core.Relationships;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Parameters;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
-using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Models.Relationships;
+using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Enums;
+using XmiSchema.Models.Parameters;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Geometries;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Manager
+namespace XmiSchema.Models.Commons
 {
     /// <summary>
     /// Contract for components that manage Cross Model Information graphs and helper creation routines.

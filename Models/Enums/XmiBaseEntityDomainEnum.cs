@@ -1,4 +1,6 @@
-namespace XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+
+namespace XmiSchema.Models.Enums;
 
 /// <summary>
 /// Defines the domain classification for XMI entities.
@@ -9,5 +11,5 @@ public enum XmiBaseEntityDomainEnum
     [EnumValue("StructuralAnalytical")] StructuralAnalytical,
     [EnumValue("Geometry")] Geometry,
     [EnumValue("Functional")] Functional,
-        [EnumValue("Shared")] Shared
+    [EnumValue("Shared")] Shared
 }

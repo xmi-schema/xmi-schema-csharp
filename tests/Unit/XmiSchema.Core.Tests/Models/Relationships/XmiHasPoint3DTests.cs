@@ -1,7 +1,8 @@
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Relationships;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Relationships;
+namespace XmiSchema.Tests.Models.Relationships;
 
 /// <summary>
 /// Covers the constructors on <see cref="XmiHasPoint3d"/>.

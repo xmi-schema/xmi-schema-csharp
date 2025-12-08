@@ -1,7 +1,6 @@
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Links an entity to its geometric representation, typically associating members to lines or arcs.

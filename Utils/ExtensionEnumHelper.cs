@@ -1,7 +1,7 @@
 using System.Reflection;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Utils;
+namespace XmiSchema.Utils;
 
 /// <summary>
 /// Provides utilities for converting serialized string values back into XMI enums.

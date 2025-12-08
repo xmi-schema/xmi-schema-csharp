@@ -1,6 +1,6 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Connects an entity to its structural node representation in the analytical model.

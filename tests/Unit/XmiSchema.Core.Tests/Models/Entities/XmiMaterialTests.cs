@@ -1,7 +1,8 @@
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Entities;
+namespace XmiSchema.Tests.Models.Entities;
 
 /// <summary>
 /// Validates the material entity used throughout the schema.

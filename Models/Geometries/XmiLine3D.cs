@@ -1,4 +1,6 @@
-namespace XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
+
+namespace XmiSchema.Models.Geometries;
 
 /// <summary>
 /// Defines a straight 3D line segment between two <see cref="XmiPoint3d"/> nodes.

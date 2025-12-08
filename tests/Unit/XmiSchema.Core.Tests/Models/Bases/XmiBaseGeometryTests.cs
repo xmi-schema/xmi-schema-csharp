@@ -1,6 +1,6 @@
 using XmiSchema.Core.Geometries;
 
-namespace XmiSchema.Core.Tests.Models.Bases;
+namespace XmiSchema.Tests.Models.Bases;
 
 /// <summary>
 /// Validates the behavior of <see cref="XmiBaseGeometry"/> through a lightweight stub.

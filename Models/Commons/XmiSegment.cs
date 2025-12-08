@@ -1,8 +1,8 @@
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Geometries;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Models.Commons;
 
 /// <summary>
 /// Represents a logical segment within a structural curve member, including its position and shape classification.

@@ -1,7 +1,7 @@
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Tests.Models.Bases;
+namespace XmiSchema.Tests.Models.Bases;
 
 /// <summary>
 /// Verifies the behavior of <see cref="XmiBaseStructuralAnalyticalEntity"/> base class.

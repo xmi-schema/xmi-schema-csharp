@@ -1,9 +1,9 @@
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Models.Entities.Physical;
-using XmiSchema.Core.Tests.Support;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Entities.Physical;
+namespace XmiSchema.Tests.Models.Entities.Physical;
 
 /// <summary>
 /// Validates <see cref="XmiBeam"/> entity creation and properties.

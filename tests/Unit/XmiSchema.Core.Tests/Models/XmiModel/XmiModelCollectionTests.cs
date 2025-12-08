@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Models.Entities.Physical;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.GraphModel;
+namespace XmiSchema.Tests.Models.XmiModel;
 
 /// <summary>
 /// Tests collection validation scenarios in <see cref="XmiModel"/>.

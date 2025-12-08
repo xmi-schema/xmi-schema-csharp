@@ -2,13 +2,14 @@ using System;
 using System.IO;
 using System.Linq;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Manager;
+namespace XmiSchema.Tests.Manager;
 
 /// <summary>
 /// Exercises the orchestration helpers on <see cref="XmiManager"/>.

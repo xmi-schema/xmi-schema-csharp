@@ -1,7 +1,7 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Connects a structural entity to a point reference, typically used for structural nodes.

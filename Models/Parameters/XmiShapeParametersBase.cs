@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Parameters;
+namespace XmiSchema.Models.Parameters;
 
 /// <summary>
 /// Base implementation storing the canonical dictionary representation for a shape.

@@ -1,6 +1,7 @@
 using XmiSchema.Core.Entities;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Entities;
+namespace XmiSchema.Tests.Models.Entities;
 
 /// <summary>
 /// Covers the metadata handling of <see cref="XmiStorey"/>.

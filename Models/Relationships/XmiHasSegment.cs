@@ -1,6 +1,6 @@
-using XmiSchema.Core.Entities;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Relationships;
+namespace XmiSchema.Models.Relationships;
 
 /// <summary>
 /// Binds curve members to segment definitions so consumers can rebuild detailed analytical definitions.

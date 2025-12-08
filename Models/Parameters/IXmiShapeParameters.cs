@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Parameters;
+namespace XmiSchema.Models.Parameters;
 
 /// <summary>
 /// Represents a strongly typed parameter set for an <see cref="XmiShapeEnum"/>.

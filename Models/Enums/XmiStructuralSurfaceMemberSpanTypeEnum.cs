@@ -1,4 +1,5 @@
-namespace XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+namespace XmiSchema.Models.Enums;
 
 public enum XmiStructuralSurfaceMemberSpanTypeEnum
 

@@ -1,17 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using XmiSchema.Core.Entities;
-using XmiSchema.Core.Geometries;
-using XmiSchema.Core.Enums;
-using XmiSchema.Core.Relationships;
-using XmiSchema.Core.Parameters;
 using Newtonsoft.Json;
 using System.Reflection;
-using XmiSchema.Core.Models.Entities.StructuralAnalytical;
-using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Models.Relationships;
+using XmiSchema.Models.Entities.StructuralAnalytical;
+using XmiSchema.Models.Enums;
+using XmiSchema.Models.Parameters;
+using XmiSchema.Models.Entities.Physical;
+using XmiSchema.Models.Geometries;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Manager
+namespace XmiSchema.Models.Commons
 {
     /// <summary>
     /// Provides high-level helpers for constructing and querying <see cref="XmiModel"/> instances.

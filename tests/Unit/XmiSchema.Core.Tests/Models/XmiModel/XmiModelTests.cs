@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Relationships;
 using XmiSchema.Core.Parameters;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Models.Entities.Physical;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.GraphModel;
+namespace XmiSchema.Tests.Models.XmiModel;
 
 /// <summary>
 /// Covers the factory helpers exposed on <see cref="Core.XmiModel"/>.

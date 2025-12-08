@@ -1,7 +1,8 @@
 using Newtonsoft.Json;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
+using XmiSchema.Models.Enums;
 
-namespace XmiSchema.Core.Entities;
+namespace XmiSchema.Models.Commons;
 
 /// <summary>
 /// Describes a structural material that can be referenced by other XMI entities, including the mechanical constants used during analysis.

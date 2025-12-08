@@ -1,6 +1,7 @@
 using XmiSchema.Core.Relationships;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Relationships;
+namespace XmiSchema.Tests.Models.Relationships;
 
 /// <summary>
 /// Confirms segment relationships honor the provided source/target metadata.

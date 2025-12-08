@@ -1,6 +1,6 @@
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 
-namespace XmiSchema.Core.Tests.Models.Enums;
+namespace XmiSchema.Tests.Models.Enums;
 
 /// <summary>
 /// Validates all enum types have expected values and can be properly constructed.

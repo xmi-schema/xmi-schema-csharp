@@ -1,8 +1,8 @@
 using XmiSchema.Core.Entities;
 using XmiSchema.Core.Relationships;
-using XmiSchema.Core.Tests.Support;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.Models.Relationships;
+namespace XmiSchema.Tests.Models.Relationships;
 
 /// <summary>
 /// Validates <see cref="XmiHasStructuralCurveMember"/> relationship constructors.

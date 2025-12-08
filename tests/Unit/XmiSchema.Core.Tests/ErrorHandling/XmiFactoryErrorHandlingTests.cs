@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using XmiSchema.Core.Entities;
-using XmiSchema.Core.Enums;
+using XmiSchema.Models.Bases;
 using XmiSchema.Core.Geometries;
 using XmiSchema.Core.Manager;
 using XmiSchema.Core.Models;
 using XmiSchema.Core.Models.Entities.StructuralAnalytical;
 using XmiSchema.Core.Parameters;
-using XmiSchema.Core.Tests.Support;
+using XmiSchema.Tests.Support;
 
-namespace XmiSchema.Core.Tests.ErrorHandling;
+namespace XmiSchema.Tests.ErrorHandling;
 
 /// <summary>
 /// Validates error handling and validation logic in XmiModel and XmiManager factory methods.
