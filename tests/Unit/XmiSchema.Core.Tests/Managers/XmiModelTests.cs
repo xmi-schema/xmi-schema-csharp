@@ -258,6 +258,340 @@ public class XmiModelTests
     }
 
     /// <summary>
+    /// Curve member creation skips cross-section relationships when NativeId is null.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_DoesNotLinkCrossSectionWithNullNativeId()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        var crossSectionWithNullNativeId = new XmiCrossSection(
+            "sec-null-native",
+            "Section Null Native",
+            "ifc",
+            null!,
+            "desc",
+            XmiShapeEnum.Rectangular,
+            new RectangularShapeParameters(0.2, 0.4),
+            0.08,
+            0.001,
+            0.0015,
+            0.01,
+            0.015,
+            0.0003,
+            0.00035,
+            0.0004,
+            0.00045,
+            0.0005);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-null-native",
+            "Member null native section",
+            "ifc",
+            "native-null-section",
+            "desc",
+            null,
+            crossSectionWithNullNativeId,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Beam,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            4.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        Assert.DoesNotContain(model.Relationships.OfType<XmiHasCrossSection>(), r => r.Source == member);
+    }
+
+    /// <summary>
+    /// Curve member creation reuses existing cross-section by NativeId.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_ReusesCrossSectionByNativeId()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var existingCrossSection = TestModelFactory.CreateCrossSection();
+        model.AddXmiCrossSection(existingCrossSection);
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        // Create a new cross-section instance with same NativeId
+        var duplicateCrossSection = new XmiCrossSection(
+            "sec-different-id",
+            "Different Section Name",
+            "ifc-different",
+            existingCrossSection.NativeId,
+            "different desc",
+            XmiShapeEnum.Rectangular,
+            new RectangularShapeParameters(0.5, 0.8),
+            0.40,
+            0.010,
+            0.015,
+            0.05,
+            0.06,
+            0.003,
+            0.004,
+            0.005,
+            0.006,
+            0.007);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-reuse-cs",
+            "Member reuse cs",
+            "ifc",
+            "native-reuse-cs",
+            "desc",
+            null,
+            duplicateCrossSection,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Beam,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            5.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        var csRelation = model.Relationships.OfType<XmiHasCrossSection>().FirstOrDefault(r => r.Source == member);
+        Assert.NotNull(csRelation);
+        Assert.Equal(existingCrossSection.Id, csRelation.Target.Id);
+    }
+
+    /// <summary>
+    /// Curve member creation reuses existing material by NativeId.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_ReusesMaterialByNativeId()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var existingMaterial = TestModelFactory.CreateMaterial();
+        model.AddXmiMaterial(existingMaterial);
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        // Create a new material instance with same NativeId
+        var duplicateMaterial = new XmiMaterial(
+            "mat-different-id",
+            "Different Material Name",
+            "ifc-different",
+            existingMaterial.NativeId,
+            "different desc",
+            XmiMaterialTypeEnum.Concrete,
+            60,
+            25.0,
+            "30000",
+            "12500",
+            "0.2",
+            1.0);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-reuse-mat",
+            "Member reuse mat",
+            "ifc",
+            "native-reuse-mat",
+            "desc",
+            duplicateMaterial,
+            null,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Column,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            3.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Fixed");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        var matRelation = model.Relationships.OfType<XmiHasMaterial>().FirstOrDefault(r => r.Source == member);
+        Assert.NotNull(matRelation);
+        Assert.Equal(existingMaterial.Id, matRelation.Target.Id);
+    }
+
+    /// <summary>
+    /// Curve member creation reuses existing storey by NativeId.
+    /// </summary>
+    [Fact]
+    public void CreateStructuralCurveMember_ReusesStoreyByNativeId()
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var existingStorey = TestModelFactory.CreateStorey();
+        model.AddXmiStorey(existingStorey);
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+        model.AddXmiStructuralPointConnection(beginNode);
+        model.AddXmiStructuralPointConnection(endNode);
+
+        // Create a new storey instance with same NativeId
+        var duplicateStorey = new XmiStorey(
+            "storey-different-id",
+            "Different Storey Name",
+            "ifc-different",
+            existingStorey.NativeId,
+            "different desc",
+            10.0,
+            2000.0);
+
+        var member = model.CreateXmiStructuralCurveMember(
+            "cur-reuse-storey",
+            "Member reuse storey",
+            "ifc",
+            "native-reuse-storey",
+            "desc",
+            null,
+            null,
+            duplicateStorey,
+            XmiStructuralCurveMemberTypeEnum.Beam,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            6.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Pinned",
+            "Pinned");
+
+        Assert.Contains(model.Entities.OfType<XmiStructuralCurveMember>(), e => e.Id == member.Id);
+        var storeyRelation = model.Relationships.OfType<XmiHasStorey>().FirstOrDefault(r => r.Source == member);
+        Assert.NotNull(storeyRelation);
+        Assert.Equal(existingStorey.Id, storeyRelation.Target.Id);
+    }
+
+    /// <summary>
+    /// Curve member creation throws when ID is null or empty.
+    /// </summary>
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void CreateStructuralCurveMember_ThrowsWhenIdIsNullOrEmpty(string? invalidId)
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+
+        Assert.Throws<ArgumentException>(() => model.CreateXmiStructuralCurveMember(
+            invalidId!,
+            "Member",
+            "ifc",
+            "native",
+            "desc",
+            null,
+            null,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Beam,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            5.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned"));
+    }
+
+    /// <summary>
+    /// Curve member creation throws when name is null or empty.
+    /// </summary>
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void CreateStructuralCurveMember_ThrowsWhenNameIsNullOrEmpty(string? invalidName)
+    {
+        var model = new XmiSchema.Managers.XmiModel();
+        var beginNode = TestModelFactory.CreatePointConnection("pc-begin");
+        var endNode = TestModelFactory.CreatePointConnection("pc-end");
+
+        Assert.Throws<ArgumentException>(() => model.CreateXmiStructuralCurveMember(
+            "cur-valid-id",
+            invalidName!,
+            "ifc",
+            "native",
+            "desc",
+            null,
+            null,
+            null,
+            XmiStructuralCurveMemberTypeEnum.Beam,
+            new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
+            XmiSystemLineEnum.MiddleMiddle,
+            beginNode,
+            endNode,
+            5.0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            "Fixed",
+            "Pinned"));
+    }
+
+    /// <summary>
     /// Creating a surface member supports optional materials.
     /// </summary>
     [Fact]
