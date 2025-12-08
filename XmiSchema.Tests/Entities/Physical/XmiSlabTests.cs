@@ -17,7 +17,7 @@ public class XmiSlabTests
     [Fact]
     public void Constructor_AssignsAllProperties()
     {
-        var slab = new XmiSlab("slab-1", "S1", "ifc-slab", "native-slab-1", "Concrete slab");
+        var slab = new XmiSlab("slab-1", "S1", "ifc-slab", "native-slab-1", "Concrete slab", 1.2, "1,0,0", "0,1,0", "0,0,1", 0.25);
 
         Assert.Equal("slab-1", slab.Id);
         Assert.Equal("S1", slab.Name);
@@ -25,6 +25,11 @@ public class XmiSlabTests
         Assert.Equal("native-slab-1", slab.NativeId);
         Assert.Equal("Concrete slab", slab.Description);
         Assert.Equal(nameof(XmiSlab), slab.EntityType);
+        Assert.Equal(1.2, slab.ZOffset);
+        Assert.Equal("1,0,0", slab.LocalAxisX);
+        Assert.Equal("0,1,0", slab.LocalAxisY);
+        Assert.Equal("0,0,1", slab.LocalAxisZ);
+        Assert.Equal(0.25, slab.Thickness);
     }
 
     /// <summary>
@@ -33,7 +38,7 @@ public class XmiSlabTests
     [Fact]
     public void Constructor_SetsTypeToPhysical()
     {
-        var slab = new XmiSlab("slab-2", "S2", "ifc", "native", "desc");
+        var slab = new XmiSlab("slab-2", "S2", "ifc", "native", "desc", 0, "1,0,0", "0,1,0", "0,0,1", 0.3);
 
         Assert.Equal(XmiBaseEntityDomainEnum.Physical, slab.Type);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(slab);
@@ -45,8 +50,8 @@ public class XmiSlabTests
     [Fact]
     public void Equals_UsesNativeId()
     {
-        var first = new XmiSlab("slab-3", "S3", "ifc", "SLAB-SHARED", "First slab");
-        var second = new XmiSlab("slab-4", "S4", "ifc2", "slab-shared", "Second slab");
+        var first = new XmiSlab("slab-3", "S3", "ifc", "SLAB-SHARED", "First slab", 0, "1,0,0", "0,1,0", "0,0,1", 0.3);
+        var second = new XmiSlab("slab-4", "S4", "ifc2", "slab-shared", "Second slab", 0, "1,0,0", "0,1,0", "0,0,1", 0.25);
 
         Assert.True(first.Equals(second));
     }
@@ -57,8 +62,8 @@ public class XmiSlabTests
     [Fact]
     public void Equals_ReturnsFalseForDifferentNativeIds()
     {
-        var first = new XmiSlab("slab-5", "S5", "ifc", "SLAB-A", "Slab A");
-        var second = new XmiSlab("slab-6", "S6", "ifc", "SLAB-B", "Slab B");
+        var first = new XmiSlab("slab-5", "S5", "ifc", "SLAB-A", "Slab A", 0, "1,0,0", "0,1,0", "0,0,1", 0.2);
+        var second = new XmiSlab("slab-6", "S6", "ifc", "SLAB-B", "Slab B", 0, "1,0,0", "0,1,0", "0,0,1", 0.2);
 
         Assert.False(first.Equals(second));
     }
@@ -69,8 +74,8 @@ public class XmiSlabTests
     [Fact]
     public void GetHashCode_ConsistentWithEquals()
     {
-        var first = new XmiSlab("slab-7", "S7", "ifc", "SLAB-HASH", "Slab");
-        var second = new XmiSlab("slab-8", "S8", "ifc", "slab-hash", "Slab");
+        var first = new XmiSlab("slab-7", "S7", "ifc", "SLAB-HASH", "Slab", 0, "1,0,0", "0,1,0", "0,0,1", 0.2);
+        var second = new XmiSlab("slab-8", "S8", "ifc", "slab-hash", "Slab", 0, "1,0,0", "0,1,0", "0,0,1", 0.2);
 
         Assert.Equal(first.GetHashCode(), second.GetHashCode());
     }

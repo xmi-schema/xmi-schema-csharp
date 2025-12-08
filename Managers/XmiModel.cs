@@ -189,6 +189,24 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
+        /// Adds a line geometry relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasLine3d(XmiHasLine3d relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
+        /// Adds an arc geometry relationship to the model.
+        /// </summary>
+        /// <param name="relation">Relationship instance.</param>
+        public void AddXmiHasArc3d(XmiHasArc3d relation)
+        {
+            Relationships.Add(relation);
+        }
+
+        /// <summary>
         /// Adds a line geometry entity to the model.
         /// </summary>
         /// <param name="line">Line entity to add.</param>
@@ -687,7 +705,7 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a slab physical element and optionally links a material.
+        /// Creates a slab physical element and optionally links material and boundary segments.
         /// </summary>
         /// <returns>The created slab.</returns>
         public XmiSlab CreateXmiSlab(
@@ -696,7 +714,13 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double thickness
         )
         {
             if (string.IsNullOrEmpty(id)) throw new ArgumentException("ID cannot be null or empty", nameof(id));
@@ -715,7 +739,12 @@ namespace XmiSchema.Managers
                     name,
                     ifcGuid,
                     nativeId,
-                    description
+                    description,
+                    zOffset,
+                    localAxisX,
+                    localAxisY,
+                    localAxisZ,
+                    thickness
                 );
 
                 AddXmiSlab(slab);
@@ -723,6 +752,16 @@ namespace XmiSchema.Managers
                 if (existingMaterial != null)
                 {
                     AddXmiHasMaterial(new XmiHasMaterial(slab, existingMaterial));
+                }
+
+                if (segments != null)
+                {
+                    var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
+                    foreach (var segment in segments)
+                    {
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
+                        AddXmiHasSegment(new XmiHasSegment(slab, existingSegment));
+                    }
                 }
 
                 return slab;
@@ -1188,8 +1227,8 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a line segment with associated geometry and point relationships.
-        /// Creates: XmiSegment -> XmiHasGeometry -> existing XmiLine3d (with its own point relationships)
+        /// Creates a line segment and links it to existing line geometry.
+        /// Creates: XmiSegment -> XmiHasLine3d -> existing XmiLine3d (line already manages any point relationships)
         /// </summary>
         /// <param name="id">Unique identifier for the segment.</param>
         /// <param name="name">Human readable name.</param>
@@ -1238,7 +1277,7 @@ namespace XmiSchema.Managers
                 AddXmiSegment(segment);
 
                 // Create segment -> line relationship
-                AddXmiHasGeometry(new XmiHasLine3d(segment, existingLine));
+                AddXmiHasLine3d(new XmiHasLine3d(segment, existingLine));
 
                 return segment;
             }
@@ -1249,8 +1288,8 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a circular arc segment with associated geometry and point relationships.
-        /// Creates: XmiSegment -> XmiHasGeometry -> existing XmiArc3d (with its own point relationships)
+        /// Creates a circular arc segment and links it to existing arc geometry.
+        /// Creates: XmiSegment -> XmiHasArc3d -> existing XmiArc3d (arc already manages any point relationships)
         /// </summary>
         /// <param name="id">Unique identifier for the segment.</param>
         /// <param name="name">Human readable name.</param>
@@ -1299,7 +1338,7 @@ namespace XmiSchema.Managers
                 AddXmiSegment(segment);
 
                 // Create segment -> arc relationship
-                AddXmiHasGeometry(new XmiHasArc3d(segment, existingArc));
+                AddXmiHasArc3d(new XmiHasArc3d(segment, existingArc));
 
                 return segment;
             }

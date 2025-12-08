@@ -695,7 +695,13 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            null);
+            null,
+            null,
+            0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0.25);
 
         var wall = model.CreateXmiWall(
             "wall-create",
@@ -817,6 +823,37 @@ public class XmiModelTests
         Assert.Contains(model.Entities.OfType<XmiColumn>(), e => e.Id == column.Id);
         var segmentRelationships = model.Relationships.OfType<XmiHasSegment>().Where(r => r.Source == column).ToList();
         Assert.Single(segmentRelationships);
+    }
+
+    /// <summary>
+    /// Slab factory wires segment relationships and records thickness metadata.
+    /// </summary>
+    [Fact]
+    public void CreateSlab_WithSegments_AddsSegmentRelationships()
+    {
+        var model = new XmiModel();
+        var segment1 = TestModelFactory.CreateSegment("seg-slab-1");
+        var segment2 = TestModelFactory.CreateSegment("seg-slab-2");
+        var segments = new List<XmiSegment> { segment1, segment2 };
+
+        var slab = model.CreateXmiSlab(
+            "slab-seg",
+            "Slab with segments",
+            "ifc",
+            "native-slab-seg",
+            "desc",
+            null,
+            segments,
+            0.1,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0.35);
+
+        Assert.Contains(model.Entities.OfType<XmiSlab>(), e => e.Id == slab.Id);
+        var segmentRelationships = model.Relationships.OfType<XmiHasSegment>().Where(r => r.Source == slab).ToList();
+        Assert.Equal(2, segmentRelationships.Count);
+        Assert.Equal(0.35, slab.Thickness);
     }
 
     /// <summary>

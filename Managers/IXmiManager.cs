@@ -222,7 +222,13 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            XmiMaterial? material
+            XmiMaterial? material,
+            List<XmiSegment>? segments,
+            double zOffset,
+            string localAxisX,
+            string localAxisY,
+            string localAxisZ,
+            double thickness
         );
 
         /// <summary>

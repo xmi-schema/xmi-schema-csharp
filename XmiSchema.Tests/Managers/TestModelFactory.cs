@@ -191,7 +191,12 @@ internal static class TestModelFactory
             $"Slab {id}",
             "ifc-guid",
             id.ToUpperInvariant(),
-            "Concrete slab");
+            "Concrete slab",
+            0,
+            "1,0,0",
+            "0,1,0",
+            "0,0,1",
+            0.3);
 
     internal static XmiWall CreateWall(string id = "wall-1") =>
         new(id,
