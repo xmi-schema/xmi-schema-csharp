@@ -11,6 +11,7 @@ XmiSchema is a C# library for constructing and serializing Cross Model Informati
 ### Solution Structure
 - **Main library**: `XmiSchema.csproj` (targets `net8.0`)
 - **Unit tests**: `tests/Unit/XmiSchema.Core.Tests/XmiSchema.Tests.csproj` (targets `net8.0`)
+  - Uses xUnit 2.9.2 with Microsoft.NET.Test.Sdk 17.12.0
 - **Solution file**: `XmiSchema.sln` (includes both library and tests)
 
 ### Local Development Workflow

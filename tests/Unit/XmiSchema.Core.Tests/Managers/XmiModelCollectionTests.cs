@@ -26,8 +26,8 @@ public class XmiModelCollectionTests
     {
         var model = new XmiSchema.Managers.XmiModel();
 
-        Assert.Empty(model.Entities;
-        Assert.Empty(model.Relationships;
+        Assert.Empty(model.Entities);
+        Assert.Empty(model.Relationships);
     }
 
     /// <summary>
@@ -42,9 +42,9 @@ public class XmiModelCollectionTests
         var points = model.GetXmiEntitiesOfType<XmiPoint3d>();
         var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
-        Assert.Equal(0, materials);
-        Assert.Equal(0, points);
-        Assert.Equal(0, beams);
+        Assert.Empty(materials);
+        Assert.Empty(points);
+        Assert.Empty(beams);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class XmiModelCollectionTests
 
         var beams = model.GetXmiEntitiesOfType<XmiBeam>();
 
-        Assert.Equal(0, beams);
+        Assert.Empty(beams);
     }
 
     /// <summary>
@@ -119,7 +119,7 @@ public class XmiModelCollectionTests
         var relation = new XmiHasMaterial(source, target);
         model.AddXmiHasMaterial(relation);
 
-        Assert.Empty(model.Entities;
+        Assert.Empty(model.Entities);
         Assert.Single(model.Relationships);
     }
 
@@ -181,7 +181,7 @@ public class XmiModelCollectionTests
         var relation = new XmiHasMaterial(curveMember, material);
         model.AddXmiHasMaterial(relation);
 
-        Assert.Empty(model.Entities;
+        Assert.Empty(model.Entities);
         Assert.Single(model.Relationships);
     }
 
