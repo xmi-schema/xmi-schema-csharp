@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasSegment : XmiBaseRelationship
     public XmiHasSegment(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiSegment target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasSegment : XmiBaseRelationship
     /// <param name="target">Segment entity.</param>
     public XmiHasSegment(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiSegment target
     ) : base(source, target, nameof(XmiHasSegment))
     {
     }

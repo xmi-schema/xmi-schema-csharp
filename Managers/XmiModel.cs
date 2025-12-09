@@ -357,6 +357,68 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
+        /// Finds all lines that are coincident with the given line.
+        /// Two lines are coincident if they occupy the same space, regardless of direction.
+        /// </summary>
+        /// <param name="line">The line to match against.</param>
+        /// <returns>All coincident lines (excluding the input line itself if it exists in the model).</returns>
+        public IEnumerable<XmiLine3d> FindCoincidentLines(XmiLine3d line)
+        {
+            if (line == null) return Enumerable.Empty<XmiLine3d>();
+
+            return Entities
+                .OfType<XmiLine3d>()
+                .Where(l => !ReferenceEquals(l, line) && l.IsCoincident(line));
+        }
+
+        /// <summary>
+        /// Finds all lines that are directionally equal to the given line.
+        /// Two lines are directionally equal if they have the same coordinates AND the same direction.
+        /// </summary>
+        /// <param name="line">The line to match against.</param>
+        /// <returns>All directionally equal lines (excluding the input line itself if it exists in the model).</returns>
+        public IEnumerable<XmiLine3d> FindDirectionallyEqualLines(XmiLine3d line)
+        {
+            if (line == null) return Enumerable.Empty<XmiLine3d>();
+
+            return Entities
+                .OfType<XmiLine3d>()
+                .Where(l => !ReferenceEquals(l, line) && l.IsDirectionallyEqual(line));
+        }
+
+        /// <summary>
+        /// Finds all <see cref="XmiHasLine3d"/> relationships whose targets are coincident
+        /// with the given line.
+        /// Use for detecting redundant geometry relationships.
+        /// </summary>
+        /// <param name="line">The line to match against.</param>
+        /// <returns>All relationships with coincident targets.</returns>
+        public IEnumerable<XmiHasLine3d> FindCoincidentLineRelationships(XmiLine3d line)
+        {
+            if (line == null) return Enumerable.Empty<XmiHasLine3d>();
+
+            return Relationships
+                .OfType<XmiHasLine3d>()
+                .Where(rel => rel.TargetLine3d.IsCoincident(line));
+        }
+
+        /// <summary>
+        /// Finds all <see cref="XmiHasLine3d"/> relationships whose targets are directionally
+        /// equal to the given line.
+        /// Use when direction/vector matters.
+        /// </summary>
+        /// <param name="line">The line to match against.</param>
+        /// <returns>All relationships with directionally equal targets.</returns>
+        public IEnumerable<XmiHasLine3d> FindDirectionallyEqualLineRelationships(XmiLine3d line)
+        {
+            if (line == null) return Enumerable.Empty<XmiHasLine3d>();
+
+            return Relationships
+                .OfType<XmiHasLine3d>()
+                .Where(rel => rel.TargetLine3d.IsDirectionallyEqual(line));
+        }
+
+        /// <summary>
         /// Creates a new <see cref="XmiPoint3d"/> entity, adding it to the model.
         /// </summary>
         /// <param name="id">Unique identifier.</param>

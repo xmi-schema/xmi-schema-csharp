@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasMaterial : XmiBaseRelationship
     public XmiHasMaterial(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiMaterial target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasMaterial : XmiBaseRelationship
     /// <param name="target">Material entity.</param>
     public XmiHasMaterial(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiMaterial target
     ) : base(source, target, nameof(XmiHasMaterial))
     {
     }

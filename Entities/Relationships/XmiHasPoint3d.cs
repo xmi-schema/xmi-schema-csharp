@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Geometries;
 using XmiSchema.Enums;
 
 namespace XmiSchema.Entities.Relationships;
@@ -26,7 +27,7 @@ public class XmiHasPoint3d : XmiBaseRelationship
     public XmiHasPoint3d(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiPoint3d target,
         string name,
         string description,
         string entityName,
@@ -44,7 +45,7 @@ public class XmiHasPoint3d : XmiBaseRelationship
     /// <param name="pointType">Optional role of the point (Start, End, Center).</param>
     public XmiHasPoint3d(
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiPoint3d target,
         XmiPoint3dTypeEnum? pointType = null
     ) : base(source, target, nameof(XmiHasPoint3d))
     {

@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Geometries;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -13,7 +14,7 @@ public class XmiHasArc3d : XmiBaseRelationship
     public XmiHasArc3d(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiArc3d target,
         string name,
         string description,
         string entityName
@@ -26,7 +27,7 @@ public class XmiHasArc3d : XmiBaseRelationship
     /// </summary>
     public XmiHasArc3d(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiArc3d target
     ) : base(source, target, nameof(XmiHasArc3d))
     {
     }
