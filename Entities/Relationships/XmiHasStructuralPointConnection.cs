@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasStructuralPointConnection : XmiBaseRelationship
     public XmiHasStructuralPointConnection(
         string id,
         XmiBaseStructuralAnalyticalEntity source,
-        XmiBaseStructuralAnalyticalEntity target,
+        XmiStructuralPointConnection target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasStructuralPointConnection : XmiBaseRelationship
     /// <param name="target">Node entity.</param>
     public XmiHasStructuralPointConnection(
         XmiBaseStructuralAnalyticalEntity source,
-        XmiBaseStructuralAnalyticalEntity target
+        XmiStructuralPointConnection target
     ) : base(source, target, nameof(XmiHasStructuralPointConnection))
     {
     }

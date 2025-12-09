@@ -12,25 +12,25 @@ namespace XmiSchema.Tests.Entities.Bases;
 public class XmiPhysicalEntityTests
 {
     /// <summary>
-    /// Ensures the Type property is automatically set to Physical.
+    /// Ensures the Domain property is automatically set to Physical.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToPhysical()
+    public void Constructor_SetsDomainToPhysical()
     {
         var entity = new TestPhysicalEntity("phys-1", "Physical Entity", "ifc", "native", "desc");
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, entity.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, entity.Domain);
     }
 
     /// <summary>
-    /// Verifies entity type is set correctly.
+    /// Verifies entity name is set correctly.
     /// </summary>
     [Fact]
-    public void Constructor_AssignsEntityType()
+    public void Constructor_AssignsEntityName()
     {
         var entity = new TestPhysicalEntity("phys-2", "Physical Entity", "ifc", "native", "desc");
 
-        Assert.Equal(nameof(TestPhysicalEntity), entity.EntityType);
+        Assert.Equal(nameof(TestPhysicalEntity), entity.EntityName);
     }
 
     /// <summary>

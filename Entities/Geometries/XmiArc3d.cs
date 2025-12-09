@@ -40,6 +40,6 @@ public class XmiArc3d : XmiBaseGeometry
         EndPoint = endPoint;
         CenterPoint = centerPoint;
         Radius = radius;
-        EntityType = nameof(XmiArc3d);
+        EntityName = nameof(XmiArc3d);
     }
 }

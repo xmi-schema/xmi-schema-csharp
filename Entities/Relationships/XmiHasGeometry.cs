@@ -15,7 +15,7 @@ public class XmiHasGeometry : XmiBaseRelationship
     /// <param name="target">Geometry entity.</param>
     /// <param name="name">Descriptive label.</param>
     /// <param name="description">Optional notes.</param>
-    /// <param name="entityName">Type name emitted in serialized payloads.</param>
+    /// <param name="entityName">Domain name emitted in serialized payloads.</param>
     public XmiHasGeometry(
         string id,
         XmiBaseEntity source,

@@ -241,7 +241,7 @@ public class XmiSerializationTests
         var point = TestModelFactory.CreatePoint();
         var json = JsonConvert.SerializeObject(point, _settings);
 
-        Assert.Contains("\"Type\"", json);
+        Assert.Contains("\"Domain\"", json);
         Assert.Contains("\"Geometry\"", json); // XmiPoint3d has Geometry type
     }
 
@@ -272,8 +272,8 @@ public class XmiSerializationTests
             ""ifcGuid"": """",
             ""NativeId"": ""native"",
             ""Description"": """",
-            ""EntityType"": ""XmiMaterial"",
-            ""Type"": ""Shared"",
+            ""EntityName"": ""XmiMaterial"",
+            ""Domain"": ""Shared"",
             ""MaterialType"": ""Steel"",
             ""Grade"": 50,
             ""UnitWeight"": 78.5,
@@ -286,7 +286,7 @@ public class XmiSerializationTests
         var material = JsonConvert.DeserializeObject<XmiMaterial>(json, _settings);
 
         Assert.Equal(XmiMaterialTypeEnum.Steel, material!.MaterialType);
-        Assert.Equal(XmiBaseEntityDomainEnum.Shared, material.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Shared, material.Domain);
     }
 
     #endregion
@@ -614,7 +614,7 @@ public class XmiSerializationTests
     }
 
     [Fact]
-    public void PhysicalElements_SerializeWithCorrectType()
+    public void PhysicalElements_SerializeWithCorrectEntityNames()
     {
         var beam = TestModelFactory.CreateBeam();
         var column = TestModelFactory.CreateColumn();
@@ -633,7 +633,7 @@ public class XmiSerializationTests
     }
 
     [Fact]
-    public void MixedEntityTypes_InModel_SerializeCorrectly()
+    public void MixedEntityNames_InModel_SerializeCorrectly()
     {
         var model = new XmiModel();
 

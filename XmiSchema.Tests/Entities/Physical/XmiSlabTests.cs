@@ -24,7 +24,7 @@ public class XmiSlabTests
         Assert.Equal("ifc-slab", slab.IfcGuid);
         Assert.Equal("native-slab-1", slab.NativeId);
         Assert.Equal("Concrete slab", slab.Description);
-        Assert.Equal(nameof(XmiSlab), slab.EntityType);
+        Assert.Equal(nameof(XmiSlab), slab.EntityName);
         Assert.Equal(1.2, slab.ZOffset);
         Assert.Equal(new XmiAxis(1, 0, 0), slab.LocalAxisX);
         Assert.Equal(new XmiAxis(0, 1, 0), slab.LocalAxisY);
@@ -36,11 +36,11 @@ public class XmiSlabTests
     /// Verifies that XmiSlab inherits from XmiBasePhysicalEntity and has Physical type.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToPhysical()
+    public void Constructor_SetsDomainToPhysical()
     {
         var slab = new XmiSlab("slab-2", "S2", "ifc", "native", "desc", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 0.3);
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, slab.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, slab.Domain);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(slab);
     }
 

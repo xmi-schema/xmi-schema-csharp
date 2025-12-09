@@ -44,7 +44,7 @@ public class XmiPoint3d : XmiBaseGeometry, IEquatable<XmiPoint3d>
         X = x;
         Y = y;
         Z = z;
-        EntityType = nameof(XmiPoint3d);
+        EntityName = nameof(XmiPoint3d);
     }
 
     public bool Equals(XmiPoint3d? other)

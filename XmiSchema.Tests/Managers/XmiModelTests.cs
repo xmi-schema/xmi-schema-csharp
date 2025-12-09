@@ -1200,5 +1200,231 @@ public class XmiModelTests
             0.5f,
             arc));
     }
+
+    #region FindCoincidentLines
+
+    /// <summary>
+    /// FindCoincidentLines returns lines that occupy the same space.
+    /// </summary>
+    [Fact]
+    public void FindCoincidentLines_ReturnsCoincidentLines()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var line2 = new XmiLine3d("line-2", "Line 2", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 0, 0, 0),
+            TestModelFactory.CreatePoint("e2", 10, 10, 10));
+
+        var line3 = new XmiLine3d("line-3", "Line 3", "ifc-3", "N3", "desc",
+            TestModelFactory.CreatePoint("s3", 5, 5, 5),
+            TestModelFactory.CreatePoint("e3", 15, 15, 15));
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(line2);
+        model.AddXmiLine3d(line3);
+
+        var coincident = model.FindCoincidentLines(line1).ToList();
+
+        Assert.Single(coincident);
+        Assert.Contains(line2, coincident);
+        Assert.DoesNotContain(line3, coincident);
+    }
+
+    /// <summary>
+    /// FindCoincidentLines includes opposite direction lines.
+    /// </summary>
+    [Fact]
+    public void FindCoincidentLines_IncludesOppositeDirectionLines()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var lineReversed = new XmiLine3d("line-rev", "Line Reversed", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 10, 10, 10),
+            TestModelFactory.CreatePoint("e2", 0, 0, 0));
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(lineReversed);
+
+        var coincident = model.FindCoincidentLines(line1).ToList();
+
+        Assert.Single(coincident);
+        Assert.Contains(lineReversed, coincident);
+    }
+
+    /// <summary>
+    /// FindCoincidentLines returns empty when no matches.
+    /// </summary>
+    [Fact]
+    public void FindCoincidentLines_ReturnsEmptyWhenNoMatches()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var line2 = new XmiLine3d("line-2", "Line 2", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 100, 100, 100),
+            TestModelFactory.CreatePoint("e2", 200, 200, 200));
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(line2);
+
+        var coincident = model.FindCoincidentLines(line1).ToList();
+
+        Assert.Empty(coincident);
+    }
+
+    /// <summary>
+    /// FindCoincidentLines returns empty for null input.
+    /// </summary>
+    [Fact]
+    public void FindCoincidentLines_ReturnsEmptyForNull()
+    {
+        var model = new XmiModel();
+
+        var coincident = model.FindCoincidentLines(null!).ToList();
+
+        Assert.Empty(coincident);
+    }
+
+    #endregion
+
+    #region FindDirectionallyEqualLines
+
+    /// <summary>
+    /// FindDirectionallyEqualLines returns lines with same direction only.
+    /// </summary>
+    [Fact]
+    public void FindDirectionallyEqualLines_ReturnsSameDirectionOnly()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var lineSameDir = new XmiLine3d("line-same", "Line Same", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 0, 0, 0),
+            TestModelFactory.CreatePoint("e2", 10, 10, 10));
+
+        var lineReversed = new XmiLine3d("line-rev", "Line Reversed", "ifc-3", "N3", "desc",
+            TestModelFactory.CreatePoint("s3", 10, 10, 10),
+            TestModelFactory.CreatePoint("e3", 0, 0, 0));
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(lineSameDir);
+        model.AddXmiLine3d(lineReversed);
+
+        var directionallyEqual = model.FindDirectionallyEqualLines(line1).ToList();
+
+        Assert.Single(directionallyEqual);
+        Assert.Contains(lineSameDir, directionallyEqual);
+        Assert.DoesNotContain(lineReversed, directionallyEqual);
+    }
+
+    #endregion
+
+    #region FindCoincidentLineRelationships
+
+    /// <summary>
+    /// FindCoincidentLineRelationships returns relationships with coincident targets.
+    /// </summary>
+    [Fact]
+    public void FindCoincidentLineRelationships_ReturnsRelationshipsWithCoincidentTargets()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var line2 = new XmiLine3d("line-2", "Line 2", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 0, 0, 0),
+            TestModelFactory.CreatePoint("e2", 10, 10, 10));
+
+        var line3 = new XmiLine3d("line-3", "Line 3", "ifc-3", "N3", "desc",
+            TestModelFactory.CreatePoint("s3", 100, 100, 100),
+            TestModelFactory.CreatePoint("e3", 200, 200, 200));
+
+        var segment1 = TestModelFactory.CreateSegment("seg-1");
+        var segment2 = TestModelFactory.CreateSegment("seg-2");
+        var segment3 = TestModelFactory.CreateSegment("seg-3");
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(line2);
+        model.AddXmiLine3d(line3);
+        model.AddXmiSegment(segment1);
+        model.AddXmiSegment(segment2);
+        model.AddXmiSegment(segment3);
+
+        var rel1 = new XmiHasLine3d(segment1, line1);
+        var rel2 = new XmiHasLine3d(segment2, line2);
+        var rel3 = new XmiHasLine3d(segment3, line3);
+        model.AddXmiHasLine3d(rel1);
+        model.AddXmiHasLine3d(rel2);
+        model.AddXmiHasLine3d(rel3);
+
+        var coincidentRels = model.FindCoincidentLineRelationships(line1).ToList();
+
+        Assert.Equal(2, coincidentRels.Count);
+        Assert.Contains(rel1, coincidentRels);
+        Assert.Contains(rel2, coincidentRels);
+        Assert.DoesNotContain(rel3, coincidentRels);
+    }
+
+    #endregion
+
+    #region FindDirectionallyEqualLineRelationships
+
+    /// <summary>
+    /// FindDirectionallyEqualLineRelationships returns relationships with same direction targets.
+    /// </summary>
+    [Fact]
+    public void FindDirectionallyEqualLineRelationships_ReturnsSameDirectionTargets()
+    {
+        var model = new XmiModel();
+        var line1 = new XmiLine3d("line-1", "Line 1", "ifc-1", "N1", "desc",
+            TestModelFactory.CreatePoint("s1", 0, 0, 0),
+            TestModelFactory.CreatePoint("e1", 10, 10, 10));
+
+        var lineSameDir = new XmiLine3d("line-same", "Line Same", "ifc-2", "N2", "desc",
+            TestModelFactory.CreatePoint("s2", 0, 0, 0),
+            TestModelFactory.CreatePoint("e2", 10, 10, 10));
+
+        var lineReversed = new XmiLine3d("line-rev", "Line Reversed", "ifc-3", "N3", "desc",
+            TestModelFactory.CreatePoint("s3", 10, 10, 10),
+            TestModelFactory.CreatePoint("e3", 0, 0, 0));
+
+        var segment1 = TestModelFactory.CreateSegment("seg-1");
+        var segment2 = TestModelFactory.CreateSegment("seg-2");
+        var segment3 = TestModelFactory.CreateSegment("seg-3");
+
+        model.AddXmiLine3d(line1);
+        model.AddXmiLine3d(lineSameDir);
+        model.AddXmiLine3d(lineReversed);
+        model.AddXmiSegment(segment1);
+        model.AddXmiSegment(segment2);
+        model.AddXmiSegment(segment3);
+
+        var rel1 = new XmiHasLine3d(segment1, line1);
+        var rel2 = new XmiHasLine3d(segment2, lineSameDir);
+        var rel3 = new XmiHasLine3d(segment3, lineReversed);
+        model.AddXmiHasLine3d(rel1);
+        model.AddXmiHasLine3d(rel2);
+        model.AddXmiHasLine3d(rel3);
+
+        var directionalRels = model.FindDirectionallyEqualLineRelationships(line1).ToList();
+
+        Assert.Equal(2, directionalRels.Count);
+        Assert.Contains(rel1, directionalRels);
+        Assert.Contains(rel2, directionalRels);
+        Assert.DoesNotContain(rel3, directionalRels);
+    }
+
+    #endregion
 }
 

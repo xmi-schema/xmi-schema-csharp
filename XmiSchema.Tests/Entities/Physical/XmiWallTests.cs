@@ -24,7 +24,7 @@ public class XmiWallTests
         Assert.Equal("ifc-wall", wall.IfcGuid);
         Assert.Equal("native-wall-1", wall.NativeId);
         Assert.Equal("Concrete wall", wall.Description);
-        Assert.Equal(nameof(XmiWall), wall.EntityType);
+        Assert.Equal(nameof(XmiWall), wall.EntityName);
         Assert.Equal(0.4, wall.ZOffset);
         Assert.Equal(new XmiAxis(1, 0, 0), wall.LocalAxisX);
         Assert.Equal(new XmiAxis(0, 1, 0), wall.LocalAxisY);
@@ -36,11 +36,11 @@ public class XmiWallTests
     /// Verifies that XmiWall inherits from XmiBasePhysicalEntity and has Physical type.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToPhysical()
+    public void Constructor_SetsDomainToPhysical()
     {
         var wall = new XmiWall("wall-2", "W2", "ifc", "native", "desc", 0, new XmiAxis(1, 0, 0), new XmiAxis(0, 1, 0), new XmiAxis(0, 0, 1), 3.0);
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, wall.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, wall.Domain);
         Assert.IsAssignableFrom<XmiBasePhysicalEntity>(wall);
     }
 

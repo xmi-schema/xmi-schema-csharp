@@ -12,25 +12,25 @@ namespace XmiSchema.Tests.Entities.Bases;
 public class XmiStructuralAnalyticalEntityTests
 {
     /// <summary>
-    /// Ensures the Type property is automatically set to StructuralAnalytical.
+    /// Ensures the Domain property is automatically set to StructuralAnalytical.
     /// </summary>
     [Fact]
-    public void Constructor_SetsTypeToStructuralAnalytical()
+    public void Constructor_SetsDomainToStructuralAnalytical()
     {
         var entity = new TestStructuralAnalyticalEntity("struct-1", "Structural Entity", "ifc", "native", "desc");
 
-        Assert.Equal(XmiBaseEntityDomainEnum.StructuralAnalytical, entity.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.StructuralAnalytical, entity.Domain);
     }
 
     /// <summary>
-    /// Verifies entity type is set correctly.
+    /// Verifies entity name is set correctly.
     /// </summary>
     [Fact]
-    public void Constructor_AssignsEntityType()
+    public void Constructor_AssignsEntityName()
     {
         var entity = new TestStructuralAnalyticalEntity("struct-2", "Structural Entity", "ifc", "native", "desc");
 
-        Assert.Equal(nameof(TestStructuralAnalyticalEntity), entity.EntityType);
+        Assert.Equal(nameof(TestStructuralAnalyticalEntity), entity.EntityName);
     }
 
     /// <summary>

@@ -25,11 +25,11 @@ namespace XmiSchema.Entities.Bases
         public string Description { get; set; }
 
         [JsonProperty(Order = 5)]
-        public string EntityType { get; set; }
+        public string EntityName { get; set; }
 
         [JsonProperty(Order = 6)]
         [JsonConverter(typeof(StringEnumConverter))]
-        public XmiBaseEntityDomainEnum Type { get; set; }
+        public XmiBaseEntityDomainEnum Domain { get; set; }
 
         // 带参数构造函数
         /// <summary>
@@ -40,16 +40,16 @@ namespace XmiSchema.Entities.Bases
         /// <param name="ifcGuid">IFC GUID reference when available.</param>
         /// <param name="nativeId">Identifier from the native source system.</param>
         /// <param name="description">Describes the entity purpose.</param>
-        /// <param name="entityType">Type hint emitted in payloads.</param>
-        /// <param name="type">Domain classification for the entity.</param>
+        /// <param name="entityName">Domain hint emitted in payloads.</param>
+        /// <param name="domain">Domain classification for the entity.</param>
         public XmiBaseEntity(
             string id,
             string name,
             string ifcGuid,
             string nativeId,
             string description,
-            string entityType,
-            XmiBaseEntityDomainEnum type
+            string entityName,
+            XmiBaseEntityDomainEnum domain
         )
         {
             Id = id;
@@ -58,8 +58,8 @@ namespace XmiSchema.Entities.Bases
             IfcGuid = ifcGuid;
             NativeId = nativeId;
             Description = description;
-            EntityType = string.IsNullOrEmpty(entityType) ? nameof(XmiBaseEntity) : entityType;
-            Type = type;
+            EntityName = string.IsNullOrEmpty(entityName) ? nameof(XmiBaseEntity) : entityName;
+            Domain = domain;
         }
     }
 }

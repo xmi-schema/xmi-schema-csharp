@@ -39,10 +39,11 @@ XMI entities include an `ifcGuid` property, allowing direct mapping to IFC eleme
 Following industry best practices for AEC data schemas:
 
 1. **Unique Identification**: Every entity has a stable `id`, optional `ifcGuid` for IFC interoperability, and `nativeId` for source system traceability
-2. **Polymorphic Serialization**: `EntityType` discriminator enables type-safe deserialization of heterogeneous entity collections
-3. **Explicit Relationships**: Graph edges (relationships) are first-class citizens with their own identity and metadata
-4. **Unit Awareness**: `XmiUnit` entities define measurement units for proper unit conversion across systems
-5. **Tolerance-Aware Geometry**: Point deduplication with configurable geometric tolerance prevents duplicate coordinates
+2. **Polymorphic Serialization**: `EntityName` discriminator enables type-safe deserialization of heterogeneous entity collections
+3. **Domain Classification**: Entities include a `Domain` field (Physical, StructuralAnalytical, Geometry, Functional, Shared) to make payload routing explicit
+4. **Explicit Relationships**: Graph edges (relationships) are first-class citizens with their own identity and metadata
+5. **Unit Awareness**: `XmiUnit` entities define measurement units for proper unit conversion across systems
+6. **Tolerance-Aware Geometry**: Point deduplication with configurable geometric tolerance prevents duplicate coordinates
 
 ## Installation
 
@@ -199,8 +200,8 @@ XMI serializes to a clean JSON structure:
       "ifcGuid": "3$HnSh4fn5$vQIE9d8M0L9",
       "NativeId": "MAT_C40",
       "Description": "High-strength concrete",
-      "EntityType": "XmiMaterial",
-      "Type": "Material",
+      "EntityName": "XmiMaterial",
+      "Domain": "Shared",
       "MaterialType": "Concrete",
       "Grade": 40,
       "UnitWeight": 24
@@ -209,7 +210,7 @@ XMI serializes to a clean JSON structure:
   "Relationships": [
     {
       "id": "rel-1",
-      "EntityType": "XmiHasMaterial",
+      "EntityName": "XmiHasMaterial",
       "SourceId": "col-1",
       "TargetId": "mat-1"
     }

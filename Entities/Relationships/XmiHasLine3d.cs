@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Geometries;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasLine3d : XmiBaseRelationship
     public XmiHasLine3d(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiLine3d target,
         string name,
         string description,
         string entityName
@@ -34,8 +35,53 @@ public class XmiHasLine3d : XmiBaseRelationship
     /// <param name="target">Related entity.</param>
     public XmiHasLine3d(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiLine3d target
     ) : base(source, target, nameof(XmiHasLine3d))
     {
+    }
+
+    /// <summary>
+    /// Gets the target as a strongly-typed <see cref="XmiLine3d"/>.
+    /// </summary>
+    public XmiLine3d TargetLine3d => (XmiLine3d)Target;
+
+    /// <summary>
+    /// Checks if this relationship's target references the exact same
+    /// <see cref="XmiPoint3d"/> instances as the other relationship's target.
+    /// Use for graph connectivity checks.
+    /// </summary>
+    /// <param name="other">The relationship to compare against.</param>
+    /// <returns>True if both targets share the same point references.</returns>
+    public bool HasSameTarget(XmiHasLine3d? other)
+    {
+        if (other == null) return false;
+        return TargetLine3d.Equals(other.TargetLine3d);
+    }
+
+    /// <summary>
+    /// Checks if this relationship's target has the same coordinates
+    /// AND the same vector direction as the other relationship's target.
+    /// Use when direction/vector matters (e.g., load direction).
+    /// </summary>
+    /// <param name="other">The relationship to compare against.</param>
+    /// <returns>True if targets have same coordinates and direction.</returns>
+    public bool HasDirectionallyEqualTarget(XmiHasLine3d? other)
+    {
+        if (other == null) return false;
+        return TargetLine3d.IsDirectionallyEqual(other.TargetLine3d);
+    }
+
+    /// <summary>
+    /// Checks if this relationship's target occupies the same space
+    /// as the other relationship's target, regardless of direction.
+    /// A→B is considered coincident with B→A.
+    /// Use for geometry deduplication.
+    /// </summary>
+    /// <param name="other">The relationship to compare against.</param>
+    /// <returns>True if targets occupy the same space.</returns>
+    public bool HasCoincidentTarget(XmiHasLine3d? other)
+    {
+        if (other == null) return false;
+        return TargetLine3d.IsCoincident(other.TargetLine3d);
     }
 }

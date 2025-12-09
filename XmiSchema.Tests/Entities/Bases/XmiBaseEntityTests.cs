@@ -23,22 +23,22 @@ public class XmiBaseEntityTests
     /// Ensures entity type defaults to the class name whenever omitted.
     /// </summary>
     [Fact]
-    public void Constructor_DefaultsEntityType()
+    public void Constructor_DefaultsEntityName()
     {
         var entity = new XmiBaseEntity("entity-2", "Entity", "ifc", "native", "desc", string.Empty, XmiBaseEntityDomainEnum.Functional);
 
-        Assert.Equal(nameof(XmiBaseEntity), entity.EntityType);
+        Assert.Equal(nameof(XmiBaseEntity), entity.EntityName);
     }
 
     /// <summary>
-    /// Ensures the Type property is correctly assigned from constructor.
+    /// Ensures the Domain property is correctly assigned from constructor.
     /// </summary>
     [Fact]
-    public void Constructor_AssignsTypeProperty()
+    public void Constructor_AssignsDomainProperty()
     {
         var entity = new XmiBaseEntity("entity-3", "Entity", "ifc", "native", "desc", "TestType", XmiBaseEntityDomainEnum.Physical);
 
-        Assert.Equal(XmiBaseEntityDomainEnum.Physical, entity.Type);
+        Assert.Equal(XmiBaseEntityDomainEnum.Physical, entity.Domain);
     }
 
     /// <summary>
@@ -53,6 +53,6 @@ public class XmiBaseEntityTests
     {
         var entity = new XmiBaseEntity("entity-4", "Entity", "ifc", "native", "desc", "TestType", domainType);
 
-        Assert.Equal(domainType, entity.Type);
+        Assert.Equal(domainType, entity.Domain);
     }
 }

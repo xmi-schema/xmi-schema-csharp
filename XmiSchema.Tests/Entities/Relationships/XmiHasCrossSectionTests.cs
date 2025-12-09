@@ -1,6 +1,7 @@
 using XmiSchema.Enums;
 using XmiSchema.Entities.Relationships;
 using XmiSchema.Tests.Managers;
+
 namespace XmiSchema.Tests.Entities.Relationships;
 
 /// <summary>
@@ -20,7 +21,7 @@ public class XmiHasCrossSectionTests
             nameof(XmiHasCrossSection));
 
         Assert.Equal("rel-sec", relation.Id);
-        Assert.Equal(nameof(XmiHasCrossSection), relation.EntityType);
+        Assert.Equal(nameof(XmiHasCrossSection), relation.EntityName);
     }
 
     [Fact]

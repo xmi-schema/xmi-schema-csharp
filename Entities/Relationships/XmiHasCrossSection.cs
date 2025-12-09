@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasCrossSection : XmiBaseRelationship
     public XmiHasCrossSection(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiCrossSection target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasCrossSection : XmiBaseRelationship
     /// <param name="target">Cross-section entity.</param>
     public XmiHasCrossSection(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiCrossSection target
     ) : base(source, target, nameof(XmiHasCrossSection))
     {
     }

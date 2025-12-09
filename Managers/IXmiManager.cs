@@ -300,7 +300,7 @@ namespace XmiSchema.Managers
         /// <param name="ifcGuid">Optional IFC GUID reference.</param>
         /// <param name="nativeId">Native identifier within the authoring system.</param>
         /// <param name="description">Optional description for the material.</param>
-        /// <param name="materialType">Type classification for the material.</param>
+        /// <param name="materialType">Domain classification for the material.</param>
         /// <param name="grade">Material grade number.</param>
         /// <param name="unitWeight">Density in kN/m^3 or similar units.</param>
         /// <param name="eModulus">Elastic modulus string as defined in source.</param>

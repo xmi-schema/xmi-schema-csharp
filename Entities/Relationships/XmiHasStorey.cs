@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasStorey : XmiBaseRelationship
     public XmiHasStorey(
         string id,
         XmiBaseEntity source,
-        XmiBaseEntity target,
+        XmiStorey target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasStorey : XmiBaseRelationship
     /// <param name="target">Storey entity.</param>
     public XmiHasStorey(
         XmiBaseEntity source,
-        XmiBaseEntity target
+        XmiStorey target
     ) : base(source, target, nameof(XmiHasStorey))
     {
     }

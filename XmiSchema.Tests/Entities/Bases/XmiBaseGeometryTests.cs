@@ -11,31 +11,31 @@ public class XmiBaseGeometryTests
 {
     private sealed class StubGeometry : XmiBaseGeometry
     {
-        internal StubGeometry(string? entityType = null)
-            : base("geom-1", "Geom", "ifc", "native", "desc", entityType)
+        internal StubGeometry(string? entityName = null)
+            : base("geom-1", "Geom", "ifc", "native", "desc", entityName)
         {
         }
     }
 
     /// <summary>
-    /// Verifies that omitted entity type values fall back to the geometry type name.
+    /// Verifies that omitted entity name values fall back to the geometry type name.
     /// </summary>
     [Fact]
-    public void Constructor_DefaultsEntityType()
+    public void Constructor_DefaultsEntityName()
     {
         var geometry = new StubGeometry();
 
-        Assert.Equal(nameof(XmiBaseGeometry), geometry.EntityType);
+        Assert.Equal(nameof(XmiBaseGeometry), geometry.EntityName);
     }
 
     /// <summary>
-    /// Verifies that explicit entity type strings are honored.
+    /// Verifies that explicit entity name strings are honored.
     /// </summary>
     [Fact]
-    public void Constructor_UsesProvidedEntityType()
+    public void Constructor_UsesProvidedEntityName()
     {
         var geometry = new StubGeometry("CustomType");
 
-        Assert.Equal("CustomType", geometry.EntityType);
+        Assert.Equal("CustomType", geometry.EntityName);
     }
 }

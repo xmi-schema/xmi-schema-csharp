@@ -1,4 +1,5 @@
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.StructuralAnalytical;
 
 namespace XmiSchema.Entities.Relationships;
 
@@ -19,7 +20,7 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     public XmiHasStructuralCurveMember(
         string id,
         XmiBasePhysicalEntity source,
-        XmiBaseStructuralAnalyticalEntity target,
+        XmiStructuralCurveMember target,
         string name,
         string description,
         string entityName
@@ -34,7 +35,7 @@ public class XmiHasStructuralCurveMember : XmiBaseRelationship
     /// <param name="target">Structural analytical curve member entity.</param>
     public XmiHasStructuralCurveMember(
         XmiBasePhysicalEntity source,
-        XmiBaseStructuralAnalyticalEntity target
+        XmiStructuralCurveMember target
     ) : base(source, target, nameof(XmiHasStructuralCurveMember))
     {
     }
