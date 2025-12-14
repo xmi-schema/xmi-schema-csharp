@@ -38,12 +38,13 @@ public class XmiBeamTests
         var material = TestModelFactory.CreateMaterial();
         var axis = new XmiAxis(1, 0, 0);
         
-        // Create segments with invalid positions
+        // Create segments 
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", -1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -5, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { -1, -5 }; // Invalid positions
 
         var beam = model.CreateXmiBeam(
             "beam-1",
@@ -53,6 +54,7 @@ public class XmiBeamTests
             "Test beam with invalid segment positions",
             material,
             segments,
+            positions,
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
             axis,
@@ -80,8 +82,10 @@ public class XmiBeamTests
         {
             var segment = relationship.Target as XmiSegment;
             Assert.NotNull(segment);
-            Assert.Equal(0, segment.Position);
-            Assert.True(segment.IsValidPosition);
+            // Position is now handled by XmiHasSegment relationship
+            var hasSegmentRelation = relationship as XmiHasSegment;
+            Assert.NotNull(hasSegmentRelation);
+            Assert.True(hasSegmentRelation.IsValidPosition);
         }
     }
 
