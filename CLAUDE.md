@@ -152,6 +152,14 @@ Provide two constructors:
 - Use `ExtensionEnumHelper.FromEnumValue<T>(string value)` for parsing
 - Test round-trip conversions in `Utils/ExtensionEnumHelperTests.cs`
 
+### API Signature Updates (Latest)
+- **XmiSegment Constructor**: Removed position parameter (now handled via `XmiHasSegment` relationship)
+- **Factory Methods**: Added `positions` parameter when segments are provided
+- **Structural Curve Members**: Added `endFixityEnd` parameter (both start and end fixity required)
+- **Physical Elements**: Added `endNodeZOffset` parameter for complete offset specification
+- **Segment Creation**: Simplified `CreateXmiLineSegment`/`CreateXmiArcSegment` signatures
+- **Position Handling**: Segment positions managed through `XmiHasSegment.Position` property
+
 ### Test Organization
 - Tests are located in `tests/Unit/XmiSchema.Core.Tests/`
 - Use `TestModelFactory` in `Support/` for consistent test fixtures

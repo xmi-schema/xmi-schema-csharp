@@ -64,9 +64,11 @@ Install-Package XmiSchema
 ```csharp
 using XmiSchema.Managers;
 using XmiSchema.Entities.Commons;
-using XmiSchema.Parameters;
+using XmiSchema.Entities.StructuralAnalytical;
+using XmiSchema.Entities.Geometries;
+using XmiSchema.Enums;
 
-// Initialize the manager and model
+// Initialize manager and model
 var manager = new XmiManager();
 manager.Models.Add(new XmiModel());
 
@@ -97,25 +99,52 @@ var material = manager.CreateXmiMaterial(
     poissonRatio: "0.2",
     thermalCoefficient: 1.0);
 
-// Create a cross-section
-var crossSection = manager.CreateXmiCrossSection(
+// Create points with automatic deduplication
+var point1 = manager.CreateXmiPoint3D(0.0, 0.0, 0.0, "pt-1");
+var point2 = manager.CreateXmiPoint3D(0.0, 0.0, 3.0, "pt-2");
+
+// Create structural nodes
+var node1 = manager.CreateXmiStructuralPointConnection(
+    modelIndex: 0, id: "node-1", name: "Node 1", 
+    ifcGuid: "", nativeId: "", description: "", point: point1);
+
+var node2 = manager.CreateXmiStructuralPointConnection(
+    modelIndex: 0, id: "node-2", name: "Node 2", 
+    ifcGuid: "", nativeId: "", description: "", point: point2);
+
+// Create segments with positions
+var segments = new List<XmiSegment>
+{
+    new XmiSegment("seg-1", "Segment 1", "", "seg-1", "", XmiSegmentTypeEnum.Line)
+};
+var positions = new List<int> { 0 };
+
+// Create a structural curve member
+var column = manager.CreateXmiStructuralCurveMember(
     modelIndex: 0,
-    id: "sec-rect",
-    name: "400x400",
-    ifcGuid: "1Hf$vQIE9d8M0L93$HnSh",
-    nativeId: "SEC_400",
-    description: "Column section",
-    material: material,
-    shape: XmiShapeEnum.Rectangular,
-    parameters: new RectangularShapeParameters(0.4, 0.4),
-    area: 0.16,
-    // ... additional section properties
-    torsionalConstant: 0.0005);
+    id: "col-1", name: "Column 1", ifcGuid: "", nativeId: "col-1", description: "",
+    material: material, crossSection: null, storey: storey,
+    curveMemberType: XmiStructuralCurveMemberTypeEnum.Column,
+    nodes: new List<XmiStructuralPointConnection> { node1, node2 },
+    segments: segments, positions: positions,
+    systemLine: XmiSystemLineEnum.MiddleMiddle,
+    beginNode: node1, endNode: node2, length: 3.0,
+    localAxisX: new XmiAxis(1, 0, 0), localAxisY: new XmiAxis(0, 1, 0), localAxisZ: new XmiAxis(0, 0, 1),
+    beginNodeXOffset: 0, endNodeXOffset: 0, beginNodeYOffset: 0, endNodeYOffset: 0,
+    beginNodeZOffset: 0, endNodeZOffset: 0,
+    endFixityStart: "Fixed", endFixityEnd: "Fixed");
 
 // Serialize to JSON
 var json = manager.BuildJson(0);
 Console.WriteLine(json);
 ```
+
+### Key API Changes
+
+- **Segment Positioning**: Segment positions are now handled through `XmiHasSegment` relationships with a `positions` array
+- **Automatic Deduplication**: Points, lines, and arcs with identical coordinates/geometries are automatically reused
+- **Required Parameters**: Factory methods now require `positions` parameter when `segments` are provided
+- **End Fixity**: Structural curve members require both `endFixityStart` and `endFixityEnd` parameters
 
 ## Entity Types
 
