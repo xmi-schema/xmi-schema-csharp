@@ -80,7 +80,6 @@ internal static class TestModelFactory
             "ifc-guid",
             id.ToUpperInvariant(),
             "Segment description",
-            0,
             XmiSegmentTypeEnum.Line);
 
     internal static XmiStructuralCurveMember CreateCurveMember(string id = "cur-1") =>

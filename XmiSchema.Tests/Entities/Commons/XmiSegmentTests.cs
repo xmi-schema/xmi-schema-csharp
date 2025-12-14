@@ -19,7 +19,7 @@ public class XmiSegmentTests
     {
         var segment = TestModelFactory.CreateSegment();
 
-        Assert.Equal(0, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
         Assert.Equal(XmiSegmentTypeEnum.Line, segment.SegmentType);
     }
 
@@ -35,11 +35,10 @@ public class XmiSegmentTests
             "",
             "native-start",
             "",
-            0,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(0, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
         Assert.Equal("Start Segment", segment.Name);
     }
 
@@ -55,12 +54,10 @@ public class XmiSegmentTests
             "",
             "native-negative",
             "",
-            -1,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(0, segment.Position);
-        Assert.True(segment.IsValidPosition);
+        // Position validation is now handled by XmiHasSegment relationship
     }
 
     /// <summary>
@@ -75,11 +72,10 @@ public class XmiSegmentTests
             "",
             "native-end",
             "",
-            1,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(1, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
         Assert.Equal("End Segment", segment.Name);
     }
 
@@ -95,11 +91,10 @@ public class XmiSegmentTests
             "",
             "native-mid",
             "",
-            2,
             XmiSegmentTypeEnum.CircularArc
         );
 
-        Assert.Equal(2, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
         Assert.Equal(XmiSegmentTypeEnum.CircularArc, segment.SegmentType);
     }
 
@@ -115,7 +110,6 @@ public class XmiSegmentTests
             "",
             "native-arc",
             "",
-            1,
             XmiSegmentTypeEnum.CircularArc
         );
 
@@ -134,7 +128,6 @@ public class XmiSegmentTests
             "ifc-guid-123",
             "native-123",
             "Test description",
-            1,
             XmiSegmentTypeEnum.Line
         );
 
@@ -159,11 +152,10 @@ public class XmiSegmentTests
             "",
             "native-neg-updated",
             "",
-            -5,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(0, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
     }
 
     /// <summary>
@@ -178,11 +170,10 @@ public class XmiSegmentTests
             "",
             "native-over",
             "",
-            2,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(2, segment.Position);
+        // Position is now handled by XmiHasSegment relationship
     }
 
     /// <summary>
@@ -197,7 +188,6 @@ public class XmiSegmentTests
             "",
             "",
             "",
-            1,
             XmiSegmentTypeEnum.Line
         );
 
@@ -211,13 +201,11 @@ public class XmiSegmentTests
     [Fact]
     public void IsValidPosition_ValidPositions_ReturnsTrue()
     {
-        var segmentStart = new XmiSegment("seg-start", "Start", "", "native-start", "", 0, XmiSegmentTypeEnum.Line);
-        var segmentMid = new XmiSegment("seg-mid", "Middle", "", "native-mid", "", 1, XmiSegmentTypeEnum.Line);
-        var segmentEnd = new XmiSegment("seg-end", "End", "", "native-end", "", 2, XmiSegmentTypeEnum.Line);
+        var segmentStart = new XmiSegment("seg-start", "Start", "", "native-start", "", XmiSegmentTypeEnum.Line);
+        var segmentMid = new XmiSegment("seg-mid", "Middle", "", "native-mid", "", XmiSegmentTypeEnum.Line);
+        var segmentEnd = new XmiSegment("seg-end", "End", "", "native-end", "", XmiSegmentTypeEnum.Line);
 
-        Assert.True(segmentStart.IsValidPosition);
-        Assert.True(segmentMid.IsValidPosition);
-        Assert.True(segmentEnd.IsValidPosition);
+        // IsValidPosition is now handled by XmiHasSegment relationship
     }
 
     /// <summary>
@@ -226,13 +214,12 @@ public class XmiSegmentTests
     [Fact]
     public void IsValidPosition_DefaultedPositions_ReturnsTrue()
     {
-        var segmentNegative = new XmiSegment("seg-neg", "Negative", "", "native-neg", "", -1, XmiSegmentTypeEnum.Line);
-        var segmentOver = new XmiSegment("seg-over", "Over", "", "native-over", "", -2, XmiSegmentTypeEnum.Line);
+        var segmentNegative = new XmiSegment("seg-neg", "Negative", "", "native-neg", "", XmiSegmentTypeEnum.Line);
+        var segmentOver = new XmiSegment("seg-over", "Over", "", "native-over", "", XmiSegmentTypeEnum.Line);
 
-        Assert.True(segmentNegative.IsValidPosition);
-        Assert.True(segmentOver.IsValidPosition);
-        Assert.Equal(0, segmentNegative.Position);
-        Assert.Equal(0, segmentOver.Position);
+        // IsValidPosition is now handled by XmiHasSegment relationship
+        // Position is now handled by XmiHasSegment relationship
+        // Position is now handled by XmiHasSegment relationship
     }
 
     /// <summary>
@@ -243,12 +230,13 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 0, 1, 2 };
 
-        Assert.True(XmiSegment.ValidateSequence(segments));
+        Assert.True(XmiSegment.ValidateSequence(segments, positions));
     }
 
     /// <summary>
@@ -259,12 +247,13 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 0, XmiSegmentTypeEnum.Line), // Out of order
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line), // Out of order
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 1, 0, 2 };
 
-        Assert.False(XmiSegment.ValidateSequence(segments));
+        Assert.False(XmiSegment.ValidateSequence(segments, positions));
     }
 
     /// <summary>
@@ -275,14 +264,15 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -1, XmiSegmentTypeEnum.Line), // Will be defaulted to 0
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 0, 0, 2 };
 
         // After defaulting, positions will be 0, 0, 2 which passes validation (0 <= 0 <= 2)
         // ValidateSequence only checks for ascending order and valid positions, not uniqueness
-        Assert.True(XmiSegment.ValidateSequence(segments));
+        Assert.True(XmiSegment.ValidateSequence(segments, positions));
     }
 
     /// <summary>
@@ -293,16 +283,17 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 2, 0, 1 };
 
-        var sorted = XmiSegment.SortByPosition(segments);
+        var sorted = XmiSegment.SortByPosition(segments, positions);
 
-        Assert.Equal(0, sorted[0].Position);
-        Assert.Equal(1, sorted[1].Position);
-        Assert.Equal(2, sorted[2].Position);
+        Assert.Equal("seg-1", sorted[0].Id);
+        Assert.Equal("seg-2", sorted[1].Id);
+        Assert.Equal("seg-3", sorted[2].Id);
     }
 
     /// <summary>
@@ -313,12 +304,13 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 0, 1, 2 };
 
-        Assert.True(XmiSegment.CanFormClosedBoundary(segments));
+        Assert.True(XmiSegment.CanFormClosedBoundary(segments, positions));
     }
 
     /// <summary>
@@ -329,11 +321,12 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line)
         };
+        var positions = new List<int> { 0, 1 };
 
-        Assert.False(XmiSegment.CanFormClosedBoundary(segments));
+        Assert.False(XmiSegment.CanFormClosedBoundary(segments, positions));
     }
 
     /// <summary>
@@ -344,12 +337,13 @@ public class XmiSegmentTests
     {
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", -1, XmiSegmentTypeEnum.Line) // Will be defaulted to 0
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", XmiSegmentTypeEnum.Line) // Will be defaulted to 0
         };
 
+        var positions = new List<int> { 0, 1, 0 };
         // After defaulting, positions will be 0, 1, 0 - but since we have 3 segments with valid positions (0, 1, 0), it can form a boundary
-        Assert.True(XmiSegment.CanFormClosedBoundary(segments));
+        Assert.True(XmiSegment.CanFormClosedBoundary(segments, positions));
     }
 }
