@@ -618,6 +618,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             double length,
             XmiAxis localAxisX,
@@ -673,25 +674,34 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Ensure segments have valid positions (default to 0 if not provided or invalid)
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            segment.Position = 0;
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(beam, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(beam, existingSegment, pair.position));
                     }
                 }
 
@@ -715,6 +725,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             double length,
             XmiAxis localAxisX,
@@ -770,25 +781,34 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(column, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(column, existingSegment, pair.position));
                     }
                 }
 
@@ -812,6 +832,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             double zOffset,
             XmiAxis localAxisX,
             XmiAxis localAxisY,
@@ -855,28 +876,37 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // For slabs, warn if segments cannot form a closed boundary but don't fail for backward compatibility
                     // TODO: Consider making this stricter in future versions when surface boundary validation is fully implemented
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(slab, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(slab, existingSegment, pair.position));
                     }
                 }
 
@@ -900,6 +930,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             double zOffset,
             XmiAxis localAxisX,
             XmiAxis localAxisY,
@@ -943,28 +974,37 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Ensure segments have valid positions (default to 0 if not provided or invalid)
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            segment.Position = 0;
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // For walls, warn if segments cannot form a closed boundary but don't fail for backward compatibility
                     // TODO: Consider making this stricter in future versions when surface boundary validation is fully implemented
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(wall, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(wall, existingSegment, pair.position));
                     }
                 }
 
@@ -992,6 +1032,7 @@ namespace XmiSchema.Managers
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
@@ -1095,25 +1136,34 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(curveMember, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(curveMember, existingSegment, pair.position));
                     }
                 }
 
@@ -1326,6 +1376,7 @@ namespace XmiSchema.Managers
             List<XmiStructuralPointConnection> nodes,
             XmiStorey? storey,
             List<XmiSegment> segments,
+            List<int> positions,
             double area,
             double zOffset,
             XmiAxis localAxisX,
@@ -1387,28 +1438,37 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
-                    foreach (var segment in segments)
+                    // Validate positions parameter
+                    if (positions == null || positions.Count != segments.Count)
+                        throw new ArgumentException("Positions array must be provided and have the same length as segments array.");
+                    
+                    // Ensure positions are valid (default to 0 if invalid)
+                    for (int i = 0; i < positions.Count; i++)
                     {
-                        if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                        if (positions[i] < 0)
+                            positions[i] = 0;
                     }
                     
                     // Validate segment sequence
-                    if (!XmiSegment.ValidateSequence(segments))
+                    if (!XmiSegment.ValidateSequence(segments, positions))
                         throw new ArgumentException("Segments are not properly sequenced. Positions must be in ascending order.");
                     
                     // For surface members, warn if segments cannot form a closed boundary but don't fail for backward compatibility
                     // TODO: Consider making this stricter in future versions when surface boundary validation is fully implemented
                     
                     // Sort segments by position for consistent ordering
-                    var sortedSegments = XmiSegment.SortByPosition(segments);
+                    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
                     var existingSegments = GetXmiEntitiesOfType<XmiSegment>();
                     
-                    foreach (var segment in sortedSegments)
+                    // Create zipped list of segments and their positions
+                    var segmentPositionPairs = segments.Zip(positions, (segment, position) => new { segment, position })
+                                                     .OrderBy(x => x.position)
+                                                     .ToList();
+                    
+                    foreach (var pair in segmentPositionPairs)
                     {
-                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == segment.NativeId) ?? segment;
-                        AddXmiHasSegment(new XmiHasSegment(surfaceMember, existingSegment));
+                        var existingSegment = existingSegments.FirstOrDefault(s => s.NativeId == pair.segment.NativeId) ?? pair.segment;
+                        AddXmiHasSegment(new XmiHasSegment(surfaceMember, existingSegment, pair.position));
                     }
                 }
 
@@ -1438,7 +1498,6 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            int position,
             XmiLine3d line
         )
         {
@@ -1465,7 +1524,6 @@ namespace XmiSchema.Managers
                     ifcGuid,
                     nativeId,
                     description,
-                    position,
                     XmiSegmentTypeEnum.Line
                 );
                 AddXmiSegment(segment);
@@ -1499,7 +1557,6 @@ namespace XmiSchema.Managers
             string ifcGuid,
             string nativeId,
             string description,
-            int position,
             XmiArc3d arc
         )
         {
@@ -1526,7 +1583,6 @@ namespace XmiSchema.Managers
                     ifcGuid,
                     nativeId,
                     description,
-                    position,
                     XmiSegmentTypeEnum.CircularArc
                 );
                 AddXmiSegment(segment);
