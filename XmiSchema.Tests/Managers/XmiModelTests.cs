@@ -997,7 +997,7 @@ public class XmiModelTests
             "ifc-different",
             existingSegment.NativeId,
             "different desc",
-            0.5f,
+            1,
             XmiSegmentTypeEnum.Line);
 
         var beam = model.CreateXmiBeam(
@@ -1042,7 +1042,7 @@ public class XmiModelTests
             "ifc",
             "native-seg-line",
             "desc",
-            0.5f,
+            1,
             line);
 
         // Verify segment was created
@@ -1076,7 +1076,7 @@ public class XmiModelTests
             "ifc",
             "native-seg-line-pt",
             "desc",
-            0.5f,
+            1,
             line);
 
         line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
@@ -1106,7 +1106,7 @@ public class XmiModelTests
             "ifc",
             "native-seg-arc",
             "desc",
-            0.5f,
+            1,
             arc);
 
         // Verify segment was created
@@ -1145,7 +1145,7 @@ public class XmiModelTests
             "ifc",
             "native-seg-line-reuse",
             "desc",
-            0.5f,
+            1,
             line);
 
         // Verify line uses the existing point (by coordinates)
@@ -1173,7 +1173,7 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            0.5f,
+            1,
             line));
     }
 
@@ -1197,7 +1197,7 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            0.5f,
+            1,
             arc));
     }
 
@@ -1427,4 +1427,3 @@ public class XmiModelTests
 
     #endregion
 }
-

@@ -19,7 +19,7 @@ public class XmiSegmentTests
     {
         var segment = TestModelFactory.CreateSegment();
 
-        Assert.Equal(0.5f, segment.Position);
+        Assert.Equal(0, segment.Position);
         Assert.Equal(XmiSegmentTypeEnum.Line, segment.SegmentType);
     }
 
@@ -35,11 +35,11 @@ public class XmiSegmentTests
             "",
             "native-start",
             "",
-            0.0f,
+            0,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(0.0f, segment.Position);
+        Assert.Equal(0, segment.Position);
         Assert.Equal("Start Segment", segment.Name);
     }
 
@@ -55,11 +55,11 @@ public class XmiSegmentTests
             "",
             "native-end",
             "",
-            1.0f,
+            1,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(1.0f, segment.Position);
+        Assert.Equal(1, segment.Position);
         Assert.Equal("End Segment", segment.Name);
     }
 
@@ -75,11 +75,11 @@ public class XmiSegmentTests
             "",
             "native-mid",
             "",
-            0.75f,
+            2,
             XmiSegmentTypeEnum.CircularArc
         );
 
-        Assert.Equal(0.75f, segment.Position);
+        Assert.Equal(2, segment.Position);
         Assert.Equal(XmiSegmentTypeEnum.CircularArc, segment.SegmentType);
     }
 
@@ -95,7 +95,7 @@ public class XmiSegmentTests
             "",
             "native-arc",
             "",
-            0.5f,
+            1,
             XmiSegmentTypeEnum.CircularArc
         );
 
@@ -114,7 +114,7 @@ public class XmiSegmentTests
             "ifc-guid-123",
             "native-123",
             "Test description",
-            0.5f,
+            1,
             XmiSegmentTypeEnum.Line
         );
 
@@ -139,11 +139,11 @@ public class XmiSegmentTests
             "",
             "native-neg",
             "",
-            -0.5f,
+            -1,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(-0.5f, segment.Position);
+        Assert.Equal(-1, segment.Position);
     }
 
     /// <summary>
@@ -158,11 +158,11 @@ public class XmiSegmentTests
             "",
             "native-over",
             "",
-            1.5f,
+            2,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(1.5f, segment.Position);
+        Assert.Equal(2, segment.Position);
     }
 
     /// <summary>
@@ -177,11 +177,154 @@ public class XmiSegmentTests
             "",
             "",
             "",
-            0.5f,
+            1,
             XmiSegmentTypeEnum.Line
         );
 
         Assert.Equal("seg-empty", segment.Id);
         Assert.Equal("seg-empty", segment.Name); // XmiBaseEntity defaults name to id when empty
+    }
+
+    /// <summary>
+    /// Validates IsValidPosition returns true for valid position values.
+    /// </summary>
+    [Fact]
+    public void IsValidPosition_ValidPositions_ReturnsTrue()
+    {
+        var segmentStart = new XmiSegment("seg-start", "Start", "", "native-start", "", 0, XmiSegmentTypeEnum.Line);
+        var segmentMid = new XmiSegment("seg-mid", "Middle", "", "native-mid", "", 1, XmiSegmentTypeEnum.Line);
+        var segmentEnd = new XmiSegment("seg-end", "End", "", "native-end", "", 2, XmiSegmentTypeEnum.Line);
+
+        Assert.True(segmentStart.IsValidPosition);
+        Assert.True(segmentMid.IsValidPosition);
+        Assert.True(segmentEnd.IsValidPosition);
+    }
+
+    /// <summary>
+    /// Validates IsValidPosition returns false for invalid position values.
+    /// </summary>
+    [Fact]
+    public void IsValidPosition_InvalidPositions_ReturnsFalse()
+    {
+        var segmentNegative = new XmiSegment("seg-neg", "Negative", "", "native-neg", "", -1, XmiSegmentTypeEnum.Line);
+        var segmentOver = new XmiSegment("seg-over", "Over", "", "native-over", "", -2, XmiSegmentTypeEnum.Line);
+
+        Assert.False(segmentNegative.IsValidPosition);
+        Assert.False(segmentOver.IsValidPosition);
+    }
+
+    /// <summary>
+    /// Validates ValidateSequence returns true for properly sequenced segments.
+    /// </summary>
+    [Fact]
+    public void ValidateSequence_ValidSequence_ReturnsTrue()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+        };
+
+        Assert.True(XmiSegment.ValidateSequence(segments));
+    }
+
+    /// <summary>
+    /// Validates ValidateSequence returns false for improperly sequenced segments.
+    /// </summary>
+    [Fact]
+    public void ValidateSequence_InvalidSequence_ReturnsFalse()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 1, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 0, XmiSegmentTypeEnum.Line), // Out of order
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+        };
+
+        Assert.False(XmiSegment.ValidateSequence(segments));
+    }
+
+    /// <summary>
+    /// Validates ValidateSequence returns false for segments with invalid positions.
+    /// </summary>
+    [Fact]
+    public void ValidateSequence_InvalidPositions_ReturnsFalse()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -1, XmiSegmentTypeEnum.Line), // Invalid position
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+        };
+
+        Assert.False(XmiSegment.ValidateSequence(segments));
+    }
+
+    /// <summary>
+    /// Validates SortByPosition returns segments in correct order.
+    /// </summary>
+    [Fact]
+    public void SortByPosition_UnsortedSegments_ReturnsSorted()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line)
+        };
+
+        var sorted = XmiSegment.SortByPosition(segments);
+
+        Assert.Equal(0, sorted[0].Position);
+        Assert.Equal(1, sorted[1].Position);
+        Assert.Equal(2, sorted[2].Position);
+    }
+
+    /// <summary>
+    /// Validates CanFormClosedBoundary returns true for sufficient segments.
+    /// </summary>
+    [Fact]
+    public void CanFormClosedBoundary_SufficientSegments_ReturnsTrue()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
+        };
+
+        Assert.True(XmiSegment.CanFormClosedBoundary(segments));
+    }
+
+    /// <summary>
+    /// Validates CanFormClosedBoundary returns false for insufficient segments.
+    /// </summary>
+    [Fact]
+    public void CanFormClosedBoundary_InsufficientSegments_ReturnsFalse()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line)
+        };
+
+        Assert.False(XmiSegment.CanFormClosedBoundary(segments));
+    }
+
+    /// <summary>
+    /// Validates CanFormClosedBoundary returns false for segments with invalid positions.
+    /// </summary>
+    [Fact]
+    public void CanFormClosedBoundary_InvalidPositions_ReturnsFalse()
+    {
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", -1, XmiSegmentTypeEnum.Line) // Invalid position
+        };
+
+        Assert.False(XmiSegment.CanFormClosedBoundary(segments));
     }
 }
