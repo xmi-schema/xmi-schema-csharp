@@ -33,8 +33,8 @@ public class XmiStructuralCurveMemberTests
         // Create segments with invalid positions
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", -3, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -7, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line)
         };
 
         var curveMember = model.CreateXmiStructuralCurveMember(
@@ -49,6 +49,7 @@ public class XmiStructuralCurveMemberTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             nodes,
             segments,
+            new List<int> { -3, -7 },
             XmiSystemLineEnum.MiddleMiddle,
             nodes[0],
             nodes[1],
@@ -76,12 +77,14 @@ public class XmiStructuralCurveMemberTests
         
         Assert.Equal(2, segmentRelationships.Count);
         
-        foreach (var relationship in segmentRelationships)
+        // Verify that the positions were defaulted to 0 via the relationships
+        var hasSegmentRelationships = model.Relationships.OfType<XmiHasSegment>().ToList();
+        Assert.Equal(2, hasSegmentRelationships.Count);
+        
+        // Check that positions were properly defaulted to 0
+        foreach (var hasSegmentRel in hasSegmentRelationships)
         {
-            var segment = relationship.Target as XmiSegment;
-            Assert.NotNull(segment);
-            Assert.Equal(0, segment.Position);
-            Assert.True(segment.IsValidPosition);
+            Assert.Equal(0, hasSegmentRel.Position);
         }
     }
 

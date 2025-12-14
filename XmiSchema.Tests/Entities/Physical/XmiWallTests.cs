@@ -26,8 +26,8 @@ public class XmiWallTests
         // Create segments with invalid positions
         var segments = new List<XmiSegment>
         {
-            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", -2, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -10, XmiSegmentTypeEnum.Line)
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", XmiSegmentTypeEnum.Line)
         };
 
         var wall = model.CreateXmiWall(
@@ -38,6 +38,7 @@ public class XmiWallTests
             "Test wall with invalid segment positions",
             material,
             segments,
+            new List<int> { -2, -10 },
             0.0,
             axis,
             axis,
@@ -55,12 +56,14 @@ public class XmiWallTests
         
         Assert.Equal(2, segmentRelationships.Count);
         
-        foreach (var relationship in segmentRelationships)
+        // Verify that the positions were defaulted to 0 via the relationships
+        var hasSegmentRelationships = model.Relationships.OfType<XmiHasSegment>().ToList();
+        Assert.Equal(2, hasSegmentRelationships.Count);
+        
+        // Check that positions were properly defaulted to 0
+        foreach (var hasSegmentRel in hasSegmentRelationships)
         {
-            var segment = relationship.Target as XmiSegment;
-            Assert.NotNull(segment);
-            Assert.Equal(0, segment.Position);
-            Assert.True(segment.IsValidPosition);
+            Assert.Equal(0, hasSegmentRel.Position);
         }
     }
 
