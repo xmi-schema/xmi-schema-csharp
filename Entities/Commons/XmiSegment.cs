@@ -14,16 +14,19 @@ public class XmiSegment : XmiBaseEntity
     // public XmiBaseGeometry Geometry { get; set; }   // Surface member the support is assigned to
     public XmiSegmentTypeEnum SegmentType { get; set; }
 
-    // 带参数构造函数（包含父类属性 + 子类属性）
     /// <summary>
-    /// Creates a new <see cref="XmiSegment"/> tied to a specific parent curve member.
+    /// Creates a new <see cref="XmiSegment"/> representing a logical division along a structural member.
     /// </summary>
     /// <param name="id">Unique identifier inside the Cross Model Information graph.</param>
     /// <param name="name">Readable label; uses <paramref name="id"/> when omitted.</param>
     /// <param name="ifcGuid">IFC GUID that links to the originating BIM element.</param>
     /// <param name="nativeId">Source identifier from the authoring system.</param>
     /// <param name="description">Free-form notes about the segment.</param>
-    /// <param name="segmentType">Geometric definition for downstream consumers.</param>
+    /// <param name="segmentType">Geometric definition for downstream consumers (Line, CircularArc, etc.).</param>
+    /// <remarks>
+    /// Segment positions are now handled through the <see cref="XmiHasSegment"/> relationship,
+    /// which allows for proper sequencing and positioning along the parent member.
+    /// </remarks>
     public XmiSegment(
         string id,
         string name,

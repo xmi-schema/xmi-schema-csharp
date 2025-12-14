@@ -607,9 +607,32 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates a beam physical element and optionally links a material and segments.
+        /// Creates a beam physical element and optionally links material and segments.
         /// </summary>
-        /// <returns>The created beam.</returns>
+        /// <param name="id">Unique identifier for the beam.</param>
+        /// <param name="name">Human-readable name for the beam.</param>
+        /// <param name="ifcGuid">IFC GUID linking to originating BIM element.</param>
+        /// <param name="nativeId">Source system identifier.</param>
+        /// <param name="description">Free-form description.</param>
+        /// <param name="material">Optional material to associate with beam.</param>
+        /// <param name="segments">Optional list of segments along the beam length.</param>
+        /// <param name="positions">Optional positions for each segment (must match segments count if provided).</param>
+        /// <param name="systemLine">System line definition for beam geometry.</param>
+        /// <param name="length">Total length of the beam.</param>
+        /// <param name="localAxisX">Local X-axis orientation.</param>
+        /// <param name="localAxisY">Local Y-axis orientation.</param>
+        /// <param name="localAxisZ">Local Z-axis orientation.</param>
+        /// <param name="beginNodeXOffset">X-offset at beam start.</param>
+        /// <param name="endNodeXOffset">X-offset at beam end.</param>
+        /// <param name="beginNodeYOffset">Y-offset at beam start.</param>
+        /// <param name="endNodeYOffset">Y-offset at beam end.</param>
+        /// <param name="beginNodeZOffset">Z-offset at beam start.</param>
+        /// <param name="endNodeZOffset">Z-offset at beam end.</param>
+        /// <returns>The created beam with all relationships established.</returns>
+        /// <remarks>
+        /// When segments are provided, positions array must have the same length.
+        /// Each segment will be linked via XmiHasSegment relationship with corresponding position.
+        /// </remarks>
         public XmiBeam CreateXmiBeam(
             string id,
             string name,
@@ -1017,9 +1040,40 @@ namespace XmiSchema.Managers
         }
 
         /// <summary>
-        /// Creates or reuses a structural curve member, optionally wiring up material, cross-section, storey, and node relationships.
+        /// Creates a structural curve member (beam, column, bracing) and optionally links material, cross-section, storey, and segments.
         /// </summary>
-        /// <returns>The created curve member.</returns>
+        /// <param name="id">Unique identifier for the curve member.</param>
+        /// <param name="name">Human-readable name for the curve member.</param>
+        /// <param name="ifcGuid">IFC GUID linking to originating BIM element.</param>
+        /// <param name="nativeId">Source system identifier.</param>
+        /// <param name="description">Free-form description.</param>
+        /// <param name="material">Optional material to associate with the member.</param>
+        /// <param name="crossSection">Optional cross-section profile for the member.</param>
+        /// <param name="storey">Optional storey level for the member.</param>
+        /// <param name="curveMemberType">Type of structural curve member (Beam, Column, etc.).</param>
+        /// <param name="nodes">List of structural point connections defining the member geometry.</param>
+        /// <param name="segments">Optional list of segments along the member length.</param>
+        /// <param name="positions">Optional positions for each segment (must match segments count if provided).</param>
+        /// <param name="systemLine">System line definition for member geometry.</param>
+        /// <param name="beginNode">Starting structural point connection.</param>
+        /// <param name="endNode">Ending structural point connection.</param>
+        /// <param name="length">Total length of the curve member.</param>
+        /// <param name="localAxisX">Local X-axis orientation.</param>
+        /// <param name="localAxisY">Local Y-axis orientation.</param>
+        /// <param name="localAxisZ">Local Z-axis orientation.</param>
+        /// <param name="beginNodeXOffset">X-offset at member start.</param>
+        /// <param name="endNodeXOffset">X-offset at member end.</param>
+        /// <param name="beginNodeYOffset">Y-offset at member start.</param>
+        /// <param name="endNodeYOffset">Y-offset at member end.</param>
+        /// <param name="beginNodeZOffset">Z-offset at member start.</param>
+        /// <param name="endNodeZOffset">Z-offset at member end.</param>
+        /// <param name="endFixityStart">Fixity condition at member start (Fixed, Pinned, etc.).</param>
+        /// <param name="endFixityEnd">Fixity condition at member end (Fixed, Pinned, etc.).</param>
+        /// <returns>The created curve member with all relationships established.</returns>
+        /// <remarks>
+        /// When segments are provided, positions array must have the same length.
+        /// Each segment will be linked via XmiHasSegment relationship with corresponding position.
+        /// </remarks>
         public XmiStructuralCurveMember CreateXmiStructuralCurveMember(
             string id,
             string name,
