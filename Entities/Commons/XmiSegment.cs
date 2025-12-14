@@ -43,7 +43,7 @@ public class XmiSegment : XmiBaseEntity
         XmiSegmentTypeEnum segmentType
     ) : base(id, name, ifcGuid, nativeId, description, nameof(XmiSegment), XmiBaseEntityDomainEnum.Shared)
     {
-        Position = position;
+        Position = position < 0 ? 0 : position;
         SegmentType = segmentType;
     }
 

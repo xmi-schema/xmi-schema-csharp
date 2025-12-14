@@ -44,6 +44,26 @@ public class XmiSegmentTests
     }
 
     /// <summary>
+    /// Validates that negative positions are defaulted to 0.
+    /// </summary>
+    [Fact]
+    public void Constructor_DefaultsNegativePositionToZero()
+    {
+        var segment = new XmiSegment(
+            "seg-negative",
+            "Negative Position Segment",
+            "",
+            "native-negative",
+            "",
+            -1,
+            XmiSegmentTypeEnum.Line
+        );
+
+        Assert.Equal(0, segment.Position);
+        Assert.True(segment.IsValidPosition);
+    }
+
+    /// <summary>
     /// Validates segment with position at end (1.0).
     /// </summary>
     [Fact]
@@ -128,22 +148,22 @@ public class XmiSegmentTests
     }
 
     /// <summary>
-    /// Validates segment can have negative position (edge case - may be invalid in real scenarios).
+    /// Validates segment defaults negative position to 0 (changed behavior).
     /// </summary>
     [Fact]
-    public void Constructor_AllowsNegativePosition()
+    public void Constructor_DefaultsNegativePositionToZeroUpdated()
     {
         var segment = new XmiSegment(
-            "seg-neg",
-            "Negative Position",
+            "seg-neg-updated",
+            "Negative Position Updated",
             "",
-            "native-neg",
+            "native-neg-updated",
             "",
-            -1,
+            -5,
             XmiSegmentTypeEnum.Line
         );
 
-        Assert.Equal(-1, segment.Position);
+        Assert.Equal(0, segment.Position);
     }
 
     /// <summary>
@@ -201,16 +221,18 @@ public class XmiSegmentTests
     }
 
     /// <summary>
-    /// Validates IsValidPosition returns false for invalid position values.
+    /// Validates IsValidPosition returns true for defaulted position values.
     /// </summary>
     [Fact]
-    public void IsValidPosition_InvalidPositions_ReturnsFalse()
+    public void IsValidPosition_DefaultedPositions_ReturnsTrue()
     {
         var segmentNegative = new XmiSegment("seg-neg", "Negative", "", "native-neg", "", -1, XmiSegmentTypeEnum.Line);
         var segmentOver = new XmiSegment("seg-over", "Over", "", "native-over", "", -2, XmiSegmentTypeEnum.Line);
 
-        Assert.False(segmentNegative.IsValidPosition);
-        Assert.False(segmentOver.IsValidPosition);
+        Assert.True(segmentNegative.IsValidPosition);
+        Assert.True(segmentOver.IsValidPosition);
+        Assert.Equal(0, segmentNegative.Position);
+        Assert.Equal(0, segmentOver.Position);
     }
 
     /// <summary>
@@ -246,19 +268,21 @@ public class XmiSegmentTests
     }
 
     /// <summary>
-    /// Validates ValidateSequence returns false for segments with invalid positions.
+    /// Validates ValidateSequence returns true for segments with defaulted positions.
     /// </summary>
     [Fact]
-    public void ValidateSequence_InvalidPositions_ReturnsFalse()
+    public void ValidateSequence_DefaultedPositions_ReturnsTrue()
     {
         var segments = new List<XmiSegment>
         {
             new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -1, XmiSegmentTypeEnum.Line), // Invalid position
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -1, XmiSegmentTypeEnum.Line), // Will be defaulted to 0
             new XmiSegment("seg-3", "Segment 3", "", "native-3", "", 2, XmiSegmentTypeEnum.Line)
         };
 
-        Assert.False(XmiSegment.ValidateSequence(segments));
+        // After defaulting, positions will be 0, 0, 2 which passes validation (0 <= 0 <= 2)
+        // ValidateSequence only checks for ascending order and valid positions, not uniqueness
+        Assert.True(XmiSegment.ValidateSequence(segments));
     }
 
     /// <summary>
@@ -313,18 +337,19 @@ public class XmiSegmentTests
     }
 
     /// <summary>
-    /// Validates CanFormClosedBoundary returns false for segments with invalid positions.
+    /// Validates CanFormClosedBoundary returns true for segments with defaulted positions.
     /// </summary>
     [Fact]
-    public void CanFormClosedBoundary_InvalidPositions_ReturnsFalse()
+    public void CanFormClosedBoundary_DefaultedPositions_ReturnsTrue()
     {
         var segments = new List<XmiSegment>
         {
             new XmiSegment("seg-1", "Segment 1", "", "native-1", "", 0, XmiSegmentTypeEnum.Line),
             new XmiSegment("seg-2", "Segment 2", "", "native-2", "", 1, XmiSegmentTypeEnum.Line),
-            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", -1, XmiSegmentTypeEnum.Line) // Invalid position
+            new XmiSegment("seg-3", "Segment 3", "", "native-3", "", -1, XmiSegmentTypeEnum.Line) // Will be defaulted to 0
         };
 
-        Assert.False(XmiSegment.CanFormClosedBoundary(segments));
+        // After defaulting, positions will be 0, 1, 0 - but since we have 3 segments with valid positions (0, 1, 0), it can form a boundary
+        Assert.True(XmiSegment.CanFormClosedBoundary(segments));
     }
 }

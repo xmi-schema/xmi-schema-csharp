@@ -1,5 +1,8 @@
 using XmiSchema.Entities.Physical;
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Commons;
+using XmiSchema.Entities.Relationships;
+using XmiSchema.Managers;
 using XmiSchema.Enums;
 using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.Entities.Physical;
@@ -23,6 +26,63 @@ public class XmiBeamTests
         Assert.Equal(nameof(XmiBeam), beam.EntityName);
         Assert.Equal(XmiSystemLineEnum.MiddleMiddle, beam.SystemLine);
         Assert.Equal(5.0, beam.Length);
+    }
+
+    /// <summary>
+    /// Validates that segments with invalid positions are defaulted to 0 when creating beams.
+    /// </summary>
+    [Fact]
+    public void CreateXmiBeam_DefaultsInvalidSegmentPositionsToZero()
+    {
+        var model = new XmiModel();
+        var material = TestModelFactory.CreateMaterial();
+        var axis = new XmiAxis(1, 0, 0);
+        
+        // Create segments with invalid positions
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", -1, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -5, XmiSegmentTypeEnum.Line)
+        };
+
+        var beam = model.CreateXmiBeam(
+            "beam-1",
+            "Test Beam",
+            "",
+            "beam-native-1",
+            "Test beam with invalid segment positions",
+            material,
+            segments,
+            XmiSystemLineEnum.MiddleMiddle,
+            5.0,
+            axis,
+            axis,
+            axis,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+        );
+
+        // Verify beam was created successfully
+        Assert.NotNull(beam);
+        
+        // Verify segments were added and their positions were defaulted to 0
+        var segmentRelationships = model.Relationships.OfType<XmiHasSegment>()
+            .Where(r => r.Source.Id == beam.Id)
+            .ToList();
+        
+        Assert.Equal(2, segmentRelationships.Count);
+        
+        foreach (var relationship in segmentRelationships)
+        {
+            var segment = relationship.Target as XmiSegment;
+            Assert.NotNull(segment);
+            Assert.Equal(0, segment.Position);
+            Assert.True(segment.IsValidPosition);
+        }
     }
 
     /// <summary>

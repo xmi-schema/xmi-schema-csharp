@@ -673,11 +673,11 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
+                    // Ensure segments have valid positions (default to 0 if not provided or invalid)
                     foreach (var segment in segments)
                     {
                         if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                            segment.Position = 0;
                     }
                     
                     // Validate segment sequence
@@ -943,11 +943,11 @@ namespace XmiSchema.Managers
 
                 if (segments != null && segments.Count > 0)
                 {
-                    // Validate segment positions
+                    // Ensure segments have valid positions (default to 0 if not provided or invalid)
                     foreach (var segment in segments)
                     {
                         if (!segment.IsValidPosition)
-                            throw new ArgumentException($"Segment {segment.Id} has invalid position: {segment.Position}. Position must be a non-negative integer.");
+                            segment.Position = 0;
                     }
                     
                     // Validate segment sequence
