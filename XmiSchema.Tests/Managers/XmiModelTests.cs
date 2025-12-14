@@ -128,6 +128,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             new List<XmiSegment> { TestModelFactory.CreateSegment() },
+            new List<int> { 0 },
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -174,6 +175,7 @@ public class XmiModelTests
             null,
             XmiStructuralCurveMemberTypeEnum.Column,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
             null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
@@ -239,6 +241,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Column,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -301,6 +304,7 @@ public class XmiModelTests
             null,
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
             null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
@@ -368,6 +372,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -431,6 +436,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Column,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -489,6 +495,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -535,6 +542,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -575,6 +583,7 @@ public class XmiModelTests
             null,
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
+            null,
             null,
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
@@ -620,6 +629,7 @@ public class XmiModelTests
             new List<XmiStructuralPointConnection> { begin, end },
             storey,
             new List<XmiSegment>(),
+            new List<int>(),
             12.5,
             0.0,
             AxisX,
@@ -648,6 +658,7 @@ public class XmiModelTests
             "native",
             "desc",
             material,
+            null,
             null,
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
@@ -681,6 +692,7 @@ public class XmiModelTests
             "desc",
             null,
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             3.0,
             AxisX,
@@ -701,6 +713,7 @@ public class XmiModelTests
             "desc",
             null,
             null,
+            null,
             0,
             AxisX,
             AxisY,
@@ -713,6 +726,7 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
+            null,
             null,
             null,
             0,
@@ -752,6 +766,7 @@ public class XmiModelTests
             new List<XmiStructuralPointConnection> { TestModelFactory.CreatePointConnection() },
             storey,
             new List<XmiSegment> { TestModelFactory.CreateSegment() },
+            new List<int> { 0 },
             12.5,
             0,
             AxisX,
@@ -783,6 +798,7 @@ public class XmiModelTests
             "desc",
             null,
             segments,
+            new List<int> { 0, 1 },
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
             AxisX,
@@ -818,6 +834,7 @@ public class XmiModelTests
             "desc",
             null,
             segments,
+            new List<int> { 0 },
             XmiSystemLineEnum.MiddleMiddle,
             3.0,
             AxisX,
@@ -854,6 +871,7 @@ public class XmiModelTests
             "desc",
             null,
             segments,
+            new List<int> { 0, 1 },
             0.1,
             AxisX,
             AxisY,
@@ -885,6 +903,7 @@ public class XmiModelTests
             "desc",
             null,
             segments,
+            new List<int> { 0, 1 },
             0.2,
             AxisX,
             AxisY,
@@ -923,6 +942,7 @@ public class XmiModelTests
             XmiStructuralCurveMemberTypeEnum.Beam,
             new List<XmiStructuralPointConnection> { beginNode, endNode },
             new List<XmiSegment> { segment1, segment2 },
+            new List<int> { 0, 1 },
             XmiSystemLineEnum.MiddleMiddle,
             beginNode,
             endNode,
@@ -968,6 +988,7 @@ public class XmiModelTests
             new List<XmiStructuralPointConnection> { TestModelFactory.CreatePointConnection() },
             null,
             new List<XmiSegment> { segment1, segment2, segment3 },
+            new List<int> { 0, 1, 2 },
             12.5,
             0,
             AxisX,
@@ -997,7 +1018,6 @@ public class XmiModelTests
             "ifc-different",
             existingSegment.NativeId,
             "different desc",
-            1,
             XmiSegmentTypeEnum.Line);
 
         var beam = model.CreateXmiBeam(
@@ -1008,6 +1028,7 @@ public class XmiModelTests
             "desc",
             null,
             new List<XmiSegment> { duplicateSegment },
+            new List<int> { 0 },
             XmiSystemLineEnum.MiddleMiddle,
             5.0,
             AxisX,
@@ -1042,7 +1063,6 @@ public class XmiModelTests
             "ifc",
             "native-seg-line",
             "desc",
-            1,
             line);
 
         // Verify segment was created
@@ -1076,7 +1096,6 @@ public class XmiModelTests
             "ifc",
             "native-seg-line-pt",
             "desc",
-            1,
             line);
 
         line = model.Entities.OfType<XmiLine3d>().FirstOrDefault();
@@ -1106,7 +1125,6 @@ public class XmiModelTests
             "ifc",
             "native-seg-arc",
             "desc",
-            1,
             arc);
 
         // Verify segment was created
@@ -1145,7 +1163,6 @@ public class XmiModelTests
             "ifc",
             "native-seg-line-reuse",
             "desc",
-            1,
             line);
 
         // Verify line uses the existing point (by coordinates)
@@ -1173,7 +1190,6 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            1,
             line));
     }
 
@@ -1197,7 +1213,6 @@ public class XmiModelTests
             "ifc",
             "native",
             "desc",
-            1,
             arc));
     }
 

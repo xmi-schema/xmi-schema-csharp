@@ -155,6 +155,7 @@ public class XmiManagerTests
             "desc",
             material,
             null,
+            null,
             XmiSystemLineEnum.MiddleMiddle,
             4.0,
             AxisX,
