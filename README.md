@@ -279,6 +279,31 @@ dotnet test --filter "FullyQualifiedName~XmiBeamTests"
 dotnet run --project tests/Examples/StructuralGraphSample/StructuralGraphSample.csproj
 ```
 
+## Documentation
+
+### Inline Documentation
+Documentation is now located alongside the code in respective namespace folders:
+
+- **[Entities/Bases/](Entities/Bases/README.md)** - Base classes and core abstractions
+- **[Entities/Commons/](Entities/Commons/README.md)** - Common domain entities (materials, cross-sections, storeys)
+- **[Entities/Physical/](Entities/Physical/README.md)** - Physical building elements (beams, columns, slabs, walls)
+- **[Entities/StructuralAnalytical/](Entities/StructuralAnalytical/README.md)** - Analytical structural elements
+- **[Entities/Geometries/](Entities/Geometries/README.md)** - Geometric primitives (points, lines, arcs)
+- **[Entities/Relationships/](Entities/Relationships/README.md)** - Graph relationships connecting entities
+- **[Enums/](Enums/README.md)** - Domain enumerations with serialization attributes
+- **[Parameters/](Parameters/README.md)** - Shape parameter definitions and factories
+- **[Utils/](Utils/README.md)** - Utility classes and extension methods
+- **[Managers/](Managers/README.md)** - XmiModel and XmiManager orchestration classes
+
+### High-Level Documentation
+- **[docs/examples/StructuralGraphSample.md](docs/examples/StructuralGraphSample.md)** - Complete working example
+- **[docs/reference/](docs/reference/)** - Additional reference materials
+
+### Key Class Documentation
+- **[Entities/Commons/XmiSegment.md](Entities/Commons/XmiSegment.md)** - Segment class reference
+- **[Managers/XmiModel.md](Managers/XmiModel.md)** - Model management and factory methods
+- **[Managers/XmiManager.md](Managers/XmiManager.md)** - Multi-model orchestration
+
 ## Resources
 
 - **Website**: [https://xmi-schema.com](https://xmi-schema.com/)
