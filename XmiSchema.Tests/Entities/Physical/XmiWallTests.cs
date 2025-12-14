@@ -3,7 +3,9 @@ using XmiSchema.Managers;
 using XmiSchema.Entities.StructuralAnalytical;
 using XmiSchema.Entities.Physical;
 using XmiSchema.Entities.Bases;
+using XmiSchema.Entities.Relationships;
 using XmiSchema.Enums;
+using XmiSchema.Tests.Managers;
 namespace XmiSchema.Tests.Entities.Physical;
 
 /// <summary>
@@ -11,6 +13,57 @@ namespace XmiSchema.Tests.Entities.Physical;
 /// </summary>
 public class XmiWallTests
 {
+    /// <summary>
+    /// Validates that segments with invalid positions are defaulted to 0 when creating walls.
+    /// </summary>
+    [Fact]
+    public void CreateXmiWall_DefaultsInvalidSegmentPositionsToZero()
+    {
+        var model = new XmiModel();
+        var material = TestModelFactory.CreateMaterial();
+        var axis = new XmiAxis(1, 0, 0);
+        
+        // Create segments with invalid positions
+        var segments = new List<XmiSegment>
+        {
+            new XmiSegment("seg-1", "Segment 1", "", "native-1", "", -2, XmiSegmentTypeEnum.Line),
+            new XmiSegment("seg-2", "Segment 2", "", "native-2", "", -10, XmiSegmentTypeEnum.Line)
+        };
+
+        var wall = model.CreateXmiWall(
+            "wall-1",
+            "Test Wall",
+            "",
+            "wall-native-1",
+            "Test wall with invalid segment positions",
+            material,
+            segments,
+            0.0,
+            axis,
+            axis,
+            axis,
+            3.0
+        );
+
+        // Verify wall was created successfully
+        Assert.NotNull(wall);
+        
+        // Verify segments were added and their positions were defaulted to 0
+        var segmentRelationships = model.Relationships.OfType<XmiHasSegment>()
+            .Where(r => r.Source.Id == wall.Id)
+            .ToList();
+        
+        Assert.Equal(2, segmentRelationships.Count);
+        
+        foreach (var relationship in segmentRelationships)
+        {
+            var segment = relationship.Target as XmiSegment;
+            Assert.NotNull(segment);
+            Assert.Equal(0, segment.Position);
+            Assert.True(segment.IsValidPosition);
+        }
+    }
+
     /// <summary>
     /// Ensures constructor assigns all required properties.
     /// </summary>

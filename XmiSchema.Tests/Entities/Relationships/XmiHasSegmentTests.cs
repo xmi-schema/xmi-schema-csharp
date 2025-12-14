@@ -15,6 +15,7 @@ public class XmiHasSegmentTests
             "rel-seg",
             TestModelFactory.CreateCurveMember(),
             TestModelFactory.CreateSegment(),
+            0,
             "Contains",
             "desc",
             nameof(XmiHasSegment));
@@ -26,7 +27,7 @@ public class XmiHasSegmentTests
     [Fact]
     public void Constructor_GeneratesIdentifier()
     {
-        var relation = new XmiHasSegment(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateSegment());
+        var relation = new XmiHasSegment(TestModelFactory.CreateCurveMember(), TestModelFactory.CreateSegment(), 0);
 
         Assert.False(string.IsNullOrWhiteSpace(relation.Id));
     }

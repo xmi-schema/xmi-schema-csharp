@@ -192,6 +192,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             double length,
             XmiAxis localAxisX,
@@ -207,7 +208,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiBeam(
-                id, name, ifcGuid, nativeId, description, material, segments,
+                id, name, ifcGuid, nativeId, description, material, segments, positions,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
@@ -225,6 +226,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             double length,
             XmiAxis localAxisX,
@@ -240,7 +242,7 @@ namespace XmiSchema.Managers
         {
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiColumn(
-                id, name, ifcGuid, nativeId, description, material, segments,
+                id, name, ifcGuid, nativeId, description, material, segments, positions,
                 systemLine, length, localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
                 beginNodeYOffset, endNodeYOffset,
@@ -258,6 +260,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             double zOffset,
             XmiAxis localAxisX,
             XmiAxis localAxisY,
@@ -268,7 +271,7 @@ namespace XmiSchema.Managers
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiSlab(
                 id, name, ifcGuid, nativeId, description, material,
-                segments, zOffset, localAxisX, localAxisY, localAxisZ, thickness
+                segments, positions, zOffset, localAxisX, localAxisY, localAxisZ, thickness
             );
         }
 
@@ -282,6 +285,7 @@ namespace XmiSchema.Managers
             string description,
             XmiMaterial? material,
             List<XmiSegment>? segments,
+            List<int>? positions,
             double zOffset,
             XmiAxis localAxisX,
             XmiAxis localAxisY,
@@ -292,7 +296,7 @@ namespace XmiSchema.Managers
             if (!IsValidModelIndex(modelIndex)) throw new IndexOutOfRangeException();
             return Models[modelIndex].CreateXmiWall(
                 id, name, ifcGuid, nativeId, description, material,
-                segments, zOffset, localAxisX, localAxisY, localAxisZ, height
+                segments, positions, zOffset, localAxisX, localAxisY, localAxisZ, height
             );
         }
 
@@ -474,6 +478,7 @@ namespace XmiSchema.Managers
             XmiStructuralCurveMemberTypeEnum curveMemberType,
             List<XmiStructuralPointConnection> nodes,
             List<XmiSegment>? segments,
+            List<int>? positions,
             XmiSystemLineEnum systemLine,
             XmiStructuralPointConnection beginNode,
             XmiStructuralPointConnection endNode,
@@ -495,7 +500,7 @@ namespace XmiSchema.Managers
             return Models[modelIndex].CreateXmiStructuralCurveMember(
                 id, name, ifcGuid, nativeId, description,
                 material, crossSection, storey, curveMemberType,
-                nodes, segments, systemLine,
+                nodes, segments, positions, systemLine,
                 beginNode, endNode, length,
                 localAxisX, localAxisY, localAxisZ,
                 beginNodeXOffset, endNodeXOffset,
@@ -520,6 +525,7 @@ namespace XmiSchema.Managers
             List<XmiStructuralPointConnection> nodes,
             XmiStorey? storey,
             List<XmiSegment> segments,
+            List<int> positions,
             double area,
             double zOffset,
             XmiAxis localAxisX,
@@ -532,7 +538,7 @@ namespace XmiSchema.Managers
             return Models[modelIndex].CreateXmiStructuralSurfaceMember(
                 id, name, ifcGuid, nativeId, description,
                 material, surfaceMemberType, thickness, systemPlane,
-                nodes, storey, segments,
+                nodes, storey, segments, positions,
                 area, zOffset,
                 localAxisX, localAxisY, localAxisZ,
                 height
