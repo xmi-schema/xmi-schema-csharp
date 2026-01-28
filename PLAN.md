@@ -1,373 +1,269 @@
-# PLAN.md: XmiSegment Position Property Migration
+# Plan: Add comprehensive XML documentation comments to all C# components
 
 ## Overview
+Add comprehensive XML documentation comments (docstrings) to all public C# classes, methods, properties, and interfaces in XmiSchema library following industry standards and best practices.
 
-This plan outlines the migration of the `Position` property from `XmiSegment` entity to `XmiHasSegment` relationship. This architectural change improves the logical model by making position a relationship attribute rather than an entity attribute, better reflecting that the same segment can have different positions in different relationships to upstream sources.
+## Ticket Reference
+- Ticket: XMI-221
+- URL: https://betekk.atlassian.net/browse/XMI-221
 
-## Current State Analysis
+## Files to Modify
 
-Based on comprehensive codebase analysis:
+### Base Classes (`XmiSchema.Entities.Bases`)
+1. `XmiBaseEntity.cs` - Root entity base class with ID, ifcGuid, NativeId, Description, EntityName
+2. `XmiBaseGeometry.cs` - Base class for geometric primitives (points, lines, arcs)
+3. `XmiBaseRelationship.cs` - Base class for graph edges holding source/target entity references
+4. `XmiBasePhysicalEntity.cs` - Intermediate base for physical elements (beams, columns, slabs, walls)
+5. `XmiBaseStructuralAnalyticalEntity.cs` - Intermediate base for analytical elements
+6. `XmiBaseEnum.cs` - Provides EnumValueAttribute for enum serialization
 
-1. **XmiSegment** currently has:
-   - `Position` property (int) representing position in sequence (0, 1, 2, etc.)
-   - `SegmentType` property
-   - Static validation methods: `ValidateSequence()`, `SortByPosition()`, `CanFormClosedBoundary()`
-   - Used across 6 bulk entity creation methods
+### Common Entities (`XmiSchema.Entities.Commons`)
+1. `XmiMaterial.cs` - Material properties with grade, density, and stiffness constants
+2. `XmiCrossSection.cs` - Geometric and analytical profile properties
+3. `XmiStorey.cs` - Level representation with elevation, mass, and reaction info
+4. `XmiUnit.cs` - Maps entity attributes to unit types for conversion
+5. `XmiSegment.cs` - Sub-span representation along curve members
 
-2. **XmiHasSegment** currently has:
-   - Basic relationship properties only (source, target, metadata)
-   - No position information
+### Physical Elements (`XmiSchema.Entities.Physical`)
+1. `XmiBeam.cs` - Physical beam component
+2. `XmiColumn.cs` - Physical column component
+3. `XmiSlab.cs` - Physical slab component
+4. `XmiWall.cs` - Physical wall component
 
-3. **Usage Patterns:**
-   - 6 bulk creation methods in XmiModel accept `List<XmiSegment>` and create `XmiHasSegment` relationships
-   - Validation logic depends on `XmiSegment.Position`
-   - 266 existing tests may reference segment positions
-   - JSON serialization will change structure
+### Analytical Elements (`XmiSchema.Entities.StructuralAnalytical`)
+1. `XmiStructuralCurveMember.cs` - Linear analytical members (beams, columns, bracing)
+2. `XmiStructuralSurfaceMember.cs` - Surface-based analytical elements (slabs, walls, plates)
+3. `XmiStructuralPointConnection.cs` - Analytical nodes connecting members
 
-## Migration Plan
+### Geometries (`XmiSchema.Entities.Geometries`)
+1. `XmiPoint3D.cs` - 3D point with tolerance-aware equality
+2. `XmiLine3D.cs` - Straight line between two points
+3. `XmiArc3D.cs` - Circular arc with start, end, center, and radius
 
-### Phase 1: Core Entity Changes
+### Relationships (`XmiSchema.Entities.Relationships`)
+1. `XmiHasGeometry.cs` - Link entities to geometries
+2. `XmiHasLine3D.cs` - Link entities to line geometries
+3. `XmiHasPoint3D.cs` - Link entities to point geometries
+4. `XmiHasMaterial.cs` - Associate materials with entities
+5. `XmiHasCrossSection.cs` - Associate cross-sections with entities
+6. `XmiHasSegment.cs` - Connect segments to entities
+7. `XmiHasStorey.cs` - Connect storeys to entities
+8. `XmiHasStructuralCurveMember.cs` - Relate analytical curve members
+9. `XmiHasStructuralPointConnection.cs` - Relate point connections
 
-**Files to modify:**
-- `Entities/Commons/XmiSegment.cs`
-- `Entities/Relationships/XmiHasSegment.cs`
+### Enumerations (`XmiSchema.Enums`)
+All enumeration types with EnumValueAttribute:
+- `XmiSegmentTypeEnum.cs`
+- `XmiShapeEnum.cs`
+- `XmiStructuralCurveMemberTypeEnum.cs`
+- `XmiSystemLineEnum.cs`
+- `XmiMaterialTypeEnum.cs`
+- `XmiStructuralSurfaceMemberTypeEnum.cs`
+- `XmiStructuralSurfaceMemberSpanTypeEnum.cs`
+- `XmiStructuralSurfaceMemberSystemPlaneEnum.cs`
+- `XmiUnitEnum.cs`
+- `XmiBaseEntityDomainEnum.cs`
 
-**XmiSegment.cs Changes:**
-1. Remove `Position` property and `IsValidPosition` property
-2. Remove position parameter from constructor
-3. Update static validation methods to accept position as separate parameter:
-   - `ValidateSequence(List<XmiSegment> segments, List<int> positions)`
-   - `SortByPosition(List<XmiSegment> segments, List<int> positions)`
-   - `CanFormClosedBoundary(List<XmiSegment> segments, List<int> positions)`
+### Parameters (`XmiSchema.Parameters`)
+1. `IXmiShapeParameters.cs` - Interface for shape parameter implementations
+2. `RectangularShapeParameters.cs` - Rectangular shape parameters
+3. `IShapeParameters.cs` - I-shaped profile parameters
+4. Additional shape parameter classes
 
-**XmiHasSegment.cs Changes:**
-1. Add `Position` property (int) with validation logic
-2. Add `IsValidPosition` property
-3. Add position parameter to both constructors:
-   - Full constructor: `(string id, XmiBaseEntity source, XmiSegment target, int position, ...)`
-   - Shorthand constructor: `(XmiBaseEntity source, XmiSegment target, int position)`
+### Managers (`XmiSchema.Managers`)
+1. `XmiModel.cs` - Holds entities and relationships, provides factory/query methods
+2. `XmiManager.cs` - Manages collection of XmiModel instances with higher-level orchestration
 
-### Phase 2: Manager Layer Updates
+### Utils (`XmiSchema.Utils`)
+1. `ExtensionEnumHelper.cs` - Utility for parsing enum values using EnumValueAttribute
 
-**Files to modify:**
-- `Managers/XmiModel.cs`
-- `Managers/XmiManager.cs`
+## Approach
 
-**XmiModel.cs Changes (6 bulk creation methods):**
-1. `CreateXmiBeam()` - lines 620-716
-2. `CreateXmiColumn()` - lines 717-813
-3. `CreateXmiSlab()` - lines 814-901
-4. `CreateXmiWall()` - lines 902-993
-5. `CreateXmiStructuralCurveMember()` - lines 994-1115
-6. `CreateXmiStructuralSurfaceMember()` - lines 1328-1434
+### 1. Analyze Existing Code Structure
+- Review each namespace and understand API structure
+- Identify all public members requiring documentation
+- Check for any existing documentation patterns
+- Understand relationship between entities and methods
 
-**Enhancements for each method:**
-1. Update validation logic to work with relationship positions
-2. Modify `XmiHasSegment` creation to pass position parameter
-3. Update error messages to reference relationship positions
-4. Maintain existing API compatibility where possible
+### 2. Document Base Classes First
+- Start with `XmiBaseEntity.cs` as foundational type
+- Document base classes before derived classes
+- Establish consistent documentation style
+- Use proper XML tags for inheritance hierarchies
 
-**XmiManager.cs Changes:**
-1. Update corresponding manager methods to pass position through
-2. Maintain interface compatibility
+### 3. Document Common Entities
+- Add XML documentation to materials, cross-sections, storeys, units, segments
+- Document all public properties and constructors
+- Include usage examples for complex properties
+- Document relationship methods
 
-### Phase 3: Test Updates
+### 4. Document Domain Entities
+- Physical elements: beams, columns, slabs, walls
+- Analytical elements: curve members, surface members, point connections
+- Document specific domain behaviors and constraints
+- Include architectural context in remarks sections
 
-**Files to modify:**
-- `XmiSchema.Tests/Managers/TestModelFactory.cs`
-- `XmiSchema.Tests/Entities/Commons/XmiSegmentTests.cs`
-- `XmiSchema.Tests/Entities/Relationships/XmiHasSegmentTests.cs`
-- `XmiSchema.Tests/Entities/Physical/XmiBeamTests.cs`
-- `XmiSchema.Tests/Entities/Physical/XmiColumnTests.cs`
-- `XmiSchema.Tests/Entities/Physical/XmiSlabTests.cs`
-- `XmiSchema.Tests/Entities/Physical/XmiWallTests.cs`
-- `XmiSchema.Tests/Entities/StructuralAnalytical/XmiStructuralCurveMemberTests.cs`
-- `XmiSchema.Tests/Entities/StructuralAnalytical/XmiStructuralSurfaceMemberTests.cs`
-- `XmiSchema.Tests/Managers/XmiModelTests.cs`
+### 5. Document Geometric Primitives
+- Points, lines, and arcs with their specific behaviors
+- Document tolerance-aware comparison logic
+- Include mathematical context where applicable
+- Provide coordinate system examples
 
-**TestModelFactory.cs Changes:**
-1. Modify `CreateSegment()` to remove position parameter
-2. Update test helpers that create segments
+### 6. Document Relationships
+- All relationship classes following graph pattern
+- Document source/target entity semantics
+- Include UML stereotype information
+- Document relationship cardinality
 
-**XmiSegmentTests.cs Changes:**
-1. Remove position-related tests from XmiSegment
-2. Update validation method tests to use separate position parameter
-3. Update constructor tests to reflect new signature
+### 7. Document Enumerations
+- Each enumeration value with XML comments
+- Include descriptions of enum semantics
+- Document serialization format
+- Provide usage context
 
-**XmiHasSegmentTests.cs Changes:**
-1. Add tests for position property
-2. Add validation tests for position logic
-3. Test both constructors with position parameter
+### 8. Document Shape Parameters
+- Interface and implementations
+- Document parameter keys and expected values
+- Include shape geometry context
+- Provide parameter mapping examples
 
-**Entity Integration Tests Changes:**
-1. Update all entity tests that check segment positions
-2. Fix assertions to check relationship positions instead
-3. Update test data creation patterns
+### 9. Document Managers
+- `XmiModel` methods (Add*, Create*, Query*)
+- `XmiManager` orchestration methods
+- Document model management responsibilities
+- Include lifecycle documentation
 
-### Phase 4: Serialization Compatibility
+### 10. Document Utilities
+- `ExtensionEnumHelper` methods
+- Document parsing behavior
+- Include exception conditions
+- Provide usage examples
 
-**Files to modify:**
-- `XmiSchema.Tests/Managers/XmiSerializationTests.cs`
+### Documentation Standards
 
-**Changes:**
-1. Add tests for new JSON structure (position in relationship)
-2. Verify round-trip serialization works with new structure
-3. Document breaking changes in serialization format
-
-## Detailed Implementation Steps
-
-### Step 1: XmiSegment Property Removal
-
+#### XML Documentation Comments Format
 ```csharp
-// Remove from XmiSegment.cs
-// public int Position { get; set; }  // REMOVE
-// public bool IsValidPosition => Position >= 0;  // REMOVE
-
-// Update constructor - remove position parameter
-public XmiSegment(
-    string id,
-    string name,
-    string ifcGuid,
-    string nativeId,
-    string description,
-    XmiSegmentTypeEnum segmentType
-) : base(id, name, ifcGuid, nativeId, description, nameof(XmiSegment), XmiBaseEntityDomainEnum.Shared)
-{
-    SegmentType = segmentType;
-}
+/// <summary>
+/// Brief description of member.
+/// </summary>
+/// <param name="parameterName">Description of parameter</param>
+/// <returns>Description of return value</returns>
+/// <exception cref="ExceptionType">Condition when thrown</exception>
+/// <remarks>Additional context or implementation notes</remarks>
+/// <example>Usage example with code</example>
+/// <seealso cref="RelatedMember"/>
 ```
 
-### Step 2: XmiHasSegment Property Addition
+#### Parameter Naming Convention
+- C# parameters: camelCase (e.g., `entityId`, `materialId`)
+- Use descriptive names that indicate purpose
+- Document each parameter with `<param name="paramName">`
+- Include type information in description
 
-```csharp
-// Add to XmiHasSegment.cs
-public int Position { get; set; }
-public bool IsValidPosition => Position >= 0;
+#### Best Practices
+- Use `<see cref=""/>` for cross-references instead of plain text
+- Escape XML special characters (`<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;`)
+- Include type information in parameter/return descriptions
+- Add examples for complex public APIs
+- Document all exceptions with proper `cref` attribute
+- Use `<remarks>` for extended descriptions beyond summary
+- Include usage context in class-level documentation
 
-// Full constructor with position
-public XmiHasSegment(
-    string id,
-    XmiBaseEntity source,
-    XmiSegment target,
-    int position,
-    string name,
-    string description,
-    string entityName
-) : base(id, source, target, name, description, nameof(XmiHasSegment))
-{
-    Position = position < 0 ? 0 : position;
-}
+### Validation Steps
+1. **Syntax Validation**
+   - Ensure all XML tags are properly closed
+   - Verify all `cref` references are valid
+   - Check parameter names match method signatures
+   - Confirm XML entities are properly escaped
 
-// Shorthand constructor with position
-public XmiHasSegment(
-    XmiBaseEntity source,
-    XmiSegment target,
-    int position
-) : base(source, target, nameof(XmiHasSegment))
-{
-    Position = position < 0 ? 0 : position;
-}
-```
+2. **Build Validation**
+   - Build project with XML documentation generation enabled
+   - Resolve all documentation warnings
+   - Verify XML documentation file is generated
+   - Check for missing documentation warnings
 
-### Step 3: Updated Validation Methods
+3. **IntelliSense Validation**
+   - Verify tooltips appear correctly in IDE
+   - Check parameter hints display properly
+   - Ensure cross-references resolve
+   - Confirm examples render in documentation
 
-```csharp
-// Update XmiSegment validation methods
-public static bool ValidateSequence(List<XmiSegment> segments, List<int> positions)
-{
-    if (segments == null || positions == null || segments.Count != positions.Count) 
-        return false;
-    
-    if (segments.Count < 2) return true;
-    
-    // Check for invalid positions
-    foreach (var position in positions)
-    {
-        if (position < 0) return false;
-    }
-    
-    // Check ascending order
-    for (int i = 0; i < positions.Count - 1; i++)
-    {
-        if (positions[i] > positions[i + 1]) return false;
-    }
-    return true;
-}
-
-public static List<XmiSegment> SortByPosition(List<XmiSegment> segments, List<int> positions)
-{
-    if (segments == null || positions == null || segments.Count != positions.Count) 
-        return new List<XmiSegment>();
-    
-    var zipped = segments.Zip(positions, (segment, position) => new { segment, position })
-                         .OrderBy(x => x.position)
-                         .Select(x => x.segment)
-                         .ToList();
-    return zipped;
-}
-```
-
-### Step 4: XmiModel Factory Method Updates
-
-```csharp
-// Example update for CreateXmiBeam method
-if (segments != null && segments.Count > 0)
-{
-    // Extract positions from segments (for backward compatibility during migration)
-    var positions = segments.Select(s => s.Position).ToList();
-    
-    // Validate positions
-    foreach (var position in positions)
-    {
-        if (position < 0)
-            throw new ArgumentException($"Segment has invalid position: {position}. Position must be a non-negative integer.");
-    }
-    
-    // Validate and sort
-    if (!XmiSegment.ValidateSequence(segments, positions))
-        throw new ArgumentException("Segments are not properly sequenced");
-    
-    var sortedSegments = XmiSegment.SortByPosition(segments, positions);
-    var sortedPositions = positions.OrderBy(p => p).ToList();
-    
-    // Create relationships with positions
-    for (int i = 0; i < sortedSegments.Count; i++)
-    {
-        var existingSegment = GetXmiEntitiesOfType<XmiSegment>()
-            .FirstOrDefault(s => s.Id == sortedSegments[i].Id);
-        if (existingSegment != null)
-        {
-            AddXmiHasSegment(new XmiHasSegment(beam, existingSegment, sortedPositions[i]));
-        }
-    }
-}
-```
-
-## Testing Strategy
-
-### Migration Testing Approach
-
-1. **XmiSegmentTests.cs Updates:**
-   - Remove position-related constructor tests
-   - Update validation method tests to use separate position parameter
-   - Remove `IsValidPosition` tests
-   - Update `ValidateSequence`, `SortByPosition`, `CanFormClosedBoundary` tests
-
-2. **XmiHasSegmentTests.cs Additions:**
-   - `Constructor_WithPosition_SetsCorrectly`
-   - `Constructor_InvalidPosition_DefaultsToZero`
-   - `IsValidPosition_ValidPosition_ReturnsTrue`
-   - `IsValidPosition_InvalidPosition_ReturnsFalse`
-   - Serialization tests for position property
-
-3. **Entity Integration Test Updates:**
-   - **XmiBeamTests.cs:** Update segment position assertions to check `XmiHasSegment.Position`
-   - **XmiColumnTests.cs:** Update segment position assertions to check `XmiHasSegment.Position`
-   - **XmiSlabTests.cs:** Update segment position assertions to check `XmiHasSegment.Position`
-   - **XmiWallTests.cs:** Update segment position assertions to check `XmiHasSegment.Position`
-   - **XmiStructuralCurveMemberTests.cs:** Update segment position assertions
-   - **XmiStructuralSurfaceMemberTests.cs:** Update segment position assertions
-
-4. **XmiModelTests.cs Updates:**
-   - Update all bulk creation method tests to work with new position handling
-   - Test error handling for invalid positions in relationships
-   - Test segment sorting with relationship positions
-
-5. **Serialization Tests:**
-   - Test new JSON structure (position moved from segment to relationship)
-   - Verify round-trip serialization maintains position data
-   - Test backward compatibility issues
-
-### Critical Test Scenarios
-
-1. **Backward Compatibility:** Ensure existing serialized data can be migrated
-2. **Position Validation:** Test position validation in relationship context
-3. **Segment Reuse:** Test same segment with different positions in different relationships
-4. **Error Handling:** Test invalid position handling in relationships
-5. **API Consistency:** Ensure all 6 bulk creation methods behave consistently
-
-## Risk Assessment
-
-**High Risk:**
-- **Breaking Change:** JSON serialization structure changes (position moves from entity to relationship)
-- **API Impact:** Constructor signatures change for both XmiSegment and XmiHasSegment
-- **Test Suite Impact:** 266 existing tests may need updates
-
-**Medium Risk:**
-- **Validation Logic Migration:** Complex validation methods need parameter changes
-- **Bulk Creation Methods:** 6 methods need consistent updates
-- **Backward Compatibility:** Existing serialized data may become incompatible
-
-**Low Risk:**
-- **Conceptual Model:** Migration improves logical consistency
-- **Future Extensibility:** Better supports segment reuse scenarios
-
-**Mitigation Strategies:**
-1. **Comprehensive Test Coverage:** Update all affected tests before implementation
-2. **Incremental Migration:** Implement in phases with testing at each step
-3. **Backward Compatibility Layer:** Consider migration utilities for existing data
-4. **Documentation:** Clearly document breaking changes and migration path
-5. **Version Management:** Consider version bump for breaking change
+4. **Test Validation**
+   - Run all 266 existing unit tests
+   - Ensure no functionality changes
+   - Verify no test failures introduced
+   - Confirm build succeeds
 
 ## Success Criteria
 
-1. ✅ Position property successfully moved from XmiSegment to XmiHasSegment
-2. ✅ All validation methods updated to work with relationship positions
-3. ✅ All 6 bulk creation methods updated consistently
-4. ✅ JSON serialization structure updated and tested
-5. ✅ All existing tests updated and passing
-6. ✅ New tests cover position validation in relationships
-7. ✅ Backward compatibility considerations documented
-8. ✅ API documentation updated with breaking changes
+- [ ] All public classes have `<summary>` and `<remarks>` XML comments
+- [ ] All public methods have XML comments with `<param>` for all parameters
+- [ ] All methods with return values have `<returns>` documentation
+- [ ] All methods that throw exceptions have `<exception cref="">` documentation
+- [ ] All public properties have `<summary>` and `<value>` documentation
+- [ ] All public interfaces have complete documentation
+- [ ] All enumeration values have XML comments
+- [ ] All XML tags are properly formatted and closed
+- [ ] Parameter names in `<param>` tags match method signatures exactly
+- [ ] All `cref` references are valid and resolve correctly
+- [ ] Special XML characters are properly escaped
+- [ ] Project builds without documentation warnings
+- [ ] All 266 existing unit tests pass
+- [ ] XML documentation file (XmiSchema.xml) is generated successfully
 
-## Timeline Estimate
+## Notes
 
-- **Phase 1 (Core Entities):** 2-3 days (XmiSegment and XmiHasSegment updates)
-- **Phase 2 (Manager Layer):** 3-4 days (XmiModel and XmiManager updates)
-- **Phase 3 (Test Updates):** 4-5 days (Comprehensive test suite updates)
-- **Phase 4 (Serialization):** 1-2 days (JSON structure and compatibility testing)
-- **Phase 5 (Documentation):** 1 day (Update documentation and migration guide)
+### Documentation Benefits
+- Enables IntelliSense tooltips in Visual Studio and VS Code
+- Facilitates automatic API documentation generation (DocFX, Sandcastle)
+- Improves code discoverability and reduces onboarding time
+- Provides context for API consumers
+- Ensures API contract clarity
 
-**Total:** 11-15 days
+### Code Style Consistency
+- Follow existing C# naming conventions (PascalCase for types, camelCase for parameters)
+- Use existing code structure patterns
+- Maintain consistency with CLAUDE.md documentation
+- Align with project's architectural patterns
 
-## Key Challenges & Solutions
+### Priority Implementation Order
+1. Base classes (foundational types)
+2. Common entities (widely used types)
+3. Domain entities (business types)
+4. Geometries (mathematical types)
+5. Relationships (graph types)
+6. Managers (orchestration types)
+7. Utilities (helper types)
+8. Enumerations (simple types)
 
-### Challenge 1: Validation Logic Migration
-**Problem:** Current validation methods depend on `XmiSegment.Position`
-**Solution:** Update methods to accept separate position parameters, maintain API compatibility during transition
+### Implementation Timeline Estimate
+- Base classes: 2 hours
+- Common entities: 3 hours
+- Physical elements: 2 hours
+- Analytical elements: 2 hours
+- Geometries: 1 hour
+- Relationships: 2 hours
+- Enumerations: 1 hour
+- Parameters: 2 hours
+- Managers: 2 hours
+- Utilities: 1 hour
+- Validation and testing: 2 hours
 
-### Challenge 2: JSON Structure Changes
-**Problem:** Position moves from segment entity to relationship entity
-**Solution:** Comprehensive serialization testing, clear documentation of breaking changes
+**Total estimated time: 20 hours**
 
-### Challenge 3: Test Suite Impact
-**Problem:** 266 existing tests may reference segment positions
-**Solution:** Systematic test update approach, leverage existing test patterns
+## Related Resources
 
-### Challenge 4: API Consistency
-**Problem:** 6 bulk creation methods need consistent updates
-**Solution:** Standardized update pattern across all methods, comprehensive testing
+### Documentation Standards
+- [C# XML Documentation Comments - Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
+- [XML Documentation Recommendations](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
+- [DocFX Documentation Generator](https://dotnet.github.io/docfx/)
 
-## Dependencies
+### Project Documentation
+- `CLAUDE.md` - Complete project overview and architecture
+- `XmiSchema.csproj` - Project configuration with documentation settings
+- Existing test files for API usage examples
 
-- **Internal:** Requires coordination across multiple entity layers
-- **Testing:** Dependent on comprehensive test suite updates
-- **Documentation:** Requires clear migration guide for users
-- **Version Management:** May require semantic version bump for breaking changes
-
-## Migration Considerations
-
-### Data Migration
-- Existing serialized XMI data will need migration utilities
-- Consider providing automated migration scripts
-- Document manual migration process for users
-
-### API Migration
-- Constructor signatures will change
-- Method signatures for validation will change
-- Provide clear upgrade path documentation
-
-### Backward Compatibility
-- Consider compatibility layer for transition period
-- Document deprecation timeline for old APIs
-- Provide migration examples and best practices
+### External References
+- [XMI Standard](https://www.omg.org/spec/XMI/) - Cross Model Information interchange
+- [IFC Standard](https://technical.buildingsmart.org/standards/ifc/) - Industry Foundation Classes
+- [BIM Standards](https://www.buildingsmart.org/) - Building Information Modeling standards
