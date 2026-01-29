@@ -1,269 +1,331 @@
-# Plan: Add comprehensive XML documentation comments to all C# components
+# Plan: Streamline XMI Confluence Pages with Entity Documentation
 
 ## Overview
-Add comprehensive XML documentation comments (docstrings) to all public C# classes, methods, properties, and interfaces in XmiSchema library following industry standards and best practices.
+Update and streamline all XMI Schema Confluence pages with the comprehensive entity documentation now available in the `docs/` directory. Replace older, generic documentation with detailed, structured documentation including usage examples, best practices, and technical specifications.
 
 ## Ticket Reference
-- Ticket: XMI-221
-- URL: https://betekk.atlassian.net/browse/XMI-221
+- Ticket: XMI-222 (to be created)
+- Related: XMI-221 (XML Documentation Comments)
 
-## Files to Modify
+## Current State Analysis
 
-### Base Classes (`XmiSchema.Entities.Bases`)
-1. `XmiBaseEntity.cs` - Root entity base class with ID, ifcGuid, NativeId, Description, EntityName
-2. `XmiBaseGeometry.cs` - Base class for geometric primitives (points, lines, arcs)
-3. `XmiBaseRelationship.cs` - Base class for graph edges holding source/target entity references
-4. `XmiBasePhysicalEntity.cs` - Intermediate base for physical elements (beams, columns, slabs, walls)
-5. `XmiBaseStructuralAnalyticalEntity.cs` - Intermediate base for analytical elements
-6. `XmiBaseEnum.cs` - Provides EnumValueAttribute for enum serialization
+### Confluence Pages Inventory
+Based on search results, the following Confluence pages exist for XMI Schema entities:
 
-### Common Entities (`XmiSchema.Entities.Commons`)
-1. `XmiMaterial.cs` - Material properties with grade, density, and stiffness constants
-2. `XmiCrossSection.cs` - Geometric and analytical profile properties
-3. `XmiStorey.cs` - Level representation with elevation, mass, and reaction info
-4. `XmiUnit.cs` - Maps entity attributes to unit types for conversion
-5. `XmiSegment.cs` - Sub-span representation along curve members
+| Page ID | Title | Status | Notes |
+|---------|-------|--------|-------|
+| 3670166 | XmiBaseEntity | Basic table format, needs comprehensive update |
+| 3670177 | XmiStructuralCurveMember | Generic template, needs detailed documentation |
+| 3670186 | XmiStructuralPointConnection | Template with placeholders |
+| 3670203 | XmiStructuralCrossSection | Template, needs complete documentation |
+| 3670206 | XmiStructuralModelAnalysis | Overview page |
+| 3670209 | XmiStructuralStorey | Template |
+| 3670212 | XmiStructuralSurfaceMember | Template |
+| 3670168 | XmiStructuralMaterial | Template |
+| 3670171 | XmiStructuralModel | Template |
+| 3670343 | Overall Summary of Entities | High-level overview, needs updating |
+| 3670390 | XMI Schema CSharp | Empty page, needs to be populated |
 
-### Physical Elements (`XmiSchema.Entities.Physical`)
-1. `XmiBeam.cs` - Physical beam component
-2. `XmiColumn.cs` - Physical column component
-3. `XmiSlab.cs` - Physical slab component
-4. `XmiWall.cs` - Physical wall component
+### Available Documentation in docs/
+Comprehensive documentation exists for:
+- **Base Classes** (6 entities): XmiBaseEntity, XmiBaseGeometry, XmiBaseRelationship, XmiBasePhysicalEntity, XmiBaseStructuralAnalyticalEntity, XmiBaseEnum
+- **Common Entities** (5 entities): XmiMaterial, XmiCrossSection, XmiStorey, XmiUnit, XmiSegment
+- **Physical Elements** (4 entities): XmiBeam, XmiColumn, XmiSlab, XmiWall
+- **Structural Analytical Elements** (3 entities): XmiStructuralCurveMember, XmiStructuralSurfaceMember, XmiStructuralPointConnection
+- **Geometries** (3 entities): XmiPoint3D, XmiLine3D, XmiArc3D
+- **Relationships** (10 entities): XmiHasGeometry, XmiHasLine3D, XmiHasPoint3D, XmiHasMaterial, XmiHasCrossSection, XmiHasSegment, XmiHasStorey, XmiHasStructuralCurveMember, XmiHasStructuralPointConnection, XmiHasArc3D
+- **Examples**: StructuralGraphSample with complete working code example
 
-### Analytical Elements (`XmiSchema.Entities.StructuralAnalytical`)
-1. `XmiStructuralCurveMember.cs` - Linear analytical members (beams, columns, bracing)
-2. `XmiStructuralSurfaceMember.cs` - Surface-based analytical elements (slabs, walls, plates)
-3. `XmiStructuralPointConnection.cs` - Analytical nodes connecting members
+## Pages to Update
 
-### Geometries (`XmiSchema.Entities.Geometries`)
-1. `XmiPoint3D.cs` - 3D point with tolerance-aware equality
-2. `XmiLine3D.cs` - Straight line between two points
-3. `XmiArc3D.cs` - Circular arc with start, end, center, and radius
+### Phase 1: Base Classes (Priority: High)
+1. **XmiBaseEntity** (Page ID: 3670166)
+   - Replace with comprehensive documentation from `docs/entities/bases/XmiBaseEntity.md`
+   - Include inheritance hierarchy, properties table, usage examples, best practices
+   - Add code examples demonstrating entity creation and property access
 
-### Relationships (`XmiSchema.Entities.Relationships`)
-1. `XmiHasGeometry.cs` - Link entities to geometries
-2. `XmiHasLine3D.cs` - Link entities to line geometries
-3. `XmiHasPoint3D.cs` - Link entities to point geometries
-4. `XmiHasMaterial.cs` - Associate materials with entities
-5. `XmiHasCrossSection.cs` - Associate cross-sections with entities
-6. `XmiHasSegment.cs` - Connect segments to entities
-7. `XmiHasStorey.cs` - Connect storeys to entities
-8. `XmiHasStructuralCurveMember.cs` - Relate analytical curve members
-9. `XmiHasStructuralPointConnection.cs` - Relate point connections
+2. **XmiBaseGeometry** (New Page)
+   - Create new page using `docs/entities/bases/XmiBaseGeometry.md`
+   - Document geometric primitive base class properties and methods
+   - Link to child pages: XmiPoint3D, XmiLine3D, XmiArc3D
 
-### Enumerations (`XmiSchema.Enums`)
-All enumeration types with EnumValueAttribute:
-- `XmiSegmentTypeEnum.cs`
-- `XmiShapeEnum.cs`
-- `XmiStructuralCurveMemberTypeEnum.cs`
-- `XmiSystemLineEnum.cs`
-- `XmiMaterialTypeEnum.cs`
-- `XmiStructuralSurfaceMemberTypeEnum.cs`
-- `XmiStructuralSurfaceMemberSpanTypeEnum.cs`
-- `XmiStructuralSurfaceMemberSystemPlaneEnum.cs`
-- `XmiUnitEnum.cs`
-- `XmiBaseEntityDomainEnum.cs`
+3. **XmiBaseRelationship** (New Page)
+   - Create new page using `docs/entities/bases/XmiBaseRelationship.md`
+   - Document relationship base class with source/target entity pattern
+   - Link to all relationship child pages
 
-### Parameters (`XmiSchema.Parameters`)
-1. `IXmiShapeParameters.cs` - Interface for shape parameter implementations
-2. `RectangularShapeParameters.cs` - Rectangular shape parameters
-3. `IShapeParameters.cs` - I-shaped profile parameters
-4. Additional shape parameter classes
+4. **XmiBasePhysicalEntity** (New Page)
+   - Create new page using `docs/entities/bases/XmiBasePhysicalEntity.md`
+   - Document intermediate base for physical elements
+   - Link to: XmiBeam, XmiColumn, XmiSlab, XmiWall
 
-### Managers (`XmiSchema.Managers`)
-1. `XmiModel.cs` - Holds entities and relationships, provides factory/query methods
-2. `XmiManager.cs` - Manages collection of XmiModel instances with higher-level orchestration
+5. **XmiBaseStructuralAnalyticalEntity** (New Page)
+   - Create new page using `docs/entities/bases/XmiBaseStructuralAnalyticalEntity.md`
+   - Document analytical element base class
+   - Link to: XmiStructuralCurveMember, XmiStructuralSurfaceMember, XmiStructuralPointConnection
 
-### Utils (`XmiSchema.Utils`)
-1. `ExtensionEnumHelper.cs` - Utility for parsing enum values using EnumValueAttribute
+6. **XmiBaseEnum** (New Page)
+   - Create new page using `docs/entities/bases/XmiBaseEnum.md`
+   - Document EnumValueAttribute usage and enum serialization
 
-## Approach
+### Phase 2: Common Entities (Priority: High)
+1. **XmiMaterial** (Page ID: 3670168)
+   - Replace with `docs/entities/commons/XmiMaterial.md`
+   - Include material types table, properties explained, usage examples, analysis applications, common material libraries
 
-### 1. Analyze Existing Code Structure
-- Review each namespace and understand API structure
-- Identify all public members requiring documentation
-- Check for any existing documentation patterns
-- Understand relationship between entities and methods
+2. **XmiCrossSection** (Page ID: 3670203)
+   - Replace with `docs/entities/commons/XmiCrossSection.md`
+   - Document shape types, geometric properties, analytical properties
 
-### 2. Document Base Classes First
-- Start with `XmiBaseEntity.cs` as foundational type
-- Document base classes before derived classes
-- Establish consistent documentation style
-- Use proper XML tags for inheritance hierarchies
+3. **XmiStorey** (Page ID: 3670209)
+   - Replace with `docs/entities/commons/XmiStorey.md`
+   - Document level representation, elevation, mass, reaction properties
 
-### 3. Document Common Entities
-- Add XML documentation to materials, cross-sections, storeys, units, segments
-- Document all public properties and constructors
-- Include usage examples for complex properties
-- Document relationship methods
+4. **XmiUnit** (New Page)
+   - Create using `docs/entities/commons/XmiUnit.md`
+   - Document unit mapping and conversion utilities
 
-### 4. Document Domain Entities
-- Physical elements: beams, columns, slabs, walls
-- Analytical elements: curve members, surface members, point connections
-- Document specific domain behaviors and constraints
-- Include architectural context in remarks sections
+5. **XmiSegment** (New Page)
+   - Create using `docs/entities/commons/XmiSegment.md`
+   - Document segment types and usage in curve members
 
-### 5. Document Geometric Primitives
-- Points, lines, and arcs with their specific behaviors
-- Document tolerance-aware comparison logic
-- Include mathematical context where applicable
-- Provide coordinate system examples
+### Phase 3: Physical Elements (Priority: Medium)
+1. **XmiBeam** (New Page)
+   - Create using `docs/entities/physical/XmiBeam.md`
+   - Document physical beam properties and relationships
 
-### 6. Document Relationships
-- All relationship classes following graph pattern
-- Document source/target entity semantics
-- Include UML stereotype information
-- Document relationship cardinality
+2. **XmiColumn** (New Page)
+   - Create using `docs/entities/physical/XmiColumn.md`
+   - Document physical column properties and relationships
 
-### 7. Document Enumerations
-- Each enumeration value with XML comments
-- Include descriptions of enum semantics
-- Document serialization format
-- Provide usage context
+3. **XmiSlab** (New Page)
+   - Create using `docs/entities/physical/XmiSlab.md`
+   - Document physical slab properties and relationships
 
-### 8. Document Shape Parameters
-- Interface and implementations
-- Document parameter keys and expected values
-- Include shape geometry context
-- Provide parameter mapping examples
+4. **XmiWall** (New Page)
+   - Create using `docs/entities/physical/XmiWall.md`
+   - Document physical wall properties and relationships
 
-### 9. Document Managers
-- `XmiModel` methods (Add*, Create*, Query*)
-- `XmiManager` orchestration methods
-- Document model management responsibilities
-- Include lifecycle documentation
+### Phase 4: Structural Analytical Elements (Priority: High)
+1. **XmiStructuralCurveMember** (Page ID: 3670177)
+   - Replace with `docs/entities/structural-analytical/XmiStructuralCurveMember.md`
+   - Include comprehensive properties, end fixity conditions, usage examples
 
-### 10. Document Utilities
-- `ExtensionEnumHelper` methods
-- Document parsing behavior
-- Include exception conditions
-- Provide usage examples
+2. **XmiStructuralSurfaceMember** (Page ID: 3670212)
+   - Replace with `docs/entities/structural-analytical/XmiStructuralSurfaceMember.md`
+   - Document surface member types, system plane, boundary conditions
 
-### Documentation Standards
+3. **XmiStructuralPointConnection** (Page ID: 3670186)
+   - Replace with `docs/entities/structural-analytical/XmiStructuralPointConnection.md`
+   - Document node properties, coordinate systems, usage patterns
 
-#### XML Documentation Comments Format
-```csharp
-/// <summary>
-/// Brief description of member.
-/// </summary>
-/// <param name="parameterName">Description of parameter</param>
-/// <returns>Description of return value</returns>
-/// <exception cref="ExceptionType">Condition when thrown</exception>
-/// <remarks>Additional context or implementation notes</remarks>
-/// <example>Usage example with code</example>
-/// <seealso cref="RelatedMember"/>
-```
+### Phase 5: Geometries (Priority: Medium)
+1. **XmiPoint3D** (New Page)
+   - Create using `docs/entities/geometries/XmiPoint3d.md`
+   - Document 3D point properties, tolerance-aware equality, automatic deduplication
 
-#### Parameter Naming Convention
-- C# parameters: camelCase (e.g., `entityId`, `materialId`)
-- Use descriptive names that indicate purpose
-- Document each parameter with `<param name="paramName">`
-- Include type information in description
+2. **XmiLine3D** (New Page)
+   - Create using `docs/entities/geometries/XmiLine3d.md`
+   - Document line geometry properties, start/end points
 
-#### Best Practices
-- Use `<see cref=""/>` for cross-references instead of plain text
-- Escape XML special characters (`<` → `&lt;`, `>` → `&gt;`, `&` → `&amp;`)
-- Include type information in parameter/return descriptions
-- Add examples for complex public APIs
-- Document all exceptions with proper `cref` attribute
-- Use `<remarks>` for extended descriptions beyond summary
-- Include usage context in class-level documentation
+3. **XmiArc3D** (New Page)
+   - Create using `docs/entities/geometries/XmiArc3d.md`
+   - Document arc geometry properties, start/end/center points, radius
+
+### Phase 6: Relationships (Priority: Low)
+1. **XmiHasGeometry** (New Page)
+   - Create using `docs/entities/relationships/XmiHasGeometry.md`
+   - Document geometry association pattern
+
+2. **XmiHasLine3D** (New Page)
+   - Create using `docs/entities/relationships/XmiHasLine3d.md`
+
+3. **XmiHasPoint3D** (New Page)
+   - Create using `docs/entities/relationships/XmiHasPoint3d.md`
+
+4. **XmiHasMaterial** (New Page)
+   - Create using `docs/entities/relationships/XmiHasMaterial.md`
+   - Document material assignment pattern
+
+5. **XmiHasCrossSection** (New Page)
+   - Create using `docs/entities/relationships/XmiHasCrossSection.md`
+   - Document cross-section assignment pattern
+
+6. **XmiHasSegment** (New Page)
+   - Create using `docs/entities/relationships/XmiHasSegment.md`
+   - Document segment positioning with positions
+
+7. **XmiHasStorey** (New Page)
+   - Create using `docs/entities/relationships/XmiHasStorey.md`
+   - Document storey association
+
+8. **XmiHasStructuralCurveMember** (New Page)
+   - Create using `docs/entities/relationships/XmiHasStructuralCurveMember.md`
+
+9. **XmiHasStructuralPointConnection** (New Page)
+   - Create using `docs/entities/relationships/XmiHasStructuralPointConnection.md`
+
+10. **XmiHasArc3D** (New Page)
+    - Create using `docs/entities/relationships/XmiHasArc3d.md`
+
+### Phase 7: Examples (Priority: High)
+1. **XMI Schema CSharp** (Page ID: 3670390)
+   - Currently empty, populate with overview of C# library
+   - Include quick start guide, installation instructions, basic usage
+   - Link to StructuralGraphSample example
+
+2. **StructuralGraphSample** (New Page)
+   - Create using `docs/examples/StructuralGraphSample.md`
+   - Include complete working code example
+   - Document key concepts demonstrated
+   - Provide expected output
+
+### Phase 8: Overview Pages (Priority: Medium)
+1. **Overall Summary of Entities** (Page ID: 3670343)
+   - Update with current entity hierarchy
+   - Update domain descriptions
+   - Add links to all entity pages
+   - Include architecture diagram
+
+2. **XMI Schema Implementation** (Page ID: 3670601)
+   - Update with library implementation details
+   - Include manager classes (XmiModel, XmiManager)
+   - Document API patterns
+
+3. **Entity Relationship Diagram** (Page ID: 3670162)
+   - Update with current entity relationships
+   - Include UML stereotype information
+
+## Documentation Standards
+
+### Page Structure Template
+Each entity page should include:
+1. **Title**: Clear entity name
+2. **Purpose**: Brief description of entity's role
+3. **Properties**: Complete table with Type, Required, Description columns
+4. **Usage Example**: C# code demonstrating entity creation
+5. **Key Characteristics**: Important behaviors and patterns
+6. **Best Practices**: Guidelines for using the entity correctly
+7. **Related Entities**: Links to related entities
+8. **Related Enums**: Links to relevant enumerations
+9. **Notes**: Important considerations and constraints
+
+### Confluence Formatting
+- Use Info Macros for important notes
+- Use Code Macros for code examples with C# syntax highlighting
+- Use Expand Macros for lengthy details
+- Use Table Macros for property lists
+- Include Table of Contents for easy navigation
+- Add breadcrumbs and child page links
+- Use proper heading hierarchy (H1, H2, H3)
+- Include page labels for discoverability
+
+### Cross-Referencing
+- Link to base classes from derived classes
+- Link to derived classes from base classes
+- Link to related entities in usage examples
+- Link to relationship classes where entities are used together
+- Link to enums used by entities
+
+## Migration Strategy
+
+### Content Mapping
+- **Properties**: Map entity properties to Confluence tables
+- **Code Examples**: Include in Code Macros with C# highlighting
+- **Best Practices**: Format as Info Macros or tip boxes
+- **Related Sections**: Use child pages or expandable sections
+- **Diagrams**: Include architecture and hierarchy diagrams where applicable
+
+### Backward Compatibility
+- Keep old page structure as reference (archive in comments)
+- Add migration notes for users familiar with old format
+- Maintain page IDs to prevent broken links
+- Update internal links to point to new content
+
+## Quality Assurance
+
+### Review Checklist
+- [ ] All pages include complete property tables
+- [ ] All pages have at least one code example
+- [ ] All pages have usage context and best practices
+- [ ] All related entities are cross-linked
+- [ ] All code examples compile and run
+- [ ] Formatting is consistent across all pages
+- [ ] Page labels are applied for discoverability
+- [ ] Navigation hierarchy is correct
+- [ ] Examples are tested and verified
+- [ ] Cross-references resolve correctly
 
 ### Validation Steps
-1. **Syntax Validation**
-   - Ensure all XML tags are properly closed
-   - Verify all `cref` references are valid
-   - Check parameter names match method signatures
-   - Confirm XML entities are properly escaped
-
-2. **Build Validation**
-   - Build project with XML documentation generation enabled
-   - Resolve all documentation warnings
-   - Verify XML documentation file is generated
-   - Check for missing documentation warnings
-
-3. **IntelliSense Validation**
-   - Verify tooltips appear correctly in IDE
-   - Check parameter hints display properly
-   - Ensure cross-references resolve
-   - Confirm examples render in documentation
-
-4. **Test Validation**
-   - Run all 266 existing unit tests
-   - Ensure no functionality changes
-   - Verify no test failures introduced
-   - Confirm build succeeds
+1. **Content Review**: Verify completeness of each page
+2. **Link Verification**: Ensure all links work
+3. **Code Testing**: Verify all code examples compile
+4. **Consistency Check**: Ensure formatting is uniform
+5. **Navigation Test**: Verify page hierarchy and breadcrumbs
+6. **Accessibility Check**: Ensure content is readable and navigable
 
 ## Success Criteria
 
-- [ ] All public classes have `<summary>` and `<remarks>` XML comments
-- [ ] All public methods have XML comments with `<param>` for all parameters
-- [ ] All methods with return values have `<returns>` documentation
-- [ ] All methods that throw exceptions have `<exception cref="">` documentation
-- [ ] All public properties have `<summary>` and `<value>` documentation
-- [ ] All public interfaces have complete documentation
-- [ ] All enumeration values have XML comments
-- [ ] All XML tags are properly formatted and closed
-- [ ] Parameter names in `<param>` tags match method signatures exactly
-- [ ] All `cref` references are valid and resolve correctly
-- [ ] Special XML characters are properly escaped
-- [ ] Project builds without documentation warnings
-- [ ] All 266 existing unit tests pass
-- [ ] XML documentation file (XmiSchema.xml) is generated successfully
-
-## Notes
-
-### Documentation Benefits
-- Enables IntelliSense tooltips in Visual Studio and VS Code
-- Facilitates automatic API documentation generation (DocFX, Sandcastle)
-- Improves code discoverability and reduces onboarding time
-- Provides context for API consumers
-- Ensures API contract clarity
-
-### Code Style Consistency
-- Follow existing C# naming conventions (PascalCase for types, camelCase for parameters)
-- Use existing code structure patterns
-- Maintain consistency with CLAUDE.md documentation
-- Align with project's architectural patterns
-
-### Priority Implementation Order
-1. Base classes (foundational types)
-2. Common entities (widely used types)
-3. Domain entities (business types)
-4. Geometries (mathematical types)
-5. Relationships (graph types)
-6. Managers (orchestration types)
-7. Utilities (helper types)
-8. Enumerations (simple types)
-
-### Implementation Timeline Estimate
-- Base classes: 2 hours
-- Common entities: 3 hours
-- Physical elements: 2 hours
-- Analytical elements: 2 hours
-- Geometries: 1 hour
-- Relationships: 2 hours
-- Enumerations: 1 hour
-- Parameters: 2 hours
-- Managers: 2 hours
-- Utilities: 1 hour
-- Validation and testing: 2 hours
-
-**Total estimated time: 20 hours**
+- [ ] All entity pages updated with comprehensive documentation
+- [ ] All new pages created for missing entities
+- [ ] All code examples tested and verified
+- [ ] All cross-references implemented
+- [ ] All pages properly formatted in Confluence
+- [ ] Navigation structure is logical and complete
+- [ ] Documentation is consistent with codebase
+- [ ] All pages include best practices and usage examples
+- [ ] XMI Schema CSharp overview page populated with quick start guide
+- [ ] Examples section added with working code samples
 
 ## Related Resources
 
-### Documentation Standards
-- [C# XML Documentation Comments - Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
-- [XML Documentation Recommendations](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
-- [DocFX Documentation Generator](https://dotnet.github.io/docfx/)
+### Internal Resources
+- `docs/entities/` - Comprehensive entity documentation
+- `docs/examples/` - Working code examples
+- `docs/_config.yml` - Documentation configuration
+- `PLAN.md` (XML documentation) - Related ticket XMI-221
 
-### Project Documentation
-- `CLAUDE.md` - Complete project overview and architecture
-- `XmiSchema.csproj` - Project configuration with documentation settings
-- Existing test files for API usage examples
+### Confluence Resources
+- Space: XKB (Knowledge Base)
+- Parent pages: XMI Schema Implementation, Overall Summary of Entities
+- Page hierarchy needs to be maintained
 
 ### External References
-- [XMI Standard](https://www.omg.org/spec/XMI/) - Cross Model Information interchange
-- [IFC Standard](https://technical.buildingsmart.org/standards/ifc/) - Industry Foundation Classes
-- [BIM Standards](https://www.buildingsmart.org/) - Building Information Modeling standards
+- XMI Standard Documentation
+- IFC Standard Documentation
+- BIM Standards Documentation
+- C# Documentation Guidelines
+
+## Timeline Estimate
+
+| Phase | Description | Estimated Time |
+|--------|-------------|---------------|
+| Phase 1 | Base Classes | 4 hours |
+| Phase 2 | Common Entities | 3 hours |
+| Phase 3 | Physical Elements | 2 hours |
+| Phase 4 | Structural Analytical | 3 hours |
+| Phase 5 | Geometries | 2 hours |
+| Phase 6 | Relationships | 3 hours |
+| Phase 7 | Examples | 2 hours |
+| Phase 8 | Overview Pages | 2 hours |
+| **Total** | | **21 hours** |
+
+## Notes
+
+### Prioritization
+- **High Priority**: Core entities (base classes, common entities, analytical elements) - needed for development
+- **Medium Priority**: Physical elements, geometries, overview pages - useful for users
+- **Low Priority**: Relationships - can be documented as needed, follow same pattern
+
+### Maintenance
+- Documentation should be updated when entities change
+- Code examples should be tested with each library release
+- Best practices should be reviewed periodically
+- Links should be checked for broken references
+
+### Future Enhancements
+- Add interactive code snippets that can be copied and run
+- Include API reference generation from XML documentation comments
+- Add video tutorials for complex entities
+- Integrate with automated documentation generation tools
+- Add community contribution guidelines
