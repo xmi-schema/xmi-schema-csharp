@@ -79,6 +79,64 @@ public class XmiBeam : XmiBasePhysicalEntity, IEquatable<XmiBeam>
         EndNodeZOffset = endNodeZOffset;
     }
 
+    /// <summary>
+    /// Determines equality based on the native identifier.
+    /// </summary>
+    /// <param name="other">Another <see cref="XmiBeam"/> instance to compare.</param>
+    /// <returns>
+    /// <c>true</c> if the native identifiers match (case-insensitive); otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// Beam equality is based on <see cref="NativeId"/> for consistency with other XmiSchema entities.
+    /// This allows identifying duplicate beams from different data sources while ignoring case differences.
+    /// </remarks>
+    public bool Equals(XmiBeam? other)
+    {
+        if (other == null) return false;
+        return string.Equals(NativeId, other.NativeId, StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>
+    /// Determines equality based on the native identifier.
+    /// </summary>
+    /// <param name="obj">Another object to compare.</param>
+    /// <returns>
+    /// <c>true</c> if this beam equals the compared object; otherwise, <c>false</c>.
+    /// </returns>
+    /// <remarks>
+    /// This method overrides <see cref="Equals(XmiBeam?)"/> to handle null comparison.
+    /// </remarks>
+    public override bool Equals(object? obj) => Equals(obj as XmiBeam);
+
+    /// <summary>
+    /// Returns a hash code based on the native identifier.
+    /// </summary>
+    /// <returns>
+    /// A hash code derived from the lowercase native identifier.
+    /// </returns>
+    /// <remarks>
+    /// The hash code is consistent with <see cref="Equals(XmiBeam?)"/> behavior and ensures
+    /// that beams with the same native ID are considered equal for collection operations.
+    /// The <c>0</c> fallback ensures non-null references return a valid hash code.
+    /// </remarks>
+    public override int GetHashCode()
+    {
+        return NativeId?.ToLowerInvariant().GetHashCode() ?? 0;
+    }
+    {
+        SystemLine = systemLine;
+        Length = length;
+        LocalAxisX = localAxisX;
+        LocalAxisY = localAxisY;
+        LocalAxisZ = localAxisZ;
+        BeginNodeXOffset = beginNodeXOffset;
+        EndNodeXOffset = endNodeXOffset;
+        BeginNodeYOffset = beginNodeYOffset;
+        EndNodeYOffset = endNodeYOffset;
+        BeginNodeZOffset = beginNodeZOffset;
+        EndNodeZOffset = endNodeZOffset;
+    }
+
     public bool Equals(XmiBeam? other)
     {
         if (other == null) return false;
